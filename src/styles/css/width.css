@@ -1,0 +1,351 @@
+.mwi {
+  min-width: inherit;
+}
+
+.mw5 {
+  min-width: 5%;
+}
+
+.mw10 {
+  min-width: 10%;
+}
+
+.mw15 {
+  min-width: 15%;
+}
+
+.mw20 {
+  min-width: 20%;
+}
+
+.mw25 {
+  min-width: 25%;
+}
+
+.mw30 {
+  min-width: 30%;
+}
+
+.mw35 {
+  min-width: 35%;
+}
+
+.mw40 {
+  min-width: 40%;
+}
+
+.mw45 {
+  min-width: 45%;
+}
+
+.mw50 {
+  min-width: 50%;
+}
+
+.mw55 {
+  min-width: 55%;
+}
+
+.mw60 {
+  min-width: 60%;
+}
+
+.mw65 {
+  min-width: 65%;
+}
+
+.mw70 {
+  min-width: 70%;
+}
+
+.mw75 {
+  min-width: 75%;
+}
+
+.mw80 {
+  min-width: 80%;
+}
+
+.mw85 {
+  min-width: 85%;
+}
+
+.mw90 {
+  min-width: 90%;
+}
+
+.mw95 {
+  min-width: 95%;
+}
+
+.mw100 {
+  min-width: 100%;
+}
+
+@media only screen and (min-width: 600px) {
+  .mwi-xs {
+    min-width: inherit;
+  }
+  .mw5-xs {
+    min-width: 5%;
+  }
+  .mw10-xs {
+    min-width: 10%;
+  }
+  .mw15-xs {
+    min-width: 15%;
+  }
+  .mw20-xs {
+    min-width: 20%;
+  }
+  .mw25-xs {
+    min-width: 25%;
+  }
+  .mw30-xs {
+    min-width: 30%;
+  }
+  .mw35-xs {
+    min-width: 35%;
+  }
+  .mw40-xs {
+    min-width: 40%;
+  }
+  .mw45-xs {
+    min-width: 45%;
+  }
+  .mw50-xs {
+    min-width: 50%;
+  }
+  .mw55-xs {
+    min-width: 55%;
+  }
+  .mw60-xs {
+    min-width: 60%;
+  }
+  .mw65-xs {
+    min-width: 65%;
+  }
+  .mw70-xs {
+    min-width: 70%;
+  }
+  .mw75-xs {
+    min-width: 75%;
+  }
+  .mw80-xs {
+    min-width: 80%;
+  }
+  .mw85-xs {
+    min-width: 85%;
+  }
+  .mw90-xs {
+    min-width: 90%;
+  }
+  .mw95-xs {
+    min-width: 95%;
+  }
+  .mw100-xs {
+    min-width: 100%;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .mwi-sm {
+    min-width: inherit;
+  }
+  .mw5-sm {
+    min-width: 5%;
+  }
+  .mw10-sm {
+    min-width: 10%;
+  }
+  .mw15-sm {
+    min-width: 15%;
+  }
+  .mw20-sm {
+    min-width: 20%;
+  }
+  .mw25-sm {
+    min-width: 25%;
+  }
+  .mw30-sm {
+    min-width: 30%;
+  }
+  .mw35-sm {
+    min-width: 35%;
+  }
+  .mw40-sm {
+    min-width: 40%;
+  }
+  .mw45-sm {
+    min-width: 45%;
+  }
+  .mw50-sm {
+    min-width: 50%;
+  }
+  .mw55-sm {
+    min-width: 55%;
+  }
+  .mw60-sm {
+    min-width: 60%;
+  }
+  .mw65-sm {
+    min-width: 65%;
+  }
+  .mw70-sm {
+    min-width: 70%;
+  }
+  .mw75-sm {
+    min-width: 75%;
+  }
+  .mw80-sm {
+    min-width: 80%;
+  }
+  .mw85-sm {
+    min-width: 85%;
+  }
+  .mw90-sm {
+    min-width: 90%;
+  }
+  .mw95-sm {
+    min-width: 95%;
+  }
+  .mw100-sm {
+    min-width: 100%;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+
+@media only screen and (min-width: 992px) {
+  .mwi-l {
+    min-width: inherit;
+  }
+  .mw5-l {
+    min-width: 5%;
+  }
+  .mw10-l {
+    min-width: 10%;
+  }
+  .mw15-l {
+    min-width: 15%;
+  }
+  .mw20-l {
+    min-width: 20%;
+  }
+  .mw25-l {
+    min-width: 25%;
+  }
+  .mw30-l {
+    min-width: 30%;
+  }
+  .mw35-l {
+    min-width: 35%;
+  }
+  .mw40-l {
+    min-width: 40%;
+  }
+  .mw45-l {
+    min-width: 45%;
+  }
+  .mw50-l {
+    min-width: 50%;
+  }
+  .mw55-l {
+    min-width: 55%;
+  }
+  .mw60-l {
+    min-width: 60%;
+  }
+  .mw65-l {
+    min-width: 65%;
+  }
+  .mw70-l {
+    min-width: 70%;
+  }
+  .mw75-l {
+    min-width: 75%;
+  }
+  .mw80-l {
+    min-width: 80%;
+  }
+  .mw85-l {
+    min-width: 85%;
+  }
+  .mw90-l {
+    min-width: 90%;
+  }
+  .mw95-l {
+    min-width: 95%;
+  }
+  .mw100-l {
+    min-width: 100%;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+
+@media only screen and (min-width: 1200px) {
+  .mwi-xl {
+    min-width: inherit;
+  }
+  .mw5-xl {
+    min-width: 5%;
+  }
+  .mw10-xl {
+    min-width: 10%;
+  }
+  .mw15-xl {
+    min-width: 15%;
+  }
+  .mw20-xl {
+    min-width: 20%;
+  }
+  .mw25-xl {
+    min-width: 25%;
+  }
+  .mw30-xl {
+    min-width: 30%;
+  }
+  .mw35-xl {
+    min-width: 35%;
+  }
+  .mw40-xl {
+    min-width: 40%;
+  }
+  .mw45-xl {
+    min-width: 45%;
+  }
+  .mw50-xl {
+    min-width: 50%;
+  }
+  .mw55-xl {
+    min-width: 55%;
+  }
+  .mw60-xl {
+    min-width: 60%;
+  }
+  .mw65-xl {
+    min-width: 65%;
+  }
+  .mw70-xl {
+    min-width: 70%;
+  }
+  .mw75-xl {
+    min-width: 75%;
+  }
+  .mw80-xl {
+    min-width: 80%;
+  }
+  .mw85-xl {
+    min-width: 85%;
+  }
+  .mw90-xl {
+    min-width: 90%;
+  }
+  .mw95-xl {
+    min-width: 95%;
+  }
+  .mw100-xl {
+    min-width: 100%;
+  }
+}

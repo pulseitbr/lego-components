@@ -1,7 +1,8 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import { SetupStyle } from "lego-components";
+import "lego-components/dist/index.css";
 
-import './index.css'
-import App from './App'
-
-ReactDOM.render(<App />, document.getElementById('root'))
+SetupStyle();
+ReactDOM.render(<App />, document.getElementById("root"));
