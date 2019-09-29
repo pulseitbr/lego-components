@@ -1,21 +1,32 @@
 import React, { Component } from "react";
-import { Body, Container, Right, Left } from "lego-components";
+import { Body, Page, Container, Button, Title, View, Footer, GlobalStyle } from "lego-components";
 export default class App extends Component {
   render() {
     return (
-      <Body>
-        <Container style={{ backgroundColor: "red" }}>
-          <Left mobile={70} style={{ backgroundColor: "white", minWith: "10%" }}>
-            Left
-          </Left>
-          <Right className="mw30 mwi-xl" style={{ backgroundColor: "black" }}>
-            Right
-          </Right>
-        </Container>
-        <Container>
-          <h2>KOE</h2>
-        </Container>
-      </Body>
+      <Page>
+        <Body>
+          {/* <Modal title="AEEE">AEEEEEEEEEEEE</Modal> */}
+          <Container>
+            <View span="10%" style={{ backgroundColor: "red" }}>
+              AEEE
+            </View>
+            <View span="90%" style={{ backgroundColor: "blue" }}>
+              AEEE
+            </View>
+          </Container>
+          <Container>
+            <Container>
+              <Title>KOE</Title>
+            </Container>
+            <Container>
+              <Button>Click</Button>
+            </Container>
+          </Container>
+        </Body>
+        <Footer>
+          <Container style={{ textAlign: "center", fontWeight: "bolder" }}>Footer</Container>
+        </Footer>
+      </Page>
     );
   }
 }

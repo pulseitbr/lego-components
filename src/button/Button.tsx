@@ -3,7 +3,7 @@ import Theme from "../styles";
 import React, { CSSProperties } from "react";
 import styled from "styled-components";
 
-type THEMES = "danger" | "primary" | "info" | "success" | "warn" | "transparent" | "light" | "none" | "dark";
+type THEMES = "danger" | "primary" | "info" | "success" | "warn" | "transparent" | "light" | "none" | "dark" | "disabledTransparent";
 export type ButtonProps = {
   stopPropagation?: boolean;
   size?: string;
@@ -18,6 +18,7 @@ export type ButtonProps = {
   success?: boolean;
   warn?: boolean;
   transparent?: boolean;
+  disabledTransparent?: boolean;
   light?: boolean;
   none?: boolean;
   dark?: boolean;
@@ -71,6 +72,13 @@ const sizes: { [key: string]: any } = {
 		padding-right: 0.6rem;
 		padding-top: 0.5rem;
 		padding-bottom: 0.5rem;
+    `,
+  large: `
+		padding: 0.5rem;
+		padding-left: 0.6rem;
+		padding-right: 0.6rem;
+		padding-top: 0.5rem;
+		padding-bottom: 0.5rem;
 		`,
   small: `
 		padding: 0.25rem;
@@ -91,7 +99,11 @@ const styledProps = {
   danger: ghostStyle(Theme.danger, Theme.light, Theme.danger),
   primary: ghostStyle(Theme.primary, Theme.light, Theme.primary),
   success: ghostStyle(Theme.success, Theme.light, Theme.success),
-  disabled: `${ghostStyle(Theme.disabled, Theme.darkAlpha, Theme.disabled)} cursor: not-allowed;`
+  disabled: `${ghostStyle(Theme.disabled, Theme.darkAlpha, "transparent")} cursor: not-allowed;`,
+  disabledTransparent: `${ghostStyle(Theme.disabled, Theme.disabled, "transparent")} cursor: not-allowed; &:disabled {
+    background-color: transparent;
+    border-color: transparent;
+  }`
 };
 
 const Transparent = styled(ThinButton)`
@@ -131,12 +143,24 @@ const RippleButton = styled(Transparent)`
   }
 `;
 
-const themeRnStyleProperty = ["danger", "primary", "info", "success", "warn", "transparent", "light", "none", "dark"];
+const themeRnStyleProperty = [
+  "danger",
+  "primary",
+  "info",
+  "success",
+  "warn",
+  "transparent",
+  "light",
+  "none",
+  "dark",
+  "disabled",
+  "disabledTransparent"
+];
 
-const defineTheme = (props: ButtonProps, styleType: string, theme: string): string => {
+const defineTheme = (props: ButtonProps & Object, styleType: string, theme: string): string => {
   for (const key of themeRnStyleProperty) {
-    //@ts-ignore
-    if (key in props && !!props[key]) {
+    const hasProp = props.hasOwnProperty(key);
+    if (hasProp && !!props[key]) {
       return key;
     }
   }
