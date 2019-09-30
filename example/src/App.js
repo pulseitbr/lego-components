@@ -1,12 +1,12 @@
+import { Body, Button, Container, Footer, Modal, Page, Title, View } from "lego-components";
 import React, { Component } from "react";
-import { Body, Page, Container, Button, Title, View, Footer, GlobalStyle } from "lego-components";
 export default class App extends Component {
   render() {
     return (
       <Page>
         <Body>
-          {/* <Modal title="AEEE">AEEEEEEEEEEEE</Modal> */}
           <Container>
+            <Modal visible>AEEEEEEEEEEEE</Modal>
             <View span="10%" style={{ backgroundColor: "red" }}>
               AEEE
             </View>
