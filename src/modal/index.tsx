@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Portal } from "react-portal";
 import styled from "styled-components";
 
-const ModalPortal = styled.aside.attrs((props: any) => {
-  return { ...props, visible: !!props.visible ? "block" : "none" };
+const ModalPortal = styled.div.attrs((props: any) => {
+  return { ...props, visible: !!props.visible ? "block" : "none", speed: props.speed };
 })`
   display: ${(props) => props.visible};
   position: fixed;
@@ -15,7 +15,16 @@ const ModalPortal = styled.aside.attrs((props: any) => {
   height: 100%;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
-  animation: 2s ease-in-out;
+  animation: fading ${(props) => props.speed}ms forwards ease-out;
+
+  @keyframes fading {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 `;
 
 const ModalContent = styled.div`
@@ -30,24 +39,31 @@ const ModalContent = styled.div`
   left: 50%;
 `;
 
-const Modal = (props: any) => {
-  const [visible, setVisible] = useState(!!props.visible);
-  const onClickMask = () => {
-    setVisible(false);
-  };
+type Props = {
+  visible?: boolean;
+  children: React.ReactNode;
+  animationTime?: number;
+} & React.HTMLAttributes<HTMLDivElement>;
+
+const Modal = ({ visible = false, children, animationTime = 950, ...props }: Props) => {
+  const [visibility, setVisibility] = useState(!!visible);
 
   useEffect(() => {
-    setVisible(!!props.visible);
-  }, [props.visible]);
-  
+    setVisibility(!!visible);
+  }, [visible]);
+
+  const onClickMask = (e: any) => {
+    setVisibility(false);
+    if (props.onClick) {
+      props.onClick(e);
+    }
+  };
+
   return (
     <Portal>
-      <ModalPortal onClick={onClickMask} visible={visible}>
-        <ModalContent>
-          <div>{props.children}</div>
-        </ModalContent>
+      <ModalPortal onClick={onClickMask} visible={visibility} speed={animationTime}>
+        <ModalContent>{children}</ModalContent>
       </ModalPortal>
-      )}
     </Portal>
   );
 };
