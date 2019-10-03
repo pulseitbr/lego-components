@@ -5,6 +5,8 @@ export * from "./base";
 export { default as SetupStyle } from "./styles/SetupStyle";
 export * from "./typography/index";
 export { default as Form } from "./form/Form";
+export { default as CurrencyInput } from "./form/CurrencyInput";
+export { default as Input } from "./form/Input";
 export { default as Modal } from "./modal";
 import "./index.css";
 

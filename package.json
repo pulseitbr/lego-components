@@ -23,7 +23,10 @@
   },
   "dependencies": {
     "rc-dialog": "^7.5.7",
+    "rc-notification": "^3.3.1",
+    "react-icons": "^3.7.0",
     "react-portal-minimal": "^4.0.2",
+    "react-text-mask": "^5.4.3",
     "sidekicker": "^0.0.28",
     "styled-components": "^4.4.0"
   },
@@ -37,6 +40,7 @@
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
     "@types/react-portal": "^4.0.2",
+    "@types/react-text-mask": "^5.4.6",
     "@types/styled-components": "^4.1.19",
     "babel-core": "^6.26.3",
     "babel-runtime": "^6.26.0",

@@ -1,6 +1,6 @@
 import React from "react";
 type Props = React.DetailedHTMLProps<React.FormHTMLAttributes<HTMLFormElement>, HTMLFormElement> & {
-  onSubmit(event: React.FormEvent<HTMLFormElement>, formValues: unknown): any;
+    onSubmit(event: React.FormEvent<HTMLFormElement>, formValues: unknown): any;
 };
 
 const Form = ({ children, onSubmit, ...props }: Props) => {
