@@ -55,7 +55,6 @@ export const Right = styled(Responsive)`
 export const View = styled(Responsive)`
   justify-items: center;
   flex-wrap: wrap;
-  /* width: 100%; */
 `;
 
 type TypeContainerBody = { fit?: boolean } & React.HTMLAttributes<any>;
