@@ -4,6 +4,7 @@ export { default as Loader } from "./loader/Loader";
 export * from "./base";
 export { default as SetupStyle } from "./styles/SetupStyle";
 export * from "./typography/index";
+export { default as Form } from "./form/Form";
 export { default as Modal } from "./modal";
 import "./index.css";
 
