@@ -1,4 +1,4 @@
-import { Body, Form, Button, Container, Footer, Modal, Page, Title, View } from "lego-components";
+import { Body, Button, Container, Footer, Form, Page } from "lego-components";
 import React, { useState } from "react";
 
 function App() {
@@ -38,7 +38,7 @@ function App() {
   );
 }
 
-export default class AnotherApp extends React.Component {
+class AnotherApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = { input: "", list: [] };
