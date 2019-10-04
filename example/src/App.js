@@ -3,7 +3,7 @@ import React from "react";
 
 const addressList = [
     {
-        nrSeqEndereco: 35,
+        nrSeqEndereco: 199,
         cep: "22753053",
         numero: "número",
         complemento: "Complemento",
@@ -21,7 +21,7 @@ const addressList = [
         }
     },
     {
-        nrSeqEndereco: 36,
+        nrSeqEndereco: 363,
         cep: "22753051",
         numero: "número",
         complemento: "Complemento2",
@@ -39,7 +39,7 @@ const addressList = [
         }
     },
     {
-        nrSeqEndereco: 35,
+        nrSeqEndereco: 3521,
         cep: "22753053",
         numero: "número",
         complemento: "Complemento",
@@ -57,7 +57,25 @@ const addressList = [
         }
     },
     {
-        nrSeqEndereco: 35,
+        nrSeqEndereco: 351,
+        cep: "22753053",
+        numero: "número",
+        complemento: "Complemento",
+        logradouro: "Logradouro",
+        bairro: "Bairro",
+        cidade: "Cidade",
+        uf: "UF",
+        tipoEndereco: {
+            codigo: 0,
+            descricao: ""
+        },
+        tipoLogradouro: {
+            id: 0,
+            descricao: ""
+        }
+    },
+    {
+        nrSeqEndereco: 99,
         cep: "22753053",
         numero: "número",
         complemento: "Complemento",
@@ -77,11 +95,15 @@ const addressList = [
 ];
 
 export default function App() {
+    const onChange = (e) => {
+        console.log("Que lixo", e);
+    };
+
     return (
         <Page>
             <Body>
                 <Container>
-                    <AddressCard dataSource={addressList} />
+                    <AddressCard dataSource={addressList} onChange={onChange} />
                 </Container>
             </Body>
         </Page>
