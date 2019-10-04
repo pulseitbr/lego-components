@@ -6,6 +6,7 @@ import { createGlobalStyle } from "styled-components";
 export { default as Loader } from "./loader/Loader";
 export { default as Form } from "./form/Form";
 export { default as Input } from "./form/Input";
+export { default as StyleInput } from "./form/StyleInput";
 export { default as Modal } from "./modal";
 export * from "./base";
 export * from "./typography/index";

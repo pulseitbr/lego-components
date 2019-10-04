@@ -22,8 +22,11 @@
     "deploy": "gh-pages -d example/build"
   },
   "dependencies": {
+    "classnames": "^2.2.6",
+    "polished": "^3.4.1",
     "rc-dialog": "^7.5.7",
     "rc-notification": "^3.3.1",
+    "react-content-loader": "^4.3.0",
     "react-icons": "^3.7.0",
     "react-portal-minimal": "^4.0.2",
     "react-text-mask": "^5.4.3",
@@ -36,6 +39,7 @@
   },
   "devDependencies": {
     "@svgr/rollup": "^2.4.1",
+    "@types/classnames": "^2.2.9",
     "@types/jest": "^23.1.5",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",

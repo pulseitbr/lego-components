@@ -163,4 +163,6 @@ export const $__BP__: typeof CONFIG_THEME = {
     }
 };
 
-export default $__BP__.config.theme;
+const Theme = $__BP__.config.theme;
+
+export default Theme;
