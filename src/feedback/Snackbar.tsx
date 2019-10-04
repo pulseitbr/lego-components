@@ -7,6 +7,8 @@ const Snackbar = ({ children, ...props }: SnackbarType) => {
         containerClass: "tc center",
         position: "bottomCenter",
         closable: false,
+        hasIcon: false,
+        
         theme: "dark",
         center: true,
         duration: 3,

@@ -1,15 +1,15 @@
-import { createGlobalStyle } from "styled-components";
 export { default as Button, ButtonProps } from "./button/Button";
-export { default as Loader } from "./loader/Loader";
-export * from "./base";
-export { default as SetupStyle } from "./styles/SetupStyle";
-export * from "./typography/index";
-export { default as Form } from "./form/Form";
 export { default as CurrencyInput } from "./form/CurrencyInput";
+export { default as AddressCard } from "./tenants/AddressCard"
+export { default as SetupStyle } from "./styles/SetupStyle";
+import { createGlobalStyle } from "styled-components";
+export { default as Loader } from "./loader/Loader";
+export { default as Form } from "./form/Form";
 export { default as Input } from "./form/Input";
 export { default as Modal } from "./modal";
+export * from "./base";
+export * from "./typography/index";
 import "./index.css";
-
 export const GlobalStyle = createGlobalStyle`
   * {
     margin: 0;
