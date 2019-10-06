@@ -1,10 +1,12 @@
-import { invert } from "polished";
-import React, { CSSProperties, useEffect, useState } from "react";
+import { lighten } from "polished";
+import React, { CSSProperties, useEffect } from "react";
 import { MdClose } from "react-icons/md";
 import styled, { ThemedStyledFunction } from "styled-components";
 import { TypeContainer, View } from "../base";
 import Theme from "../styles";
 import Portal from "../utils/Portal";
+
+const lightenClose = lighten(0.6);
 
 const ModalPortal = styled.div.attrs((props: any) => ({ ...props, visible: !!props.visible ? "block" : "none", speed: props.speed }))`
     top: 0;
@@ -14,6 +16,7 @@ const ModalPortal = styled.div.attrs((props: any) => ({ ...props, visible: !!pro
     height: 100%;
     overflow: auto;
     position: fixed;
+    padding-top: 3rem;
     display: ${(props) => props.visible};
     background-color: rgba(0, 0, 0, 0.65);
     animation: fading ${(props) => props.speed}ms forwards ease-out;
@@ -40,27 +43,27 @@ const ModalContent = styled.div.attrs((props: Content) => ({
     max-width: 100%;
     width: ${(props) => props.width};
     border: 1px solid ${Theme.darkAlpha};
-    /* top: 50%; */
-    /* left: 50%; */
 `;
 
 const Close = styled.span`
     color: ${(props) => props.color};
-    margin-top: -10px;
     font-size: 1.35rem;
     font-weight: bold;
+    margin-top: -10px;
     float: right;
 
     &:hover,
     &:focus {
-        color: ${(props) => invert(props.color!)};
+        color: ${(props) => lightenClose(props.color!)};
         text-decoration: none;
         cursor: pointer;
     }
 `;
 
 type Props = {
+    onClose: () => any;
     title?: React.ReactNode;
+    footer?: React.ReactNode;
     visible?: boolean;
     children: React.ReactNode;
     animationTime?: number;
@@ -81,6 +84,8 @@ const defaultModalPartProps = {
 const Modal = ({
     visible = false,
     width = "60%",
+    footer,
+    onClose,
     headerProps = defaultModalPartProps,
     bodyProps = defaultModalPartProps,
     footerProps = defaultModalPartProps,
@@ -89,10 +94,9 @@ const Modal = ({
     children,
     animationTime = 950
 }: Props) => {
-    const [visibility, setVisibility] = useState(!!visible);
     const toggleVisibility = (e: any) => {
         if (e.key === "Escape" && closeOnEsc) {
-            setVisibility(false);
+            onClose();
         }
     };
 
@@ -101,16 +105,9 @@ const Modal = ({
         return () => window.removeEventListener("keydown", toggleVisibility);
     }, []);
 
-    useEffect(() => {
-        setVisibility(!!visible);
-    }, [visible]);
-
     const onClickMask = (e: any) => {
         e.stopPropagation();
-        // setVisibility(false);
-        // if (props.onClick) {
-        //     props.onClick(e);
-        // }
+        onClose();
     };
 
     const onModalClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -120,23 +117,23 @@ const Modal = ({
 
     const headerViewProps = {
         ...headerProps,
-        style: { ...defaultModalPartProps.style, ...headerProps.style, borderBottom: `1px solid ${Theme.darkAlpha}` }
+        style: { borderBottom: `1px solid ${Theme.darkAlpha}`, ...defaultModalPartProps.style, ...headerProps.style }
     };
     const bodyViewProps = { ...bodyProps, style: { ...defaultModalPartProps.style, ...bodyProps.style } };
-    const footerViewProps = { ...footerProps, style: { ...defaultModalPartProps.style, ...footerProps.style } };
+    const footerViewProps = { ...footerProps, style: { textAlign: "right" as "right", ...defaultModalPartProps.style, ...footerProps.style } };
 
     return (
         <Portal>
-            <ModalPortal onClick={onClickMask} visible={visibility} speed={animationTime}>
+            <ModalPortal onClick={onClickMask} visible={visible} speed={animationTime}>
                 <ModalContent onClick={onModalClick} width={width}>
                     <View {...headerViewProps}>
-                        <Close color="#121212">
+                        <Close color="#121212" onClick={onClose}>
                             <MdClose />
                         </Close>
                         {title}
                     </View>
                     <View {...bodyViewProps}>{children}</View>
-                    <View {...footerViewProps}>Footer</View>
+                    {!!footer && <View {...footerViewProps}>{footer}</View>}
                 </ModalContent>
             </ModalPortal>
         </Portal>

@@ -10,7 +10,16 @@ export default function App() {
                     <Button onClick={() => setVisible((p) => !p)}>Ativa o Modal</Button>
                 </Container>
             </Body>
-            <Modal title="Modal de exemplo" visible={visible}>
+            <Modal
+                onClose={() => setVisible(false)}
+                title="Modal de exemplo"
+                visible={visible}
+                footer={
+                    <Button danger onClick={() => setVisible(false)}>
+                        Cancelar
+                    </Button>
+                }
+            >
                 AEEEEEEEEEEEEEEEEE
             </Modal>
         </Page>

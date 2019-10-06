@@ -6,6 +6,7 @@ const Snackbar = ({ children, ...props }: SnackbarType) => {
     return Notification({
         containerClass: "tc center",
         position: "bottomCenter",
+        clickClose: true,
         closable: false,
         theme: "dark",
         center: true,
