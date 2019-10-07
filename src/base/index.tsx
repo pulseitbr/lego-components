@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 type Value = number | string;
-type TypeContainer = {
+export type TypeContainer = {
     span: Value;
     xsmall?: Value;
     small?: Value;
@@ -43,15 +43,15 @@ const Responsive = styled.section.attrs((props: TypeContainer) => {
     }
 `;
 export const Left = styled(Responsive)`
+    flex: 1;
     align-items: flex-start;
     align-self: center;
-    order: 0;
 `;
 
 export const Right = styled(Responsive)`
+    flex: 1;
     align-items: flex-end;
     align-self: center;
-    order: 1;
 `;
 
 export const View = styled(Responsive)`
@@ -63,11 +63,10 @@ type TypeContainerBody = { fit?: boolean } & React.HTMLAttributes<any>;
 export const Container = styled.section.attrs(({ fit = true, ...props }: TypeContainerBody) => {
     return { ...props, fit };
 })`
-  /* flex: ${(props) => (props.fit ? 0 : 1)}; */
-  display: flex;
-  justify-items: center;
-  flex-wrap: wrap;
-  width:100%
+    display: flex;
+    justify-items: center;
+    flex-wrap: wrap;
+    width: 100%;
 `;
 export const Page = styled.main`
     display: flex;

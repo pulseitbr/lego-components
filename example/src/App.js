@@ -1,111 +1,53 @@
-import { Body, AddressCard, Container, Input, Page } from "lego-components";
-import React from "react";
-
-const addressList = [
-    {
-        nrSeqEndereco: 199,
-        cep: "22753053",
-        numero: "número",
-        complemento: "Complemento",
-        logradouro: "Logradouro",
-        bairro: "Bairro",
-        cidade: "Cidade",
-        uf: "UF",
-        tipoEndereco: {
-            codigo: 0,
-            descricao: ""
-        },
-        tipoLogradouro: {
-            id: 0,
-            descricao: ""
-        }
-    },
-    {
-        nrSeqEndereco: 363,
-        cep: "22753051",
-        numero: "número",
-        complemento: "Complemento2",
-        logradouro: "Logradouro2",
-        bairro: "Bairro2",
-        cidade: "Cidade2",
-        uf: "UF2",
-        tipoEndereco: {
-            codigo: 0,
-            descricao: ""
-        },
-        tipoLogradouro: {
-            id: 0,
-            descricao: ""
-        }
-    },
-    {
-        nrSeqEndereco: 3521,
-        cep: "22753053",
-        numero: "número",
-        complemento: "Complemento",
-        logradouro: "Logradouro",
-        bairro: "Bairro",
-        cidade: "Cidade",
-        uf: "UF",
-        tipoEndereco: {
-            codigo: 0,
-            descricao: ""
-        },
-        tipoLogradouro: {
-            id: 0,
-            descricao: ""
-        }
-    },
-    {
-        nrSeqEndereco: 351,
-        cep: "22753053",
-        numero: "número",
-        complemento: "Complemento",
-        logradouro: "Logradouro",
-        bairro: "Bairro",
-        cidade: "Cidade",
-        uf: "UF",
-        tipoEndereco: {
-            codigo: 0,
-            descricao: ""
-        },
-        tipoLogradouro: {
-            id: 0,
-            descricao: ""
-        }
-    },
-    {
-        nrSeqEndereco: 99,
-        cep: "22753053",
-        numero: "número",
-        complemento: "Complemento",
-        logradouro: "Logradouro",
-        bairro: "Bairro",
-        cidade: "Cidade",
-        uf: "UF",
-        tipoEndereco: {
-            codigo: 0,
-            descricao: ""
-        },
-        tipoLogradouro: {
-            id: 0,
-            descricao: ""
-        }
-    }
-];
-
+import { Body, Button, Notification, Container, Modal, Page } from "lego-components";
+import React, { Fragment, useState } from "react";
+import useMultipleEffects from "./useMultipleEffects";
 export default function App() {
-    const onChange = (e) => {
-        console.log("Que lixo", e);
-    };
-
+    const [visible, setVisible] = useState(false);
+    const [count, setCount] = useState(0);
+    useMultipleEffects([
+        {
+            effect() {
+                document.title = `Count ${count}`;
+            },
+            deps: [count]
+        },
+        {
+            effect() {
+                window.addEventListener("keydown", (e) => {
+                    if (e.target.nodeName.toLowerCase !== "input") {
+                        Notification.info({
+                            title: "Vou te ajudar",
+                            children: "Calma fera, tem ajuda aqui"
+                        });
+                    }
+                });
+            },
+            deps: [count]
+        }
+    ]);
     return (
         <Page>
             <Body>
                 <Container>
-                    <AddressCard dataSource={addressList} onChange={onChange} />
+                    <Button onClick={() => setCount((p) => p + 1)}>Ativa o Modal</Button>
+                    <input type="text" />
                 </Container>
             </Body>
+            <Modal
+                onClose={() => setVisible(false)}
+                title="Modal de exemplo"
+                visible={visible}
+                footer={
+                    <Fragment>
+                        <Button danger onClick={() => setVisible(false)}>
+                            Cancelar
+                        </Button>{" "}
+                        <Button success>Deu bom</Button>
+                    </Fragment>
+                }
+            >
+                AEEEEEEEEEEEEEEEEE
+            </Modal>
         </Page>
     );
 }
