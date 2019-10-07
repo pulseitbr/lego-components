@@ -1,6 +1,6 @@
 export { default as Button, ButtonProps } from "./button/Button";
 export { default as CurrencyInput } from "./form/CurrencyInput";
-export { default as AddressCard } from "./tenants/AddressCard"
+export { default as AddressBox } from "./tenants/AddressBox"
 export { default as SetupStyle } from "./styles/SetupStyle";
 import { createGlobalStyle } from "styled-components";
 export { default as Loader } from "./loader/Loader";
