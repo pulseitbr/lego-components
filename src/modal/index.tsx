@@ -1,5 +1,5 @@
 import { lighten } from "polished";
-import React, { CSSProperties, useEffect } from "react";
+import React, { CSSProperties, Fragment, useEffect } from "react";
 import { MdClose } from "react-icons/md";
 import styled, { ThemedStyledFunction } from "styled-components";
 import { TypeContainer, View } from "../base";
@@ -111,8 +111,9 @@ const Modal = ({
     };
 
     const onModalClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        event.persist();
         event.stopPropagation();
+        event.preventDefault();
+        event.persist();
     };
 
     const headerViewProps = {
@@ -121,7 +122,9 @@ const Modal = ({
     };
     const bodyViewProps = { ...bodyProps, style: { ...defaultModalPartProps.style, ...bodyProps.style } };
     const footerViewProps = { ...footerProps, style: { textAlign: "right" as "right", ...defaultModalPartProps.style, ...footerProps.style } };
-
+    if (!visible) {
+        return <Fragment />;
+    }
     return (
         <Portal>
             <ModalPortal onClick={onClickMask} visible={visible} speed={animationTime}>

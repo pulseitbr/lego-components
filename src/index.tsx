@@ -8,6 +8,9 @@ export { default as Form } from "./form/Form";
 export { default as CurrencyInput } from "./form/CurrencyInput";
 export { default as Input } from "./form/Input";
 export { default as StyleInput } from "./form/StyleInput";
+export { default as Notification } from "./feedback/Notification";
+export { default as Badge } from "./feedback/Badge";
+export { default as Snackbar } from "./feedback/Snackbar";
 export { default as Modal } from "./modal";
 import "./index.css";
 

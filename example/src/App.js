@@ -1,13 +1,36 @@
-import { Body, Button, Container, Modal, Page } from "lego-components";
-import React, { useState } from "react";
-
+import { Body, Button, Notification, Container, Modal, Page } from "lego-components";
+import React, { Fragment, useState } from "react";
+import useMultipleEffects from "./useMultipleEffects";
 export default function App() {
-    const [visible, setVisible] = React.useState(false);
+    const [visible, setVisible] = useState(false);
+    const [count, setCount] = useState(0);
+    useMultipleEffects([
+        {
+            effect() {
+                document.title = `Count ${count}`;
+            },
+            deps: [count]
+        },
+        {
+            effect() {
+                window.addEventListener("keydown", (e) => {
+                    if (e.target.nodeName.toLowerCase !== "input") {
+                        Notification.info({
+                            title: "Vou te ajudar",
+                            children: "Calma fera, tem ajuda aqui"
+                        });
+                    }
+                });
+            },
+            deps: [count]
+        }
+    ]);
     return (
         <Page>
             <Body>
                 <Container>
-                    <Button onClick={() => setVisible((p) => !p)}>Ativa o Modal</Button>
+                    <Button onClick={() => setCount((p) => p + 1)}>Ativa o Modal</Button>
+                    <input type="text" />
                 </Container>
             </Body>
             <Modal
@@ -15,9 +38,12 @@ export default function App() {
                 title="Modal de exemplo"
                 visible={visible}
                 footer={
-                    <Button danger onClick={() => setVisible(false)}>
-                        Cancelar
-                    </Button>
+                    <Fragment>
+                        <Button danger onClick={() => setVisible(false)}>
+                            Cancelar
+                        </Button>{" "}
+                        <Button success>Deu bom</Button>
+                    </Fragment>
                 }
             >
                 AEEEEEEEEEEEEEEEEE

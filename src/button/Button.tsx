@@ -163,10 +163,10 @@ const Button = ({
     const themeDefined = defineTheme(html, styleType, theme);
 
     const onClickButton = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        event.persist();
         if (stopPropagation) {
             event.stopPropagation();
         }
+        event.persist();
         if (!!onClick) {
             return onClick(event);
         }
