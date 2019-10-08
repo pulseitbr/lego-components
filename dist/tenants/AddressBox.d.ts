@@ -1,6 +1,6 @@
 import React from "react";
 export declare type AddressBoxItem = {
-    nomeLoja: string;
+    nomeLoja?: string;
     nrSeqEndereco: number;
     cep: string;
     numero: string;

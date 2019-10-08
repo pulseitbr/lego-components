@@ -17,7 +17,7 @@ export type TypeContainer = LegoMediaQuery &
     };
 
 const ResponsiveContainer = styled.div.attrs((props: TypeContainer) => {
-    const span = props.span || 0;
+    const span = props.span || "100%";
     const xsmall = props.xsmall || "100%";
     const small = props.small || "100%";
     const medium = props.medium || span;
@@ -57,7 +57,6 @@ const Collapse = styled(ResponsiveContainer).attrs((props: TypeContainer) => {
     height: 100%;
     overflow: hidden;
     transition: max-height ${(props: any) => props.time}ms cubic-bezier(0.45, 0.27, 0.63, 0.51);
-    flex: 0 0 ${(props: TypeContainer) => props.span};
 `;
 
 type ResponsiveProps = {
