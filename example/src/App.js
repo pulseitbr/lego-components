@@ -1,4 +1,4 @@
-import { Body, Button, Notification, Container, Modal, Page, AddressBox, View } from "lego-components";
+import { Body, Button, Notification, Container, Modal, Page, AddressBox, View, Form, Input } from "lego-components";
 import React, { Fragment, useState, useEffect } from "react";
 import useMultipleEffects from "./useMultipleEffects";
 
@@ -78,7 +78,7 @@ export default function App() {
     const [visible, setVisible] = useState(false);
     const [list, setList] = useState([]);
     const [id, setId] = useState(0);
-
+    const [collapse, setCollapse] = useState(false);
     // const [count, setCount] = useState(0);
     // useMultipleEffects([
     //     {
@@ -109,7 +109,7 @@ export default function App() {
 
     return (
         <Page>
-            <Body>
+            <Body isCollapse show={collapse}>
                 <Container>
                     <View span="70%">
                         <AddressBox
@@ -128,7 +128,9 @@ export default function App() {
                         />
                     </View>
                 </Container>
-                <Container>Endereço selecionado {id}</Container>
+                <Container>
+                    Endereço selecionado {id}
+                </Container>
             </Body>
             <Modal
                 onClose={() => setVisible(false)}
@@ -145,6 +147,9 @@ export default function App() {
             >
                 AEEEEEEEEEEEEEEEEE
             </Modal>
+            <Container>
+                <Button onClick={() => setCollapse(!collapse)}>Collapse all</Button>
+            </Container>
         </Page>
     );
 }

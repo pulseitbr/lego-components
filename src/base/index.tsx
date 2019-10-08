@@ -1,23 +1,29 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 
 type Value = number | string;
-export type TypeContainer = {
-    span: Value;
+
+export type LegoMediaQuery = {
+    span?: Value;
     xsmall?: Value;
     small?: Value;
     medium?: Value;
     large?: Value;
     xlarge?: Value;
-} & React.HTMLAttributes<any>;
+};
+export type TypeContainer = LegoMediaQuery &
+    React.HTMLAttributes<HTMLDivElement> & {
+        time?: Value;
+    };
 
-const Responsive = styled.section.attrs((props: TypeContainer) => {
-    const span = props.span;
+const ResponsiveContainer = styled.div.attrs((props: TypeContainer) => {
+    const span = props.span || 0;
     const xsmall = props.xsmall || "100%";
     const small = props.small || "100%";
     const medium = props.medium || span;
     const large = props.large || span;
     const xlarge = props.xlarge || span;
+
     return { ...props, span, xsmall, medium, large, small, xlarge };
 })`
     flex: 0 0 ${(props: TypeContainer) => props.span};
@@ -42,6 +48,52 @@ const Responsive = styled.section.attrs((props: TypeContainer) => {
         flex: 0 0 ${(props: TypeContainer) => props.xlarge};
     }
 `;
+
+const Collapse = styled(ResponsiveContainer).attrs((props: TypeContainer) => {
+    const time = props.time || 350;
+    return { ...props, time };
+})`
+    max-height: 0;
+    height: 100%;
+    overflow: hidden;
+    transition: max-height ${(props: any) => props.time}ms cubic-bezier(0.45, 0.27, 0.63, 0.51);
+    flex: 0 0 ${(props: TypeContainer) => props.span};
+`;
+
+type ResponsiveProps = {
+    isCollapse?: boolean;
+    show?: boolean;
+};
+
+const Responsive = ({ isCollapse = false, show = true, children, ...props }: TypeContainer & ResponsiveProps) => {
+    const ref: React.RefObject<HTMLDivElement> = useRef(null);
+    useEffect(() => {
+        if (!!ref.current) {
+            if (!!isCollapse) {
+                if (show) {
+                    ref.current.style.maxHeight = `${ref.current.scrollHeight}px`;
+                } else {
+                    ref.current.style.maxHeight = null;
+                }
+            }
+        }
+    }, [isCollapse, show]);
+
+    if (!isCollapse) {
+        return (
+            <ResponsiveContainer ref={ref} {...props}>
+                {children}
+            </ResponsiveContainer>
+        );
+    }
+
+    return (
+        <Collapse ref={ref} {...props}>
+            {children}
+        </Collapse>
+    );
+};
+
 export const Left = styled(Responsive)`
     flex: 1;
     align-items: flex-start;
@@ -60,7 +112,7 @@ export const View = styled(Responsive)`
 `;
 
 type TypeContainerBody = { fit?: boolean } & React.HTMLAttributes<any>;
-export const Container = styled.section.attrs(({ fit = true, ...props }: TypeContainerBody) => {
+export const Container = styled(Responsive).attrs(({ fit = true, ...props }: TypeContainerBody) => {
     return { ...props, fit };
 })`
     display: flex;
@@ -68,7 +120,7 @@ export const Container = styled.section.attrs(({ fit = true, ...props }: TypeCon
     flex-wrap: wrap;
     width: 100%;
 `;
-export const Page = styled.main`
+export const Page = styled(Responsive)`
     display: flex;
     align-content: center;
     align-items: center;
@@ -78,7 +130,7 @@ export const Page = styled.main`
     width: 100%;
     min-width: 100%;
 `;
-export const Body = styled.div`
+export const Body = styled(Responsive)`
     flex: 1 0 auto;
     width: 100%;
     min-width: 100%;
@@ -87,7 +139,7 @@ export const Body = styled.div`
     align-self: center;
 `;
 
-export const Footer = styled.footer`
+export const Footer = styled(Responsive)`
     flex-shrink: 0;
     justify-content: center;
     align-content: center;
