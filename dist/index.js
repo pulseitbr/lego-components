@@ -405,7 +405,7 @@ var CurrencyInput = function (_a) {
 };
 
 var ResponsiveContainer = styled__default.div.attrs(function (props) {
-    var span = props.span || 0;
+    var span = props.span || "100%";
     var xsmall = props.xsmall || "100%";
     var small = props.small || "100%";
     var medium = props.medium || span;
@@ -416,7 +416,7 @@ var ResponsiveContainer = styled__default.div.attrs(function (props) {
 var Collapse = styled__default(ResponsiveContainer).attrs(function (props) {
     var time = props.time || 350;
     return __assign(__assign({}, props), { time: time });
-})(templateObject_2$1 || (templateObject_2$1 = __makeTemplateObject(["\n    max-height: 0;\n    height: 100%;\n    overflow: hidden;\n    transition: max-height ", "ms cubic-bezier(0.45, 0.27, 0.63, 0.51);\n    flex: 0 0 ", ";\n"], ["\n    max-height: 0;\n    height: 100%;\n    overflow: hidden;\n    transition: max-height ", "ms cubic-bezier(0.45, 0.27, 0.63, 0.51);\n    flex: 0 0 ", ";\n"])), function (props) { return props.time; }, function (props) { return props.span; });
+})(templateObject_2$1 || (templateObject_2$1 = __makeTemplateObject(["\n    max-height: 0;\n    height: 100%;\n    overflow: hidden;\n    transition: max-height ", "ms cubic-bezier(0.45, 0.27, 0.63, 0.51);\n"], ["\n    max-height: 0;\n    height: 100%;\n    overflow: hidden;\n    transition: max-height ", "ms cubic-bezier(0.45, 0.27, 0.63, 0.51);\n"])), function (props) { return props.time; });
 var Responsive = function (_a) {
     var _b = _a.isCollapse, isCollapse = _b === void 0 ? false : _b, _c = _a.show, show = _c === void 0 ? true : _c, children = _a.children, props = __rest(_a, ["isCollapse", "show", "children"]);
     var ref = React.useRef(null);
@@ -442,7 +442,7 @@ var Right = styled__default(Responsive)(templateObject_4$1 || (templateObject_4$
 var View = styled__default(Responsive)(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n    justify-items: center;\n    flex-wrap: wrap;\n"], ["\n    justify-items: center;\n    flex-wrap: wrap;\n"])));
 var Container = styled__default(Responsive)(templateObject_6 || (templateObject_6 = __makeTemplateObject(["\n    display: flex;\n    justify-items: center;\n    flex-wrap: wrap;\n    width: 100%;\n"], ["\n    display: flex;\n    justify-items: center;\n    flex-wrap: wrap;\n    width: 100%;\n"])));
 var Page = styled__default(Responsive)(templateObject_7 || (templateObject_7 = __makeTemplateObject(["\n    display: flex;\n    align-content: center;\n    align-items: center;\n    flex-direction: column;\n    height: 100%;\n    min-height: 100%;\n    width: 100%;\n    min-width: 100%;\n"], ["\n    display: flex;\n    align-content: center;\n    align-items: center;\n    flex-direction: column;\n    height: 100%;\n    min-height: 100%;\n    width: 100%;\n    min-width: 100%;\n"])));
-var Body = styled__default(Responsive)(templateObject_8 || (templateObject_8 = __makeTemplateObject(["\n    flex: 1 0 auto;\n    width: 100%;\n    min-width: 100%;\n    flex-wrap: wrap;\n    align-items: center;\n    align-self: center;\n"], ["\n    flex: 1 0 auto;\n    width: 100%;\n    min-width: 100%;\n    flex-wrap: wrap;\n    align-items: center;\n    align-self: center;\n"])));
+var Body = styled__default(Responsive)(templateObject_8 || (templateObject_8 = __makeTemplateObject(["\n    flex: 1 0 100%;\n    width: 100%;\n    min-width: 100%;\n    flex-wrap: wrap;\n    align-items: center;\n    align-self: center;\n"], ["\n    flex: 1 0 100%;\n    width: 100%;\n    min-width: 100%;\n    flex-wrap: wrap;\n    align-items: center;\n    align-self: center;\n"])));
 var Footer = styled__default(Responsive)(templateObject_9 || (templateObject_9 = __makeTemplateObject(["\n    flex-shrink: 0;\n    justify-content: center;\n    align-content: center;\n    align-self: center;\n    align-items: center;\n"], ["\n    flex-shrink: 0;\n    justify-content: center;\n    align-content: center;\n    align-self: center;\n    align-items: center;\n"])));
 var templateObject_1$1, templateObject_2$1, templateObject_3$1, templateObject_4$1, templateObject_5, templateObject_6, templateObject_7, templateObject_8, templateObject_9;
 

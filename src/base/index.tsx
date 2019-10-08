@@ -127,7 +127,7 @@ export const Page = styled(Responsive)`
     min-width: 100%;
 `;
 export const Body = styled(Responsive)`
-    flex: 1 0 auto;
+    flex: 1 0 100%;
     width: 100%;
     min-width: 100%;
     flex-wrap: wrap;
