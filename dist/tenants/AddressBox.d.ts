@@ -1,5 +1,6 @@
 import React from "react";
-declare type Endereco = {
+export declare type AddressBoxItem = {
+    nomeLoja: string;
     nrSeqEndereco: number;
     cep: string;
     numero: string;
@@ -10,6 +11,8 @@ declare type Endereco = {
     uf: string;
 };
 declare type BindProps = {
+    span: string;
+    medium: string;
     isHome?: boolean;
     inlineLayout?: boolean;
     idSelectAddress: number | null;
@@ -17,9 +20,9 @@ declare type BindProps = {
 };
 declare type Props = {
     listGetter: () => any;
-    dataSource: Endereco[];
+    dataSource: AddressBoxItem[];
     emptyHomeMessage: React.ReactNode;
     emptyStoreMessage: React.ReactNode;
 } & Omit<BindProps, "idSelectAddress">;
-declare const AddressBox: ({ dataSource, emptyHomeMessage, emptyStoreMessage, listGetter, onChange, inlineLayout, isHome }: Props) => JSX.Element;
+declare const AddressBox: ({ dataSource, emptyHomeMessage, emptyStoreMessage, listGetter, onChange, inlineLayout, isHome, span, medium }: Props) => JSX.Element;
 export default AddressBox;

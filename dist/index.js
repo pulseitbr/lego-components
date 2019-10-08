@@ -443,14 +443,12 @@ var Responsive = function (_a) {
 var Left = styled__default(Responsive)(templateObject_3$1 || (templateObject_3$1 = __makeTemplateObject(["\n    flex: 1;\n    align-items: flex-start;\n    align-self: center;\n"], ["\n    flex: 1;\n    align-items: flex-start;\n    align-self: center;\n"])));
 var Right = styled__default(Responsive)(templateObject_4$1 || (templateObject_4$1 = __makeTemplateObject(["\n    flex: 1;\n    align-items: flex-end;\n    align-self: center;\n"], ["\n    flex: 1;\n    align-items: flex-end;\n    align-self: center;\n"])));
 var View = styled__default(Responsive)(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n    justify-items: center;\n    flex-wrap: wrap;\n"], ["\n    justify-items: center;\n    flex-wrap: wrap;\n"])));
-var Container = styled__default(Responsive).attrs(function (_a) {
-    var _b = _a.fit, fit = _b === void 0 ? true : _b, props = __rest(_a, ["fit"]);
-    return __assign(__assign({}, props), { fit: fit });
-})(templateObject_6 || (templateObject_6 = __makeTemplateObject(["\n    display: flex;\n    justify-items: center;\n    flex-wrap: wrap;\n    width: 100%;\n"], ["\n    display: flex;\n    justify-items: center;\n    flex-wrap: wrap;\n    width: 100%;\n"])));
+var Container = styled__default(Responsive)(templateObject_6 || (templateObject_6 = __makeTemplateObject(["\n    display: flex;\n    justify-items: center;\n    flex-wrap: wrap;\n    width: 100%;\n"], ["\n    display: flex;\n    justify-items: center;\n    flex-wrap: wrap;\n    width: 100%;\n"])));
 var Page = styled__default(Responsive)(templateObject_7 || (templateObject_7 = __makeTemplateObject(["\n    display: flex;\n    align-content: center;\n    align-items: center;\n    flex-direction: column;\n    height: 100%;\n    min-height: 100%;\n    width: 100%;\n    min-width: 100%;\n"], ["\n    display: flex;\n    align-content: center;\n    align-items: center;\n    flex-direction: column;\n    height: 100%;\n    min-height: 100%;\n    width: 100%;\n    min-width: 100%;\n"])));
 var Body = styled__default(Responsive)(templateObject_8 || (templateObject_8 = __makeTemplateObject(["\n    flex: 1 0 auto;\n    width: 100%;\n    min-width: 100%;\n    flex-wrap: wrap;\n    align-items: center;\n    align-self: center;\n"], ["\n    flex: 1 0 auto;\n    width: 100%;\n    min-width: 100%;\n    flex-wrap: wrap;\n    align-items: center;\n    align-self: center;\n"])));
 var Footer = styled__default(Responsive)(templateObject_9 || (templateObject_9 = __makeTemplateObject(["\n    flex-shrink: 0;\n    justify-content: center;\n    align-content: center;\n    align-self: center;\n    align-items: center;\n"], ["\n    flex-shrink: 0;\n    justify-content: center;\n    align-content: center;\n    align-self: center;\n    align-items: center;\n"])));
 var templateObject_1$1, templateObject_2$1, templateObject_3$1, templateObject_4$1, templateObject_5, templateObject_6, templateObject_7, templateObject_8, templateObject_9;
+//# sourceMappingURL=index.js.map
 
 var ClosureComponent = function (props) { return function (x, flatListKey) { return props.component(__assign({}, x), flatListKey); }; };
 function FlatList(props) {
@@ -1653,15 +1651,19 @@ curry
 /* ::<number | string, string, string> */
 (transparentize);
 
+var SOFT_RADIUS = "0.25rem";
+//# sourceMappingURL=Constants.js.map
+
 var transparentBackground = curriedTransparentize(0.4, Theme.primaryAlpha);
 var getIcon = function (isHome) { return (isHome ? React__default.createElement(MdHome, null) : React__default.createElement(MdStore, null)); };
-var BindCard = function (props) { return function (endereco) {
-    var isSelected = props.idSelectAddress === endereco.nrSeqEndereco;
-    var onChange = function () { return props.onChange(endereco.nrSeqEndereco); };
+var BindCard = function (props) { return function (addr) {
+    var isSelected = props.idSelectAddress === addr.nrSeqEndereco;
+    var onChange = function () { return props.onChange(addr.nrSeqEndereco); };
     if (!!props.inlineLayout) {
-        return (React__default.createElement(View, { span: "50%", role: "button", onClick: onChange, style: { padding: "0.15rem", textAlign: "left", cursor: "pointer" } },
+        return (React__default.createElement(View, { key: "address-box-item-" + addr.nrSeqEndereco, span: props.span, role: "button", onClick: onChange, style: { padding: "0.15rem", textAlign: "left", cursor: "pointer" } },
             React__default.createElement(Container, { style: {
                     padding: "0.1rem",
+                    borderRadius: SOFT_RADIUS,
                     border: "1px solid " + Theme.darkAlpha,
                     backgroundColor: isSelected ? transparentBackground : "transparent"
                 } },
@@ -1669,23 +1671,24 @@ var BindCard = function (props) { return function (endereco) {
                     React__default.createElement(SubTitle, { style: { fontSize: "1.25rem" } },
                         getIcon(!!props.isHome),
                         " ",
-                        Format_1(endereco.cep))),
+                        !!addr.nomeLoja ? addr.nomeLoja + " - " : "",
+                        Format_1(addr.cep))),
                 React__default.createElement(Right, { style: { flex: "0 0 30%", textAlign: "right", justifyContent: "flex-end" } },
-                    React__default.createElement(Radiobox, { name: "check-address-" + endereco.nrSeqEndereco, value: isSelected })),
+                    React__default.createElement(Radiobox, { name: "check-address-" + addr.nrSeqEndereco, value: isSelected })),
                 React__default.createElement(View, { span: "100%" },
-                    endereco.logradouro,
+                    addr.logradouro,
                     ", ",
-                    endereco.numero,
-                    !!endereco.complemento ? ", " + endereco.complemento : "",
+                    addr.numero,
+                    !!addr.complemento ? ", " + addr.complemento : "",
                     ". ",
-                    endereco.bairro,
+                    addr.bairro,
                     " -",
                     " ",
-                    endereco.cidade,
+                    addr.cidade,
                     " - ",
-                    endereco.uf))));
+                    addr.uf))));
     }
-    return (React__default.createElement(View, { span: "33%", medium: "33%", role: "button", onClick: onChange, style: { padding: "0.25rem", textAlign: "left", cursor: "pointer" } },
+    return (React__default.createElement(View, { role: "button", span: props.span, onClick: onChange, medium: props.medium, style: { padding: "0.25rem", textAlign: "left", cursor: "pointer" } },
         React__default.createElement(Container, { style: {
                 padding: "0.5rem",
                 border: "1px solid " + Theme.darkAlpha,
@@ -1696,31 +1699,31 @@ var BindCard = function (props) { return function (endereco) {
                     React__default.createElement(SubTitle, { style: { fontSize: "1.25rem" } },
                         getIcon(!!props.isHome),
                         " ",
-                        Format_1(endereco.cep))),
+                        Format_1(addr.cep))),
                 React__default.createElement(Right, { style: { flex: "0 0 30%", textAlign: "right", justifyContent: "flex-end" } },
-                    React__default.createElement(Radiobox, { name: "check-address-" + endereco.nrSeqEndereco, value: isSelected }))),
+                    React__default.createElement(Radiobox, { name: "check-address-" + addr.nrSeqEndereco, value: isSelected }))),
             React__default.createElement(Container, null,
                 React__default.createElement("span", { style: { fontSize: "0.8rem" } }, "Logradouro: "),
                 " ",
                 React__default.createElement("span", { className: "b" },
-                    endereco.logradouro,
+                    addr.logradouro,
                     ", ",
-                    endereco.numero)),
+                    addr.numero)),
             React__default.createElement(Container, null,
                 React__default.createElement("small", null, "Bairro: "),
                 " ",
-                React__default.createElement("span", { className: "b" }, endereco.bairro)),
+                React__default.createElement("span", { className: "b" }, addr.bairro)),
             React__default.createElement(Container, null,
                 React__default.createElement("small", null, "Cidade: "),
                 " ",
-                React__default.createElement("span", { className: "b" }, endereco.cidade)),
+                React__default.createElement("span", { className: "b" }, addr.cidade)),
             React__default.createElement(Container, null,
                 React__default.createElement("small", null, "Estado: "),
                 " ",
-                React__default.createElement("span", { className: "b" }, endereco.uf)))));
+                React__default.createElement("span", { className: "b" }, addr.uf)))));
 }; };
 var AddressBox = function (_a) {
-    var dataSource = _a.dataSource, emptyHomeMessage = _a.emptyHomeMessage, emptyStoreMessage = _a.emptyStoreMessage, listGetter = _a.listGetter, onChange = _a.onChange, _b = _a.inlineLayout, inlineLayout = _b === void 0 ? false : _b, _c = _a.isHome, isHome = _c === void 0 ? true : _c;
+    var dataSource = _a.dataSource, emptyHomeMessage = _a.emptyHomeMessage, emptyStoreMessage = _a.emptyStoreMessage, listGetter = _a.listGetter, onChange = _a.onChange, _b = _a.inlineLayout, inlineLayout = _b === void 0 ? false : _b, _c = _a.isHome, isHome = _c === void 0 ? true : _c, span = _a.span, medium = _a.medium;
     var _d = __read(React.useState(null), 2), idSelectAddress = _d[0], setIdSelectAddress = _d[1];
     var useInlineLayout = inlineLayout || dataSource.length > 5;
     var emptyMessage = isHome ? emptyHomeMessage : emptyStoreMessage;
@@ -1743,9 +1746,15 @@ var AddressBox = function (_a) {
         onChange(id);
     };
     return (React__default.createElement(Container, null,
-        React__default.createElement(FlatList, { data: dataSource, emptyComponent: emptyMessage, key: dataSource.length + "-flat-list-address", component: BindCard({ onChange: changeSelect, idSelectAddress: idSelectAddress, inlineLayout: useInlineLayout, isHome: isHome }) })));
+        React__default.createElement(FlatList, { data: dataSource, emptyComponent: emptyMessage, key: dataSource.length + "-flat-list-address", component: BindCard({
+                onChange: changeSelect,
+                idSelectAddress: idSelectAddress,
+                inlineLayout: useInlineLayout,
+                isHome: isHome,
+                span: span,
+                medium: medium
+            }) })));
 };
-//# sourceMappingURL=AddressBox.js.map
 
 var root = document.querySelector(":root");
 //@ts-ignore
@@ -6165,7 +6174,6 @@ var templateObject_1$6, templateObject_2$3, templateObject_3$2;
 
 var GlobalStyle = styled.createGlobalStyle(templateObject_1$7 || (templateObject_1$7 = __makeTemplateObject(["\n  * {\n    margin: 0;\n    padding: 0;\n    outline: 0;\n    box-sizing: border-box;\n    font-stretch: extra-condensed;\n    -webkit-font-smoothing: antialiased;\n    -moz-osx-font-smoothing: grayscale;\n    text-rendering: optimizeLegibility;\n    text-shadow: rgba(0, 0, 0, .01) 0 0 1px;\n  }\n\n  body {\n      scroll-behavior: smooth;\n      height: 100%;\n      min-height: 100%;\n      font-stretch: extra-condensed;\n      -webkit-font-smoothing: antialiased;\n      -moz-osx-font-smoothing: grayscale;\n      text-rendering: optimizeLegibility;\n      text-shadow: rgba(0, 0, 0, .01) 0 0 1px;\n  }\n\n  html, body, #root {\n    min-height:100%;\n  }\n"], ["\n  * {\n    margin: 0;\n    padding: 0;\n    outline: 0;\n    box-sizing: border-box;\n    font-stretch: extra-condensed;\n    -webkit-font-smoothing: antialiased;\n    -moz-osx-font-smoothing: grayscale;\n    text-rendering: optimizeLegibility;\n    text-shadow: rgba(0, 0, 0, .01) 0 0 1px;\n  }\n\n  body {\n      scroll-behavior: smooth;\n      height: 100%;\n      min-height: 100%;\n      font-stretch: extra-condensed;\n      -webkit-font-smoothing: antialiased;\n      -moz-osx-font-smoothing: grayscale;\n      text-rendering: optimizeLegibility;\n      text-shadow: rgba(0, 0, 0, .01) 0 0 1px;\n  }\n\n  html, body, #root {\n    min-height:100%;\n  }\n"])));
 var templateObject_1$7;
-//# sourceMappingURL=index.js.map
 
 exports.AddressBox = AddressBox;
 exports.Badge = Badge;

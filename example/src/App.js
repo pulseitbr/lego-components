@@ -113,6 +113,8 @@ export default function App() {
                 <Container>
                     <View span="70%">
                         <AddressBox
+                            span="100%"
+                            medium="100%"
                             isHome
                             onChange={setId}
                             dataSource={list}
@@ -128,9 +130,7 @@ export default function App() {
                         />
                     </View>
                 </Container>
-                <Container>
-                    Endereço selecionado {id}
-                </Container>
+                <Container>Endereço selecionado {id}</Container>
             </Body>
             <Modal
                 onClose={() => setVisible(false)}

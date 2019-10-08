@@ -111,10 +111,7 @@ export const View = styled(Responsive)`
     flex-wrap: wrap;
 `;
 
-type TypeContainerBody = { fit?: boolean } & React.HTMLAttributes<any>;
-export const Container = styled(Responsive).attrs(({ fit = true, ...props }: TypeContainerBody) => {
-    return { ...props, fit };
-})`
+export const Container = styled(Responsive)`
     display: flex;
     justify-items: center;
     flex-wrap: wrap;
