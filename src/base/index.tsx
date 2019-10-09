@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
 
 type Value = number | string;
@@ -16,14 +16,13 @@ export type TypeContainer = LegoMediaQuery &
         time?: Value;
     };
 
-const ResponsiveContainer = styled.div.attrs((props: TypeContainer) => {
-    const span = props.span || "100%";
+const Flex = styled.section.attrs((props: TypeContainer) => {
+    const span = props.span;
     const xsmall = props.xsmall || "100%";
     const small = props.small || "100%";
     const medium = props.medium || span;
     const large = props.large || span;
     const xlarge = props.xlarge || span;
-
     return { ...props, span, xsmall, medium, large, small, xlarge };
 })`
     flex: 0 0 ${(props: TypeContainer) => props.span};
@@ -49,12 +48,11 @@ const ResponsiveContainer = styled.div.attrs((props: TypeContainer) => {
     }
 `;
 
-const Collapse = styled(ResponsiveContainer).attrs((props: TypeContainer) => {
+const Collapse = styled(Flex).attrs((props: TypeContainer) => {
     const time = props.time || 350;
     return { ...props, time };
 })`
     max-height: 0;
-    height: 100%;
     overflow: hidden;
     transition: max-height ${(props: any) => props.time}ms cubic-bezier(0.45, 0.27, 0.63, 0.51);
 `;
@@ -62,9 +60,9 @@ const Collapse = styled(ResponsiveContainer).attrs((props: TypeContainer) => {
 type ResponsiveProps = {
     isCollapse?: boolean;
     show?: boolean;
-};
+} & TypeContainer;
 
-const Responsive = ({ isCollapse = false, show = true, children, ...props }: TypeContainer & ResponsiveProps) => {
+const Responsive = ({ isCollapse = false, show = true, children, ...props }: ResponsiveProps) => {
     const ref: React.RefObject<HTMLDivElement> = useRef(null);
     useEffect(() => {
         if (!!ref.current) {
@@ -79,11 +77,7 @@ const Responsive = ({ isCollapse = false, show = true, children, ...props }: Typ
     }, [isCollapse, show]);
 
     if (!isCollapse) {
-        return (
-            <ResponsiveContainer ref={ref} {...props}>
-                {children}
-            </ResponsiveContainer>
-        );
+        return <Flex {...props}>{children}</Flex>;
     }
 
     return (
@@ -114,7 +108,7 @@ export const Container = styled(Responsive)`
     display: flex;
     justify-items: center;
     flex-wrap: wrap;
-    width: 100%;
+    min-width: 100%;
 `;
 export const Page = styled(Responsive)`
     display: flex;
@@ -127,7 +121,7 @@ export const Page = styled(Responsive)`
     min-width: 100%;
 `;
 export const Body = styled(Responsive)`
-    flex: 1 0 100%;
+    flex: 1 0 auto;
     width: 100%;
     min-width: 100%;
     flex-wrap: wrap;
