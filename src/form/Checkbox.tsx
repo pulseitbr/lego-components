@@ -26,7 +26,7 @@ const Label = styled.label`
         height: 20px;
         width: 20px;
         background-color: #eee;
-        animation: fade 1000ms ease-in-out;
+        animation: fade 400ms ease-in-out;
     }
 
     &:hover input ~ .checkmark {
@@ -53,17 +53,14 @@ const Label = styled.label`
         width: 0.35rem;
         height: 0.625rem;
         border: solid ${(props: any) => props.checkColor};
-        border-width: 0 0.2rem 0.2rem 0;
+        border-width: 0 0.1rem 0.1rem 0;
         transform: rotate(40deg);
-        animation: fade 1250ms ease-out;
+        animation: fade 450ms cubic-bezier(0.28, 0.65, 0.64, 0.95);
     }
 
     @keyframes fade {
         0% {
             opacity: 0;
-        }
-        40% {
-            opacity: 0.2;
         }
         100% {
             opacity: 1;
@@ -78,7 +75,9 @@ type OmitOnClick = Omit<OmitOnChange, "onClick">;
 type EventCustom = EventTarget & {
     target: { name: string; value: boolean; checked: boolean; stopPropagation(): void; persist(): void };
 };
-export type CheckboxTrigger = React.MouseEvent<HTMLInputElement, MouseEvent> & EventCustom & React.InputHTMLAttributes<any>;
+export type CheckboxTrigger = React.MouseEvent<HTMLInputElement, MouseEvent> &
+    EventCustom &
+    React.InputHTMLAttributes<any>;
 type Props = OmitOnClick & {
     round?: boolean;
     checkColor?: string;
@@ -121,7 +120,16 @@ const Checkbox = ({
     return (
         //@ts-ignore
         <Label className={`${labelClassName} pointer`} color={color} checkColor={checkColor}>
-            <input {...html} name={name} type="checkbox" onChange={change} checked={checkedValue} aria-checked={valString} />
+            <input
+                {...html}
+                name={name}
+                type="checkbox"
+                onChange={change}
+                //@ts-ignore
+                value={checkedValue}
+                checked={checkedValue}
+                aria-checked={valString}
+            />
             <span className="checkmark" role="checkbox" aria-checked={valString} /> {children}
         </Label>
     );
