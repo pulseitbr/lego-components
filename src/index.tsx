@@ -1,10 +1,13 @@
+import { createGlobalStyle } from "styled-components";
 export { default as Button, ButtonProps } from "./button/Button";
 export { default as CurrencyInput } from "./form/CurrencyInput";
-export { default as AddressBox } from "./tenants/AddressBox"
+export { default as AddressBox } from "./tenants/AddressBox";
 export { default as SetupStyle } from "./styles/SetupStyle";
-import { createGlobalStyle } from "styled-components";
 export { default as Loader } from "./loader/Loader";
 export { default as Form } from "./form/Form";
+export { default as CheckBox } from "./form/Checkbox";
+export { default as RadioBox } from "./form/Radiobox";
+export { default as Switch } from "./form/Switch";
 export { default as Input } from "./form/Input";
 export { default as StyleInput } from "./form/StyleInput";
 export { default as Notification } from "./feedback/Notification";
