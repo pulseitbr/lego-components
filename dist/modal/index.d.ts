@@ -11,7 +11,8 @@ declare type Props = {
     headerProps?: Partial<TypeContainer>;
     bodyProps?: Partial<TypeContainer>;
     closeOnEsc?: boolean;
+    maskPaddingVertical?: string;
     footerProps?: Partial<TypeContainer>;
 } & React.HTMLAttributes<HTMLDivElement>;
-declare const Modal: ({ visible, width, footer, onClose, headerProps, bodyProps, footerProps, title, closeOnEsc, children, animationTime }: Props) => JSX.Element;
+declare const Modal: ({ visible, width, footer, onClose, maskPaddingVertical, headerProps, bodyProps, footerProps, title, closeOnEsc, children, animationTime }: Props) => JSX.Element;
 export default Modal;

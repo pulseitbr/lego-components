@@ -1,6 +1,5 @@
-import { Body, Button, Notification, Container, Modal, Page, AddressBox, View, Form, Input } from "lego-components";
-import React, { Fragment, useState, useEffect } from "react";
-import useMultipleEffects from "./useMultipleEffects";
+import { AddressBox, Body, Button, CheckBox, Container, Footer, Modal, Page, View } from "lego-components";
+import React, { Fragment, useState } from "react";
 
 const dataSource = [
     {
@@ -79,6 +78,7 @@ export default function App() {
     const [list, setList] = useState([]);
     const [id, setId] = useState(0);
     const [collapse, setCollapse] = useState(false);
+    const [check, setCheck] = useState(false);
     // const [count, setCount] = useState(0);
     // useMultipleEffects([
     //     {
@@ -109,28 +109,40 @@ export default function App() {
 
     return (
         <Page>
-            <Body isCollapse show={collapse}>
-                <Container>
-                    <View span="70%">
-                        <AddressBox
-                            span="100%"
-                            medium="100%"
-                            isHome
-                            onChange={setId}
-                            dataSource={list}
-                            // inlineLayout={true}
-                            listGetter={changeListSize}
-                            emptyHomeMessage={
-                                <span>
-                                    Você não possui endereços cadastrados.{" "}
-                                    <a href="#/linkCadastro">Clique aqui para cadastrar</a>
-                                </span>
-                            }
-                            emptyStoreMessage="Não possuem lojas cadastradas para a entrega"
-                        />
-                    </View>
+            <Body>
+                <Container isCollapse show={collapse}>
+                    <Container>
+                        <View span="70%">
+                            <AddressBox
+                                span="100%"
+                                medium="100%"
+                                isHome
+                                onChange={setId}
+                                dataSource={list}
+                                // inlineLayout={true}
+                                listGetter={changeListSize}
+                                emptyHomeMessage={
+                                    <span>
+                                        Você não possui endereços cadastrados.{" "}
+                                        <a href="#/linkCadastro">Clique aqui para cadastrar</a>
+                                    </span>
+                                }
+                                emptyStoreMessage="Não possuem lojas cadastradas para a entrega"
+                            />
+                        </View>
+                    </Container>
+                    <Container>Endereço selecionado {id}</Container>
                 </Container>
-                <Container>Endereço selecionado {id}</Container>
+                <Container>
+                    <Button
+                        onClick={() => {
+                            setCollapse(!collapse);
+                            setVisible((p) => !p);
+                        }}
+                    >
+                        Collapse all
+                    </Button>
+                </Container>
             </Body>
             <Modal
                 onClose={() => setVisible(false)}
@@ -145,11 +157,116 @@ export default function App() {
                     </Fragment>
                 }
             >
-                AEEEEEEEEEEEEEEEEE
+                <Container>
+                    <CheckBox
+                        name="check"
+                        checked={check}
+                        onChange={(e) => {
+                            console.log("CLICK CHEDK");
+                            setCheck(e.target.value);
+                        }}
+                    >
+                        AEEEEEE
+                    </CheckBox>
+                </Container>
+                <Container>
+                    <CheckBox
+                        name="check"
+                        checked={check}
+                        onChange={(e) => {
+                            console.log("CLICK CHEDK");
+                            setCheck(e.target.value);
+                        }}
+                    >
+                        AEEEEEE
+                    </CheckBox>
+                </Container>
+                <Container>
+                    <CheckBox
+                        name="check"
+                        checked={check}
+                        onChange={(e) => {
+                            console.log("CLICK CHEDK");
+                            setCheck(e.target.value);
+                        }}
+                    >
+                        AEEEEEE
+                    </CheckBox>
+                </Container>
+                <Container>
+                    <CheckBox
+                        name="check"
+                        checked={check}
+                        onChange={(e) => {
+                            console.log("CLICK CHEDK");
+                            setCheck(e.target.value);
+                        }}
+                    >
+                        AEEEEEE
+                    </CheckBox>
+                </Container>
+                <Container>
+                    <CheckBox
+                        name="check"
+                        checked={check}
+                        onChange={(e) => {
+                            console.log("CLICK CHEDK");
+                            setCheck(e.target.value);
+                        }}
+                    >
+                        AEEEEEE
+                    </CheckBox>
+                </Container>
+                <Container>
+                    <CheckBox
+                        name="check"
+                        checked={check}
+                        onChange={(e) => {
+                            console.log("CLICK CHEDK");
+                            setCheck(e.target.value);
+                        }}
+                    >
+                        AEEEEEE
+                    </CheckBox>
+                </Container>
+                <Container>
+                    <CheckBox
+                        name="check"
+                        checked={check}
+                        onChange={(e) => {
+                            console.log("CLICK CHEDK");
+                            setCheck(e.target.value);
+                        }}
+                    >
+                        AEEEEEE
+                    </CheckBox>
+                </Container>
+                <Container>
+                    <CheckBox
+                        name="check"
+                        checked={check}
+                        onChange={(e) => {
+                            console.log("CLICK CHEDK");
+                            setCheck(e.target.value);
+                        }}
+                    >
+                        AEEEEEE
+                    </CheckBox>
+                </Container>
+                <Container>
+                    <CheckBox
+                        name="check"
+                        checked={check}
+                        onChange={(e) => {
+                            console.log("CLICK CHEDK");
+                            setCheck(e.target.value);
+                        }}
+                    >
+                        AEEEEEE
+                    </CheckBox>
+                </Container>
             </Modal>
-            <Container>
-                <Button onClick={() => setCollapse(!collapse)}>Collapse all</Button>
-            </Container>
+            <Footer>Footer</Footer>
         </Page>
     );
 }

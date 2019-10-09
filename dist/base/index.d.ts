@@ -14,26 +14,12 @@ export declare type TypeContainer = LegoMediaQuery & React.HTMLAttributes<HTMLDi
 declare type ResponsiveProps = {
     isCollapse?: boolean;
     show?: boolean;
-};
-export declare const Left: import("styled-components").StyledComponent<({ isCollapse, show, children, ...props }: LegoMediaQuery & React.HTMLAttributes<HTMLDivElement> & {
-    time?: string | number | undefined;
-} & ResponsiveProps) => JSX.Element, any, {}, never>;
-export declare const Right: import("styled-components").StyledComponent<({ isCollapse, show, children, ...props }: LegoMediaQuery & React.HTMLAttributes<HTMLDivElement> & {
-    time?: string | number | undefined;
-} & ResponsiveProps) => JSX.Element, any, {}, never>;
-export declare const View: import("styled-components").StyledComponent<({ isCollapse, show, children, ...props }: LegoMediaQuery & React.HTMLAttributes<HTMLDivElement> & {
-    time?: string | number | undefined;
-} & ResponsiveProps) => JSX.Element, any, {}, never>;
-export declare const Container: import("styled-components").StyledComponent<({ isCollapse, show, children, ...props }: LegoMediaQuery & React.HTMLAttributes<HTMLDivElement> & {
-    time?: string | number | undefined;
-} & ResponsiveProps) => JSX.Element, any, {}, never>;
-export declare const Page: import("styled-components").StyledComponent<({ isCollapse, show, children, ...props }: LegoMediaQuery & React.HTMLAttributes<HTMLDivElement> & {
-    time?: string | number | undefined;
-} & ResponsiveProps) => JSX.Element, any, {}, never>;
-export declare const Body: import("styled-components").StyledComponent<({ isCollapse, show, children, ...props }: LegoMediaQuery & React.HTMLAttributes<HTMLDivElement> & {
-    time?: string | number | undefined;
-} & ResponsiveProps) => JSX.Element, any, {}, never>;
-export declare const Footer: import("styled-components").StyledComponent<({ isCollapse, show, children, ...props }: LegoMediaQuery & React.HTMLAttributes<HTMLDivElement> & {
-    time?: string | number | undefined;
-} & ResponsiveProps) => JSX.Element, any, {}, never>;
+} & TypeContainer;
+export declare const Left: import("styled-components").StyledComponent<({ isCollapse, show, children, ...props }: ResponsiveProps) => JSX.Element, any, {}, never>;
+export declare const Right: import("styled-components").StyledComponent<({ isCollapse, show, children, ...props }: ResponsiveProps) => JSX.Element, any, {}, never>;
+export declare const View: import("styled-components").StyledComponent<({ isCollapse, show, children, ...props }: ResponsiveProps) => JSX.Element, any, {}, never>;
+export declare const Container: import("styled-components").StyledComponent<({ isCollapse, show, children, ...props }: ResponsiveProps) => JSX.Element, any, {}, never>;
+export declare const Page: import("styled-components").StyledComponent<({ isCollapse, show, children, ...props }: ResponsiveProps) => JSX.Element, any, {}, never>;
+export declare const Body: import("styled-components").StyledComponent<({ isCollapse, show, children, ...props }: ResponsiveProps) => JSX.Element, any, {}, never>;
+export declare const Footer: import("styled-components").StyledComponent<({ isCollapse, show, children, ...props }: ResponsiveProps) => JSX.Element, any, {}, never>;
 export {};
