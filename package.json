@@ -18,7 +18,7 @@
     "scripts": {
         "build": "rollup -c",
         "start": "rollup -c -w",
-        "prepare": "yarn run build"
+        "prepare": "npm run build"
     },
     "dependencies": {
         "classnames": "^2.2.6",
