@@ -19,8 +19,7 @@
         "build": "rollup -c",
         "start": "rollup -c -w",
         "rm": "shx rm -rf dist",
-        "prepare": "npm-run-all -s rm build",
-        "install": "npm-run-all -s rm build"
+        "prepare": "rollup -c"
     },
     "dependencies": {
         "classnames": "^2.2.6",
