@@ -18,11 +18,14 @@
     "scripts": {
         "build": "rollup -c",
         "start": "rollup -c -w",
-        "prepare": "npm run build"
+        "rm": "shx rm -rf dist",
+        "prepare": "npm-run-all -s rm build",
+        "install": "npm-run-all -s rm build"
     },
     "dependencies": {
         "classnames": "^2.2.6",
         "indexof": "^0.0.1",
+        "npm-run-all": "^4.1.5",
         "polished": "^3.4.1",
         "rc-dialog": "^7.5.7",
         "rc-notification": "^3.3.1",
@@ -30,6 +33,7 @@
         "react-icons": "^3.7.0",
         "react-portal-minimal": "^4.0.2",
         "react-text-mask": "^5.4.3",
+        "shx": "^0.3.2",
         "sidekicker": "^0.0.28",
         "styled-components": "^4.4.0"
     },
