@@ -1,32 +1,44 @@
-import { Body, Button, Notification, Container, Modal, Page } from "lego-components";
+import { AddressBox, Body, Button, CheckBox, Container, Footer, Modal, Page, View } from "lego-components";
 import React, { Fragment, useState } from "react";
-import useMultipleEffects from "./useMultipleEffects";
+import Drawer from "./modal";
+
 export default function App() {
     const [visible, setVisible] = useState(false);
-    const [count, setCount] = useState(0);
+    const [list, setList] = useState([]);
+    const [id, setId] = useState(0);
+    const [collapse, setCollapse] = useState(false);
+    const [check, setCheck] = useState(false);
+    // const [count, setCount] = useState(0);
+    // useMultipleEffects([
+    //     {
+    //         effect() {
+    //             document.title = `Count ${count}`;
+    //         },
+    //         deps: [count]
+    //     },
+    //     {
+    //         effect() {
+    //             window.addEventListener("keydown", (e) => {
+    //                 if (e.target.nodeName.toLowerCase !== "input") {
+    //                     // define trigger sequences
+    //                     // Notification.info({
+    //                     //     title: "Vou te ajudar",
+    //                     //     children: "Calma fera, tem ajuda aqui"
+    //                     // });
+    //                 }
+    //             });
+    //         },
+    //         deps: [count]
+    //     }
+    // ]);
+
     return (
         <Page>
             <Body>
-                <Container>
-                    <Button onClick={() => setVisible(!visible)}>Ativa o Modal</Button>
-                    <input type="text" />
-                </Container>
+                <Button onClick={() => setVisible((p) => !p)}>Click</Button>
+                <Drawer visible={visible}>AEEEEE</Drawer>
             </Body>
-            <Modal
-                onClose={() => setVisible(false)}
-                title="Modal de exemplo"
-                visible={visible}
-                footer={
-                    <Fragment>
-                        <Button danger onClick={() => setVisible(false)}>
-                            Cancelar
-                        </Button>{" "}
-                        <Button success>Deu bom</Button>
-                    </Fragment>
-                }
-            >
-                AEEEEEEEEEEEEEEEEE
-            </Modal>
+            <Footer>Footer</Footer>
         </Page>
     );
 }

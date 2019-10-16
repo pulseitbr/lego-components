@@ -8,6 +8,8 @@ const Snackbar = ({ children, ...props }: SnackbarType) => {
         position: "bottomCenter",
         clickClose: true,
         closable: false,
+        hasIcon: false,
+        
         theme: "dark",
         center: true,
         duration: 3,

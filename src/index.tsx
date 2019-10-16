@@ -1,19 +1,23 @@
 import { createGlobalStyle } from "styled-components";
 export { default as Button, ButtonProps } from "./button/Button";
-export { default as Loader } from "./loader/Loader";
-export * from "./base";
-export { default as SetupStyle } from "./styles/SetupStyle";
-export * from "./typography/index";
-export { default as Form } from "./form/Form";
 export { default as CurrencyInput } from "./form/CurrencyInput";
+export { default as AddressBox } from "./tenants/AddressBox";
+export { default as SetupStyle } from "./styles/SetupStyle";
+export { default as Loader } from "./loader/Loader";
+export { default as Form } from "./form/Form";
+export { default as CheckBox } from "./form/Checkbox";
+export { default as RadioBox } from "./form/Radiobox";
+export { default as Switch } from "./form/Switch";
 export { default as Input } from "./form/Input";
 export { default as StyleInput } from "./form/StyleInput";
 export { default as Notification } from "./feedback/Notification";
 export { default as Badge } from "./feedback/Badge";
 export { default as Snackbar } from "./feedback/Snackbar";
 export { default as Modal } from "./modal";
+export { default as Portal } from "./utils/Portal";
+export * from "./base";
+export * from "./typography/index";
 import "./index.css";
-
 export const GlobalStyle = createGlobalStyle`
   * {
     margin: 0;
