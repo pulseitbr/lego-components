@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
+import { FlexDirectionProperty } from "csstype";
 
 type Value = number | string;
 
@@ -14,19 +15,22 @@ export type LegoMediaQuery = {
 export type TypeContainer = LegoMediaQuery &
     React.HTMLAttributes<HTMLElement> & {
         time?: Value;
+        direction?: FlexDirectionProperty;
     };
 
-const Flex = styled.section.attrs((props: TypeContainer) => {
+const Flex = styled.section.attrs(({ direction = "row", ...props }: TypeContainer) => {
     const span = props.span;
     const xsmall = props.xsmall || "100%";
     const small = props.small || "100%";
     const medium = props.medium || span;
     const large = props.large || span;
     const xlarge = props.xlarge || span;
-    return { ...props, span, xsmall, medium, large, small, xlarge };
+    return { ...props, span, xsmall, medium, large, small, xlarge, direction };
 })`
     flex: 0 0 ${(props: TypeContainer) => props.span};
-
+    flex-wrap: wrap;
+    flex-direction: ${(props) => props.direction};
+    
     @media only screen and (max-width: 600px) {
         flex: 0 0 ${(props: TypeContainer) => props.xsmall};
     }
@@ -112,6 +116,7 @@ export const Container = styled(Responsive)`
 `;
 export const Page = styled(Responsive)`
     display: flex;
+    flex-wrap: wrap;
     align-content: center;
     align-items: center;
     flex-direction: column;
