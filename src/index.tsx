@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import "./index.css";
+export { default as StyleSheet } from "./utils/StyleSheet";
 export { default as Button, ButtonProps } from "./button/Button";
 export { default as CurrencyInput } from "./form/CurrencyInput";
 export { default as AddressBox } from "./tenants/AddressBox";

@@ -1,8 +1,8 @@
 import useReducer from "./useReducer";
 import { useEffect, useMemo, useRef } from "react";
-import { isEmpty } from "sidekicker/lib/comparable";
 
-type FieldMessage = { [key: string]: { message: any; hasError: boolean } };
+type MessageField = string | number | React.ReactNode;
+type FieldMessage = { [key: string]: { message: MessageField; hasError: boolean; blurEventTrigger: boolean } };
 
 type Blur<T> = {
     [key: string]: (
@@ -10,86 +10,81 @@ type Blur<T> = {
         state: T,
         setState: (newProps: Partial<T>) => any,
         setError: (errorsObject: FieldMessage) => any
-    ) => any;
+    ) => void;
 };
-
+type InternalState<T> = {
+    fields: T;
+    errors: FieldMessage;
+};
+type Errors = { isValid: boolean; msg: string };
+type InputTypes = string | number | boolean | string[];
 type UseFormType<State> = {
     blurs?: Blur<State>;
     updateOnChange?: boolean;
-    validations?: { [key: string]: (fieldValue: any, state: State) => { isValid: boolean; msg: string } } & Object;
+    validations?: { [key: string]: (fieldValue: InputTypes, state: State) => Errors } & Object;
 };
 
 const getKeys = Object.keys;
 
-const fill = (obj: { [key: string]: any }, etc: any) => getKeys(obj).reduce((acc, e) => ({ ...acc, [e]: etc }), {});
+const fill = <T>(obj: T, etc: unknown) => getKeys(obj).reduce((acc, e) => ({ ...acc, [e]: etc }), {});
 
 const checkKeys = (o1: Object, o2: Object, key: string) => o1.hasOwnProperty(key) && o2.hasOwnProperty(key);
 
 const actions = {
-    onChange: (state: any, action: any) => {
-        const { name, value, checked, type } = action.event.target;
+    onChange: <T>(state: InternalState<T>, { event }: { event: React.ChangeEvent<HTMLInputElement> }) => {
+        const { name, value, checked, type } = event.target;
         const isCheckbox = type === "checkbox";
         const fieldValue = isCheckbox ? checked : value;
         return { ...state, fields: { ...state.fields, [name]: fieldValue } };
     },
-    cleanUpErrors: (state: any) => ({ ...state, errors: {} }),
-    updateErrors: (state: any) => ({ ...state, errors: { ...state.errors } }),
-    setState: (state: any, action: any) => ({ ...state, fields: { ...state.fields, ...action.state } }),
-    aggregateErrors: (state: any, action: any) => ({ ...state, errors: { ...state.errors, ...action.errors } })
+    cleanUpErrors: <T>(state: InternalState<T>) => ({ ...state, errors: {} }),
+    updateErrors: <T>(state: InternalState<T>, action: any) => ({ ...state, errors: action.errors }),
+    setState: <T>(state: InternalState<T>, action: { state: InternalState<T> }) => ({ ...state, fields: { ...state.fields, ...action.state } }),
+    aggregateErrors: <T>(state: InternalState<T>, action: any) => ({ ...state, errors: { ...state.errors, ...action.errors } })
 };
 
-const messageFill = { message: "", hasError: false };
+const messageFill = { message: "", hasError: false, blurEventTrigger: false };
 
 export default <T>(fields: T, { updateOnChange = true, validations = {}, blurs = {} }: UseFormType<T>) => {
-    const cache: any = useRef(fill(fields, false));
+    const cache = useRef(fill(fields, false));
     const errors: FieldMessage = useMemo(() => fill(fields, messageFill), [fields]);
 
-    const [state, dispatch] = useReducer({ fields, errors }, actions);
-    const values: any = state.fields;
+    const [state, dispatch] = useReducer({ fields, errors } as InternalState<T>, actions) as [InternalState<T>, Function];
+    const values = state.fields;
     const valuesDependency = Object.values(values);
 
     const fieldNames = Object.keys(fields);
 
     if (valuesDependency.length !== fieldNames.length) {
         const names = valuesDependency.filter((x: string) => !fieldNames.includes(x));
-        throw new Error(`Especifica o nome nos inputs o fdp ${fieldNames} - ${names}`);
+        throw new Error(`You need the field names in your inputs: ${fieldNames} - ${names}`);
     }
 
-    const setState = useMemo(
-        () => (newProps: Partial<T>) => dispatch({ type: "setState", state: { ...newProps } }),
-        []
-    );
+    const setState = useMemo(() => (newProps: Partial<T>) => dispatch({ type: "setState", state: { ...newProps } }), []);
 
-    const setErrors = useMemo(
-        () => (errorsObject: FieldMessage) => dispatch({ type: "aggregateErrors", errors: errorsObject }),
-        []
-    );
+    const setErrors = useMemo(() => (errorsObject: FieldMessage) => dispatch({ type: "aggregateErrors", errors: errorsObject }), []);
 
-    const clearState = useMemo(
-        () => (emptyState?: Partial<T>) => dispatch({ type: "setState", state: { ...fields, ...emptyState } }),
-        []
-    );
+    const clearState = useMemo(() => (emptyState?: Partial<T>) => dispatch({ type: "setState", state: { ...fields, ...emptyState } }), []);
 
     useEffect(() => {
         if (updateOnChange) {
+            const stateErrors = { ...state.errors };
             getKeys(values).forEach((x) => {
                 const value = values[x];
-                if (checkKeys(validations, values, x) && !!value) {
+                if (checkKeys(validations, values, x)) {
                     const fn = validations[x];
-                    const { isValid: error, msg } = fn(value, values);
-                    if (error) {
+                    const { isValid, msg } = fn(value, values);
+                    console.log(value, isValid, stateErrors[x], stateErrors[x].blurEventTrigger);
+                    if (stateErrors[x].blurEventTrigger && !isValid) {
                         cache.current[x] = true;
-                    }
-                    if (cache.current[x]) {
-                        errors[x] = { message: msg, hasError: !error };
+                        stateErrors[x] = { message: msg, hasError: true, blurEventTrigger: stateErrors[x].blurEventTrigger };
+                    } else {
+                        cache.current[x] = false;
+                        stateErrors[x] = { message: msg, hasError: false, blurEventTrigger: stateErrors[x].blurEventTrigger };
                     }
                 }
             });
-            if (isEmpty(errors)) {
-                dispatch({ type: "cleanUpErrors" });
-            } else {
-                dispatch({ type: "updateErrors", errors });
-            }
+            dispatch({ type: "updateErrors", errors: stateErrors });
         }
     }, valuesDependency);
 
@@ -98,7 +93,7 @@ export default <T>(fields: T, { updateOnChange = true, validations = {}, blurs =
         return dispatch({ type: "onChange", event });
     };
 
-    const blurEvents: any = useMemo(
+    const blurEvents = useMemo(
         () =>
             getKeys(blurs).reduce((acc, el) => {
                 if (!!blurs && blurs.hasOwnProperty(el)) {
@@ -106,12 +101,10 @@ export default <T>(fields: T, { updateOnChange = true, validations = {}, blurs =
                     const onBlurHandler = (event: React.FocusEvent<HTMLInputElement>) => {
                         if (!!validationFn) {
                             const validation = validationFn(event.target.value, state.fields);
-                            if (!validation.isValid) {
-                                dispatch({
-                                    type: "aggregateErrors",
-                                    errors: { [el]: { hasError: true, message: validation.msg } }
-                                });
-                            }
+                            dispatch({
+                                type: "aggregateErrors",
+                                errors: { [el]: { hasError: !validation.isValid, message: validation.msg, blurEventTrigger: true } }
+                            });
                         }
                         return blurs[el](event, state.fields, setState, setErrors);
                     };

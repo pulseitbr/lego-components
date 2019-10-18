@@ -1,6 +1,6 @@
-import React, { useRef, useEffect } from "react";
-import styled from "styled-components";
 import { FlexDirectionProperty } from "csstype";
+import React, { useEffect, useRef } from "react";
+import styled from "styled-components";
 
 type Value = number | string;
 
@@ -30,7 +30,7 @@ const Flex = styled.section.attrs(({ direction = "row", ...props }: TypeContaine
     flex: 0 0 ${(props: TypeContainer) => props.span};
     flex-wrap: wrap;
     flex-direction: ${(props) => props.direction};
-    
+
     @media only screen and (max-width: 600px) {
         flex: 0 0 ${(props: TypeContainer) => props.xsmall};
     }
@@ -107,13 +107,6 @@ export const View = styled(Responsive)`
     justify-items: center;
     flex-wrap: wrap;
 `;
-
-export const Container = styled(Responsive)`
-    display: flex;
-    justify-items: center;
-    flex-wrap: wrap;
-    min-width: 100%;
-`;
 export const Page = styled(Responsive)`
     display: flex;
     flex-wrap: wrap;
@@ -133,8 +126,13 @@ export const Body = styled(Responsive)`
     align-items: center;
     align-self: center;
 `;
-
-export const Footer = styled(Responsive)`
+export const Container = styled(Responsive)`
+    display: flex;
+    justify-items: center;
+    flex-wrap: wrap;
+    min-width: 100%;
+`;
+export const Footer = styled(Container)`
     flex-shrink: 0;
     justify-content: center;
     align-content: center;

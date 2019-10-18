@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Loader } from "../";
+import Loader from "../loader/Loader";
 import Theme from "../styles";
 
 type THEMES = "danger" | "primary" | "info" | "success" | "warn" | "transparent" | "light" | "none" | "dark" | "disabledTransparent";

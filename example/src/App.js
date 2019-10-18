@@ -1,15 +1,21 @@
-import { Body, useForm, Footer, Page, Input } from "lego-components";
-import React, { useState } from "react";
+import { Body, Footer, StyleInput as Input, Page, useForm, View, StyleSheet } from "lego-components";
+import React from "react";
 
-export default function App() {
-    const { state: form, onChange } = useForm(
+const styles = StyleSheet.create({
+    input: {
+        marginBottom: "50px"
+    }
+});
+export default () => {
+    const { state: form, onChange, blurEvents, errors } = useForm(
+        { name: "", age: "" },
         {
-            name: "",
-            age: ""
-        },
-        {
+            updateOnChange: true,
+            blurs: {
+                name(e) {}
+            },
             validations: {
-                name: (fieldValue, state) => {
+                name: (fieldValue) => {
                     return {
                         isValid: fieldValue === "Foda-se",
                         msg: "Tem que ser Foda-se"
@@ -18,15 +24,21 @@ export default function App() {
             }
         }
     );
-
-    console.log("state", form);
-
     return (
         <Page>
-            <Body>
-                <Input value={form.name} onChange={onChange} />
-            </Body>
-            <Footer>Footer</Footer>
+            <Body>Fuck</Body>
+            <Footer>
+                <View span="25%">
+                    <Input
+                        onBlur={blurEvents.name}
+                        value={form.name}
+                        name="name"
+                        divStyle={styles.input}
+                        onChange={onChange}
+                        message={errors.name.hasError && errors.name.message}
+                    />
+                </View>
+            </Footer>
         </Page>
     );
-}
+};
