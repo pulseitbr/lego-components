@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import "./index.css";
+export { default as Drawer } from "./drawer";
 export { default as StyleSheet } from "./utils/StyleSheet";
 export { default as Button, ButtonProps } from "./button/Button";
 export { default as CurrencyInput } from "./form/CurrencyInput";
@@ -19,6 +20,14 @@ export { default as Modal } from "./modal";
 export { default as Portal } from "./utils/Portal";
 export { default as useForm } from "./hooks/useForm";
 export { default as useReducer } from "./hooks/useReducer";
+export { default as Console } from "./utils/Console";
+export { default as Dimensions } from "./utils/Dimensions";
+export { default as Bowser } from "./utils/Bowser";
+export { default as Image } from "./picture/Image";
+export { default as useOnClickOutside } from "./hooks/useOnClickOutside";
+export { default as useKeyDown } from "./hooks/useKeyDown";
+export { default as Keyboard } from "./utils/Keyboard";
+export { default as Dropdown, DropdownItem } from "./feedback/Dropdown";
 export * from "./base";
 export * from "./typography/index";
 export const GlobalStyle = createGlobalStyle`
