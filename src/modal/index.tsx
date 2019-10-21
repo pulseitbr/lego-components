@@ -1,10 +1,12 @@
 import { lighten } from "polished";
-import React, { CSSProperties, Fragment, useEffect, useRef } from "react";
+import React, { CSSProperties, useEffect } from "react";
 import { MdClose } from "react-icons/md";
 import styled, { ThemedStyledFunction } from "styled-components";
 import { TypeContainer, View } from "../base";
+import useBlockScroll from "../hooks/useBlockScroll";
 import Theme from "../styles";
 import ReactPortal from "../utils/Portal";
+import StyleSheet from "../utils/StyleSheet";
 
 const lightenClose = lighten(0.6);
 
@@ -68,6 +70,7 @@ const Close = styled.span`
 `;
 
 type Props = {
+    closeColor?: string;
     onClose: () => any;
     title?: React.ReactNode;
     footer?: React.ReactNode;
@@ -99,36 +102,22 @@ const Modal = ({
     bodyProps = defaultModalPartProps,
     footerProps = defaultModalPartProps,
     title,
+    closeColor = "#121212",
     closeOnEsc = true,
     children,
     animationTime = 950
 }: Props) => {
-    const domProperties = useRef({
-        overflowY: document.body.style.overflowY
-    });
-
     const toggleVisibility = (e: any) => {
         if (e.key === "Escape" && closeOnEsc) {
             onClose();
         }
     };
+    useBlockScroll(visible);
 
     useEffect(() => {
         window.addEventListener("keydown", toggleVisibility);
         return () => window.removeEventListener("keydown", toggleVisibility);
     }, []);
-
-    useEffect(() => {
-        if (visible) {
-            document.body.style.overflowY = "hidden";
-        } else {
-            domProperties.current.overflowY = document.body.style.overflowY;
-            document.body.style.overflowY = domProperties.current.overflowY;
-        }
-        return () => {
-            document.body.style.overflowY = domProperties.current.overflowY;
-        };
-    }, [visible]);
 
     const onClickMask = (e: any) => {
         e.stopPropagation();
@@ -142,27 +131,28 @@ const Modal = ({
 
     const headerViewProps = {
         ...headerProps,
-        style: { borderBottom: `1px solid ${Theme.darkAlpha}`, ...defaultModalPartProps.style, ...headerProps.style }
+        style: {
+            borderBottom: `${StyleSheet.hairlineWidth} solid ${Theme.darkAlpha}`,
+            ...defaultModalPartProps.style,
+            ...headerProps.style
+        }
     };
     const bodyViewProps = { ...bodyProps, style: { ...defaultModalPartProps.style, ...bodyProps.style } };
     const footerViewProps = {
         ...footerProps,
         style: { textAlign: "right" as "right", ...defaultModalPartProps.style, ...footerProps.style }
     };
+
     if (!visible) {
-        return <Fragment />;
+        return null;
     }
+
     return (
         <ReactPortal>
-            <ModalPortal
-                onClick={onClickMask}
-                visible={visible}
-                maskPaddingVertical={maskPaddingVertical}
-                speed={animationTime}
-            >
+            <ModalPortal onClick={onClickMask} visible={visible} maskPaddingVertical={maskPaddingVertical} speed={animationTime}>
                 <ModalContent onClick={onModalClick} width={width}>
                     <View {...headerViewProps}>
-                        <Close color="#121212" onClick={onClose}>
+                        <Close color={closeColor} onClick={onClose}>
                             <MdClose />
                         </Close>
                         {title}
