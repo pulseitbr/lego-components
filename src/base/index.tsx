@@ -18,8 +18,8 @@ export type TypeContainer = LegoMediaQuery &
         direction?: FlexDirectionProperty;
     };
 
-const Flex = styled.section.attrs(({ direction = "row", ...props }: TypeContainer) => {
-    const span = props.span;
+const Flex = styled.div.attrs(({ direction = "row", ...props }: TypeContainer) => {
+    const span = props.span || 0;
     const xsmall = props.xsmall || "100%";
     const small = props.small || "100%";
     const medium = props.medium || span;
@@ -29,7 +29,7 @@ const Flex = styled.section.attrs(({ direction = "row", ...props }: TypeContaine
 })`
     flex: 0 0 ${(props: TypeContainer) => props.span};
     flex-wrap: wrap;
-    flex-direction: ${(props) => props.direction};
+    flex-direction: ${(props: TypeContainer) => props.direction};
 
     @media only screen and (max-width: 600px) {
         flex: 0 0 ${(props: TypeContainer) => props.xsmall};
@@ -93,12 +93,14 @@ const Responsive = ({ isCollapse = false, show = true, children, ...props }: Res
 
 export const Left = styled(Responsive)`
     flex: 1;
+    text-align: left;
     align-items: flex-start;
     align-self: center;
 `;
 
 export const Right = styled(Responsive)`
     flex: 1;
+    text-align: right;
     align-items: flex-end;
     align-self: center;
 `;
