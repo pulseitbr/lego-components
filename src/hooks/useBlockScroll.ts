@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-const useBlockScroll = (visible: boolean, deps: any[] = []) => {
+const useBlockScroll = (visible: boolean, deps: unknown[] = []) => {
     const domProperties = useRef({
         overflowY: document.body.style.overflowY
     });

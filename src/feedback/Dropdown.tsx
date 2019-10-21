@@ -35,10 +35,42 @@ type Props = {
     children: React.ReactNode;
     triggers?: Trigger[];
     itens: typeof DropdownItem[];
-    onClick?: (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => any;
+    onShow?: (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => any;
 };
 
-const Dropdown = ({ children, onClick, itens, triggers = ["onClick"] }: Props) => {
+type Callback = (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void;
+
+const triggerRemap = (x: Trigger): { name: string; callback: Callback } => {
+    if (x === "onHover") {
+        return {
+            name: "onMouseOver",
+            callback: (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+                e.persist();
+                e.stopPropagation();
+            }
+        };
+    }
+    if (x === "onContextMenu") {
+        return {
+            name: "onContextMenu",
+            callback: (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+                e.persist();
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        };
+    }
+    return {
+        name: "onClick",
+        callback: (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+            e.persist();
+            e.stopPropagation();
+        }
+    };
+};
+
+const Dropdown = ({ children, onShow, itens, triggers = ["onClick"] }: Props) => {
+    const newTriggers = triggers.map(triggerRemap);
     const ref = useRef<HTMLDivElement>(null);
     const hide = () => {
         if (ref.current !== null) {
@@ -58,14 +90,18 @@ const Dropdown = ({ children, onClick, itens, triggers = ["onClick"] }: Props) =
         }
     });
 
-    const click = (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+    const click = (callback: Callback) => (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
         show();
-        if (!!onClick) {
-            onClick(event);
+        callback(event);
+        if (!!onShow) {
+            onShow(event);
         }
     };
 
-    const triggerEvents = useMemo(() => triggers.reduce((acc, el) => ({ ...acc, [el]: click }), {}), triggers);
+    const triggerEvents = useMemo(
+        () => newTriggers.reduce((acc, el) => ({ ...acc, [el.name]: click(el.callback) }), {}),
+        triggers
+    );
 
     return (
         <DropdownMain {...triggerEvents}>

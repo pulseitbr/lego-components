@@ -6,6 +6,7 @@ export default () => {
     return (
         <Page>
             <Dropdown
+                triggers={["onContextMenu", "onClick"]}
                 itens={
                     <Fragment>
                         <DropdownItem>Item 1</DropdownItem>
