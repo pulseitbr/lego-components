@@ -6,10 +6,11 @@ import { SetupStyle, GlobalStyle } from "lego-components";
 import "lego-components/dist/index.css";
 
 SetupStyle();
+
 ReactDOM.render(
-  <React.Fragment>
-    <GlobalStyle />
-    <App />
-  </React.Fragment>,
-  document.getElementById("root")
+    <React.Fragment>
+        <App />
+        <GlobalStyle />
+    </React.Fragment>,
+    document.getElementById("root")
 );
