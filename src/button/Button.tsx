@@ -25,6 +25,7 @@ export type ButtonProps = {
     dark?: boolean;
     theme?: THEMES;
     styleType?: THEMES;
+    onPress?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => any;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const ThinButton = styled.button`
@@ -157,18 +158,21 @@ const Button = ({
     size = 1,
     children,
     onClick,
+    onPress,
     stopPropagation = true,
     ...html
 }: ButtonProps) => {
-    const themeDefined = defineTheme(html, styleType, theme);
+    const themeDefined = defineTheme(html, styleType, theme) || "primary";
+
+    const clickPressAction = onClick || onPress;
 
     const onClickButton = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         if (stopPropagation) {
             event.stopPropagation();
         }
         event.persist();
-        if (!!onClick) {
-            return onClick(event);
+        if (!!clickPressAction) {
+            return clickPressAction(event);
         }
     };
 
