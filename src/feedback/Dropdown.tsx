@@ -1,10 +1,10 @@
 import React, { useMemo, useRef } from "react";
-import Keyboard from "../utils/Keyboard";
 import styled from "styled-components";
-import StyleSheet from "../utils/StyleSheet";
-import useOnClickOutside from "../hooks/useOnClickOutside";
 import useKeyDown from "../hooks/useKeyDown";
+import useOnClickOutside from "../hooks/useOnClickOutside";
 import Theme from "../styles";
+import Keyboard from "../utils/Keyboard";
+import StyleSheet from "../utils/StyleSheet";
 
 const DropdownMain = styled.span`
     display: inline-block;
@@ -34,7 +34,7 @@ type Trigger = "onClick" | "onHover" | "onContextMenu";
 type Props = {
     children: React.ReactNode;
     triggers?: Trigger[];
-    itens: typeof DropdownItem[];
+    itens: React.ReactNode;
     onShow?: (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => any;
 };
 
@@ -69,26 +69,10 @@ const triggerRemap = (x: Trigger): { name: string; callback: Callback } => {
     };
 };
 
-const Dropdown = ({ children, onShow, itens, triggers = ["onClick"] }: Props) => {
-    const newTriggers = triggers.map(triggerRemap);
-    const ref = useRef<HTMLDivElement>(null);
-    const hide = () => {
-        if (ref.current !== null) {
-            ref.current!.style.display = "none";
-        }
-    };
-    const show = () => {
-        if (ref.current !== null) {
-            ref.current!.style.display = "block";
-        }
-    };
-    useOnClickOutside(ref, hide);
+const viewDisplay = "block";
 
-    useKeyDown((e) => {
-        if (e.keyCode === Keyboard.esc) {
-            hide();
-        }
-    });
+const Dropdown = ({ children, onShow, itens, triggers = ["onClick"] }: Props) => {
+    const ref = useRef<HTMLDivElement>(null);
 
     const click = (callback: Callback) => (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
         show();
@@ -99,9 +83,29 @@ const Dropdown = ({ children, onShow, itens, triggers = ["onClick"] }: Props) =>
     };
 
     const triggerEvents = useMemo(
-        () => newTriggers.reduce((acc, el) => ({ ...acc, [el.name]: click(el.callback) }), {}),
+        () => triggers.map(triggerRemap).reduce((acc, el) => ({ ...acc, [el.name]: click(el.callback) }), {}),
         triggers
     );
+
+    const hide = () => {
+        if (ref.current !== null) {
+            ref.current!.style.display = "none";
+        }
+    };
+
+    const show = () => {
+        if (ref.current !== null) {
+            ref.current!.style.display = viewDisplay;
+        }
+    };
+
+    useOnClickOutside(ref, hide);
+
+    useKeyDown((e) => {
+        if (e.keyCode === Keyboard.esc) {
+            hide();
+        }
+    });
 
     return (
         <DropdownMain {...triggerEvents}>

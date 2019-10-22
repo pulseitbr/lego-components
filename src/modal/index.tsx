@@ -7,6 +7,8 @@ import useBlockScroll from "../hooks/useBlockScroll";
 import Theme from "../styles";
 import ReactPortal from "../utils/Portal";
 import StyleSheet from "../utils/StyleSheet";
+import { HtmlTag } from "../@types";
+import KeyboardMap from "../utils/Keyboard";
 
 const lightenClose = lighten(0.6);
 
@@ -41,7 +43,7 @@ const ModalPortal = styled.div.attrs((props: any) => ({
 
 type Content = ThemedStyledFunction<"div", any, any, any> & { width: string | number };
 
-const ModalContent = styled.div.attrs((props: Content) => ({
+const ModalContent = styled.dialog.attrs((props: Content) => ({
     ...props,
     width: props.width
 }))`
@@ -70,6 +72,7 @@ const Close = styled.span`
 `;
 
 type Props = {
+    htmlTag?: HtmlTag;
     closeColor?: string;
     onClose: () => any;
     title?: React.ReactNode;
@@ -96,6 +99,7 @@ const Modal = ({
     visible = false,
     width = "60%",
     footer,
+    htmlTag = "dialog",
     onClose,
     maskPaddingVertical = "3rem",
     headerProps = defaultModalPartProps,
@@ -107,11 +111,13 @@ const Modal = ({
     children,
     animationTime = 950
 }: Props) => {
-    const toggleVisibility = (e: any) => {
-        if (e.key === "Escape" && closeOnEsc) {
+
+    const toggleVisibility = (e: KeyboardEvent) => {
+        if (e.keyCode === KeyboardMap.esc && closeOnEsc) {
             onClose();
         }
     };
+
     useBlockScroll(visible);
 
     useEffect(() => {
@@ -124,7 +130,7 @@ const Modal = ({
         onClose();
     };
 
-    const onModalClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const onModalClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
         event.persist();
         event.stopPropagation();
     };
@@ -149,8 +155,13 @@ const Modal = ({
 
     return (
         <ReactPortal>
-            <ModalPortal onClick={onClickMask} visible={visible} maskPaddingVertical={maskPaddingVertical} speed={animationTime}>
-                <ModalContent onClick={onModalClick} width={width}>
+            <ModalPortal
+                onClick={onClickMask}
+                visible={visible}
+                maskPaddingVertical={maskPaddingVertical}
+                speed={animationTime}
+            >
+                <ModalContent as={htmlTag} open={visible} onClick={onModalClick} width={width}>
                     <View {...headerViewProps}>
                         <Close color={closeColor} onClick={onClose}>
                             <MdClose />

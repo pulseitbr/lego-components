@@ -17,6 +17,7 @@ export { default as Notification } from "./feedback/Notification";
 export { default as Badge } from "./feedback/Badge";
 export { default as Snackbar } from "./feedback/Snackbar";
 export { default as Modal } from "./modal";
+export { default as FlatList } from "./utils/FlatList";
 export { default as Portal } from "./utils/Portal";
 export { default as useForm } from "./hooks/useForm";
 export { default as useReducer } from "./hooks/useReducer";
@@ -28,6 +29,7 @@ export { default as useOnClickOutside } from "./hooks/useOnClickOutside";
 export { default as useKeyDown } from "./hooks/useKeyDown";
 export { default as Keyboard } from "./utils/Keyboard";
 export { default as Dropdown, DropdownItem } from "./feedback/Dropdown";
+export * from "./picture/Avatar";
 export * from "./base";
 export * from "./typography/index";
 export const GlobalStyle = createGlobalStyle`

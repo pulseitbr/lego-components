@@ -1,6 +1,7 @@
 import { FlexDirectionProperty } from "csstype";
 import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
+import { HtmlTag } from "../@types";
 
 type Value = number | string;
 
@@ -12,6 +13,7 @@ export type LegoMediaQuery = {
     large?: Value;
     xlarge?: Value;
 };
+
 export type TypeContainer = LegoMediaQuery &
     React.HTMLAttributes<HTMLElement> & {
         time?: Value;
@@ -64,15 +66,16 @@ const Collapse = styled(Flex).attrs((props: TypeContainer) => {
 type ResponsiveProps = {
     isCollapse?: boolean;
     show?: boolean;
+    htmlTag?: HtmlTag;
 } & TypeContainer;
 
-const Responsive = ({ isCollapse = false, show = true, children, ...props }: ResponsiveProps) => {
+const Responsive = ({ isCollapse = false, show = true, children, htmlTag = "div", ...props }: ResponsiveProps) => {
     const ref: React.RefObject<HTMLDivElement> = useRef(null);
     useEffect(() => {
         if (!!ref.current) {
             if (!!isCollapse) {
                 if (show) {
-                    ref.current.style.maxHeight = `100%`;
+                    ref.current.style.maxHeight = "100%";
                 } else {
                     ref.current.style.maxHeight = null;
                 }
@@ -81,11 +84,15 @@ const Responsive = ({ isCollapse = false, show = true, children, ...props }: Res
     }, [isCollapse, show]);
 
     if (!isCollapse) {
-        return <Flex {...props}>{children}</Flex>;
+        return (
+            <Flex as={htmlTag} {...props}>
+                {children}
+            </Flex>
+        );
     }
 
     return (
-        <Collapse ref={ref} {...props}>
+        <Collapse as={htmlTag} ref={ref} {...props}>
             {children}
         </Collapse>
     );
@@ -110,15 +117,15 @@ export const View = styled(Responsive)`
     flex-wrap: wrap;
 `;
 export const Page = styled(Responsive)`
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-wrap: wrap;
-    align-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 100%;
-    min-height: 100%;
-    width: 100%;
     min-width: 100%;
+    min-height: 100%;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
 `;
 export const Body = styled(Responsive)`
     flex: 1 0 auto;

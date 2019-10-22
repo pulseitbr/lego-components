@@ -73,96 +73,26 @@ declare const CONFIG_THEME: {
     };
 };
 
-const defaultColor: TypeColors = {
-    primary: "#42057d",
-    primaryAlpha: "rgba(66,5,125,0.5)",
-    primaryLight: "#7609df",
-    primaryDark: "#0e011b",
-    primaryDarkest: "#000",
-    primaryLightest: "#dbb8fc",
-    secondary: "#14E0BF",
-    secondaryAlpha: "rgba(20,224,191,0.5)",
-    secondaryLight: "#68f2db",
-    secondaryDark: "#0c826f",
-    secondaryDarkest: "#000",
-    secondaryLightest: "#fff",
-    info: "#00739D",
-    infoAlpha: "rgba(0,115,157,0.5)",
-    infoLight: "#04bcff",
-    infoDark: "#002837",
-    infoDarkest: "#000",
-    infoLightest: "#d0f2ff",
-    warn: "#f2960d",
-    warnAlpha: "rgba(242,150,13,0.5)",
-    warnLight: "#f7c06e",
-    warnDark: "#915a08",
-    warnDarkest: "#000",
-    warnLightest: "#fff",
-    danger: "#ee6363",
-    dangerAlpha: "rgba(238,99,99,0.5)",
-    dangerLight: "#f8bfbf",
-    dangerDark: "#d41717",
-    dangerDarkest: "#1c0303",
-    dangerLightest: "#fff",
-    success: "#00C781",
-    successAlpha: "rgba(0,199,129,0.5)",
-    successLight: "#2effb5",
-    successDark: "#00613f",
-    successDarkest: "#000",
-    successLightest: "#fafffd",
-    dark: "#202020",
-    darkAlpha: "rgba(32,32,32,0.5)",
-    darkLight: "#535353",
-    darkDark: "#000",
-    darkDarkest: "#000",
-    darkLightest: "#b9b9b9",
-    light: "#ddd",
-    lightAlpha: "rgba(221,221,221,0.5)",
-    lightLight: "#fff",
-    lightDark: "#aaa",
-    lightDarkest: "#444",
-    lightLightest: "#fff",
-    disabled: "#bbb",
-    disabledAlpha: "rgba(187,187,187,0.5)",
-    disabledLight: "#eee",
-    disabledDark: "#888",
-    disabledDarkest: "#222",
-    disabledLightest: "#fff"
-};
-
-const PLACEHOLDER = {
-    tenant: "",
-    version: "",
-    config: {
-        theme: defaultColor,
-        icon: "",
-        logo: "",
-        card: "",
-        logo2: "",
-        tenant: "",
-        favicon: "",
-        cardBack: "",
-        theme_color: "",
-        background_color: ""
-    }
-};
-
 declare global {
     interface Window {
         $__BP__: typeof CONFIG_THEME;
     }
 }
-const useGlobalBP = !isEmpty(window.$__BP__);
+const useGlobalBP = isEmpty(window.$__BP__);
 
-const BP_PLACEHOLDER = useGlobalBP ? window.$__BP__ : PLACEHOLDER;
-export const $__BP__: typeof CONFIG_THEME = {
+if (useGlobalBP) {
+    throw new Error("Please, fill them window.__$BP__ with pattern of lib");
+}
+
+const BP_PLACEHOLDER = window.$__BP__;
+export let $__BP__: typeof CONFIG_THEME = {
     ...BP_PLACEHOLDER,
     config: {
         ...BP_PLACEHOLDER.config,
-        theme: { ...defaultColor, ...BP_PLACEHOLDER.config.theme }
+        theme: BP_PLACEHOLDER.config.theme
     }
 };
 
-const Theme = $__BP__.config.theme;
+let Theme = $__BP__.config.theme;
 
 export default Theme;
