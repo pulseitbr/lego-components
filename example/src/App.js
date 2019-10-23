@@ -3,7 +3,6 @@ import React, { Fragment, useState, useEffect } from "react";
 
 import Tabs from "./tabs/Tabs";
 
-
 const dataSource = [
     {
         nrSeqEndereco: 36,
@@ -157,35 +156,8 @@ export default function App() {
             <h1>Tabs Demo</h1>
 
             <Tabs>
-                <div label="HOME">
-                    <h3>Bem vindo a nossa empresa</h3>
-                    <br />
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Et quos perferendis placeat,
-                        perspiciatis fuga eius dolorum, dicta amet adipisci saepe quis ipsam, odit sit? Deleniti iure
-                        consequuntur nobis iusto itaque inventore et quidem commodi aperiam eos ex, eligendi blanditiis
-                        nihil laudantium unde aliquid dolores dolore corrupti magnam ipsam, architecto amet.
-                    </p>
-                </div>
-                <div label="PRODUTOS">
-                    <h3>Alguns dos nossos produtos:</h3>
-                    <br />
-                    <div className="produto_box">
-                        <div className="produto"></div>
-                        <div className="produto"></div>
-                        <div className="produto"></div>
-                    </div>
-                    <div className="produto_box">
-                        <div className="produto"></div>
-                        <div className="produto"></div>
-                        <div className="produto"></div>
-                    </div>
-                    <div className="produto_box">
-                        <div className="produto"></div>
-                        <div className="produto"></div>
-                        <div className="produto"></div>
-                    </div>
-                </div>
+                <div label="HOME">HOME</div>
+                <div label="PRODUTOS">PRODUTO</div>
                 <div label="SERVIÇOS">SERVIÇOS</div>
                 <div label="QUEM SOMOS">QUEM SOMOS</div>
                 <div label="CONTATO">CONTATO</div>
