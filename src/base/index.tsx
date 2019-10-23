@@ -143,6 +143,8 @@ export const Container = styled(Responsive)`
 `;
 export const Footer = styled(Container)`
     flex-shrink: 0;
+    flex: 0;
+    flex-wrap: wrap;
     justify-content: center;
     align-content: center;
     align-self: center;
