@@ -1,48 +1,18 @@
-import { Body, Button, Container, Dropdown, DropdownItem, Footer, Modal, Page } from "lego-components";
-import React, { useState } from "react";
+import { Page, Tabs, Tab } from "lego-components";
+import React from "react";
 
 export default () => {
-    const [view, setView] = useState(false);
     return (
-        <Page htmlTag="main">
-            <Body>
-                <Container
-                    style={{
-                        alignContent: "flex-end",
-                        alignItems: "flex-end",
-                        justifyContent: "flex-end",
-                        textAlign: "right"
-                    }}
-                >
-                    <Dropdown
-                        position="right"
-                        triggers={["onHover", "onClick"]}
-                        itens={
-                            <Container
-                                style={{
-                                    alignContent: "flex-end",
-                                    alignItems: "flex-end",
-                                    justifyContent: "flex-end",
-                                    textAlign: "left"
-                                }}
-                            >
-                                <DropdownItem>Item 1</DropdownItem>
-                                <DropdownItem>Item 2</DropdownItem>
-                                <DropdownItem>Item 3</DropdownItem>
-                                <DropdownItem>Item 4</DropdownItem>
-                            </Container>
-                        }
-                    >
-                        Dropdown
-                    </Dropdown>
-                </Container>
-            </Body>
-            <Footer htmlTag="footer">
-                <Button onClick={() => setView(true)}>Open Modal</Button>
-            </Footer>
-            <Modal htmlTag="dialog" onClose={() => setView(false)} visible={view} title="koeeeeeee">
-                AEEEEEEEEEEE
-            </Modal>
+        <Page>
+            <h1>Tabs Demo</h1>
+            <Tabs>
+                <div label="HOME">HOME</div>
+                <div label="PRODUTOS">PRODUTO</div>
+                <div label="SERVIÇOS">SERVIÇOS</div>
+                <div label="QUEM SOMOS">QUEM SOMOS</div>
+                <div label="CONTATO">CONTATO</div>
+                <div label="PORTFÓLIO">PORTFÓLIO</div>
+            </Tabs>
         </Page>
     );
 };

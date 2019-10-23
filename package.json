@@ -35,7 +35,7 @@
         "react-content-loader": "^4.3.2",
         "react-dropzone": "^10.1.10",
         "react-icons": "^3.7.0",
-        "react-portal-minimal": "^4.0.2",
+        "react-swipeable": "^5.4.0",
         "react-text-mask": "^5.4.3",
         "shx": "^0.3.2",
         "sidekicker": "^0.0.28",
