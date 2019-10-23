@@ -29,7 +29,13 @@
         "react-content-loader": "^4.3.1",
         "react-icons": "^3.7.0",
         "react-portal-minimal": "^4.0.2",
+        "react-spring": "^8.0.27",
+        "react-swipe-views": "0.0.12",
+        "react-swipeable": "^5.4.0",
+        "react-swipeable-views": "^0.13.3",
         "react-text-mask": "^5.4.3",
+        "react-use-gesture": "^6.0.12",
+        "react-with-gesture": "^4.0.8",
         "sidekicker": "^0.0.28",
         "styled-components": "^4.4.0"
     },

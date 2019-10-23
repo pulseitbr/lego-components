@@ -264,7 +264,6 @@ var useGlobalBP = !comparable_3(window.$__BP__);
 var BP_PLACEHOLDER = useGlobalBP ? window.$__BP__ : PLACEHOLDER;
 var $__BP__ = __assign(__assign({}, BP_PLACEHOLDER), { config: __assign(__assign({}, BP_PLACEHOLDER.config), { theme: __assign(__assign({}, defaultColor), BP_PLACEHOLDER.config.theme) }) });
 var Theme = $__BP__.config.theme;
-//# sourceMappingURL=index.js.map
 
 var ThinButton = styled__default.button(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    outline: none;\n    font-size: 0.9rem;\n    box-shadow: none;\n    border-width: 1px;\n    position: relative;\n    outline-style: none;\n    border-style: solid;\n    border-width: 0.1rem;\n    transition: background-color 0.35s ease-in-out;\n    width: ", ";\n    cursor: ", ";\n    border-radius: ", ";\n\n    &:disabled {\n        cursor: wait;\n        pointer-events: none;\n        color: ", ";\n        background-color: ", ";\n        border-color: ", ";\n    }\n"], ["\n    outline: none;\n    font-size: 0.9rem;\n    box-shadow: none;\n    border-width: 1px;\n    position: relative;\n    outline-style: none;\n    border-style: solid;\n    border-width: 0.1rem;\n    transition: background-color 0.35s ease-in-out;\n    width: ", ";\n    cursor: ", ";\n    border-radius: ", ";\n\n    &:disabled {\n        cursor: wait;\n        pointer-events: none;\n        color: ", ";\n        background-color: ", ";\n        border-color: ", ";\n    }\n"])), function (props) { return (props.full ? "100%" : "auto"); }, function (props) { return (props.loading ? "wait" : "pointer"); }, function (props) { return (props.pill ? "9999px" : "5px"); }, Theme.darkAlpha, Theme.disabled, Theme.disabledDark);
 var ParentButton = styled__default(ThinButton)(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n    padding: ", "rem;\n    padding-left: ", "rem;\n    padding-right: ", "rem;\n    padding-top: ", "rem;\n    padding-bottom: ", "rem;\n    font-size: ", "rem;\n    ", ";\n"], ["\n    padding: ", "rem;\n    padding-left: ", "rem;\n    padding-right: ", "rem;\n    padding-top: ", "rem;\n    padding-bottom: ", "rem;\n    font-size: ", "rem;\n    ", ";\n"])), function (props) { return 0.25 * props.size; }, function (props) { return 0.5 * props.size; }, function (props) { return 0.5 * props.size; }, function (props) { return 0.5 * props.size; }, function (props) { return 0.5 * props.size; }, function (props) { return 1 * props.size; }, function (props) { return props.theme; });
@@ -348,7 +347,6 @@ var Button = function (_a) {
         children));
 };
 var templateObject_1, templateObject_2, templateObject_3, templateObject_4;
-//# sourceMappingURL=Button.js.map
 
 var formatBrlToFloat = function (currency) {
     var final = currency
@@ -406,7 +404,6 @@ var CurrencyInput = function (_a) {
     };
     return (React__default.createElement("input", __assign({}, props, { type: "text", value: value, name: props.name, onChange: change, inputMode: "decimal", pattern: "^[A-Z]{1,3}[0-9$,. ]+$" })));
 };
-//# sourceMappingURL=CurrencyInput.js.map
 
 var ResponsiveContainer = styled__default.div.attrs(function (props) {
     var span = props.span || 0;
@@ -449,7 +446,6 @@ var Page = styled__default(Responsive)(templateObject_7 || (templateObject_7 = _
 var Body = styled__default(Responsive)(templateObject_8 || (templateObject_8 = __makeTemplateObject(["\n    flex: 1 0 auto;\n    width: 100%;\n    min-width: 100%;\n    flex-wrap: wrap;\n    align-items: center;\n    align-self: center;\n"], ["\n    flex: 1 0 auto;\n    width: 100%;\n    min-width: 100%;\n    flex-wrap: wrap;\n    align-items: center;\n    align-self: center;\n"])));
 var Footer = styled__default(Responsive)(templateObject_9 || (templateObject_9 = __makeTemplateObject(["\n    flex-shrink: 0;\n    justify-content: center;\n    align-content: center;\n    align-self: center;\n    align-items: center;\n"], ["\n    flex-shrink: 0;\n    justify-content: center;\n    align-content: center;\n    align-self: center;\n    align-items: center;\n"])));
 var templateObject_1$1, templateObject_2$1, templateObject_3$1, templateObject_4$1, templateObject_5, templateObject_6, templateObject_7, templateObject_8, templateObject_9;
-//# sourceMappingURL=index.js.map
 
 var ClosureComponent = function (props) { return function (x, flatListKey) { return props.component(__assign({}, x), flatListKey); }; };
 function FlatList(props) {
@@ -466,12 +462,10 @@ function FlatList(props) {
     }
     return React__default.createElement(React.Fragment, null, props.emptyComponent);
 }
-//# sourceMappingURL=FlatList.js.map
 
 var Title = styled__default.div(templateObject_1$2 || (templateObject_1$2 = __makeTemplateObject(["\n  font-weight: bold;\n  font-size: 2.25rem;\n  color: ", ";\n  font-family: \"Comfortaa\", Arial, Helvetica, sans-serif;\n"], ["\n  font-weight: bold;\n  font-size: 2.25rem;\n  color: ", ";\n  font-family: \"Comfortaa\", Arial, Helvetica, sans-serif;\n"])), Theme.darkLight);
 var SubTitle = styled__default.div(templateObject_2$2 || (templateObject_2$2 = __makeTemplateObject(["\n  font-weight: bold;\n  font-size: 1.65rem;\n  color: ", ";\n  font-family: \"Comfortaa\", Arial, Helvetica, sans-serif;\n"], ["\n  font-weight: bold;\n  font-size: 1.65rem;\n  color: ", ";\n  font-family: \"Comfortaa\", Arial, Helvetica, sans-serif;\n"])), Theme.darkLight);
 var templateObject_1$2, templateObject_2$2;
-//# sourceMappingURL=index.js.map
 
 var BrazilianRegex = createCommonjsModule(function (module, exports) {
 Object.defineProperty(exports,"__esModule",{value:!0}),exports.REGEX_CEP=/^([\d]{2})\.?([\d]{3})-?([\d]{3})/,exports.REGEX_CPF=/^(\d{3}\.){2}\d{3}-\d{2}/,exports.REGEX_CNPJ=/^\d{2}((|\.)\d{3}){2}(|\/)\d{4}(|-)\d\d$/,exports.REGEX_PLATE=/^[A-Z]{3}(-| |)\d{4}/i;
@@ -523,7 +517,6 @@ var Radiobox = function (_a) {
         children));
 };
 var templateObject_1$3;
-//# sourceMappingURL=Radiobox.js.map
 
 var DefaultContext = {
   color: undefined,
@@ -1653,7 +1646,6 @@ curry
 (transparentize);
 
 var SOFT_RADIUS = "0.25rem";
-//# sourceMappingURL=Constants.js.map
 
 var transparentBackground = curriedTransparentize(0.4, Theme.primaryAlpha);
 var getIcon = function (isHome) { return (isHome ? React__default.createElement(MdHome, null) : React__default.createElement(MdStore, null)); };
@@ -1756,12 +1748,10 @@ var AddressBox = function (_a) {
                 medium: medium
             }) })));
 };
-//# sourceMappingURL=AddressBox.js.map
 
 var root = document.querySelector(":root");
 //@ts-ignore
 var SetupStyle = (function () { return Object.keys(Theme).forEach(function (x) { return root.style.setProperty("--" + x, "" + Theme[x]); }); });
-//# sourceMappingURL=SetupStyle.js.map
 
 var SpanLoader = styled__default.span(templateObject_1$4 || (templateObject_1$4 = __makeTemplateObject(["\n    @keyframes donut-spin {\n        0% {\n            transform: rotate(0deg);\n        }\n        100% {\n            transform: rotate(360deg);\n        }\n    }\n\n    & {\n        display: inline-block;\n        border: ", "rem solid rgba(0, 0, 0, 0.1);\n        border-left-color: ", ";\n        border-radius: 50%;\n        width: ", "rem;\n        height: ", "rem;\n        animation: donut-spin ", "s linear infinite;\n    }\n"], ["\n    @keyframes donut-spin {\n        0% {\n            transform: rotate(0deg);\n        }\n        100% {\n            transform: rotate(360deg);\n        }\n    }\n\n    & {\n        display: inline-block;\n        border: ", "rem solid rgba(0, 0, 0, 0.1);\n        border-left-color: ", ";\n        border-radius: 50%;\n        width: ", "rem;\n        height: ", "rem;\n        animation: donut-spin ", "s linear infinite;\n    }\n"])), function (props) { return props.border; }, function (props) { return props.color; }, function (props) { return props.size; }, function (props) { return props.size; }, function (props) { return props.velocity; });
 var Loader = function (_a) {
@@ -1771,7 +1761,6 @@ var Loader = function (_a) {
     React__default.createElement(SpanLoader, __assign({}, props, { velocity: velocity, color: color, size: size, border: border, className: className })));
 };
 var templateObject_1$4;
-//# sourceMappingURL=Loader.js.map
 
 var Form = function (_a) {
     var children = _a.children, onSubmit = _a.onSubmit, props = __rest(_a, ["children", "onSubmit"]);
@@ -1785,7 +1774,6 @@ var Form = function (_a) {
     };
     return (React__default.createElement("form", __assign({}, props, { onSubmit: submitEvent }), children));
 };
-//# sourceMappingURL=Form.js.map
 
 var reactTextMask = createCommonjsModule(function (module, exports) {
 !function(e,t){module.exports=t(React__default);}(commonjsGlobal,function(e){return function(e){function t(n){if(r[n])return r[n].exports;var o=r[n]={exports:{},id:n,loaded:!1};return e[n].call(o.exports,o,o.exports,t),o.loaded=!0,o.exports}var r={};return t.m=e,t.c=r,t.p="",t(0)}([function(e,t,r){function n(e){return e&&e.__esModule?e:{default:e}}function o(e,t){var r={};for(var n in e)t.indexOf(n)>=0||Object.prototype.hasOwnProperty.call(e,n)&&(r[n]=e[n]);return r}function i(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function a(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return !t||"object"!=typeof t&&"function"!=typeof t?e:t}function u(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t);}Object.defineProperty(t,"__esModule",{value:!0}),t.conformToMask=void 0;var s=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var r=arguments[t];for(var n in r)Object.prototype.hasOwnProperty.call(r,n)&&(e[n]=r[n]);}return e},l=function(){function e(e,t){for(var r=0;r<t.length;r++){var n=t[r];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,n.key,n);}}return function(t,r,n){return r&&e(t.prototype,r),n&&e(t,n),t}}(),f=r(3);Object.defineProperty(t,"conformToMask",{enumerable:!0,get:function(){return n(f).default}});var c=r(11),p=n(c),d=r(9),h=n(d),v=r(5),y=n(v),m=r(2),b=function(e){function t(){var e;i(this,t);for(var r=arguments.length,n=Array(r),o=0;o<r;o++)n[o]=arguments[o];var u=a(this,(e=t.__proto__||Object.getPrototypeOf(t)).call.apply(e,[this].concat(n)));return u.setRef=u.setRef.bind(u),u.onBlur=u.onBlur.bind(u),u.onChange=u.onChange.bind(u),u}return u(t,e),l(t,[{key:"setRef",value:function(e){this.inputElement=e;}},{key:"initTextMask",value:function(){var e=this.props,t=this.props.value;this.textMaskInputElement=(0, y.default)(s({inputElement:this.inputElement},e)),this.textMaskInputElement.update(t);}},{key:"componentDidMount",value:function(){this.initTextMask();}},{key:"componentDidUpdate",value:function(e){var t=this.props,r=t.value,n=t.pipe,o=t.mask,i=t.guide,a=t.placeholderChar,u=t.showMask,s={guide:i,placeholderChar:a,showMask:u},l="function"==typeof n&&"function"==typeof e.pipe?n.toString()!==e.pipe.toString():(0, m.isNil)(n)&&!(0, m.isNil)(e.pipe)||!(0, m.isNil)(n)&&(0, m.isNil)(e.pipe),f=o.toString()!==e.mask.toString(),c=Object.keys(s).some(function(t){return s[t]!==e[t]})||f||l,p=r!==this.inputElement.value;(p||c)&&this.initTextMask();}},{key:"render",value:function e(){var t=this.props,e=t.render,r=o(t,["render"]);return delete r.mask,delete r.guide,delete r.pipe,delete r.placeholderChar,delete r.keepCharPositions,delete r.value,delete r.onBlur,delete r.onChange,delete r.showMask,e(this.setRef,s({onBlur:this.onBlur,onChange:this.onChange,defaultValue:this.props.value},r))}},{key:"onChange",value:function(e){this.textMaskInputElement.update(),"function"==typeof this.props.onChange&&this.props.onChange(e);}},{key:"onBlur",value:function(e){"function"==typeof this.props.onBlur&&this.props.onBlur(e);}}]),t}(p.default.PureComponent);t.default=b,b.propTypes={mask:h.default.oneOfType([h.default.array,h.default.func,h.default.bool,h.default.shape({mask:h.default.oneOfType([h.default.array,h.default.func]),pipe:h.default.func})]).isRequired,guide:h.default.bool,value:h.default.oneOfType([h.default.string,h.default.number]),pipe:h.default.func,placeholderChar:h.default.string,keepCharPositions:h.default.bool,showMask:h.default.bool},b.defaultProps={render:function(e,t){return p.default.createElement("input",s({ref:e},t))}};},function(e,t){Object.defineProperty(t,"__esModule",{value:!0}),t.placeholderChar="_",t.strFunction="function";},function(e,t,r){function n(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:f,t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:l.placeholderChar;if(!o(e))throw new Error("Text-mask:convertMaskToPlaceholder; The mask property must be an array.");if(e.indexOf(t)!==-1)throw new Error("Placeholder character must not be used as part of the mask. Please specify a character that is not present in your mask as your placeholder character.\n\n"+("The placeholder character that was received is: "+JSON.stringify(t)+"\n\n")+("The mask that was received is: "+JSON.stringify(e)));return e.map(function(e){return e instanceof RegExp?t:e}).join("")}function o(e){return Array.isArray&&Array.isArray(e)||e instanceof Array}function i(e){return "string"==typeof e||e instanceof String}function a(e){return "number"==typeof e&&void 0===e.length&&!isNaN(e)}function u(e){return "undefined"==typeof e||null===e}function s(e){for(var t=[],r=void 0;r=e.indexOf(c),r!==-1;)t.push(r),e.splice(r,1);return {maskWithoutCaretTraps:e,indexes:t}}Object.defineProperty(t,"__esModule",{value:!0}),t.convertMaskToPlaceholder=n,t.isArray=o,t.isString=i,t.isNumber=a,t.isNil=u,t.processCaretTraps=s;var l=r(1),f=[],c="[]";},function(e,t,r){function n(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:s,t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:u,r=arguments.length>2&&void 0!==arguments[2]?arguments[2]:{};if(!(0, i.isArray)(t)){if(("undefined"==typeof t?"undefined":o(t))!==a.strFunction)throw new Error("Text-mask:conformToMask; The mask property must be an array.");t=t(e,r),t=(0, i.processCaretTraps)(t).maskWithoutCaretTraps;}var n=r.guide,l=void 0===n||n,f=r.previousConformedValue,c=void 0===f?s:f,p=r.placeholderChar,d=void 0===p?a.placeholderChar:p,h=r.placeholder,v=void 0===h?(0, i.convertMaskToPlaceholder)(t,d):h,y=r.currentCaretPosition,m=r.keepCharPositions,b=l===!1&&void 0!==c,g=e.length,k=c.length,C=v.length,O=t.length,T=g-k,P=T>0,x=y+(P?-T:0),w=x+Math.abs(T);if(m===!0&&!P){for(var S=s,_=x;_<w;_++)v[_]===d&&(S+=d);e=e.slice(0,x)+S+e.slice(x,g);}for(var M=e.split(s).map(function(e,t){return {char:e,isNew:t>=x&&t<w}}),j=g-1;j>=0;j--){var E=M[j].char;if(E!==d){var R=j>=x&&k===O;E===v[R?j-T:j]&&M.splice(j,1);}}var V=s,N=!1;e:for(var A=0;A<C;A++){var B=v[A];if(B===d){if(M.length>0)for(;M.length>0;){var I=M.shift(),F=I.char,q=I.isNew;if(F===d&&b!==!0){V+=d;continue e}if(t[A].test(F)){if(m===!0&&q!==!1&&c!==s&&l!==!1&&P){for(var D=M.length,L=null,W=0;W<D;W++){var J=M[W];if(J.char!==d&&J.isNew===!1)break;if(J.char===d){L=W;break}}null!==L?(V+=F,M.splice(L,1)):A--;}else V+=F;continue e}N=!0;}b===!1&&(V+=v.substr(A,C));break}V+=B;}if(b&&P===!1){for(var U=null,H=0;H<V.length;H++)v[H]===d&&(U=H);V=null!==U?V.substr(0,U+1):s;}return {conformedValue:V,meta:{someCharsRejected:N}}}Object.defineProperty(t,"__esModule",{value:!0});var o="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e};t.default=n;var i=r(2),a=r(1),u=[],s="";},function(e,t){function r(e){var t=e.previousConformedValue,r=void 0===t?o:t,i=e.previousPlaceholder,a=void 0===i?o:i,u=e.currentCaretPosition,s=void 0===u?0:u,l=e.conformedValue,f=e.rawValue,c=e.placeholderChar,p=e.placeholder,d=e.indexesOfPipedChars,h=void 0===d?n:d,v=e.caretTrapIndexes,y=void 0===v?n:v;if(0===s||!f.length)return 0;var m=f.length,b=r.length,g=p.length,k=l.length,C=m-b,O=C>0,T=0===b,P=C>1&&!O&&!T;if(P)return s;var x=O&&(r===l||l===p),w=0,S=void 0,_=void 0;if(x)w=s-C;else{var M=l.toLowerCase(),j=f.toLowerCase(),E=j.substr(0,s).split(o),R=E.filter(function(e){return M.indexOf(e)!==-1});_=R[R.length-1];var V=a.substr(0,R.length).split(o).filter(function(e){return e!==c}).length,N=p.substr(0,R.length).split(o).filter(function(e){return e!==c}).length,A=N!==V,B=void 0!==a[R.length-1]&&void 0!==p[R.length-2]&&a[R.length-1]!==c&&a[R.length-1]!==p[R.length-1]&&a[R.length-1]===p[R.length-2];!O&&(A||B)&&V>0&&p.indexOf(_)>-1&&void 0!==f[s]&&(S=!0,_=f[s]);for(var I=h.map(function(e){return M[e]}),F=I.filter(function(e){return e===_}).length,q=R.filter(function(e){return e===_}).length,D=p.substr(0,p.indexOf(c)).split(o).filter(function(e,t){return e===_&&f[t]!==e}).length,L=D+q+F+(S?1:0),W=0,J=0;J<k;J++){var U=M[J];if(w=J+1,U===_&&W++,W>=L)break}}if(O){for(var H=w,Y=w;Y<=g;Y++)if(p[Y]===c&&(H=Y),p[Y]===c||y.indexOf(Y)!==-1||Y===g)return H}else if(S){for(var z=w-1;z>=0;z--)if(l[z]===_||y.indexOf(z)!==-1||0===z)return z}else for(var G=w;G>=0;G--)if(p[G-1]===c||y.indexOf(G)!==-1||0===G)return G}Object.defineProperty(t,"__esModule",{value:!0}),t.default=r;var n=[],o="";},function(e,t,r){function n(e){return e&&e.__esModule?e:{default:e}}function o(e){var t={previousConformedValue:void 0,previousPlaceholder:void 0};return {state:t,update:function(r){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:e,o=n.inputElement,l=n.mask,c=n.guide,y=n.pipe,b=n.placeholderChar,g=void 0===b?h.placeholderChar:b,k=n.keepCharPositions,C=void 0!==k&&k,O=n.showMask,T=void 0!==O&&O;if("undefined"==typeof r&&(r=o.value),r!==t.previousConformedValue){("undefined"==typeof l?"undefined":s(l))===m&&void 0!==l.pipe&&void 0!==l.mask&&(y=l.pipe,l=l.mask);var P=void 0,x=void 0;if(l instanceof Array&&(P=(0, d.convertMaskToPlaceholder)(l,g)),l!==!1){var w=a(r),S=o.selectionEnd,_=t.previousConformedValue,M=t.previousPlaceholder,j=void 0;if(("undefined"==typeof l?"undefined":s(l))===h.strFunction){if(x=l(w,{currentCaretPosition:S,previousConformedValue:_,placeholderChar:g}),x===!1)return;var E=(0, d.processCaretTraps)(x),R=E.maskWithoutCaretTraps,V=E.indexes;x=R,j=V,P=(0, d.convertMaskToPlaceholder)(x,g);}else x=l;var N={previousConformedValue:_,guide:c,placeholderChar:g,pipe:y,placeholder:P,currentCaretPosition:S,keepCharPositions:C},A=(0, p.default)(w,x,N),B=A.conformedValue,I=("undefined"==typeof y?"undefined":s(y))===h.strFunction,F={};I&&(F=y(B,u({rawValue:w},N)),F===!1?F={value:_,rejected:!0}:(0, d.isString)(F)&&(F={value:F}));var q=I?F.value:B,D=(0, f.default)({previousConformedValue:_,previousPlaceholder:M,conformedValue:q,placeholder:P,rawValue:w,currentCaretPosition:S,placeholderChar:g,indexesOfPipedChars:F.indexesOfPipedChars,caretTrapIndexes:j}),L=q===P&&0===D,W=T?P:v,J=L?W:q;t.previousConformedValue=J,t.previousPlaceholder=P,o.value!==J&&(o.value=J,i(o,D));}}}}}function i(e,t){document.activeElement===e&&(b?g(function(){return e.setSelectionRange(t,t,y)},0):e.setSelectionRange(t,t,y));}function a(e){if((0, d.isString)(e))return e;if((0, d.isNumber)(e))return String(e);if(void 0===e||null===e)return v;throw new Error("The 'value' provided to Text Mask needs to be a string or a number. The value received was:\n\n "+JSON.stringify(e))}Object.defineProperty(t,"__esModule",{value:!0});var u=Object.assign||function(e){for(var t=1;t<arguments.length;t++){var r=arguments[t];for(var n in r)Object.prototype.hasOwnProperty.call(r,n)&&(e[n]=r[n]);}return e},s="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e};t.default=o;var l=r(4),f=n(l),c=r(3),p=n(c),d=r(2),h=r(1),v="",y="none",m="object",b="undefined"!=typeof navigator&&/Android/i.test(navigator.userAgent),g="undefined"!=typeof requestAnimationFrame?requestAnimationFrame:setTimeout;},function(e,t){function r(e){return function(){return e}}var n=function(){};n.thatReturns=r,n.thatReturnsFalse=r(!1),n.thatReturnsTrue=r(!0),n.thatReturnsNull=r(null),n.thatReturnsThis=function(){return this},n.thatReturnsArgument=function(e){return e},e.exports=n;},function(e,t,r){function n(e,t,r,n,i,a,u,s){if(!e){var l;if(void 0===t)l=new Error("Minified exception occurred; use the non-minified dev environment for the full error message and additional helpful warnings.");else{var f=[r,n,i,a,u,s],c=0;l=new Error(t.replace(/%s/g,function(){return f[c++]})),l.name="Invariant Violation";}throw l.framesToPop=1,l}}e.exports=n;},function(e,t,r){var n=r(6),o=r(7),i=r(10);e.exports=function(){function e(e,t,r,n,a,u){u!==i&&o(!1,"Calling PropTypes validators directly is not supported by the `prop-types` package. Use PropTypes.checkPropTypes() to call them. Read more at http://fb.me/use-check-prop-types");}function t(){return e}e.isRequired=e;var r={array:e,bool:e,func:e,number:e,object:e,string:e,symbol:e,any:e,arrayOf:t,element:e,instanceOf:t,node:e,objectOf:t,oneOf:t,oneOfType:t,shape:t,exact:t};return r.checkPropTypes=n,r.PropTypes=r,r};},function(e,t,r){e.exports=r(8)();},function(e,t){var r="SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED";e.exports=r;},function(t,r){t.exports=e;}])});
@@ -2034,7 +2022,6 @@ var decimalKeyboard = {
         inputMode: "decimal"
     }
 };
-//# sourceMappingURL=masks.js.map
 
 var createPlaceholder = function (maskRegex) { return convertMaskToString(maskRegex); };
 var instanceMaskValues = function (mask, usePl, html, value, props) {
@@ -2069,7 +2056,6 @@ var Input = function (_a) {
     }
     return React__default.createElement("input", __assign({}, html, options));
 };
-//# sourceMappingURL=Input.js.map
 
 var onActive = "form-field__control form-field--is-active";
 var onActiveError = "form-field__control form-field--is-active form-field__input-error";
@@ -2119,7 +2105,6 @@ var StyleInput = function (_a) {
         loading && React__default.createElement(Loader, { className: "toggle-password", size: 1.2, border: 0.1, color: loaderColor }),
         !!message && React__default.createElement("small", null, message)));
 };
-//# sourceMappingURL=StyleInput.js.map
 
 var objectWithoutProperties = createCommonjsModule(function (module, exports) {
 
@@ -2150,7 +2135,7 @@ if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
 });
 
 var _core = createCommonjsModule(function (module) {
-var core = module.exports = { version: '2.6.9' };
+var core = module.exports = { version: '2.6.10' };
 if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 });
 var _core_1 = _core.version;
@@ -5976,7 +5961,6 @@ var allThemes = {
     default: { icon: { color: Theme.dark }, box: { backgroundColor: Theme.lightLightest, color: Theme.dark } }
 };
 var themes = (function (theme) { return (allThemes.hasOwnProperty(theme) ? allThemes[theme] : allThemes.default); });
-//# sourceMappingURL=themes.js.map
 
 var width = "22em";
 var wDefaults = {
@@ -5993,7 +5977,6 @@ var positions = {
     bottomCenter: __assign(__assign({}, wDefaults), { bottom: 10, left: "50%" }),
     center: __assign(__assign({}, wDefaults), { top: "40%", left: "50%" })
 };
-//# sourceMappingURL=positions.js.map
 
 var notificationInstance = {};
 var prefixCls = "notify";
@@ -6073,7 +6056,6 @@ Notification$1.warn = function (props) {
 Notification$1.danger = function (props) {
     return Notification$1(__assign({ theme: "danger" }, props));
 };
-//# sourceMappingURL=Notification.js.map
 
 var Dot = styled__default.span(templateObject_1$5 || (templateObject_1$5 = __makeTemplateObject(["\n    background-color: ", ";\n    display: inline-block;\n    text-align: center;\n    border-radius: 50%;\n    min-height: 0.6rem;\n    min-width: 0.6rem;\n    margin-bottom: 1px;\n"], ["\n    background-color: ", ";\n    display: inline-block;\n    text-align: center;\n    border-radius: 50%;\n    min-height: 0.6rem;\n    min-width: 0.6rem;\n    margin-bottom: 1px;\n"])), function (props) { return props.color; });
 var Badge = function (_a) {
@@ -6084,13 +6066,11 @@ var Badge = function (_a) {
         children));
 };
 var templateObject_1$5;
-//# sourceMappingURL=Badge.js.map
 
 var Snackbar = function (_a) {
     var children = _a.children, props = __rest(_a, ["children"]);
     return Notification$1(__assign({ containerClass: "tc center", position: "bottomCenter", clickClose: true, closable: false, hasIcon: false, theme: "dark", center: true, duration: 3, title: "", children: children }, props));
 };
-//# sourceMappingURL=Snackbar.js.map
 
 var canUseDOM = !!(typeof window !== "undefined" && window.document && window.document.createElement);
 var Portal = /** @class */ (function (_super) {
@@ -6123,7 +6103,6 @@ var Portal = /** @class */ (function (_super) {
     };
     return Portal;
 }(React__default.Component));
-//# sourceMappingURL=Portal.js.map
 
 var lightenClose = curriedLighten(0.6);
 var ModalPortal = styled__default.div.attrs(function (props) { return (__assign(__assign({}, props), { visible: !!props.visible ? "block" : "none", speed: props.speed })); })(templateObject_1$6 || (templateObject_1$6 = __makeTemplateObject(["\n    top: 0;\n    left: 0;\n    z-index: 1;\n    width: 100%;\n    height: 100%;\n    overflow: auto;\n    position: fixed;\n    padding-top: 3rem;\n    display: ", ";\n    background-color: rgba(0, 0, 0, 0.65);\n    animation: fading ", "ms forwards ease-out;\n\n    @keyframes fading {\n        0% {\n            opacity: 0;\n        }\n        100% {\n            opacity: 1;\n        }\n    }\n"], ["\n    top: 0;\n    left: 0;\n    z-index: 1;\n    width: 100%;\n    height: 100%;\n    overflow: auto;\n    position: fixed;\n    padding-top: 3rem;\n    display: ", ";\n    background-color: rgba(0, 0, 0, 0.65);\n    animation: fading ", "ms forwards ease-out;\n\n    @keyframes fading {\n        0% {\n            opacity: 0;\n        }\n        100% {\n            opacity: 1;\n        }\n    }\n"])), function (props) { return props.visible; }, function (props) { return props.speed; });
@@ -6172,7 +6151,6 @@ var Modal = function (_a) {
                 !!footer && React__default.createElement(View, __assign({}, footerViewProps), footer)))));
 };
 var templateObject_1$6, templateObject_2$3, templateObject_3$2;
-//# sourceMappingURL=index.js.map
 
 var GlobalStyle = styled.createGlobalStyle(templateObject_1$7 || (templateObject_1$7 = __makeTemplateObject(["\n  * {\n    margin: 0;\n    padding: 0;\n    outline: 0;\n    box-sizing: border-box;\n    font-stretch: extra-condensed;\n    -webkit-font-smoothing: antialiased;\n    -moz-osx-font-smoothing: grayscale;\n    text-rendering: optimizeLegibility;\n    text-shadow: rgba(0, 0, 0, .01) 0 0 1px;\n  }\n\n  body {\n      scroll-behavior: smooth;\n      height: 100%;\n      min-height: 100%;\n      font-stretch: extra-condensed;\n      -webkit-font-smoothing: antialiased;\n      -moz-osx-font-smoothing: grayscale;\n      text-rendering: optimizeLegibility;\n      text-shadow: rgba(0, 0, 0, .01) 0 0 1px;\n  }\n\n  html, body, #root {\n    min-height:100%;\n  }\n"], ["\n  * {\n    margin: 0;\n    padding: 0;\n    outline: 0;\n    box-sizing: border-box;\n    font-stretch: extra-condensed;\n    -webkit-font-smoothing: antialiased;\n    -moz-osx-font-smoothing: grayscale;\n    text-rendering: optimizeLegibility;\n    text-shadow: rgba(0, 0, 0, .01) 0 0 1px;\n  }\n\n  body {\n      scroll-behavior: smooth;\n      height: 100%;\n      min-height: 100%;\n      font-stretch: extra-condensed;\n      -webkit-font-smoothing: antialiased;\n      -moz-osx-font-smoothing: grayscale;\n      text-rendering: optimizeLegibility;\n      text-shadow: rgba(0, 0, 0, .01) 0 0 1px;\n  }\n\n  html, body, #root {\n    min-height:100%;\n  }\n"])));
 var templateObject_1$7;

@@ -1,6 +1,8 @@
 import { Body, Button, Notification, Container, Modal, Page, AddressBox, View, Form, Input } from "lego-components";
 import React, { Fragment, useState, useEffect } from "react";
-import useMultipleEffects from "./useMultipleEffects";
+
+import Tabs from "./tabs/Tabs";
+
 
 const dataSource = [
     {
@@ -109,7 +111,7 @@ export default function App() {
 
     return (
         <Page>
-            <Body isCollapse show={collapse}>
+            {/* <Body isCollapse show={collapse}>
                 <Container>
                     <View span="70%">
                         <AddressBox
@@ -150,7 +152,45 @@ export default function App() {
             <Container>
                 <Button onPress={() => setCollapse(!collapse)} square={true}>Collapse all</Button>
                 
-            </Container>
+            </Container> */}
+
+            <h1>Tabs Demo</h1>
+
+            <Tabs>
+                <div label="HOME">
+                    <h3>Bem vindo a nossa empresa</h3>
+                    <br />
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Et quos perferendis placeat,
+                        perspiciatis fuga eius dolorum, dicta amet adipisci saepe quis ipsam, odit sit? Deleniti iure
+                        consequuntur nobis iusto itaque inventore et quidem commodi aperiam eos ex, eligendi blanditiis
+                        nihil laudantium unde aliquid dolores dolore corrupti magnam ipsam, architecto amet.
+                    </p>
+                </div>
+                <div label="PRODUTOS">
+                    <h3>Alguns dos nossos produtos:</h3>
+                    <br />
+                    <div className="produto_box">
+                        <div className="produto"></div>
+                        <div className="produto"></div>
+                        <div className="produto"></div>
+                    </div>
+                    <div className="produto_box">
+                        <div className="produto"></div>
+                        <div className="produto"></div>
+                        <div className="produto"></div>
+                    </div>
+                    <div className="produto_box">
+                        <div className="produto"></div>
+                        <div className="produto"></div>
+                        <div className="produto"></div>
+                    </div>
+                </div>
+                <div label="SERVIÇOS">SERVIÇOS</div>
+                <div label="QUEM SOMOS">QUEM SOMOS</div>
+                <div label="CONTATO">CONTATO</div>
+                <div label="PORTFÓLIO">PORTFÓLIO</div>
+            </Tabs>
         </Page>
     );
 }
