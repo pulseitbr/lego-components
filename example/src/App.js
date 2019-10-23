@@ -37,12 +37,12 @@ export default () => {
                     </Dropdown>
                 </Container>
             </Body>
-            <Modal htmlTag="dialog" onClose={() => setView(false)} visible={view} title="koeeeeeee">
-                AEEEEEEEEEEE
-            </Modal>
             <Footer htmlTag="footer">
                 <Button onClick={() => setView(true)}>Open Modal</Button>
             </Footer>
+            <Modal htmlTag="dialog" onClose={() => setView(false)} visible={view} title="koeeeeeee">
+                AEEEEEEEEEEE
+            </Modal>
         </Page>
     );
 };
