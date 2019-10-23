@@ -1,5 +1,5 @@
 import React, { useMemo, useRef } from "react";
-import styled, { ThemedStyledFunction } from "styled-components";
+import styled from "styled-components";
 import useKeyDown from "../hooks/useKeyDown";
 import useOnClickOutside from "../hooks/useOnClickOutside";
 import Theme from "../styles";
@@ -9,15 +9,17 @@ import StyleSheet from "../utils/StyleSheet";
 type Placements = "right" | "left";
 type Trigger = "onClick" | "onHover" | "onContextMenu";
 type Props = {
-    contentProps?: Omit<ThemedStyledFunction<"div", any, {}, never>, "attrs">;
+    contentProps?: React.DetailedHTMLProps<any, HTMLDivElement>;
     position?: Placements;
     children: React.ReactNode;
     triggers?: Trigger[];
-    itens: React.ReactNode;
+    itens: React.ReactChild;
     onShow?: (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => any;
-} & ThemedStyledFunction<"span", any, {}, never>;
+};
 
 type Callback = (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void;
+
+type ContentProps = HTMLDivElement & { position: Placements };
 
 const DropdownMain = styled.span`
     position: relative;
@@ -25,10 +27,10 @@ const DropdownMain = styled.span`
     text-decoration: none;
 `;
 
-const DropdownContent = styled.div.attrs(({ position = "left", ...props }: Props) => ({ ...props, position }))`
+const DropdownContent = styled.div.attrs(({ position = "left", ...props }: ContentProps) => ({ ...props, position }))`
     display: none;
     position: absolute;
-    ${(props) => props.position}: 0;
+    ${(props: Props) => props.position}: 0;
     min-width: 10rem;
     box-shadow: 0px ${StyleSheet.hairlineWidth} 2px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
