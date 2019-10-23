@@ -1,19 +1,34 @@
 import React, { useMemo, useRef } from "react";
-import styled from "styled-components";
+import styled, { ThemedStyledFunction } from "styled-components";
 import useKeyDown from "../hooks/useKeyDown";
 import useOnClickOutside from "../hooks/useOnClickOutside";
 import Theme from "../styles";
 import Keyboard from "../utils/Keyboard";
 import StyleSheet from "../utils/StyleSheet";
 
+type Placements = "right" | "left";
+type Trigger = "onClick" | "onHover" | "onContextMenu";
+type Props = {
+    contentProps?: Omit<ThemedStyledFunction<"div", any, {}, never>, "attrs">;
+    position?: Placements;
+    children: React.ReactNode;
+    triggers?: Trigger[];
+    itens: React.ReactNode;
+    onShow?: (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => any;
+} & ThemedStyledFunction<"span", any, {}, never>;
+
+type Callback = (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void;
+
 const DropdownMain = styled.span`
+    position: relative;
     display: inline-block;
     text-decoration: none;
 `;
 
-const DropdownContent = styled.div`
+const DropdownContent = styled.div.attrs(({ position = "left", ...props }: Props) => ({ ...props, position }))`
     display: none;
     position: absolute;
+    ${(props) => props.position}: 0;
     min-width: 10rem;
     box-shadow: 0px ${StyleSheet.hairlineWidth} 2px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
@@ -29,17 +44,6 @@ export const DropdownItem = styled.span`
         background-color: ${Theme.lightAlpha};
     }
 `;
-
-type Trigger = "onClick" | "onHover" | "onContextMenu";
-type Props = {
-    children: React.ReactNode;
-    triggers?: Trigger[];
-    itens: React.ReactNode;
-    onShow?: (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => any;
-};
-
-type Callback = (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void;
-
 const triggerRemap = (x: Trigger): { name: string; callback: Callback } => {
     if (x === "onHover") {
         return {
@@ -71,7 +75,7 @@ const triggerRemap = (x: Trigger): { name: string; callback: Callback } => {
 
 const viewDisplay = "block";
 
-const Dropdown = ({ children, onShow, itens, triggers = ["onClick"] }: Props) => {
+const Dropdown = ({ children, position = "left", contentProps, onShow, itens, triggers = ["onClick"] }: Props) => {
     const ref = useRef<HTMLDivElement>(null);
 
     const click = (callback: Callback) => (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
@@ -110,7 +114,9 @@ const Dropdown = ({ children, onShow, itens, triggers = ["onClick"] }: Props) =>
     return (
         <DropdownMain {...triggerEvents}>
             {children}
-            <DropdownContent ref={ref}>{itens}</DropdownContent>
+            <DropdownContent {...contentProps} position={position} ref={ref}>
+                {itens}
+            </DropdownContent>
         </DropdownMain>
     );
 };

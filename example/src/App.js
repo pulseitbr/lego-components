@@ -1,46 +1,31 @@
-import {
-    Body,
-    Button,
-    CircleAvatar,
-    Container,
-    Dropdown,
-    DropdownItem,
-    FlatList,
-    Footer,
-    Modal,
-    Page,
-    View
-} from "lego-components";
+import { Body, Button, Container, Dropdown, DropdownItem, Footer, Modal, Page } from "lego-components";
 import React, { useState } from "react";
-
-const data = [
-    {
-        id: new Date().getMilliseconds() + Math.random(),
-        name: "Chuck Norris",
-        birthDate: "01/01/1970"
-    },
-    {
-        id: new Date().getMilliseconds() + Math.random(),
-        name: "Chuck Norris",
-        birthDate: "01/01/1970"
-    },
-    {
-        id: new Date().getMilliseconds() + Math.random(),
-        name: "Chuck Norris",
-        birthDate: "01/01/1970"
-    }
-];
 
 export default () => {
     const [view, setView] = useState(false);
     return (
         <Page htmlTag="main">
             <Body>
-                <Container>
+                <Container
+                    style={{
+                        alignContent: "flex-end",
+                        alignItems: "flex-end",
+                        justifyContent: "flex-end",
+                        textAlign: "right"
+                    }}
+                >
                     <Dropdown
+                        position="right"
                         triggers={["onHover", "onClick"]}
                         itens={
-                            <Container>
+                            <Container
+                                style={{
+                                    alignContent: "flex-end",
+                                    alignItems: "flex-end",
+                                    justifyContent: "flex-end",
+                                    textAlign: "left"
+                                }}
+                            >
                                 <DropdownItem>Item 1</DropdownItem>
                                 <DropdownItem>Item 2</DropdownItem>
                                 <DropdownItem>Item 3</DropdownItem>
@@ -48,7 +33,6 @@ export default () => {
                             </Container>
                         }
                     >
-                        <CircleAvatar size={3} src="https://www.w3schools.com/w3images/avatar5.png" />
                         Dropdown
                     </Dropdown>
                 </Container>
