@@ -1,19 +1,28 @@
-const hexRegex = /[A-Fa-f0-9]/
+const hexRegex = /[A-Fa-f0-9]/;
 
-const alphaRegex = /[A-Za-z]/
+const specialRegex = /[@#$%*¨*(!)\\\/=+§_<>,\.?;-]/;
 
-const decimalRegex = /\d/
+const alphaRegex = /[A-Za-z]/;
 
-const alphaNumericRegex = /[\S]/
+const decimalRegex = /\d/;
+
+const binaryRegex = /[01]/;
+
+const alphaNumericRegex = /[\S]/;
 
 const maskTemplate = {
+    b: binaryRegex,
+    B: binaryRegex,
+    s: specialRegex,
+    S: specialRegex,
     H: hexRegex,
     h: hexRegex,
     A: alphaRegex,
     a: alphaRegex,
     0: decimalRegex,
+    9: decimalRegex,
     X: alphaNumericRegex,
-    x: alphaNumericRegex,
+    x: alphaNumericRegex
 };
 
 const maskCreator = (template = "") =>

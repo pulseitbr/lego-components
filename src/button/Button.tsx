@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Loader } from "../";
+import Loader from "../loader/Loader";
 import Theme from "../styles";
 
 type THEMES =
@@ -36,6 +36,7 @@ export type ButtonProps = {
     dark?: boolean;
     theme?: THEMES;
     styleType?: THEMES;
+    onPress?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => any;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 const ThinButton = styled.button`
@@ -155,6 +156,8 @@ const defineTheme = (props: ButtonProps & Object, styleType: string, theme: stri
     return styleType || theme;
 };
 
+const voidFn = () => {};
+
 const Button = ({
     full = false,
     circle = false,
@@ -176,14 +179,16 @@ const Button = ({
     const onClickOrPress = onClick || onPress;
     const ifDisable = html.disabled ? "disabled" : themeDefined;
     const cursor = html.disabled ? ("not-allowed" as "not-allowed") : ("pointer" as "pointer");
-    
+
+    const clickPressAction = onClick || onPress || voidFn;
+
     const onClickButton = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         if (stopPropagation) {
             event.stopPropagation();
         }
         event.persist();
         if (!!onClickOrPress) {
-            return onClickOrPress(event);
+            return clickPressAction(event);
         }
     };
 

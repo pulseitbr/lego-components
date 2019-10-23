@@ -22,6 +22,7 @@ export declare type ButtonProps = {
     dark?: boolean;
     theme?: THEMES;
     styleType?: THEMES;
+    onPress?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => any;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 declare const Button: ({ full, circle, loading, square, loadingHeight, style, styleType, rippleColor, theme, size, children, onClick, onPress, stopPropagation, ...html }: ButtonProps) => JSX.Element;
 export default Button;

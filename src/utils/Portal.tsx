@@ -1,33 +1,34 @@
-import React from "react";
+import { useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 
 const canUseDOM = !!(typeof window !== "undefined" && window.document && window.document.createElement);
 
-class Portal extends React.Component<any, any, any> {
-    componentWillUnmount() {
-        //@ts-ignore
-        if (this.defaultNode) {
+const ReactPortal = (props: any): any => {
+    const defaultNode = useRef(null);
+    useEffect(() => {
+        return () => {
             //@ts-ignore
-            document.body.removeChild(this.defaultNode);
-        }
-        //@ts-ignore
-        this.defaultNode = null;
-    }
+            if (defaultNode.current) {
+                //@ts-ignore
+                document.body.removeChild(defaultNode.current);
+            }
+            //@ts-ignore
+            defaultNode.current = null;
+        };
+    }, []);
 
-    render() {
-        if (!canUseDOM) {
-            return null;
-        }
-        //@ts-ignore
-        if (!this.props.node && !this.defaultNode) {
-            //@ts-ignore
-            this.defaultNode = document.createElement("div");
-            //@ts-ignore
-            document.body.appendChild(this.defaultNode);
-        }
-        //@ts-ignore
-        return ReactDOM.createPortal(this.props.children, this.props.node || this.defaultNode);
+    if (!canUseDOM) {
+        return null;
     }
-}
+    //@ts-ignore
+    if (!props.node && !defaultNode.current) {
+        //@ts-ignore
+        defaultNode.current = document.createElement("div");
+        //@ts-ignore
+        document.body.appendChild(defaultNode.current);
+    }
+    //@ts-ignore
+    return ReactDOM.createPortal(props.children, props.node || defaultNode.current);
+};
 
-export default Portal;
+export default ReactPortal;

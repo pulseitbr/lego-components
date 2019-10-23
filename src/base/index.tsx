@@ -1,5 +1,7 @@
+import { FlexDirectionProperty } from "csstype";
 import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
+import { HtmlTag } from "../@types";
 
 type Value = number | string;
 
@@ -11,22 +13,25 @@ export type LegoMediaQuery = {
     large?: Value;
     xlarge?: Value;
 };
+
 export type TypeContainer = LegoMediaQuery &
-    React.HTMLAttributes<HTMLDivElement> & {
+    React.HTMLAttributes<HTMLElement> & {
         time?: Value;
+        direction?: FlexDirectionProperty;
     };
 
-const ResponsiveContainer = styled.div.attrs((props: TypeContainer) => {
+const Flex = styled.div.attrs(({ direction = "row", ...props }: TypeContainer) => {
     const span = props.span || 0;
     const xsmall = props.xsmall || "100%";
     const small = props.small || "100%";
     const medium = props.medium || span;
     const large = props.large || span;
     const xlarge = props.xlarge || span;
-
-    return { ...props, span, xsmall, medium, large, small, xlarge };
+    return { ...props, span, xsmall, medium, large, small, xlarge, direction };
 })`
     flex: 0 0 ${(props: TypeContainer) => props.span};
+    flex-wrap: wrap;
+    flex-direction: ${(props: TypeContainer) => props.direction};
 
     @media only screen and (max-width: 600px) {
         flex: 0 0 ${(props: TypeContainer) => props.xsmall};
@@ -49,29 +54,28 @@ const ResponsiveContainer = styled.div.attrs((props: TypeContainer) => {
     }
 `;
 
-const Collapse = styled(ResponsiveContainer).attrs((props: TypeContainer) => {
+const Collapse = styled(Flex).attrs((props: TypeContainer) => {
     const time = props.time || 350;
     return { ...props, time };
 })`
     max-height: 0;
-    height: 100%;
     overflow: hidden;
     transition: max-height ${(props: any) => props.time}ms cubic-bezier(0.45, 0.27, 0.63, 0.51);
-    flex: 0 0 ${(props: TypeContainer) => props.span};
 `;
 
 type ResponsiveProps = {
     isCollapse?: boolean;
     show?: boolean;
-};
+    htmlTag?: HtmlTag;
+} & TypeContainer;
 
-const Responsive = ({ isCollapse = false, show = true, children, ...props }: TypeContainer & ResponsiveProps) => {
+const Responsive = ({ isCollapse = false, show = true, children, htmlTag = "div", ...props }: ResponsiveProps) => {
     const ref: React.RefObject<HTMLDivElement> = useRef(null);
     useEffect(() => {
         if (!!ref.current) {
             if (!!isCollapse) {
                 if (show) {
-                    ref.current.style.maxHeight = `${ref.current.scrollHeight}px`;
+                    ref.current.style.maxHeight = "100%";
                 } else {
                     ref.current.style.maxHeight = null;
                 }
@@ -81,14 +85,14 @@ const Responsive = ({ isCollapse = false, show = true, children, ...props }: Typ
 
     if (!isCollapse) {
         return (
-            <ResponsiveContainer ref={ref} {...props}>
+            <Flex as={htmlTag} {...props}>
                 {children}
-            </ResponsiveContainer>
+            </Flex>
         );
     }
 
     return (
-        <Collapse ref={ref} {...props}>
+        <Collapse as={htmlTag} ref={ref} {...props}>
             {children}
         </Collapse>
     );
@@ -96,12 +100,14 @@ const Responsive = ({ isCollapse = false, show = true, children, ...props }: Typ
 
 export const Left = styled(Responsive)`
     flex: 1;
+    text-align: left;
     align-items: flex-start;
     align-self: center;
 `;
 
 export const Right = styled(Responsive)`
     flex: 1;
+    text-align: right;
     align-items: flex-end;
     align-self: center;
 `;
@@ -110,22 +116,16 @@ export const View = styled(Responsive)`
     justify-items: center;
     flex-wrap: wrap;
 `;
-
-export const Container = styled(Responsive)`
-    display: flex;
-    justify-items: center;
-    flex-wrap: wrap;
-    width: 100%;
-`;
 export const Page = styled(Responsive)`
-    display: flex;
-    align-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 100%;
-    min-height: 100%;
     width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
     min-width: 100%;
+    min-height: 100%;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
 `;
 export const Body = styled(Responsive)`
     flex: 1 0 auto;
@@ -135,9 +135,16 @@ export const Body = styled(Responsive)`
     align-items: center;
     align-self: center;
 `;
-
-export const Footer = styled(Responsive)`
+export const Container = styled(Responsive)`
+    display: flex;
+    justify-items: center;
+    flex-wrap: wrap;
+    min-width: 100%;
+`;
+export const Footer = styled(Container)`
     flex-shrink: 0;
+    flex: 0;
+    flex-wrap: wrap;
     justify-content: center;
     align-content: center;
     align-self: center;
