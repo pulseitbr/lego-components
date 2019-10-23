@@ -156,6 +156,8 @@ const defineTheme = (props: ButtonProps & Object, styleType: string, theme: stri
     return styleType || theme;
 };
 
+const voidFn = () => {};
+
 const Button = ({
     full = false,
     circle = false,
@@ -173,16 +175,19 @@ const Button = ({
     stopPropagation = true,
     ...html
 }: ButtonProps) => {
-    const themeDefined = defineTheme(html, styleType, theme) || "primary";
+    const themeDefined = defineTheme(html, styleType, theme);
+    const onClickOrPress = onClick || onPress;
+    const ifDisable = html.disabled ? "disabled" : themeDefined;
+    const cursor = html.disabled ? ("not-allowed" as "not-allowed") : ("pointer" as "pointer");
 
-    const clickPressAction = onClick || onPress;
+    const clickPressAction = onClick || onPress || voidFn;
 
     const onClickButton = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         if (stopPropagation) {
             event.stopPropagation();
         }
         event.persist();
-        if (!!clickPressAction) {
+        if (!!onClickOrPress) {
             return clickPressAction(event);
         }
     };

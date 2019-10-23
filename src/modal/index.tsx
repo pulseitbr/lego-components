@@ -1,14 +1,23 @@
 import { lighten } from "polished";
-import React, { CSSProperties, Fragment, useEffect } from "react";
+import React, { CSSProperties, useEffect } from "react";
 import { MdClose } from "react-icons/md";
 import styled, { ThemedStyledFunction } from "styled-components";
 import { TypeContainer, View } from "../base";
+import useBlockScroll from "../hooks/useBlockScroll";
 import Theme from "../styles";
-import Portal from "../utils/Portal";
+import ReactPortal from "../utils/Portal";
+import StyleSheet from "../utils/StyleSheet";
+import { HtmlTag } from "../@types";
+import KeyboardMap from "../utils/Keyboard";
 
 const lightenClose = lighten(0.6);
 
-const ModalPortal = styled.div.attrs((props: any) => ({ ...props, visible: !!props.visible ? "block" : "none", speed: props.speed }))`
+const ModalPortal = styled.div.attrs((props: any) => ({
+    ...props,
+    speed: props.speed,
+    visible: !!props.visible ? "block" : "none",
+    paddingVertical: props.paddingVertical || "3rem"
+}))`
     top: 0;
     left: 0;
     z-index: 1;
@@ -16,7 +25,8 @@ const ModalPortal = styled.div.attrs((props: any) => ({ ...props, visible: !!pro
     height: 100%;
     overflow: auto;
     position: fixed;
-    padding-top: 3rem;
+    padding-top: ${(props) => props.paddingVertical};
+    padding-bottom: ${(props) => props.paddingVertical};
     display: ${(props) => props.visible};
     background-color: rgba(0, 0, 0, 0.65);
     animation: fading ${(props) => props.speed}ms forwards ease-out;
@@ -33,7 +43,7 @@ const ModalPortal = styled.div.attrs((props: any) => ({ ...props, visible: !!pro
 
 type Content = ThemedStyledFunction<"div", any, any, any> & { width: string | number };
 
-const ModalContent = styled.div.attrs((props: Content) => ({
+const ModalContent = styled.dialog.attrs((props: Content) => ({
     ...props,
     width: props.width
 }))`
@@ -41,6 +51,7 @@ const ModalContent = styled.div.attrs((props: Content) => ({
     margin: auto;
     min-width: 360px;
     max-width: 100%;
+    overflow-y: hidden;
     width: ${(props) => props.width};
     border: 1px solid ${Theme.darkAlpha};
 `;
@@ -61,6 +72,8 @@ const Close = styled.span`
 `;
 
 type Props = {
+    htmlTag?: HtmlTag;
+    closeColor?: string;
     onClose: () => any;
     title?: React.ReactNode;
     footer?: React.ReactNode;
@@ -71,6 +84,7 @@ type Props = {
     headerProps?: Partial<TypeContainer>;
     bodyProps?: Partial<TypeContainer>;
     closeOnEsc?: boolean;
+    maskPaddingVertical?: string;
     footerProps?: Partial<TypeContainer>;
 } & React.HTMLAttributes<HTMLDivElement>;
 
@@ -85,20 +99,26 @@ const Modal = ({
     visible = false,
     width = "60%",
     footer,
+    htmlTag = "dialog",
     onClose,
+    maskPaddingVertical = "3rem",
     headerProps = defaultModalPartProps,
     bodyProps = defaultModalPartProps,
     footerProps = defaultModalPartProps,
     title,
+    closeColor = "#121212",
     closeOnEsc = true,
     children,
     animationTime = 950
 }: Props) => {
-    const toggleVisibility = (e: any) => {
-        if (e.key === "Escape" && closeOnEsc) {
+
+    const toggleVisibility = (e: KeyboardEvent) => {
+        if (e.keyCode === KeyboardMap.esc && closeOnEsc) {
             onClose();
         }
     };
+
+    useBlockScroll(visible);
 
     useEffect(() => {
         window.addEventListener("keydown", toggleVisibility);
@@ -110,27 +130,40 @@ const Modal = ({
         onClose();
     };
 
-    const onModalClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        event.stopPropagation();
-        event.preventDefault();
+    const onModalClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
         event.persist();
+        event.stopPropagation();
     };
 
     const headerViewProps = {
         ...headerProps,
-        style: { borderBottom: `1px solid ${Theme.darkAlpha}`, ...defaultModalPartProps.style, ...headerProps.style }
+        style: {
+            borderBottom: `${StyleSheet.hairlineWidth} solid ${Theme.darkAlpha}`,
+            ...defaultModalPartProps.style,
+            ...headerProps.style
+        }
     };
     const bodyViewProps = { ...bodyProps, style: { ...defaultModalPartProps.style, ...bodyProps.style } };
-    const footerViewProps = { ...footerProps, style: { textAlign: "right" as "right", ...defaultModalPartProps.style, ...footerProps.style } };
+    const footerViewProps = {
+        ...footerProps,
+        style: { textAlign: "right" as "right", ...defaultModalPartProps.style, ...footerProps.style }
+    };
+
     if (!visible) {
-        return <Fragment />;
+        return null;
     }
+
     return (
-        <Portal>
-            <ModalPortal onClick={onClickMask} visible={visible} speed={animationTime}>
-                <ModalContent onClick={onModalClick} width={width}>
+        <ReactPortal>
+            <ModalPortal
+                onClick={onClickMask}
+                visible={visible}
+                maskPaddingVertical={maskPaddingVertical}
+                speed={animationTime}
+            >
+                <ModalContent as={htmlTag} open={visible} onClick={onModalClick} width={width}>
                     <View {...headerViewProps}>
-                        <Close color="#121212" onClick={onClose}>
+                        <Close color={closeColor} onClick={onClose}>
                             <MdClose />
                         </Close>
                         {title}
@@ -139,7 +172,7 @@ const Modal = ({
                     {!!footer && <View {...footerViewProps}>{footer}</View>}
                 </ModalContent>
             </ModalPortal>
-        </Portal>
+        </ReactPortal>
     );
 };
 

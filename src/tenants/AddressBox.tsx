@@ -11,7 +11,7 @@ import { isEmpty } from "sidekicker/lib/comparable";
 import { SOFT_RADIUS } from "../styles/Constants";
 
 export type AddressBoxItem = {
-    nomeLoja: string;
+    nomeLoja?: string;
     nrSeqEndereco: number;
     cep: string;
     numero: string;

@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
+import Decimal from "decimal.js";
 
 const formatBrlToFloat = (currency: string) => {
     const final = currency
         .replace(/,/g, ".")
         .replace(/(.*)\./, (x) => x.replace(/\./g, "") + ".")
         .replace(/[^0-9\.]/g, "");
-    return Number.parseFloat(final);
+    return new Decimal(final).toDP(2).toNumber();
 };
 export type CurrencyInputType = React.InputHTMLAttributes<HTMLInputElement> & {
     prefix?: string;
+    name: string;
+    value: string;
     separator?: string;
-    onChange?(e: React.ChangeEvent<HTMLInputElement> & { target: { rawValue: number } }): any;
+    onChange(e: React.ChangeEvent<HTMLInputElement> & { target: { rawValue: number } }): any;
 };
 
 const fromValue = (value = "") => value.replace(/(-(?!\d))|[^0-9|-]/g, "") || "";
@@ -67,17 +70,7 @@ const CurrencyInput = ({ prefix = "R$ ", separator = ",", defaultValue, ...props
         }
     };
 
-    return (
-        <input
-            {...props}
-            type="text"
-            value={value}
-            name={props.name}
-            onChange={change}
-            inputMode="decimal"
-            pattern="^[A-Z]{1,3}[0-9$,. ]+$"
-        />
-    );
+    return <input {...props} type="text" value={value} name={props.name} onChange={change} inputMode="decimal" pattern="^[A-Z]{1,3}[0-9$,. ]+$" />;
 };
 
 export default CurrencyInput;

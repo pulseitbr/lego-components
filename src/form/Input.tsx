@@ -40,6 +40,9 @@ export type MaskInputProps = {
     usePlaceholder?: boolean;
     type?: InputTypes;
     mask?: MasksTypes | Array<string | RegExp>;
+    name: string;
+    value: string;
+    onChange(e: React.ChangeEvent<HTMLInputElement>): any;
 };
 
 type Props = MaskInputProps & CurrencyInputType & InputHTMLAttributes<any>;
@@ -66,19 +69,14 @@ const instanceMaskValues = (mask: MasksTypes, usePl: boolean, html: any, value: 
 
 const noMask = ["matricula"];
 
-const Input = ({ title = "", type = "text", mask, value, usePlaceholder = true, ...html }: Props) => {
+const Input = ({ title = "", type = "text", mask, usePlaceholder = true, ...html }: Props) => {
+    const value = html.value;
     if (mask === "currency") {
         return <CurrencyInput {...html} value={value} />;
     }
     const options = { mask, name: html.name, value, type };
     if (typeof mask === "string" && masks.hasOwnProperty(mask)) {
-        const { extraProps, maskRegex, maskedValue, placeholder } = instanceMaskValues(
-            mask,
-            usePlaceholder,
-            html,
-            value,
-            html
-        );
+        const { extraProps, maskRegex, maskedValue, placeholder } = instanceMaskValues(mask, usePlaceholder, html, value, html);
         return (
             <MaskedInput
                 {...html}
