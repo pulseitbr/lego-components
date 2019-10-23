@@ -1,6 +1,7 @@
 import React from "react";
 declare type THEMES = "danger" | "primary" | "info" | "success" | "warn" | "transparent" | "light" | "none" | "dark" | "disabledTransparent";
 export declare type ButtonProps = {
+    onPress?(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): any;
     rippleColor?: string;
     stopPropagation?: boolean;
     size?: number;
@@ -22,5 +23,5 @@ export declare type ButtonProps = {
     theme?: THEMES;
     styleType?: THEMES;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
-declare const Button: ({ full, circle, loading, square, loadingHeight, style, styleType, rippleColor, theme, size, children, onClick, stopPropagation, ...html }: ButtonProps) => JSX.Element;
+declare const Button: ({ full, circle, loading, square, loadingHeight, style, styleType, rippleColor, theme, size, children, onClick, onPress, stopPropagation, ...html }: ButtonProps) => JSX.Element;
 export default Button;

@@ -148,7 +148,8 @@ export default function App() {
                 AEEEEEEEEEEEEEEEEE
             </Modal>
             <Container>
-                <Button onClick={() => setCollapse(!collapse)}>Collapse all</Button>
+                <Button onPress={() => setCollapse(!collapse)} square={true}>Collapse all</Button>
+                
             </Container>
         </Page>
     );

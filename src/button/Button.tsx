@@ -3,8 +3,19 @@ import styled from "styled-components";
 import { Loader } from "../";
 import Theme from "../styles";
 
-type THEMES = "danger" | "primary" | "info" | "success" | "warn" | "transparent" | "light" | "none" | "dark" | "disabledTransparent";
+type THEMES =
+    | "danger"
+    | "primary"
+    | "info"
+    | "success"
+    | "warn"
+    | "transparent"
+    | "light"
+    | "none"
+    | "dark"
+    | "disabledTransparent";
 export type ButtonProps = {
+    onPress?(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): any;
     rippleColor?: string;
     stopPropagation?: boolean;
     size?: number;
@@ -157,18 +168,22 @@ const Button = ({
     size = 1,
     children,
     onClick,
+    onPress,
     stopPropagation = true,
     ...html
 }: ButtonProps) => {
     const themeDefined = defineTheme(html, styleType, theme);
-
+    const onClickOrPress = onClick || onPress;
+    const ifDisable = html.disabled ? "disabled" : themeDefined;
+    const cursor = html.disabled ? ("not-allowed" as "not-allowed") : ("pointer" as "pointer");
+    
     const onClickButton = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         if (stopPropagation) {
             event.stopPropagation();
         }
         event.persist();
-        if (!!onClick) {
-            return onClick(event);
+        if (!!onClickOrPress) {
+            return onClickOrPress(event);
         }
     };
 
@@ -186,9 +201,6 @@ const Button = ({
             </Transparent>
         );
     }
-
-    const ifDisable = html.disabled ? "disabled" : themeDefined;
-    const cursor = html.disabled ? ("not-allowed" as "not-allowed") : ("pointer" as "pointer");
 
     return (
         //@ts-ignore

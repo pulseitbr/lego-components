@@ -317,15 +317,18 @@ var defineTheme = function (props, styleType, theme) {
     return styleType || theme;
 };
 var Button = function (_a) {
-    var _b = _a.full, full = _b === void 0 ? false : _b, _c = _a.circle, _d = _a.loading, loading = _d === void 0 ? false : _d, _e = _a.square, square = _e === void 0 ? false : _e, _f = _a.loadingHeight, _g = _a.style, style = _g === void 0 ? {} : _g, _h = _a.styleType, styleType = _h === void 0 ? "primary" : _h, _j = _a.rippleColor, rippleColor = _j === void 0 ? Theme.primary : _j, theme = _a.theme, _k = _a.size, size = _k === void 0 ? 1 : _k, children = _a.children, onClick = _a.onClick, _l = _a.stopPropagation, stopPropagation = _l === void 0 ? true : _l, html = __rest(_a, ["full", "circle", "loading", "square", "loadingHeight", "style", "styleType", "rippleColor", "theme", "size", "children", "onClick", "stopPropagation"]);
+    var _b = _a.full, full = _b === void 0 ? false : _b, _c = _a.circle, _d = _a.loading, loading = _d === void 0 ? false : _d, _e = _a.square, square = _e === void 0 ? false : _e, _f = _a.loadingHeight, _g = _a.style, style = _g === void 0 ? {} : _g, _h = _a.styleType, styleType = _h === void 0 ? "primary" : _h, _j = _a.rippleColor, rippleColor = _j === void 0 ? Theme.primary : _j, theme = _a.theme, _k = _a.size, size = _k === void 0 ? 1 : _k, children = _a.children, onClick = _a.onClick, onPress = _a.onPress, _l = _a.stopPropagation, stopPropagation = _l === void 0 ? true : _l, html = __rest(_a, ["full", "circle", "loading", "square", "loadingHeight", "style", "styleType", "rippleColor", "theme", "size", "children", "onClick", "onPress", "stopPropagation"]);
     var themeDefined = defineTheme(html, styleType, theme);
+    var onClickOrPress = onClick || onPress;
+    var ifDisable = html.disabled ? "disabled" : themeDefined;
+    var cursor = html.disabled ? "not-allowed" : "pointer";
     var onClickButton = function (event) {
         if (stopPropagation) {
             event.stopPropagation();
         }
         event.persist();
-        if (!!onClick) {
-            return onClick(event);
+        if (!!onClickOrPress) {
+            return onClickOrPress(event);
         }
     };
     if (themeDefined === "transparent") {
@@ -336,8 +339,6 @@ var Button = function (_a) {
     else if (themeDefined === "none") {
         return (React__default.createElement(Transparent, __assign({}, html, { onClick: onClickButton }), children));
     }
-    var ifDisable = html.disabled ? "disabled" : themeDefined;
-    var cursor = html.disabled ? "not-allowed" : "pointer";
     return (
     //@ts-ignore
     React__default.createElement(ParentButton, __assign({}, html, { full: full, size: size, pill: !square, bColor: Theme.primary, bgColor: Theme.primary, onClick: onClickButton, style: __assign({ cursor: cursor }, style), textColor: Theme.lightLight, theme: styledProps[ifDisable], disabled: loading ? true : !!html.disabled }),
@@ -1755,6 +1756,7 @@ var AddressBox = function (_a) {
                 medium: medium
             }) })));
 };
+//# sourceMappingURL=AddressBox.js.map
 
 var root = document.querySelector(":root");
 //@ts-ignore
