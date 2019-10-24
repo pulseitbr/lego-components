@@ -36,6 +36,7 @@ export { default as FlatList } from "./utils/FlatList";
 export { default as Keyboard } from "./utils/Keyboard";
 export { default as Portal } from "./utils/Portal";
 export { default as StyleSheet } from "./utils/StyleSheet";
+export { default as BBCode } from "./utils/BBCode";
 export const GlobalStyle = createGlobalStyle`
   * {
     margin: 0;

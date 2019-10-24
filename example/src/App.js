@@ -1,40 +1,15 @@
-import { Body, Button, Container, Dropdown, DropdownItem, Footer, Modal, Page } from "lego-components";
+import { Body, BBCode, Button, Container, Dropdown, DropdownItem, Footer, Modal, Page } from "lego-components";
 import React, { useState } from "react";
 
 export default () => {
     const [view, setView] = useState(false);
+    const string = "[insta user='https://instagram.com']Meu número do [line]zap[/line][/zap]";
     return (
         <Page htmlTag="main">
             <Body>
-                <Container
-                    style={{
-                        alignContent: "flex-end",
-                        alignItems: "flex-end",
-                        justifyContent: "flex-end",
-                        textAlign: "right"
-                    }}
-                >
-                    <Dropdown
-                        position="right"
-                        triggers={["onHover", "onClick"]}
-                        itens={
-                            <Container
-                                style={{
-                                    alignContent: "flex-end",
-                                    alignItems: "flex-end",
-                                    justifyContent: "flex-end",
-                                    textAlign: "left"
-                                }}
-                            >
-                                <DropdownItem>Item 1</DropdownItem>
-                                <DropdownItem>Item 2</DropdownItem>
-                                <DropdownItem>Item 3</DropdownItem>
-                                <DropdownItem>Item 4</DropdownItem>
-                            </Container>
-                        }
-                    >
-                        Dropdown
-                    </Dropdown>
+                <Container>
+                    {BBCode(string)}
+                    <p dangerouslySetInnerHTML={{ __html: BBCode(string) }}></p>
                 </Container>
             </Body>
             <Footer htmlTag="footer">

@@ -36,6 +36,7 @@
         "react-dropzone": "^10.1.10",
         "react-icons": "^3.7.0",
         "react-portal-minimal": "^4.0.2",
+        "react-ripples": "^2.2.1",
         "react-text-mask": "^5.4.3",
         "shx": "^0.3.2",
         "sidekicker": "^0.0.28",

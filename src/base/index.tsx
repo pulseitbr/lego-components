@@ -54,10 +54,7 @@ const Flex = styled.div.attrs(({ direction = "row", ...props }: TypeContainer) =
     }
 `;
 
-const Collapse = styled(Flex).attrs((props: TypeContainer) => {
-    const time = props.time || 350;
-    return { ...props, time };
-})`
+const Collapse = styled(Flex).attrs(({ time = 450, ...props }: TypeContainer) => ({ ...props, time }))`
     max-height: 0;
     overflow: hidden;
     transition: max-height ${(props: any) => props.time}ms cubic-bezier(0.45, 0.27, 0.63, 0.51);
@@ -142,11 +139,11 @@ export const Container = styled(Responsive)`
     min-width: 100%;
 `;
 export const Footer = styled(Container)`
-    flex-shrink: 0;
     flex: 0;
+    flex-shrink: 0;
     flex-wrap: wrap;
-    justify-content: center;
-    align-content: center;
     align-self: center;
     align-items: center;
+    align-content: center;
+    justify-content: center;
 `;

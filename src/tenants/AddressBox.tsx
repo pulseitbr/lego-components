@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, View, Right, Left } from "../base";
 import FlatList from "../list/FlatList";
-import { SubTitle } from "../typography";
+import { SubTitle, Text } from "../typography";
 import { formatCep } from "sidekicker/lib/strings/Format";
 import Radiobox from "../form/Radiobox";
 import { MdHome, MdStore } from "react-icons/md";
@@ -75,8 +75,7 @@ const BindCard = (props: BindProps) => (addr: AddressBoxItem) => {
                     </Right>
                     <View span="100%">
                         {addr.logradouro}, {addr.numero}
-                        {!!addr.complemento ? `, ${addr.complemento}` : ""}. {addr.bairro} -{" "}
-                        {addr.cidade} - {addr.uf}
+                        {!!addr.complemento ? `, ${addr.complemento}` : ""}. {addr.bairro} - {addr.cidade} - {addr.uf}
                     </View>
                 </Container>
             </View>
@@ -109,10 +108,10 @@ const BindCard = (props: BindProps) => (addr: AddressBoxItem) => {
                     </Right>
                 </Container>
                 <Container>
-                    <span style={{ fontSize: "0.8rem" }}>Logradouro: </span>{" "}
-                    <span className="b">
+                    <Text style={{ fontSize: "0.8rem" }}>Logradouro: </Text>{" "}
+                    <Text className="b">
                         {addr.logradouro}, {addr.numero}
-                    </span>
+                    </Text>
                 </Container>
                 <Container>
                     <small>Bairro: </small> <span className="b">{addr.bairro}</span>
@@ -121,7 +120,9 @@ const BindCard = (props: BindProps) => (addr: AddressBoxItem) => {
                     <small>Cidade: </small> <span className="b">{addr.cidade}</span>
                 </Container>
                 <Container>
-                    <small>Estado: </small> <span className="b">{addr.uf}</span>
+                    <Text>
+                        <small>Estado: </small> <span className="b">{addr.uf}</span>
+                    </Text>
                 </Container>
             </Container>
         </View>

@@ -3,32 +3,44 @@ import styled from "styled-components";
 import Loader from "../loader/Loader";
 import Theme from "../styles";
 
-type THEMES = "danger" | "primary" | "info" | "success" | "warn" | "transparent" | "light" | "none" | "dark" | "disabledTransparent";
-export type ButtonProps = {
-    rippleColor?: string;
-    stopPropagation?: boolean;
-    size?: number;
-    full?: boolean;
+type THEMES =
+    | "danger"
+    | "primary"
+    | "info"
+    | "success"
+    | "warn"
+    | "transparent"
+    | "light"
+    | "none"
+    | "dark"
+    | "disabledTransparent";
+interface IButtonProps {
     circle?: boolean;
-    loading?: boolean;
-    square?: boolean;
-    loadingHeight?: number;
     danger?: boolean;
-    primary?: boolean;
-    info?: boolean;
-    success?: boolean;
-    warn?: boolean;
-    transparent?: boolean;
-    disabledTransparent?: boolean;
-    light?: boolean;
-    none?: boolean;
     dark?: boolean;
-    theme?: THEMES;
-    styleType?: THEMES;
+    disabledTransparent?: boolean;
+    full?: boolean;
+    info?: boolean;
+    light?: boolean;
+    loading?: boolean;
+    loadingHeight?: number;
+    none?: boolean;
     onPress?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => any;
-} & React.ButtonHTMLAttributes<HTMLButtonElement>;
+    primary?: boolean;
+    rippleColor?: string;
+    size?: number;
+    square?: boolean;
+    stopPropagation?: boolean;
+    styleType?: THEMES;
+    success?: boolean;
+    theme?: THEMES;
+    transparent?: boolean;
+    warn?: boolean;
+}
 
-const ThinButton = styled.button`
+export type ButtonProps = IButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>;
+
+const ThinButton = styled.button<ButtonProps & { pill?: boolean }>`
     outline: none;
     font-size: 0.9rem;
     box-shadow: none;
@@ -51,7 +63,7 @@ const ThinButton = styled.button`
     }
 `;
 
-const ParentButton = styled(ThinButton)`
+const ParentButton = styled(ThinButton)<ButtonProps & { bgColor: string; textColor: string }>`
     padding: ${(props: any) => 0.25 * props.size}rem;
     padding-left: ${(props: any) => 0.5 * props.size}rem;
     padding-right: ${(props: any) => 0.5 * props.size}rem;
@@ -61,24 +73,29 @@ const ParentButton = styled(ThinButton)`
     ${(props: any) => props.theme};
 `;
 
-const ghostStyle = (primaryColor: string, hoverColor: string, bgColor: string) => `
+const ghostStyle = (primaryColor: string, hoverColor: string, bgColor: string, clickColor: string) => `
 	color: ${primaryColor};
 	background-color: transparent;
 	border-color: ${bgColor};
 	&:hover { color: ${hoverColor}; background-color: ${bgColor}; }
-	&:active { color: ${hoverColor}; background-color: ${bgColor}; }
+	&:active { color: ${hoverColor}; background-color: ${clickColor}; }
 `;
 
 const styledProps = {
-    warn: ghostStyle(Theme.warn, Theme.light, Theme.warn),
-    info: ghostStyle(Theme.info, Theme.light, Theme.info),
-    dark: ghostStyle(Theme.dark, Theme.light, Theme.dark),
-    light: ghostStyle(Theme.light, Theme.light, Theme.light),
-    danger: ghostStyle(Theme.danger, Theme.light, Theme.danger),
-    primary: ghostStyle(Theme.primary, Theme.light, Theme.primary),
-    success: ghostStyle(Theme.success, Theme.light, Theme.success),
-    disabled: `${ghostStyle(Theme.disabled, Theme.darkAlpha, "transparent")} cursor: not-allowed;`,
-    disabledTransparent: `${ghostStyle(Theme.disabled, Theme.disabled, "transparent")} cursor: not-allowed; &:disabled {
+    warn: ghostStyle(Theme.warn, Theme.light, Theme.warn, Theme.warnDark),
+    info: ghostStyle(Theme.info, Theme.light, Theme.info, Theme.infoDark),
+    dark: ghostStyle(Theme.dark, Theme.light, Theme.dark, Theme.darkDarkest),
+    light: ghostStyle(Theme.light, Theme.light, Theme.light, Theme.lightDark),
+    danger: ghostStyle(Theme.danger, Theme.light, Theme.danger, Theme.dangerDark),
+    primary: ghostStyle(Theme.primary, Theme.light, Theme.primary, Theme.primaryDark),
+    success: ghostStyle(Theme.success, Theme.light, Theme.success, Theme.successDark),
+    disabled: `${ghostStyle(Theme.disabled, Theme.darkAlpha, "transparent", "transparent")} cursor: not-allowed;`,
+    disabledTransparent: `${ghostStyle(
+        Theme.disabled,
+        Theme.disabled,
+        "transparent",
+        "transparent"
+    )} cursor: not-allowed; &:disabled {
     background-color: transparent;
     border-color: transparent;
   }`
@@ -95,7 +112,9 @@ const Transparent = styled(ThinButton)`
     cursor: pointer;
 `;
 
-const RippleButton = styled(Transparent)`
+const RippleButton = styled(Transparent).attrs(({ rippleColor = Theme.primaryAlpha, ...props }: ButtonProps) => ({
+    ...props
+}))`
     overflow: hidden;
     transform: translate3d(0, 0, 0);
     &:after {
@@ -107,16 +126,17 @@ const RippleButton = styled(Transparent)`
         top: 0;
         left: 0;
         pointer-events: none;
-        background-image: radial-gradient(circle, ${(props: any) => props.rippleColor} 10%, transparent 10.01%);
+        background-image: radial-gradient(circle, ${(props: any) => props.rippleColor} 10%, transparent 15%);
         background-repeat: no-repeat;
-        background-position: 50%;
+        background-position: center;
         transform: scale(10, 10);
         opacity: 0;
-        transition: transform 0.5s, opacity 1s;
+        transition: transform 500ms, opacity 1s;
     }
+
     &:active:after {
         transform: scale(0, 0);
-        opacity: 0.3;
+        opacity: 0.4;
         transition: 0s;
     }
 `;
@@ -163,8 +183,9 @@ const Button = ({
     ...html
 }: ButtonProps) => {
     const themeDefined = defineTheme(html, styleType, theme) || "primary";
-
     const clickPressAction = onClick || onPress;
+    const ifDisable = html.disabled ? "disabled" : themeDefined;
+    const cursor = html.disabled ? ("not-allowed" as "not-allowed") : ("pointer" as "pointer");
 
     const onClickButton = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         if (stopPropagation) {
@@ -178,7 +199,6 @@ const Button = ({
 
     if (themeDefined === "transparent") {
         return (
-            // @ts-ignore
             <RippleButton {...html} onClick={onClickButton} rippleColor={rippleColor}>
                 {children}
             </RippleButton>
@@ -191,17 +211,12 @@ const Button = ({
         );
     }
 
-    const ifDisable = html.disabled ? "disabled" : themeDefined;
-    const cursor = html.disabled ? ("not-allowed" as "not-allowed") : ("pointer" as "pointer");
-
     return (
-        //@ts-ignore
         <ParentButton
             {...html}
             full={full}
             size={size}
             pill={!square}
-            bColor={Theme.primary}
             bgColor={Theme.primary}
             onClick={onClickButton}
             style={{ cursor, ...style }}

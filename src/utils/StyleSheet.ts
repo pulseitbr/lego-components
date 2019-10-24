@@ -1,8 +1,10 @@
 import { CSSProperties } from "react";
+import { TypeText } from "../@types";
 
 type Props = {
     [key: string]: CSSProperties;
 };
+
 const StyleSheet = (props: Props) => props;
 
 StyleSheet.create = StyleSheet;
@@ -14,7 +16,7 @@ export const zIndex = {
     veryImportant: 10
 };
 
-export const paddingVertical = (top: number, bottom?: number) => {
+export const paddingVertical = (top: TypeText, bottom?: TypeText) => {
     const maybeBottom = bottom || top;
     return {
         paddingTop: top,
@@ -22,21 +24,35 @@ export const paddingVertical = (top: number, bottom?: number) => {
     };
 };
 
-export const paddingHorizontal = (left: number, right?: number) => {
+export const paddingHorizontal = (left: TypeText, right?: TypeText) => {
     const maybeRight = right || left;
     return {
         paddingLeft: left,
         paddingRight: maybeRight
     };
 };
+export const marginVertical = (top: TypeText, bottom?: TypeText) => {
+    const maybeBottom = bottom || top;
+    return {
+        marginTop: top,
+        marginBottom: maybeBottom
+    };
+};
+
+export const marginHorizontal = (left: TypeText, right?: TypeText) => {
+    const maybeRight = right || left;
+    return {
+        marginLeft: left,
+        marginRight: maybeRight
+    };
+};
 export const hairlineWidth = "0.5px";
 
 StyleSheet.hairlineWidth = hairlineWidth;
-
+StyleSheet.marginHorizontal = marginHorizontal;
+StyleSheet.marginVertical = marginVertical;
 StyleSheet.paddingHorizontal = paddingHorizontal;
-
 StyleSheet.paddingVertical = paddingVertical;
-
 StyleSheet.zIndex = zIndex;
 
 export default StyleSheet;

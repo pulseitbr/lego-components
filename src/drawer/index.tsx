@@ -45,23 +45,7 @@ const DrawerContainer = styled.div`
     max-height: 100%;
     width: 0;
     transition: 550ms ease-out;
-    /* animation: max-width 1250ms forwards ease-out; */
 `;
-
-// type directions = "top" | "bottom" | "left" | "right";
-
-// const openDirections = {
-//     default: {
-//         originX: "right" as directions,
-//         originY: "top" as directions,
-//         animate: "width"
-//     },
-//     left: {
-//         originX: "left" as directions,
-//         originY: "top" as directions,
-//         animate: "width"
-//     }
-// };
 
 type Props = {
     visible?: boolean;
