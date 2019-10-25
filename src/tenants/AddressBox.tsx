@@ -8,7 +8,12 @@ import { MdHome, MdStore } from "react-icons/md";
 import { transparentize } from "polished";
 import Theme from "../styles";
 import { isEmpty } from "sidekicker/lib/comparable";
-import { SOFT_RADIUS } from "../styles/Constants";
+import Constants, { SOFT_RADIUS } from "../styles/Constants";
+import StyleSheet from "../styles/StyleSheet";
+
+const styles = StyleSheet.create({
+    view: { padding: Constants.UNIT_1, textAlign: "left", cursor: "pointer" }
+});
 
 export type AddressBoxItem = {
     nomeLoja?: string;
@@ -83,13 +88,7 @@ const BindCard = (props: BindProps) => (addr: AddressBoxItem) => {
     }
 
     return (
-        <View
-            role="button"
-            span={props.span}
-            onClick={onChange}
-            medium={props.medium}
-            style={{ padding: "0.25rem", textAlign: "left", cursor: "pointer" }}
-        >
+        <View role="button" span={props.span} onClick={onChange} medium={props.medium} style={styles.view}>
             <Container
                 style={{
                     padding: "0.5rem",
@@ -173,12 +172,12 @@ const AddressBox = ({
                 emptyComponent={emptyMessage}
                 key={`${dataSource.length}-flat-list-address`}
                 component={BindCard({
-                    onChange: changeSelect,
                     idSelectAddress,
                     inlineLayout: useInlineLayout,
                     isHome,
+                    medium,
+                    onChange: changeSelect,
                     span,
-                    medium
                 })}
             />
         </Container>

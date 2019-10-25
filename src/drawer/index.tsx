@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import Portal from "../utils/Portal";
 import { useRef } from "react";
+import StyleSheet from "../styles/StyleSheet";
 
 type PropsPortal = {
     speed: number;
@@ -44,6 +45,7 @@ const DrawerContainer = styled.div`
     height: 100%;
     max-height: 100%;
     width: 0;
+    min-width: ${StyleSheet.minWidthMobile};
     transition: 550ms ease-out;
 `;
 

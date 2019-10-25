@@ -4,7 +4,7 @@ import useKeyDown from "../hooks/useKeyDown";
 import useOnClickOutside from "../hooks/useOnClickOutside";
 import Theme from "../styles";
 import Keyboard from "../utils/Keyboard";
-import StyleSheet from "../utils/StyleSheet";
+import StyleSheet from "../styles/StyleSheet";
 
 type Placements = "right" | "left";
 type Trigger = "onClick" | "onHover" | "onContextMenu";

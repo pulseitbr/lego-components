@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import Theme from "../styles";
+import StyleSheet from "../styles/StyleSheet";
+import Constants from "../styles/Constants";
 
 const Dot = styled.span`
     background-color: ${(props) => props.color};
@@ -17,9 +19,13 @@ type Props = {
     color?: string;
 };
 
+const styles = StyleSheet.create({
+    margin: StyleSheet.marginHorizontal(Constants.UNIT_1)
+});
+
 const Badge = ({ children, color = Theme.info }: Props) => {
     return (
-        <span className="mh1">
+        <span style={styles.margin}>
             <Dot color={color} /> {children}
         </span>
     );

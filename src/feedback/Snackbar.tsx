@@ -9,7 +9,6 @@ const Snackbar = ({ children, ...props }: SnackbarType) => {
         clickClose: true,
         closable: false,
         hasIcon: false,
-        
         theme: "dark",
         center: true,
         duration: 3,

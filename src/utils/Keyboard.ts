@@ -1,4 +1,4 @@
-const KeyboardMap = {
+const Keyboard = {
     backspace: 8,
     tab: 9,
     enter: 13,
@@ -102,4 +102,4 @@ const KeyboardMap = {
     singleQuote: 222
 };
 
-export default KeyboardMap;
+export default Keyboard;

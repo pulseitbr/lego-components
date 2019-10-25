@@ -1,4 +1,5 @@
 import Theme from "../styles";
+import Constants from "../styles/Constants";
 import React, { InputHTMLAttributes } from "react";
 import styled from "styled-components";
 
@@ -21,7 +22,7 @@ const Label = styled.label`
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: #ccc;
+        background-color: ${Theme.disabledLight};
         -webkit-transition: 0.4s;
         transition: 0.4s;
     }
@@ -31,8 +32,8 @@ const Label = styled.label`
         content: "";
         height: 0.9rem;
         width: 0.9rem;
-        left: 0.25rem;
-        bottom: 0.25rem;
+        left: ${Constants.UNIT_1};
+        bottom: ${Constants.UNIT_1};
         background-color: white;
         -webkit-transition: 0.4s;
         transition: 0.4s;
@@ -93,7 +94,6 @@ const Switch = ({
                 name={name}
                 type="checkbox"
                 onChange={change}
-                //@ts-ignore
                 checked={isChecked}
                 aria-checked={value.toString() as "false" | "true"}
             />

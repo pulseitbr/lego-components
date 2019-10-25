@@ -7,8 +7,8 @@ const wDefaults = {
 };
 
 export default {
-    default: { ...wDefaults, top: 10, right: -172 },
-    bottomRight: { ...wDefaults, bottom: 10, right: -172 },
+    default: { ...wDefaults, top: 10, right: -175 },
+    bottomRight: { ...wDefaults, bottom: 10, right: -175 },
     topLeft: { ...wDefaults, top: 10, left: 180 },
     bottomLeft: { ...wDefaults, bottom: 10, left: 180 },
     topCenter: { ...wDefaults, top: 10, left: "50%" },

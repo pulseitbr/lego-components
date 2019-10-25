@@ -10,56 +10,58 @@ const initialField = "form-field__control";
 const initialFieldError = "form-field__control form-field__input-error";
 
 type Props = {
-    mainColor?: string;
-    labelColor?: string;
+    className?: string;
+    divClassName?: string;
     divColor?: string;
+    divStyle?: React.CSSProperties;
+    error?: boolean;
+    hidePasswordIcon?: React.ReactNode;
+    inputClassName?: string;
     inputColor?: string;
     inputErrorColor?: string;
-    viewPasswordIcon?: React.ReactNode;
-    hidePasswordIcon?: React.ReactNode;
-    className?: string;
-    inputClassName?: string;
-    divClassName?: string;
-    divStyle?: React.CSSProperties;
     labelClassName?: string;
+    labelColor?: string;
     labelStyle?: React.CSSProperties;
-    name: string;
-    error?: boolean;
-    message?: React.ReactNode;
-    loading?: boolean;
     loaderColor?: string;
+    loading?: boolean;
+    mainColor?: string;
+    message?: React.ReactNode;
+    name: string;
+    viewPasswordIcon?: React.ReactNode;
 };
 
 type FloatInputType = React.InputHTMLAttributes<HTMLInputElement> & Props & MaskInputProps;
 
 const changeType = (type: InputTypes, prev: string) => (type === "password" && type === prev ? "text" : "password");
 
+const voidFn = () => "";
+
 const StyleInput = ({
     className = "",
     disabled = false,
     divClassName = "",
+    divColor = Theme.primaryLight,
     divStyle = {},
     error = false,
     hidePasswordIcon = <MdVisibility style={{ color: Theme.primaryLight }} />,
+    inputColor = Theme.primary,
+    inputErrorColor = Theme.danger,
     labelClassName = "",
+    labelColor = Theme.primaryLight,
     labelStyle,
+    loaderColor = Theme.primary,
     loading = false,
+    mainColor = Theme.primary,
     mask: maskType,
     message,
     name,
-    onBlur = () => "",
-    onChange = () => "",
-    onFocus = () => "",
+    onBlur = voidFn,
+    onChange = voidFn,
+    onFocus = voidFn,
     placeholder = "",
     type = "text",
     value = "",
-    loaderColor = Theme.primary,
     viewPasswordIcon = <MdVisibilityOff style={{ color: Theme.primaryLight }} />,
-    mainColor = Theme.primary,
-    labelColor = Theme.primaryLight,
-    divColor = Theme.primaryLight,
-    inputColor = Theme.primary,
-    inputErrorColor = Theme.danger,
     ...inputHtml
 }: FloatInputType) => {
     const [field, setField] = useState(initialField);
@@ -114,20 +116,17 @@ const StyleInput = ({
                 </label>
                 <Input
                     {...inputHtml}
-                    style={{
-                        cursor: disabled ? "not-allowed" : "pointer",
-                        ...inputHtml.style
-                    }}
-                    disabled={disabled}
-                    value={value}
                     className={`form-field__input ${className}${disabled ? " not-allowed" : ""}`}
+                    disabled={disabled}
                     id={name}
-                    type={stateType}
                     mask={maskType}
                     name={name}
                     onBlur={blur}
-                    onFocus={focus}
                     onChange={change}
+                    onFocus={focus}
+                    style={{ cursor: disabled ? "not-allowed" : "pointer", ...inputHtml.style }}
+                    type={stateType}
+                    value={value}
                 />
                 <button disabled={disabled} type="button" onClick={toggle} className="toggle-password">
                     {(stateType === "password" && viewPasswordIcon) || hidePasswordIcon}
@@ -140,30 +139,26 @@ const StyleInput = ({
     return (
         <div style={divStyle} className={`${field} ${divClassName}`}>
             <label
-                style={{
-                    width: "100%",
-                    color: labelColor,
-                    ...labelStyle
-                }}
-                title={placeholder}
-                htmlFor={name}
                 className={`form-field__label ${labelClassName}`}
+                htmlFor={name}
+                style={{ color: labelColor, width: "100%", ...labelStyle }}
+                title={placeholder}
             >
                 {placeholder}
             </label>
             <Input
                 {...inputHtml}
-                value={value}
-                disabled={disabled}
                 className={`form-field__input ${className}${disabled ? " not-allowed" : ""}`}
+                disabled={disabled}
                 id={name}
                 mask={maskType}
                 name={name}
-                type={type}
                 onBlur={blur}
-                onFocus={focus}
                 onChange={change}
+                onFocus={focus}
+                type={type}
                 usePlaceholder={false}
+                value={value}
             />
             {loading && <Loader className="toggle-password" size={1.2} border={0.1} color={loaderColor} />}
             {!!message && <small>{message}</small>}

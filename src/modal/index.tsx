@@ -6,9 +6,9 @@ import { TypeContainer, View } from "../base";
 import useBlockScroll from "../hooks/useBlockScroll";
 import Theme from "../styles";
 import ReactPortal from "../utils/Portal";
-import StyleSheet from "../utils/StyleSheet";
+import StyleSheet from "../styles/StyleSheet";
 import { HtmlTag } from "../@types";
-import KeyboardMap from "../utils/Keyboard";
+import Keyboard from "../utils/Keyboard";
 
 const lightenClose = lighten(0.6);
 
@@ -47,9 +47,9 @@ const ModalContent = styled.dialog.attrs((props: Content) => ({
     ...props,
     width: props.width
 }))`
-    background-color: #fefefe;
+    background-color: ${Theme.lightLight};
     margin: auto;
-    min-width: 360px;
+    min-width: ${StyleSheet.minWidthMobile};
     max-width: 100%;
     overflow-y: hidden;
     width: ${(props) => props.width};
@@ -111,9 +111,8 @@ const Modal = ({
     children,
     animationTime = 950
 }: Props) => {
-
     const toggleVisibility = (e: KeyboardEvent) => {
-        if (e.keyCode === KeyboardMap.esc && closeOnEsc) {
+        if (e.keyCode === Keyboard.esc && closeOnEsc) {
             onClose();
         }
     };
@@ -155,12 +154,7 @@ const Modal = ({
 
     return (
         <ReactPortal>
-            <ModalPortal
-                onClick={onClickMask}
-                visible={visible}
-                maskPaddingVertical={maskPaddingVertical}
-                speed={animationTime}
-            >
+            <ModalPortal onClick={onClickMask} visible={visible} maskPaddingVertical={maskPaddingVertical} speed={animationTime}>
                 <ModalContent as={htmlTag} open={visible} onClick={onModalClick} width={width}>
                     <View {...headerViewProps}>
                         <Close color={closeColor} onClick={onClose}>

@@ -62,15 +62,13 @@ const CurrencyInput = ({ prefix = "R$ ", separator = ",", defaultValue, ...props
                 ...e,
                 target: {
                     ...e.target,
+                    name: props.name || "",
                     rawValue: realValue,
-                    value: `${realValue}`,
-                    name: props.name || ""
+                    value: `${realValue}`
                 }
             });
         }
     };
-
-    return <input {...props} type="text" value={value} name={props.name} onChange={change} inputMode="decimal" pattern="^[A-Z]{1,3}[0-9$,. ]+$" />;
-};
+    return <input {...props} type="text" value={value} name={props.name} onChange={change} inputMode="decimal" pattern="^[A-Z]{1,3}[0-9$,. ]+$" />;};
 
 export default CurrencyInput;

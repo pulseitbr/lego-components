@@ -19,10 +19,10 @@ const toTelephone = (str: string) => {
 };
 
 export const maskConverter = {
+    cellphone: toCellphone,
+    cnpj: (str: string) => (str.length === 14 ? toCnpj(str) : str),
     color: (str: string) => (str.length === 7 ? `#${onlyNumbers(str)}` : str),
     cpf: (str: string) => (str.length === 11 ? toCpf(str) : str),
-    cnpj: (str: string) => (str.length === 14 ? toCnpj(str) : str),
-    cellphone: toCellphone,
     telephone: toTelephone,
     cep: (str: string) => onlyNumbers(str).replace(/(\d{5})(\d{3})/, "$1-$2"),
     cpfCnpj: (str: string) => {
@@ -62,11 +62,11 @@ export const maskConverter = {
     matricula: (str: string) => str
 };
 export const masks = {
+    cellphone: ["(", /\d/, /\d/, ")", " ", /\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/],
+    cep: [/\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/],
+    cnpj: [/\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/],
     color: ["#", /\d/, /\d/, /\d/, /\d/, /\d/, /\d/],
     cpf: [/\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "-", /\d/, /\d/],
-    cnpj: [/\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/],
-    cep: [/\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/],
-    cellphone: ["(", /\d/, /\d/, ")", " ", /\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/],
     telephone: ["(", /\d/, /\d/, ")", " ", /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/],
     date: (str: string) => {
         const numbers = onlyNumbers(str) || "";

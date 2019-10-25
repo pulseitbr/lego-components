@@ -226,7 +226,7 @@ const Button = ({
         >
             {loading && (
                 <React.Fragment>
-                    <Loader border={0.05} size={0.55} color={Theme.disabledDark} />{" "}
+                    <Loader border={0.05} size={0.5} color={Theme.disabledDark} />{" "}
                 </React.Fragment>
             )}
             {children}

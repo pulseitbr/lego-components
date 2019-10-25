@@ -19,6 +19,7 @@ export { default as useForm } from "./hooks/useForm";
 export { default as useImagePreview } from "./hooks/useImagePreview";
 export { default as useKeyDown } from "./hooks/useKeyDown";
 export { default as useOnClickOutside } from "./hooks/useOnClickOutside";
+export { default as Constants } from "./styles/Constants";
 export { default as useReducer } from "./hooks/useReducer";
 export { default as useSetState } from "./hooks/useSetState";
 export { default as useWidth } from "./hooks/useWidth";
@@ -35,7 +36,7 @@ export { default as Dimensions } from "./utils/Dimensions";
 export { default as FlatList } from "./utils/FlatList";
 export { default as Keyboard } from "./utils/Keyboard";
 export { default as Portal } from "./utils/Portal";
-export { default as StyleSheet } from "./utils/StyleSheet";
+export { default as StyleSheet } from "./styles/StyleSheet";
 export { default as BBCode } from "./utils/BBCode";
 export const GlobalStyle = createGlobalStyle`
   * {

@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import Skeleton from "react-content-loader";
 import { Container } from "../base";
-import StyleSheet from "../utils/StyleSheet";
+import StyleSheet from "../styles/StyleSheet";
 
 const styles = StyleSheet.create({
     listMargin: StyleSheet.marginVertical("0.4rem")

@@ -1,11 +1,11 @@
 import { CSSProperties } from "react";
 import { TypeText } from "../@types";
 
-type Props = {
-    [key: string]: CSSProperties;
+type Props<T extends string> = {
+    [key in T]: CSSProperties;
 };
 
-const StyleSheet = (props: Props) => props;
+const StyleSheet = <T extends string>(props: Props<T>) => props;
 
 StyleSheet.create = StyleSheet;
 export const zIndex = {
@@ -54,5 +54,6 @@ StyleSheet.marginVertical = marginVertical;
 StyleSheet.paddingHorizontal = paddingHorizontal;
 StyleSheet.paddingVertical = paddingVertical;
 StyleSheet.zIndex = zIndex;
+StyleSheet.minWidthMobile = "360px";
 
 export default StyleSheet;

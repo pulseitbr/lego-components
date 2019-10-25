@@ -6,7 +6,7 @@ const placeholder = { class: "", phone: { text: "", number: "" }, style: {}, use
 
 const fnPlaceholder = (v: string) => v;
 
-type StringMap = { [key: string]: string };
+type StringMap = { [key: string]: string } & Object;
 type ParserParams = { colors?: StringMap };
 type FunctionMap = { [key: string]: (v: string) => string };
 type TPlaceholder = typeof placeholder;
@@ -24,7 +24,8 @@ const placeholderFunctions = {
     class: (prev: TPlaceholder, value: string): TPlaceholder => ({ ...prev, class: value }),
     text: (prev: TPlaceholder, text: string): TPlaceholder => ({ ...prev, phone: { ...prev.phone, text } }),
     phone: (prev: TPlaceholder, n: string): TPlaceholder => ({ ...prev, phone: { ...prev.phone, number: n } }),
-    user: (prev: TPlaceholder, user: string) => ({ ...prev, user })
+    user: (prev: TPlaceholder, user: string) => ({ ...prev, user }),
+    page: (prev: TPlaceholder, page: string) => ({ ...prev, page })
 };
 
 const toSecureHttps = (str = "") => {
@@ -37,11 +38,11 @@ const toSecureHttps = (str = "") => {
 const sanitizeHTML = (str = "") => str.replace(/<[^>]*>/, "");
 
 const codeMap: StringMap = {
-    "[line]": "<p>",
-    "[line": "<p>",
+    "[line": "<p",
     "[/line]": "</p>",
     "[/b]": "</strong>",
     "[b": "<strong",
+    "[face": "<a",
     "[insta": "<a",
     "[instagram": "<a",
     "[i": "<i",
@@ -53,7 +54,8 @@ const codeMap: StringMap = {
     "[link": "<a",
     "[/link]": "</a>",
     "[zap": "<a",
-    "[/zap]": "<a>"
+    "[/zap]": "<a>",
+    "[/face]": "<a>"
 };
 
 const quote = `('|")`;
@@ -66,9 +68,9 @@ const paramToRE = (...flags: string[]) => flags.reduce(optionalREconcat, "").rep
 
 const acceptChars = "#@0-9a-zA-ZàèìòùÀÈÌÒÙáéíóúýäëïöüÿçßØøÅåÆæœ.:/ _-";
 
-const tags = paramToRE("zap", "b", "link", "i", "t", "line", "insta", "instagram");
+const tags = paramToRE("zap", "b", "link", "i", "t", "line", "insta", "instagram", "face");
 
-const tagAttributes = paramToRE("phone", "text", "color", "url", "class", "mark", "user");
+const tagAttributes = paramToRE("phone", "text", "color", "url", "class", "mark", "user", "page");
 
 const openRegex = new RegExp(`\\[(${tags})( ?(${tagAttributes})=${quote}[${acceptChars}]+${quote} ?){0,}?\\]`, "gi");
 
@@ -76,16 +78,20 @@ const closeRegex = new RegExp(`\\[/(${tags})]`, "gi");
 
 const tagParameters = /(\S+)=["']?((?:.(?!["']?\s+(?:\S+)=|[\]"']))+.)["']?/g;
 
-const parser = (params: ParserParams = {}) => (str: string) => {
-    const colors = params!.colors as any;
+const maybeValue = (object: Object, value: string) => (object.hasOwnProperty("value") ? object[value] : value);
+
+const parser = (params: ParserParams = { colors: {} }) => (str: string) => {
+    const colors = params!.colors as StringMap;
 
     const keyOperator: FunctionMap = {
         class: (value) => value.trim(),
         url: (value) => toSecureHttps(value),
         phone: (value) => `https://wa.me/${onlyNumbers(value)}`,
+        user: (value) => `https://instagram.com/@${value}`,
+        page: (value) => `https://facebook.com/@${value}`,
         text: (value) => encodeURIComponent(clearQuote(value.trim())),
-        mark: (value) => (colors.hasOwnProperty(value) ? colors[value] : value),
-        color: (value) => (colors.hasOwnProperty(value) ? colors[value] : value)
+        mark: (value) => maybeValue(colors, value),
+        color: (value) => maybeValue(colors, value)
     };
 
     const matchOpenCommands = (match: string) => {
@@ -110,7 +116,6 @@ const parser = (params: ParserParams = {}) => (str: string) => {
         const attrs = keys.reduce((acc: TPlaceholder, el: string) => {
             const val = `${attributesOfTag[el]}`;
             if (placeholderFunctions.hasOwnProperty(el)) {
-                //@ts-ignore
                 return placeholderFunctions[el](acc, val);
             }
             return { ...acc, style: { ...acc.style, [el]: val } };
@@ -125,6 +130,9 @@ const parser = (params: ParserParams = {}) => (str: string) => {
         }
         if (!!attrs.user) {
             innerAttributes += `href="${attrs.user}" `;
+        }
+        if (!!attrs.page) {
+            innerAttributes += `href="${attrs.page}" `;
         }
         if (!isEmpty(attrs.style)) {
             const ok = Object.entries(attrs.style)

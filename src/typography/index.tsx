@@ -7,7 +7,7 @@ export const Title = styled.h1`
     font-family: "Comfortaa", Arial, Helvetica, sans-serif;
 `;
 
-export const SubTitle = styled.h2`
+export const SubTitle = styled.h3`
     font-weight: bold;
     font-size: 1.65rem;
     color: ${Theme.darkLight};
