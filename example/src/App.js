@@ -1,4 +1,4 @@
-import { BBCode, Drawer, Body, Button, Container, Footer, Modal, Page, Notification } from "lego-components";
+import { BBCode, Body, Button, Container, Drawer, Footer, Modal, Notification, Page } from "lego-components";
 import React, { useState } from "react";
 
 export default () => {

@@ -3,8 +3,8 @@ import styled from "styled-components";
 import useKeyDown from "../hooks/useKeyDown";
 import useOnClickOutside from "../hooks/useOnClickOutside";
 import Theme from "../styles";
-import Keyboard from "../utils/Keyboard";
 import StyleSheet from "../styles/StyleSheet";
+import Keyboard from "../utils/Keyboard";
 
 type Placements = "right" | "left";
 type Trigger = "onClick" | "onHover" | "onContextMenu";
@@ -77,7 +77,7 @@ const triggerRemap = (x: Trigger): { name: string; callback: Callback } => {
 
 const viewDisplay = "block";
 
-const Dropdown = ({ children, position = "left", contentProps, onShow, itens, triggers = ["onClick"] }: Props) => {
+export const Dropdown = ({ children, position = "left", contentProps, onShow, itens, triggers = ["onClick"] }: Props) => {
     const ref = useRef<HTMLDivElement>(null);
 
     const click = (callback: Callback) => (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
@@ -88,10 +88,7 @@ const Dropdown = ({ children, position = "left", contentProps, onShow, itens, tr
         }
     };
 
-    const triggerEvents = useMemo(
-        () => triggers.map(triggerRemap).reduce((acc, el) => ({ ...acc, [el.name]: click(el.callback) }), {}),
-        triggers
-    );
+    const triggerEvents = useMemo(() => triggers.map(triggerRemap).reduce((acc, el) => ({ ...acc, [el.name]: click(el.callback) }), {}), triggers);
 
     const hide = () => {
         if (ref.current !== null) {
