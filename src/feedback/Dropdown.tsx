@@ -119,5 +119,3 @@ export const Dropdown = ({ children, position = "left", contentProps, onShow, it
         </DropdownMain>
     );
 };
-
-export default Dropdown;
