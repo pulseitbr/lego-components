@@ -1,17 +1,16 @@
-import { Page, Tabs, Tab } from "lego-components";
+import { Page, Tabs, Tab, Container } from "lego-components";
 import React from "react";
 
 export default () => {
     return (
         <Page>
-            <h1>Tabs Demo</h1>
             <Tabs>
-                <div label="HOME">HOME</div>
-                <div label="PRODUTOS">PRODUTO</div>
-                <div label="SERVIÇOS">SERVIÇOS</div>
-                <div label="QUEM SOMOS">QUEM SOMOS</div>
-                <div label="CONTATO">CONTATO</div>
-                <div label="PORTFÓLIO">PORTFÓLIO</div>
+                <Container label="HOME">HOME</Container>
+                <Container label="PRODUTOS">PRODUTO</Container>
+                <Container label="SERVIÇOS">SERVIÇOS</Container>
+                <Container label="QUEM SOMOS">QUEM SOMOS</Container>
+                <Container label="CONTATO">CONTATO</Container>
+                <Container label="PORTFÓLIO">PORTFÓLIO</Container>
             </Tabs>
         </Page>
     );

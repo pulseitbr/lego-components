@@ -9,6 +9,7 @@ var styled__default = _interopDefault(styled);
 var React = require('react');
 var React__default = _interopDefault(React);
 var ReactDOM = _interopDefault(require('react-dom'));
+require('indexof');
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation. All rights reserved.
@@ -663,7 +664,7 @@ if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
 });
 
 var _core = createCommonjsModule(function (module) {
-var core = module.exports = { version: '2.6.9' };
+var core = module.exports = { version: '2.6.10' };
 if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 });
 var _core_1 = _core.version;
@@ -3301,12 +3302,22 @@ var componentIndexof = function(arr, obj){
   return -1;
 };
 
+var indexOf = [].indexOf;
+
+var indexof = function(arr, obj){
+  if (indexOf) return arr.indexOf(obj);
+  for (var i = 0; i < arr.length; ++i) {
+    if (arr[i] === obj) return i;
+  }
+  return -1;
+};
+
 /**
  * Module dependencies.
  */
 
 try {
-  var index = componentIndexof;
+  var index = indexof;
 } catch (err) {
   var index = componentIndexof;
 }
@@ -4684,11 +4695,11 @@ Notification$1.danger = function (props) {
 
 var activeTabCSS = function (props) {
     if (props.isActive) {
-        return "\n            background-color: white;\n            border-bottom: 2px solid " + props.color + ";\n            color: " + props.color + ";\n            font-weight: bold;\n        ";
+        return "\n            background-color: white;\n            border-bottom: 2px solid " + (props.color || "#00fff0") + ";\n            color: " + props.color + ";\n            font-weight: bold;\n        ";
     }
     return "";
 };
-var ListItem = styled__default.li(templateObject_1$6 || (templateObject_1$6 = __makeTemplateObject(["\n    display: inline-block;\n    list-style: none;\n    margin-bottom: -1px;\n    padding: 0.5rem 0.75rem;\n    flex: 0;\n    ", "\n"], ["\n    display: inline-block;\n    list-style: none;\n    margin-bottom: -1px;\n    padding: 0.5rem 0.75rem;\n    flex: 0;\n    ", "\n"])), function (props) { return activeTabCSS(props); });
+var ListItem = styled__default.li(templateObject_1$6 || (templateObject_1$6 = __makeTemplateObject(["\n    display: inline-block;\n    list-style: none;\n    margin-bottom: -1px;\n    padding: 0.5rem 0.75rem;\n    ", "\n"], ["\n    display: inline-block;\n    list-style: none;\n    margin-bottom: -1px;\n    padding: 0.5rem 0.75rem;\n    ", "\n"])), function (props) { return activeTabCSS(props); });
 var Tab = function (_a) {
     var label = _a.label, onClick = _a.onClick, activeTab = _a.activeTab;
     var triggerClick = function () {
@@ -5019,7 +5030,7 @@ Swipeable.propTypes = {
 };
 Swipeable.defaultProps = defaultProps;
 
-var TabList = styled__default.ul(templateObject_1$7 || (templateObject_1$7 = __makeTemplateObject(["\n    border-bottom: 1px solid #ccc;\n    width: 100%;\n    padding-left: 0;\n    cursor: pointer;\n    overflow: hidden;\n    overflow-x: scroll;\n    display: flex;\n    flex-wrap: nowrap;\n    ::-webkit-scrollbar {\n        display: none;\n        scrollbar-width: none;\n        -ms-overflow-style: none;\n        overflow-y: scroll;\n        overflow-x: hidden;\n    }\n"], ["\n    border-bottom: 1px solid #ccc;\n    width: 100%;\n    padding-left: 0;\n    cursor: pointer;\n    overflow: hidden;\n    overflow-x: scroll;\n    display: flex;\n    flex-wrap: nowrap;\n    ::-webkit-scrollbar {\n        display: none;\n        scrollbar-width: none;\n        -ms-overflow-style: none;\n        overflow-y: scroll;\n        overflow-x: hidden;\n    }\n"])));
+var TabList = styled__default.ul(templateObject_1$7 || (templateObject_1$7 = __makeTemplateObject(["\n    display: flex;\n    flex: 1;\n    cursor: pointer;\n    flex-wrap: nowrap;\n    overflow-x: scroll;\n    align-content: flex-start;\n    border-bottom: 1px solid #ccc;\n\n    & > li {\n        display: inline-flex;\n    }\n\n    ::-webkit-scrollbar {\n        display: none;\n        scrollbar-width: none;\n        -ms-overflow-style: none;\n        overflow-y: scroll;\n        overflow-x: hidden;\n    }\n"], ["\n    display: flex;\n    flex: 1;\n    cursor: pointer;\n    flex-wrap: nowrap;\n    overflow-x: scroll;\n    align-content: flex-start;\n    border-bottom: 1px solid #ccc;\n\n    & > li {\n        display: inline-flex;\n    }\n\n    ::-webkit-scrollbar {\n        display: none;\n        scrollbar-width: none;\n        -ms-overflow-style: none;\n        overflow-y: scroll;\n        overflow-x: hidden;\n    }\n"])));
 var Tabs = function (_a) {
     var children = _a.children;
     var childrens = React__default.Children.toArray(children);
@@ -5029,52 +5040,56 @@ var Tabs = function (_a) {
         setActiveTab(tab);
     };
     return (React__default.createElement(Container, null,
-        React__default.createElement(TabList, null, childrens.map(function (child) {
-            //@ts-ignore
-            var label = child.props.label;
-            return React__default.createElement(Tab, { activeTab: activeTab, key: label, label: label, onClick: onClickTabItem });
-        })),
-        React__default.createElement(Swipeable, { onSwipedLeft: function () {
-                childrens.forEach(function (x, i) {
-                    var currentElement = x.props;
-                    if (currentElement.label === activeTab) {
-                        if (i + 1 < childrens.length) {
-                            //@ts-ignore
-                            var element = childrens[i + 1].props.label;
-                            setActiveTab(element);
-                            return;
-                        }
-                        if (i + 1 === childrens.length) {
-                            //@ts-ignore
-                            var firstElement = childrens[0].props.label;
-                            setActiveTab(firstElement);
-                        }
-                    }
-                });
-            }, onSwipedRight: function () {
-                childrens.forEach(function (x, i) {
-                    var currentElement = x.props;
-                    if (currentElement.label === activeTab) {
-                        if (i < childrens.length) {
-                            if (i === 0) {
+        React__default.createElement(View, { style: { backgroundColor: "red" }, span: "100%" },
+            React__default.createElement(TabList, null, childrens.map(function (child) {
+                //@ts-ignore
+                var label = child.props.label;
+                //@ts-ignore
+                return (React__default.createElement(Tab, { activeTab: activeTab, key: label, label: label, onClick: onClickTabItem, color: "#00f07c" }));
+            }))),
+        React__default.createElement(View, { span: "100%" },
+            React__default.createElement(Swipeable, { style: { flex: "1 0 auto" }, onSwipedLeft: function () {
+                    childrens.forEach(function (x, i) {
+                        var currentElement = x.props;
+                        if (currentElement.label === activeTab) {
+                            if (i + 1 < childrens.length) {
                                 //@ts-ignore
-                                var element_1 = childrens[childrens.length - 1].props.label;
-                                setActiveTab(element_1);
+                                var element = childrens[i + 1].props.label;
+                                setActiveTab(element);
                                 return;
                             }
-                            //@ts-ignore
-                            var element = childrens[i - 1].props.label;
-                            setActiveTab(element);
+                            if (i + 1 === childrens.length) {
+                                //@ts-ignore
+                                var firstElement = childrens[0].props.label;
+                                setActiveTab(firstElement);
+                            }
                         }
-                    }
-                });
-            } },
-            React__default.createElement(Container, null, childrens.map(function (child) {
+                    });
+                }, onSwipedRight: function () {
+                    childrens.forEach(function (x, i) {
+                        var currentElement = x.props;
+                        if (currentElement.label === activeTab) {
+                            if (i < childrens.length) {
+                                if (i === 0) {
+                                    //@ts-ignore
+                                    var element_1 = childrens[childrens.length - 1].props.label;
+                                    setActiveTab(element_1);
+                                    return;
+                                }
+                                //@ts-ignore
+                                var element = childrens[i - 1].props.label;
+                                setActiveTab(element);
+                            }
+                        }
+                    });
+                } }, childrens.map(function (child) {
+                console.log(child);
                 //@ts-ignore
-                return child.props.label !== activeTab ? undefined : child.props.children;
+                return child.props.label !== activeTab ? undefined : child;
             })))));
 };
 var templateObject_1$7;
+//# sourceMappingURL=Tabs.js.map
 
 var Snackbar = function (_a) {
     var children = _a.children, props = __rest(_a, ["children"]);

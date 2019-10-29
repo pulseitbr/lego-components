@@ -5,7 +5,7 @@ const activeTabCSS = (props: any) => {
     if (props.isActive) {
         return `
             background-color: white;
-            border-bottom: 2px solid ${props.color};
+            border-bottom: 2px solid ${props.color || "#00fff0"};
             color: ${props.color};
             font-weight: bold;
         `;
@@ -18,13 +18,13 @@ const ListItem = styled.li`
     list-style: none;
     margin-bottom: -1px;
     padding: 0.5rem 0.75rem;
-    flex: 0;
     ${(props) => activeTabCSS(props)}
 `;
 
 type Props = {
-    activeTab: string;
+    color: string;
     label: string;
+    activeTab: string;
     onClick: (label: string) => any;
 };
 
