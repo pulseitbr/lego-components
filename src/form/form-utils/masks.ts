@@ -68,20 +68,60 @@ export const masks = {
     cep: [/\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/],
     cellphone: ["(", /\d/, /\d/, ")", " ", /\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/],
     telephone: ["(", /\d/, /\d/, ")", " ", /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/],
+
     date: (str: string) => {
-        const numbers = onlyNumbers(str) || "";
-        if (numbers.length === 2) {
-            const day = toInt(numbers.substring(0, 2));
-            if (day === 31) {
-                return [/[0123]/, /\d/, "/", /[01]/, /[12356789]/, "/", /\d/, /\d/, /\d/, /\d/];
+        const date = onlyNumbers(str) || "";
+        if (date.length === 2) {
+            const dayFirstDigit = toInt(date.substring(0, 1));
+            if (dayFirstDigit === 3) {
+                return [dayFirstDigit, /[01]/, "/", /[01]/, /[12356789]/, "/", /\d/, /\d/, /\d/, /\d/];
             }
-            if (day === 30) {
-                return [/[0123]/, /\d/, "/", /[01]/, /\d/, "/", /\d/, /\d/, /\d/, /\d/];
+        }
+        if (date.length === 4) {
+            const monthFirstDigit = toInt(date.substring(2, 3));
+            const d0 = toInt(date.substring(0, 1));
+            const d1 = toInt(date.substring(1, 2));
+
+
+
+
+            console.log('str', str);
+            console.log('date', date);
+            console.log('d0',d0);
+            console.log('d1',d1);
+            console.log('monthFirstDigit',monthFirstDigit)
+            
+
+
+
+            if (monthFirstDigit === 0) {
+                const dayNumber = parseInt(`${d0}${d1}`);
+                console.log('dayNumber',dayNumber)
+                if (dayNumber === 31) {
+                    return [/[0123]/, /\d/, "/", /\d/, /[13578]/, "/", /\d/, /\d/, /\d/, /\d/];
+                }
+                else if (dayNumber < 31 && dayNumber >= 29) {
+                    return [/[0123]/, /\d/, "/", /\d/, /[13456789]/, "/", /\d/, /\d/, /\d/, /\d/];
+                }
+                else {
+                    return [/[0123]/, /\d/, "/", /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/];
+                }
+            }
+            if (monthFirstDigit === 1) {
+                const dayNumber = parseInt(`${d0}${d1}`);
+                if (dayNumber === 31) {
+                    return [/[0123]/, /\d/, "/", /\d/, /[02]/, "/", /\d/, /\d/, /\d/, /\d/];
+                }
+                else {
+                    return [/[0123]/, /\d/, "/", /\d/, /[0-2]/, "/", /\d/, /\d/, /\d/, /\d/];
+                }
             }
         }
         return [/[0123]/, /\d/, "/", /[01]/, /\d/, "/", /\d/, /\d/, /\d/, /\d/];
     },
+
     isoDate: [/\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, "-", /\d/, /\d/],
+    
     creditCard: [
         /\d/,
         /\d/,

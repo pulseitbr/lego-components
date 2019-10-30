@@ -10170,14 +10170,43 @@ var masks = {
     cellphone: ["(", /\d/, /\d/, ")", " ", /\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/],
     telephone: ["(", /\d/, /\d/, ")", " ", /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/],
     date: function (str) {
-        var numbers = Utils_23(str) || "";
-        if (numbers.length === 2) {
-            var day = Utils_21(numbers.substring(0, 2));
-            if (day === 31) {
-                return [/[0123]/, /\d/, "/", /[01]/, /[12356789]/, "/", /\d/, /\d/, /\d/, /\d/];
+        var date = Utils_23(str) || "";
+        if (date.length === 2) {
+            var dayFirstDigit = Utils_21(date.substring(0, 1));
+            if (dayFirstDigit === 3) {
+                return [dayFirstDigit, /[01]/, "/", /[01]/, /[12356789]/, "/", /\d/, /\d/, /\d/, /\d/];
             }
-            if (day === 30) {
-                return [/[0123]/, /\d/, "/", /[01]/, /\d/, "/", /\d/, /\d/, /\d/, /\d/];
+        }
+        if (date.length === 4) {
+            var monthFirstDigit = Utils_21(date.substring(2, 3));
+            var d0 = Utils_21(date.substring(0, 1));
+            var d1 = Utils_21(date.substring(1, 2));
+            console.log('str', str);
+            console.log('date', date);
+            console.log('d0', d0);
+            console.log('d1', d1);
+            console.log('monthFirstDigit', monthFirstDigit);
+            if (monthFirstDigit === 0) {
+                var dayNumber = parseInt("" + d0 + d1);
+                console.log('dayNumber', dayNumber);
+                if (dayNumber === 31) {
+                    return [/[0123]/, /\d/, "/", /\d/, /[13578]/, "/", /\d/, /\d/, /\d/, /\d/];
+                }
+                else if (dayNumber < 31 && dayNumber >= 29) {
+                    return [/[0123]/, /\d/, "/", /\d/, /[13456789]/, "/", /\d/, /\d/, /\d/, /\d/];
+                }
+                else {
+                    return [/[0123]/, /\d/, "/", /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/];
+                }
+            }
+            if (monthFirstDigit === 1) {
+                var dayNumber = parseInt("" + d0 + d1);
+                if (dayNumber === 31) {
+                    return [/[0123]/, /\d/, "/", /\d/, /[02]/, "/", /\d/, /\d/, /\d/, /\d/];
+                }
+                else {
+                    return [/[0123]/, /\d/, "/", /\d/, /[0-2]/, "/", /\d/, /\d/, /\d/, /\d/];
+                }
             }
         }
         return [/[0123]/, /\d/, "/", /[01]/, /\d/, "/", /\d/, /\d/, /\d/, /\d/];
@@ -10343,7 +10372,6 @@ var decimalKeyboard = {
         inputMode: "decimal"
     }
 };
-//# sourceMappingURL=masks.js.map
 
 var createPlaceholder = function (maskRegex) { return convertMaskToString(maskRegex); };
 var instanceMaskValues = function (mask, usePl, html, value, props) {
@@ -10379,7 +10407,6 @@ var Input = function (_a) {
     }
     return React__default.createElement("input", __assign({}, html, options));
 };
-//# sourceMappingURL=Input.js.map
 
 var Label$1 = styled__default.label(templateObject_1$9 || (templateObject_1$9 = __makeTemplateObject(["\n    cursor: pointer;\n    position: relative;\n    padding: 0 0.8rem;\n    margin-bottom: 0;\n    font-size: 1rem;\n    user-select: none;\n\n    & input {\n        opacity: 0;\n        cursor: pointer;\n        position: absolute;\n    }\n\n    .checkmark {\n        position: absolute;\n        top: 0;\n        left: 0;\n        height: 1.05rem;\n        width: 1.05rem;\n        border-radius: 100%;\n        background-color: transparent;\n        border: 2px solid ", ";\n    }\n\n    &:hover input ~ .checkmark {\n        background-color: transparent;\n        border: 2px solid ", ";\n    }\n\n    & input:checked ~ .checkmark {\n        background-color: transparent;\n        border: 2px solid ", ";\n    }\n\n    .checkmark:after {\n        content: \"\";\n        display: none;\n        position: absolute;\n    }\n\n    & input:checked ~ .checkmark:after {\n        display: block;\n    }\n\n    & .checkmark:after {\n        top: 1.22px;\n        left: 1.2px;\n        width: 0.6rem;\n        height: 0.6rem;\n        border-radius: 100%;\n        animation: fade 500ms ease-out;\n        text-rendering: optimizeLegibility;\n        background: ", ";\n    }\n\n    @keyframes fade {\n        0% {\n            opacity: 0;\n        }\n        100% {\n            opacity: 1;\n        }\n    }\n"], ["\n    cursor: pointer;\n    position: relative;\n    padding: 0 0.8rem;\n    margin-bottom: 0;\n    font-size: 1rem;\n    user-select: none;\n\n    & input {\n        opacity: 0;\n        cursor: pointer;\n        position: absolute;\n    }\n\n    .checkmark {\n        position: absolute;\n        top: 0;\n        left: 0;\n        height: 1.05rem;\n        width: 1.05rem;\n        border-radius: 100%;\n        background-color: transparent;\n        border: 2px solid ", ";\n    }\n\n    &:hover input ~ .checkmark {\n        background-color: transparent;\n        border: 2px solid ", ";\n    }\n\n    & input:checked ~ .checkmark {\n        background-color: transparent;\n        border: 2px solid ", ";\n    }\n\n    .checkmark:after {\n        content: \"\";\n        display: none;\n        position: absolute;\n    }\n\n    & input:checked ~ .checkmark:after {\n        display: block;\n    }\n\n    & .checkmark:after {\n        top: 1.22px;\n        left: 1.2px;\n        width: 0.6rem;\n        height: 0.6rem;\n        border-radius: 100%;\n        animation: fade 500ms ease-out;\n        text-rendering: optimizeLegibility;\n        background: ", ";\n    }\n\n    @keyframes fade {\n        0% {\n            opacity: 0;\n        }\n        100% {\n            opacity: 1;\n        }\n    }\n"])), Theme.disabled, Theme.disabled, function (props) { return props.color; }, function (props) { return props.color; });
 var nullFn$1 = function () { };
@@ -12000,6 +12027,7 @@ function FlatList$1(props) {
 
 var GlobalStyle = styled.createGlobalStyle(templateObject_1$e || (templateObject_1$e = __makeTemplateObject(["\n  * {\n    margin: 0;\n    padding: 0;\n    outline: 0;\n    box-sizing: border-box;\n    font-stretch: extra-condensed;\n    -webkit-font-smoothing: antialiased;\n    -moz-osx-font-smoothing: grayscale;\n    text-rendering: optimizeLegibility;\n    text-shadow: rgba(0, 0, 0, .01) 0 0 1px;\n  }\n\n  body {\n      scroll-behavior: smooth;\n      height: 100%;\n      min-height: 100%;\n      font-stretch: extra-condensed;\n      -webkit-font-smoothing: antialiased;\n      -moz-osx-font-smoothing: grayscale;\n      text-rendering: optimizeLegibility;\n      text-shadow: rgba(0, 0, 0, .01) 0 0 1px;\n  }\n\n  html, body, #root {\n    min-height:100%;\n  }\n"], ["\n  * {\n    margin: 0;\n    padding: 0;\n    outline: 0;\n    box-sizing: border-box;\n    font-stretch: extra-condensed;\n    -webkit-font-smoothing: antialiased;\n    -moz-osx-font-smoothing: grayscale;\n    text-rendering: optimizeLegibility;\n    text-shadow: rgba(0, 0, 0, .01) 0 0 1px;\n  }\n\n  body {\n      scroll-behavior: smooth;\n      height: 100%;\n      min-height: 100%;\n      font-stretch: extra-condensed;\n      -webkit-font-smoothing: antialiased;\n      -moz-osx-font-smoothing: grayscale;\n      text-rendering: optimizeLegibility;\n      text-shadow: rgba(0, 0, 0, .01) 0 0 1px;\n  }\n\n  html, body, #root {\n    min-height:100%;\n  }\n"])));
 var templateObject_1$e;
+//# sourceMappingURL=index.js.map
 
 exports.AddressBox = AddressBox;
 exports.Avatar = Avatar;
