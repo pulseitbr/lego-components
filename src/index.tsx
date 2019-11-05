@@ -40,6 +40,7 @@ export { default as Console } from "./utils/Console";
 export { default as Dimensions } from "./utils/Dimensions";
 export { default as FlatList } from "./utils/FlatList";
 export { default as Keyboard } from "./utils/Keyboard";
+export * from "./tenants/profile";
 export { default as Portal } from "./utils/Portal";
 export const GlobalStyle = createGlobalStyle`
   * {
