@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import "./index.css";
+import Theme from "./styles";
 export * from "./base";
 export { ButtonProps, default as Button } from "./button/Button";
 export { default as Drawer } from "./drawer";
@@ -50,7 +51,7 @@ export const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    text-shadow: rgba(0, 0, 0, .01) 0 0 1px;
+    text-shadow: rgba(0, 0, 0, .05) 0 0 1px;
   }
 
   body {
@@ -66,5 +67,6 @@ export const GlobalStyle = createGlobalStyle`
 
   html, body, #root {
     min-height:100%;
+    background-color: ${Theme.light}
   }
 `;
