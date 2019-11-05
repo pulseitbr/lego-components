@@ -5,12 +5,12 @@ export const TENANT_TITLE = $__BP__.config.tenant;
 export const GLOBAL_CONFIG = $__BP__.config;
 export const VERSION = $__BP__.tenant;
 
-export const Tenants = {
-	mobifacil: "mobifacil",
-	andario: "andario",
-	andacampos: "andario",
-	dev: "dev"
-};
+export enum Tenants {
+	mobifacil = "mobifacil",
+	andario = "andario",
+	andacampos = "andario",
+	dev = "dev"
+}
 
 export const MidiaAppId = {
 	mobifacil: 2,
