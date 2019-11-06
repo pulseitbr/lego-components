@@ -4,11 +4,12 @@ import { Profile } from "./profile";
 type Props = {
 	allowedProfiles: Profile[];
 	allowedTenants: Tenants[];
-	profile: Profile;
+	profiles: Profile[];
 	tenant: Tenants;
 };
 
-const AllowView = ({ allowedProfiles, allowedTenants, profile, tenant }: Props) =>
-	allowedProfiles.includes(profile) && allowedTenants.includes(tenant);
+const AllowView = ({ allowedProfiles, allowedTenants, profiles, tenant }: Props) =>
+	allowedProfiles.some((allowed) => profiles.some((profile) => profile === allowed)) &&
+	allowedTenants.includes(tenant);
 
 export default AllowView;
