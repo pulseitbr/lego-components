@@ -6,94 +6,6 @@
     vertical-align: text-bottom;
 }
 
-html,
-body,
-#root {
-    font-family: "Montserrat", sans-serif !important;
-    scroll-behavior: smooth;
-    min-width: 100%;
-    min-height: 100%;
-    height: 100%;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    box-sizing: border-box;
-    line-height: 1.15;
-    -webkit-text-size-adjust: 100%;
-    vertical-align: text-bottom;
-}
-
-*,
-:after,
-:before {
-    box-sizing: inherit;
-}
-
-body {
-    margin: 0;
-}
-
-main {
-    display: block;
-}
-
-.title,
-.comfortaa {
-    font-family: "Comfortaa", cursive !important;
-}
-
-.text,
-.montserrat {
-    font-family: "Montserrat", sans-serif !important;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-family: "Comfortaa", cursive !important;
-}
-
-body,
-html,
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    color: var(--darkLight);
-    vertical-align: text-bottom;
-}
-
-label {
-    cursor: pointer;
-    vertical-align: text-bottom;
-}
-
-@media print {
-    .no-print,
-    .no-print * {
-        display: none !important;
-    }
-}
-
-.fade-div-page {
-    animation: fade-view 1.2s ease-in-out;
-}
-
-@keyframes fade-view {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
 span,
 small,
 p {
@@ -610,6 +522,94 @@ template {
 
 .c-zoom-out {
     cursor: zoom-out;
+}
+
+html,
+body,
+#root {
+    font-family: "Montserrat", sans-serif !important;
+    scroll-behavior: smooth;
+    min-width: 100%;
+    min-height: 100%;
+    height: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    box-sizing: border-box;
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+    vertical-align: text-bottom;
+}
+
+*,
+:after,
+:before {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+}
+
+main {
+    display: block;
+}
+
+.title,
+.comfortaa {
+    font-family: "Comfortaa", cursive !important;
+}
+
+.text,
+.montserrat {
+    font-family: "Montserrat", sans-serif !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Comfortaa", cursive !important;
+}
+
+body,
+html,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--darkLight);
+    vertical-align: text-bottom;
+}
+
+label {
+    cursor: pointer;
+    vertical-align: text-bottom;
+}
+
+@media print {
+    .no-print,
+    .no-print * {
+        display: none !important;
+    }
+}
+
+.fade-div-page {
+    animation: fade-view 1.2s ease-in-out;
+}
+
+@keyframes fade-view {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .notify {
