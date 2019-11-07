@@ -64,7 +64,7 @@ type ResponsiveProps = {
 	isCollapse?: boolean;
 	show?: boolean;
 	htmlTag?: HtmlTag;
-	Component: StyledComponent<"div", any, any>;
+	Component?: StyledComponent<"div", any, any>;
 } & TypeContainer;
 
 const Responsive = ({
