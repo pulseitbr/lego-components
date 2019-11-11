@@ -2,18 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Loader from "../loader/Loader";
 import Theme from "../styles";
+import { ThemeProperty, defineTheme } from "../styles/ThemeProperty";
 
-type THEMES =
-	| "danger"
-	| "primary"
-	| "info"
-	| "success"
-	| "warn"
-	| "transparent"
-	| "light"
-	| "none"
-	| "dark"
-	| "disabledTransparent";
 interface IButtonProps {
 	circle?: boolean;
 	danger?: boolean;
@@ -31,9 +21,9 @@ interface IButtonProps {
 	size?: number;
 	square?: boolean;
 	stopPropagation?: boolean;
-	styleType?: THEMES;
+	styleType?: ThemeProperty;
 	success?: boolean;
-	theme?: THEMES;
+	theme?: ThemeProperty;
 	transparent?: boolean;
 	warn?: boolean;
 }
@@ -112,9 +102,7 @@ const Transparent = styled(ThinButton)`
 	cursor: pointer;
 `;
 
-const RippleButton = styled(Transparent).attrs(({ rippleColor = Theme.primaryAlpha, ...props }: ButtonProps) => ({
-	...props
-}))`
+const RippleButton = styled(Transparent)`
 	overflow: hidden;
 	transform: translate3d(0, 0, 0);
 	&:after {
@@ -141,30 +129,6 @@ const RippleButton = styled(Transparent).attrs(({ rippleColor = Theme.primaryAlp
 	}
 `;
 
-const themeRnStyleProperty = [
-	"danger",
-	"primary",
-	"info",
-	"success",
-	"warn",
-	"transparent",
-	"light",
-	"none",
-	"dark",
-	"disabled",
-	"disabledTransparent"
-];
-
-const defineTheme = (props: ButtonProps & Object, styleType: string, theme: string = ""): string => {
-	for (const key of themeRnStyleProperty) {
-		const hasProp = props.hasOwnProperty(key);
-		if (hasProp && !!props[key]) {
-			return key;
-		}
-	}
-	return styleType || theme;
-};
-
 const Button = ({
 	full = false,
 	circle = false,
@@ -173,7 +137,7 @@ const Button = ({
 	loadingHeight = 35,
 	style = {},
 	styleType = "primary",
-	rippleColor = Theme.primary,
+	rippleColor = Theme.primaryAlpha,
 	theme,
 	size = 1,
 	children,

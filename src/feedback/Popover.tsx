@@ -1,17 +1,16 @@
 import Tippy from "@tippy.js/react";
-import React, { CSSProperties } from "react";
-import styled from "styled-components";
-import { inlinePositioning, sticky } from "tippy.js";
+import React from "react";
+import { sticky } from "tippy.js";
 import "tippy.js/animations/perspective.css";
 import "tippy.js/animations/scale.css";
 import "tippy.js/animations/shift-away.css";
 import "tippy.js/animations/shift-toward.css";
 import "tippy.js/dist/backdrop.css";
-import { Colors } from "..";
-import { Container } from "../base";
-import Theme from "../styles";
+import "tippy.js/dist/svg-arrow.css";
+import "tippy.js/dist/tippy.css";
+import "tippy.js/themes/light.css";
 
-export const tippyPlugins = [sticky, inlinePositioning];
+export const tippyPlugins = [sticky];
 
 export type Triggers = "mouseenter" | "focus" | "click" | "manual";
 type Placements =
@@ -32,7 +31,10 @@ type Placements =
 	| "left-start";
 
 export type Animations = "perspective" | "fade" | "scale" | "shift-away" | "shift-toward";
+export type PopoverTheme = "dark" | "light";
 type Props = {
+	onCreate?: any;
+	theme?: PopoverTheme;
 	distance?: number;
 	className?: string;
 	animation?: Animations;
@@ -44,52 +46,39 @@ type Props = {
 	itens: React.ReactChild;
 	onShow?: (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => any;
 };
-
-export const DropdownItem = styled.li`
-	text-decoration: none;
-	display: block;
-	cursor: pointer;
-	width: 100%;
-
-	&:hover {
-		background-color: ${Theme.lightAlpha};
-	}
-`;
-
-export const Dropdown = ({
+export const Popover = ({
 	children,
 	className = "",
 	triggers = ["click"],
-	bgColor = Colors.lightLight,
 	itens,
-	animation = "perspective",
+	onCreate,
+	theme = "light",
+	animation = "shift-away",
 	position = "bottom-end"
 }: Props) => {
-	const style: CSSProperties = { backgroundColor: bgColor, width: "100%", padding: "0.4rem", listStyle: "none" };
 	const triggerString = triggers.join(" ");
-
-	const content = (
-		<Container>
-			<ul style={style}>{itens}</ul>
-		</Container>
-	);
-
 	return (
 		<Tippy
 			lazy
+			flip
+			arrow
 			sticky
 			inertia
+			multiple
 			interactive
+			theme={theme}
+			content={itens}
 			maxWidth="30rem"
-			inlinePositioning
-			content={content}
+			boundary="viewport"
+			duration={[350, 200]}
+			onCreate={onCreate}
 			placement={position}
 			className={className}
 			animation={animation}
 			plugins={tippyPlugins}
 			trigger={triggerString}
 		>
-			{children as any}
+			<span>{children as any}</span>
 		</Tippy>
 	);
 };

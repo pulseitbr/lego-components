@@ -22,6 +22,7 @@
         "prepare": "rollup -c"
     },
     "dependencies": {
+        "@tippy.js/react": "^3.1.1",
         "classnames": "^2.2.6",
         "decimal.js": "^10.2.0",
         "filesize": "^5.0.3",
@@ -33,6 +34,7 @@
         "rc-tabs": "^9.6.7",
         "rc-tooltip": "^4.0.0-alpha.0",
         "react-circular-progressbar": "^2.0.2",
+        "react-collapse": "^5.0.0",
         "react-content-loader": "^4.3.2",
         "react-dropzone": "^10.1.10",
         "react-icons": "^3.7.0",
@@ -41,7 +43,8 @@
         "react-text-mask": "^5.4.3",
         "shx": "^0.3.2",
         "sidekicker": "^0.0.28",
-        "styled-components": "^4.4.0"
+        "styled-components": "^4.4.0",
+        "tippy.js": "^5.1.1"
     },
     "peerDependencies": {
         "react": "16.10.2",
@@ -52,6 +55,7 @@
         "@types/classnames": "^2.2.9",
         "@types/jest": "^24.0.19",
         "@types/react": "^16.9.7",
+        "@types/react-collapse": "^4.0.2",
         "@types/react-dom": "^16.9.2",
         "@types/react-portal": "^4.0.2",
         "@types/react-text-mask": "^5.4.6",

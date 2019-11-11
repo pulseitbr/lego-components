@@ -10342,6 +10342,7 @@ rc-notification@^3.3.1:
     rc-animate "2.x"
     rc-util "^4.0.4"
 
+<<<<<<< HEAD
 rc-tabs@^9.6.7:
   version "9.6.7"
   resolved "https://registry.yarnpkg.com/rc-tabs/-/rc-tabs-9.6.7.tgz#c546115a351f5ed779ea5524143157f48ee0c015"
@@ -10359,6 +10360,8 @@ rc-tabs@^9.6.7:
     resize-observer-polyfill "^1.5.1"
     warning "^4.0.3"
 
+=======
+>>>>>>> 138fd954fa5ff39088dc785ab322a8dc2755d4ab
 rc-tooltip@^4.0.0-alpha.0:
   version "4.0.0-alpha.2"
   resolved "https://registry.yarnpkg.com/rc-tooltip/-/rc-tooltip-4.0.0-alpha.2.tgz#69e60294b219db8b23b9c6e9677a2a0a3394b213"

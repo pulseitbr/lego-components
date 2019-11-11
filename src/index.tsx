@@ -37,6 +37,8 @@ export { default as AllowView } from "./tenants/AllowView";
 export * from "./tenants/profile";
 export * from "./typography/index";
 export { default as BBCode } from "./utils/BBCode";
+export { DropdownItem, Dropdown } from "./feedback/Dropdown";
+export { Popover, Animations, Triggers } from "./feedback/Popover";
 export { default as Bowser } from "./utils/Bowser";
 export { default as Console } from "./utils/Console";
 export { default as Dimensions } from "./utils/Dimensions";
