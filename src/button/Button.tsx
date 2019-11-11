@@ -75,7 +75,7 @@ const styledProps = {
 	warn: ghostStyle(Theme.warn, Theme.light, Theme.warn, Theme.warnDark),
 	info: ghostStyle(Theme.info, Theme.light, Theme.info, Theme.infoDark),
 	dark: ghostStyle(Theme.dark, Theme.light, Theme.dark, Theme.darkDarkest),
-	light: ghostStyle(Theme.light, Theme.light, Theme.light, Theme.lightDark),
+	light: ghostStyle(Theme.light, Theme.lightDark, Theme.light, Theme.lightDark),
 	danger: ghostStyle(Theme.danger, Theme.light, Theme.danger, Theme.dangerDark),
 	primary: ghostStyle(Theme.primary, Theme.light, Theme.primary, Theme.primaryDark),
 	success: ghostStyle(Theme.success, Theme.light, Theme.success, Theme.successDark),
@@ -137,8 +137,9 @@ const Button = ({
 	loadingHeight = 35,
 	style = {},
 	styleType = "primary",
-	rippleColor = Theme.primaryAlpha,
-	theme,
+	rippleColor = Theme.primary,
+    theme,
+    disabled,
 	size = 1,
 	children,
 	type = "button",
@@ -149,8 +150,8 @@ const Button = ({
 }: ButtonProps) => {
 	const themeDefined = defineTheme(html, styleType, theme) || "primary";
 	const clickPressAction = onClick || onPress;
-	const ifDisable = html.disabled ? "disabled" : themeDefined;
-	const cursor = html.disabled ? ("not-allowed" as "not-allowed") : ("pointer" as "pointer");
+	const ifDisable = !!disabled ? "disabled" : themeDefined;
+	const cursor = !!disabled ? ("not-allowed" as "not-allowed") : ("pointer" as "pointer");
 
 	const onClickButton = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 		if (stopPropagation) {
@@ -188,7 +189,7 @@ const Button = ({
 			style={{ cursor, ...style }}
 			textColor={Theme.lightLight}
 			theme={styledProps[ifDisable]}
-			disabled={loading ? true : !!html.disabled}
+			disabled={loading ? true : !!disabled}
 		>
 			{loading && (
 				<React.Fragment>

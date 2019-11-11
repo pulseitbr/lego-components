@@ -893,7 +893,7 @@ label {
     width: 0;
     height: 0;
     border-radius: 50%;
-    background: var(--darkAlpha);
+    background: var(--primaryAlpha);
     transform: scale(0);
     position: absolute;
     opacity: 1;

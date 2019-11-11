@@ -1,33 +1,39 @@
 import React, { Fragment } from "react";
 import { action } from "@storybook/addon-actions";
-import { Button } from "lego-components";
+import { Button, Container, Colors } from "lego-components";
 
 export default {
-    title: "Button"
+	title: "Button"
 };
 
 export const ButtonReference = () => (
-    <Fragment>
-        <Button danger onClick={action("clicked")}>
-            Danger
-        </Button>{" "}
-        <Button loading danger onClick={action("clicked")}>
-            Danger
-        </Button>
-        <Button light onClick={action("clicked")}>
-            Success
-        </Button>{" "}
-        <Button success onClick={action("clicked")}>
-            Success
-        </Button>{" "}
-        <Button info onClick={action("clicked")}>
-            Info
-        </Button>{" "}
-        <Button dark onClick={action("clicked")}>
-            Success
-        </Button>{" "}
-        <Button transparent rippleColor="#ff0" onClick={action("clicked")}>
-            Transparent
-        </Button>{" "}
-    </Fragment>
+	<Container style={{ backgroundColor: Colors.lightAlpha, padding: "2rem 0" }}>
+		<Button danger onClick={() => action("clicked")}>
+			Danger
+		</Button>{" "}
+		<Button loading danger onClick={action("clicked")}>
+			Loading
+		</Button>{" "}
+		<Button disabled onClick={action("clicked")}>
+			Disabled
+		</Button>{" "}
+		<Button light onClick={action("clicked")}>
+			Success
+		</Button>{" "}
+		<Button success onClick={action("clicked")}>
+			Success
+		</Button>{" "}
+		<Button info onClick={action("clicked")}>
+			Info
+		</Button>{" "}
+		<Button dark onClick={action("clicked")}>
+			Dark
+		</Button>{" "}
+		<Button transparent rippleColor="cyan" onPress={action("clicked")}>
+			Transparent
+		</Button>{" "}
+		<Button disabledTransparent onClick={action("clicked")}>
+			Disabled Transparent
+		</Button>{" "}
+	</Container>
 );
