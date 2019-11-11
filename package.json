@@ -35,12 +35,12 @@
         "react-icons": "^3.7.0",
         "react-text-mask": "^5.4.3",
         "sidekicker": "^0.0.28",
-        "styled-components": "^4.4.0",
         "tippy.js": "^5.1.1"
     },
     "peerDependencies": {
         "react": "16.10.2",
-        "react-dom": "16.10.2"
+        "react-dom": "16.10.2",
+        "styled-components": ">= 4"
     },
     "devDependencies": {
         "@svgr/rollup": "^4.3.3",
