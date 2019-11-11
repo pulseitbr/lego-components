@@ -18,30 +18,22 @@
     "scripts": {
         "build": "rollup -c",
         "start": "rollup -c -w",
-        "rm": "shx rm -rf dist",
         "prepare": "rollup -c"
     },
     "dependencies": {
         "@tippy.js/react": "^3.1.1",
         "classnames": "^2.2.6",
         "decimal.js": "^10.2.0",
-        "filesize": "^5.0.3",
+        "filesize": "^6.0.1",
         "indexof": "^0.0.1",
-        "npm-run-all": "^4.1.5",
         "polished": "^3.4.1",
-        "rc-dialog": "^7.5.7",
         "rc-notification": "^3.3.1",
         "rc-tabs": "^9.6.7",
-        "rc-tooltip": "^4.0.0-alpha.0",
         "react-circular-progressbar": "^2.0.2",
-        "react-collapse": "^5.0.0",
         "react-content-loader": "^4.3.2",
         "react-dropzone": "^10.1.10",
         "react-icons": "^3.7.0",
-        "react-portal-minimal": "^4.0.2",
-        "react-ripples": "^2.2.1",
         "react-text-mask": "^5.4.3",
-        "shx": "^0.3.2",
         "sidekicker": "^0.0.28",
         "styled-components": "^4.4.0",
         "tippy.js": "^5.1.1"
@@ -55,9 +47,7 @@
         "@types/classnames": "^2.2.9",
         "@types/jest": "^24.0.19",
         "@types/react": "^16.9.7",
-        "@types/react-collapse": "^4.0.2",
         "@types/react-dom": "^16.9.2",
-        "@types/react-portal": "^4.0.2",
         "@types/react-text-mask": "^5.4.6",
         "@types/styled-components": "^4.1.19",
         "babel-core": "^6.26.3",
@@ -65,7 +55,6 @@
         "babel-runtime": "^6.26.0",
         "cross-env": "^6.0.3",
         "react-is": "^16.10.2",
-        "react-portal": "^4.2.0",
         "react-scripts-ts": "^3.1.0",
         "rollup": "^1.24.0",
         "rollup-plugin-babel": "^4.3.3",
@@ -74,10 +63,10 @@
         "rollup-plugin-peer-deps-external": "^2.2.0",
         "rollup-plugin-postcss": "^2.0.3",
         "rollup-plugin-typescript": "^1.0.1",
-        "rollup-plugin-typescript2": "^0.24.3",
+        "rollup-plugin-typescript2": "^0.25.2",
         "rollup-plugin-url": "^3.0.0",
         "tslib": "^1.10.0",
-        "typescript": "^3.6.4"
+        "typescript": "^3.7.2"
     },
     "files": [
         "dist"
