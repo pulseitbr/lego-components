@@ -1,22 +1,21 @@
 import { FlexDirectionProperty } from "csstype";
-import React, { useEffect, useRef } from "react";
+import React from "react";
+import Collapse from "./collapse";
 import styled, { StyledComponent } from "styled-components";
-import { HtmlTag } from "../@types";
-
-type Value = number | string;
+import { HtmlTag, TypeText } from "../@types";
 
 export type LegoMediaQuery = {
-	span?: Value;
-	xsmall?: Value;
-	small?: Value;
-	medium?: Value;
-	large?: Value;
-	xlarge?: Value;
+	span?: TypeText;
+	xsmall?: TypeText;
+	small?: TypeText;
+	medium?: TypeText;
+	large?: TypeText;
+	xlarge?: TypeText;
 };
 
 export type TypeContainer = LegoMediaQuery &
 	React.HTMLAttributes<HTMLElement> & {
-		time?: Value;
+		time?: TypeText;
 		direction?: FlexDirectionProperty;
 	};
 
@@ -54,12 +53,6 @@ const Flex = styled.div.attrs(({ direction = "row", ...props }: TypeContainer) =
 	}
 `;
 
-const Collapse = styled(Flex).attrs(({ time = 450, ...props }: TypeContainer) => ({ ...props, time }))`
-	max-height: 0;
-	overflow: hidden;
-	transition: max-height ${(props: any) => props.time}ms cubic-bezier(0.45, 0.27, 0.63, 0.51);
-`;
-
 type ResponsiveProps = {
 	isCollapse?: boolean;
 	show?: boolean;
@@ -70,24 +63,12 @@ type ResponsiveProps = {
 const Responsive = ({
 	isCollapse = false,
 	show = true,
+	time = 500,
 	Component = Flex,
 	children,
 	htmlTag = "div",
 	...props
 }: ResponsiveProps) => {
-	const ref: React.RefObject<HTMLDivElement> = useRef(null);
-	useEffect(() => {
-		if (!!ref.current) {
-			if (!!isCollapse) {
-				if (show) {
-					ref.current.style.maxHeight = "100%";
-				} else {
-					ref.current.style.maxHeight = null;
-				}
-			}
-		}
-	}, [isCollapse, show]);
-
 	if (!isCollapse) {
 		return (
 			<Component as={htmlTag} {...props}>
@@ -95,10 +76,11 @@ const Responsive = ({
 			</Component>
 		);
 	}
-
 	return (
-		<Collapse as={htmlTag} ref={ref} {...props}>
-			{children}
+		<Collapse isOpened={show} time={time}>
+			<Component as={htmlTag} {...props}>
+				{children}
+			</Component>
 		</Collapse>
 	);
 };
