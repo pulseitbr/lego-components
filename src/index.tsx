@@ -71,6 +71,5 @@ export const GlobalStyle = createGlobalStyle`
 
   html, body, #root {
     min-height:100%;
-    background-color: ${Theme.light}
   }
 `;
