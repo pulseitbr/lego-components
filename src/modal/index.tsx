@@ -4,7 +4,7 @@ import { MdClose } from "react-icons/md";
 import styled, { ThemedStyledFunction } from "styled-components";
 import { TypeContainer, View } from "../base";
 import useBlockScroll from "../hooks/useBlockScroll";
-import Theme from "../styles";
+import Colors from "../styles";
 import ReactPortal from "../utils/Portal";
 import StyleSheet from "../styles/StyleSheet";
 import { HtmlTag } from "../@types";
@@ -44,13 +44,13 @@ const ModalPortal = styled.div.attrs((props: any) => ({
 type Content = ThemedStyledFunction<"div", any, any, any> & { width: string | number };
 
 const ModalContent = styled.dialog.attrs((props: Content) => props)`
-	background-color: ${Theme.lightLight};
+	background-color: ${Colors.lightLight};
 	margin: auto;
 	min-width: ${StyleSheet.minWidthMobile};
 	max-width: 100%;
 	overflow-y: hidden;
 	width: ${(props) => props.width};
-	border: 1px solid ${Theme.darkAlpha};
+	border: 1px solid ${Colors.darkAlpha};
 `;
 
 const Close = styled.span`
@@ -118,7 +118,7 @@ const Modal = ({
 	useEffect(() => {
 		window.addEventListener("keydown", toggleVisibility);
 		return () => window.removeEventListener("keydown", toggleVisibility);
-	}, []);
+	}, [toggleVisibility]);
 
 	const onClickMask = (e: any) => {
 		e.stopPropagation();
@@ -133,7 +133,7 @@ const Modal = ({
 	const headerViewProps = {
 		...headerProps,
 		style: {
-			borderBottom: `${StyleSheet.hairlineWidth} solid ${Theme.darkAlpha}`,
+			borderBottom: `${StyleSheet.hairlineWidth} solid ${Colors.darkAlpha}`,
 			...defaultModalPartProps.style,
 			...headerProps.style
 		}

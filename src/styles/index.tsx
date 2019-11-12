@@ -102,7 +102,7 @@ if (emptyGlobalBP) {
 }
 
 const BP_PLACEHOLDER = window.$__BP__;
-export let $__BP__: typeof CONFIG_THEME = {
+export const $__BP__: typeof CONFIG_THEME = {
 	...BP_PLACEHOLDER,
 	config: {
 		...BP_PLACEHOLDER.config,
@@ -110,6 +110,6 @@ export let $__BP__: typeof CONFIG_THEME = {
 	}
 };
 
-let Theme = $__BP__.config.theme;
+const Colors = $__BP__.config.theme;
 
-export default Theme;
+export default Colors;

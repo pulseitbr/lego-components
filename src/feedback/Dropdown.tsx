@@ -7,9 +7,8 @@ import "tippy.js/animations/scale.css";
 import "tippy.js/animations/shift-away.css";
 import "tippy.js/animations/shift-toward.css";
 import "tippy.js/dist/backdrop.css";
-import { Colors } from "..";
 import { Container } from "../base";
-import Theme from "../styles";
+import Colors from "../styles";
 
 export const tippyPlugins = [sticky, inlinePositioning];
 
@@ -52,7 +51,7 @@ export const DropdownItem = styled.li`
 	width: 100%;
 
 	&:hover {
-		background-color: ${Theme.lightAlpha};
+		background-color: ${Colors.lightAlpha};
 	}
 `;
 

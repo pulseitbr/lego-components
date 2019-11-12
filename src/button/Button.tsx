@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Loader from "../loader/Loader";
-import Theme from "../styles";
+import Colors from "../styles";
 import { ThemeProperty, defineTheme } from "../styles/ThemeProperty";
 
 interface IButtonProps {
@@ -47,9 +47,9 @@ const ThinButton = styled.button<ButtonProps & { pill?: boolean }>`
 	&:disabled {
 		cursor: wait;
 		pointer-events: none;
-		color: ${Theme.darkAlpha};
-		background-color: ${Theme.disabled};
-		border-color: ${Theme.disabledDark};
+		color: ${Colors.darkAlpha};
+		background-color: ${Colors.disabled};
+		border-color: ${Colors.disabledDark};
 	}
 `;
 
@@ -72,17 +72,17 @@ const ghostStyle = (primaryColor: string, hoverColor: string, bgColor: string, c
 `;
 
 const styledProps = {
-	warn: ghostStyle(Theme.warn, Theme.light, Theme.warn, Theme.warnDark),
-	info: ghostStyle(Theme.info, Theme.light, Theme.info, Theme.infoDark),
-	dark: ghostStyle(Theme.dark, Theme.light, Theme.dark, Theme.darkDarkest),
-	light: ghostStyle(Theme.light, Theme.lightDark, Theme.light, Theme.lightDark),
-	danger: ghostStyle(Theme.danger, Theme.light, Theme.danger, Theme.dangerDark),
-	primary: ghostStyle(Theme.primary, Theme.light, Theme.primary, Theme.primaryDark),
-	success: ghostStyle(Theme.success, Theme.light, Theme.success, Theme.successDark),
-	disabled: `${ghostStyle(Theme.disabled, Theme.darkAlpha, "transparent", "transparent")} cursor: not-allowed;`,
+	warn: ghostStyle(Colors.warn, Colors.light, Colors.warn, Colors.warnDark),
+	info: ghostStyle(Colors.info, Colors.light, Colors.info, Colors.infoDark),
+	dark: ghostStyle(Colors.dark, Colors.light, Colors.dark, Colors.darkDarkest),
+	light: ghostStyle(Colors.light, Colors.lightDark, Colors.light, Colors.lightDark),
+	danger: ghostStyle(Colors.danger, Colors.light, Colors.danger, Colors.dangerDark),
+	primary: ghostStyle(Colors.primary, Colors.light, Colors.primary, Colors.primaryDark),
+	success: ghostStyle(Colors.success, Colors.light, Colors.success, Colors.successDark),
+	disabled: `${ghostStyle(Colors.disabled, Colors.darkAlpha, "transparent", "transparent")} cursor: not-allowed;`,
 	disabledTransparent: `${ghostStyle(
-		Theme.disabled,
-		Theme.disabled,
+		Colors.disabled,
+		Colors.disabled,
 		"transparent",
 		"transparent"
 	)} cursor: not-allowed; &:disabled {
@@ -97,7 +97,7 @@ const Transparent = styled(ThinButton)`
 	position: relative;
 	background-color: transparent;
 	outline: 0;
-	color: ${Theme.primary};
+	color: ${Colors.primary};
 	border: 1px solid transparent;
 	cursor: pointer;
 `;
@@ -137,9 +137,9 @@ const Button = ({
 	loadingHeight = 35,
 	style = {},
 	styleType = "primary",
-	rippleColor = Theme.primary,
-    theme,
-    disabled,
+	rippleColor = Colors.primary,
+	theme,
+	disabled,
 	size = 1,
 	children,
 	type = "button",
@@ -184,16 +184,16 @@ const Button = ({
 			full={full}
 			size={size}
 			pill={!square}
-			bgColor={Theme.primary}
+			bgColor={Colors.primary}
 			onClick={onClickButton}
 			style={{ cursor, ...style }}
-			textColor={Theme.lightLight}
+			textColor={Colors.lightLight}
 			theme={styledProps[ifDisable]}
 			disabled={loading ? true : !!disabled}
 		>
 			{loading && (
 				<React.Fragment>
-					<Loader border={0.05} size={0.5} color={Theme.disabledDark} />{" "}
+					<Loader border={0.05} size={0.5} color={Colors.disabledDark} />{" "}
 				</React.Fragment>
 			)}
 			{children}

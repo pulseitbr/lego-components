@@ -6,24 +6,24 @@ export const windowWidth = window.innerWidth;
 export const windowHeight = window.innerHeight;
 
 export const HtmlWindow = {
-    height: windowHeight,
-    width: windowWidth,
-    ref: window
+	height: windowHeight,
+	width: windowWidth,
+	ref: window
 };
 export const HTML = {
-    height: htmlHeight,
-    width: htmlWidth,
-    ref: document.querySelector(":root")! as Element
+	height: htmlHeight,
+	width: htmlWidth,
+	ref: document.querySelector(":root")! as Element
 };
 
 export const HtmlBody = {
-    height: bodyHeight,
-    width: bodyWidth,
-    ref: document.body
+	height: bodyHeight,
+	width: bodyWidth,
+	ref: document.body
 };
 
 export default {
-    Body: HtmlBody,
-    Window,
-    HTML
+	Body: HtmlBody,
+	Window,
+	HTML
 };

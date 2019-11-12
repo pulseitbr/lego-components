@@ -1,5 +1,5 @@
-import Theme from "./";
+import Colors from "./";
 
 const root: any = document.querySelector(":root");
 
-export default () => Object.keys(Theme).forEach((x: any) => root.style.setProperty(`--${x}`, `${Theme[x]}`));
+export default () => Object.keys(Colors).forEach((x: any) => root.style.setProperty(`--${x}`, `${Colors[x]}`));

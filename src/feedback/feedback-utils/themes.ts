@@ -1,22 +1,22 @@
-import Theme from "../../styles";
+import Colors from "../../styles";
 
 export type NotifyTheme = {
-    icon: {
-        color: string;
-    };
-    box: {
-        backgroundColor: string;
-        color: string;
-    };
+	icon: {
+		color: string;
+	};
+	box: {
+		backgroundColor: string;
+		color: string;
+	};
 };
 
 const allThemes: { [key: string]: NotifyTheme } = {
-    danger: { icon: { color: Theme.danger }, box: { backgroundColor: Theme.lightLightest, color: Theme.dark } },
-    dark: { icon: { color: Theme.lightLightest }, box: { backgroundColor: Theme.dark, color: Theme.lightLightest } },
-    default: { icon: { color: Theme.dark }, box: { backgroundColor: Theme.lightLightest, color: Theme.dark } },
-    info: { icon: { color: Theme.info }, box: { backgroundColor: Theme.lightLightest, color: Theme.dark } },
-    success: { icon: { color: Theme.success }, box: { backgroundColor: Theme.lightLightest, color: Theme.dark } },
-    warn: { icon: { color: Theme.warn }, box: { backgroundColor: Theme.lightLightest, color: Theme.dark } }
+	danger: { icon: { color: Colors.danger }, box: { backgroundColor: Colors.lightLightest, color: Colors.dark } },
+	dark: { icon: { color: Colors.lightLightest }, box: { backgroundColor: Colors.dark, color: Colors.lightLightest } },
+	default: { icon: { color: Colors.dark }, box: { backgroundColor: Colors.lightLightest, color: Colors.dark } },
+	info: { icon: { color: Colors.info }, box: { backgroundColor: Colors.lightLightest, color: Colors.dark } },
+	success: { icon: { color: Colors.success }, box: { backgroundColor: Colors.lightLightest, color: Colors.dark } },
+	warn: { icon: { color: Colors.warn }, box: { backgroundColor: Colors.lightLightest, color: Colors.dark } }
 };
 
 type Themes = "info" | "success" | "warn" | "dark" | "danger" | "default" | string;

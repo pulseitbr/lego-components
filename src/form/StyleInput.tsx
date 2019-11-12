@@ -1,5 +1,5 @@
 import Loader from "../loader/Loader";
-import Theme from "../styles";
+import Colors from "../styles";
 import React, { useEffect, useState } from "react";
 import Input, { InputTypes, MaskInputProps } from "./Input";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
@@ -10,24 +10,24 @@ const initialField = "form-field__control";
 const initialFieldError = "form-field__control form-field__input-error";
 
 type Props = {
-    className?: string;
-    divClassName?: string;
-    divColor?: string;
-    divStyle?: React.CSSProperties;
-    error?: boolean;
-    hidePasswordIcon?: React.ReactNode;
-    inputClassName?: string;
-    inputColor?: string;
-    inputErrorColor?: string;
-    labelClassName?: string;
-    labelColor?: string;
-    labelStyle?: React.CSSProperties;
-    loaderColor?: string;
-    loading?: boolean;
-    mainColor?: string;
-    message?: React.ReactNode;
-    name: string;
-    viewPasswordIcon?: React.ReactNode;
+	className?: string;
+	divClassName?: string;
+	divColor?: string;
+	divStyle?: React.CSSProperties;
+	error?: boolean;
+	hidePasswordIcon?: React.ReactNode;
+	inputClassName?: string;
+	inputColor?: string;
+	inputErrorColor?: string;
+	labelClassName?: string;
+	labelColor?: string;
+	labelStyle?: React.CSSProperties;
+	loaderColor?: string;
+	loading?: boolean;
+	mainColor?: string;
+	message?: React.ReactNode;
+	name: string;
+	viewPasswordIcon?: React.ReactNode;
 };
 
 type FloatInputType = React.InputHTMLAttributes<HTMLInputElement> & Props & MaskInputProps;
@@ -37,133 +37,133 @@ const changeType = (type: InputTypes, prev: string) => (type === "password" && t
 const voidFn = () => "";
 
 const StyleInput = ({
-    className = "",
-    disabled = false,
-    divClassName = "",
-    divColor = Theme.primaryLight,
-    divStyle = {},
-    error = false,
-    hidePasswordIcon = <MdVisibility style={{ color: Theme.primaryLight }} />,
-    inputColor = Theme.primary,
-    inputErrorColor = Theme.danger,
-    labelClassName = "",
-    labelColor = Theme.primaryLight,
-    labelStyle,
-    loaderColor = Theme.primary,
-    loading = false,
-    mainColor = Theme.primary,
-    mask: maskType,
-    message,
-    name,
-    onBlur = voidFn,
-    onChange = voidFn,
-    onFocus = voidFn,
-    placeholder = "",
-    type = "text",
-    value = "",
-    viewPasswordIcon = <MdVisibilityOff style={{ color: Theme.primaryLight }} />,
-    ...inputHtml
+	className = "",
+	disabled = false,
+	divClassName = "",
+	divColor = Colors.primaryLight,
+	divStyle = {},
+	error = false,
+	hidePasswordIcon = <MdVisibility style={{ color: Colors.primaryLight }} />,
+	inputColor = Colors.primary,
+	inputErrorColor = Colors.danger,
+	labelClassName = "",
+	labelColor = Colors.primaryLight,
+	labelStyle,
+	loaderColor = Colors.primary,
+	loading = false,
+	mainColor = Colors.primary,
+	mask: maskType,
+	message,
+	name,
+	onBlur = voidFn,
+	onChange = voidFn,
+	onFocus = voidFn,
+	placeholder = "",
+	type = "text",
+	value = "",
+	viewPasswordIcon = <MdVisibilityOff style={{ color: Colors.primaryLight }} />,
+	...inputHtml
 }: FloatInputType) => {
-    const [field, setField] = useState(initialField);
-    const [stateType, setType] = useState(type);
+	const [field, setField] = useState(initialField);
+	const [stateType, setType] = useState(type);
 
-    useEffect(() => {
-        if (!!value || maskType === "currency") {
-            return setField(`${initialField} ${onActive} ${divClassName}`);
-        }
-        if (value === "") {
-            return setField(initialField);
-        }
-        if (error && value !== "") {
-            return setField(`${initialFieldError} ${onActiveError} ${divClassName}`);
-        }
-        if (error && !!!value) {
-            return setField(`${initialFieldError} ${divClassName}`);
-        }
-    }, [value, error, maskType, divClassName]);
+	useEffect(() => {
+		if (!!value || maskType === "currency") {
+			return setField(`${initialField} ${onActive} ${divClassName}`);
+		}
+		if (value === "") {
+			return setField(initialField);
+		}
+		if (error && value !== "") {
+			return setField(`${initialFieldError} ${onActiveError} ${divClassName}`);
+		}
+		if (error && !!!value) {
+			return setField(`${initialFieldError} ${divClassName}`);
+		}
+	}, [value, error, maskType, divClassName]);
 
-    const blur = (e: React.FocusEvent<HTMLInputElement>) => {
-        if (!e.target.value) {
-            setField(error ? initialFieldError : initialField);
-        }
-        return onBlur(e);
-    };
+	const blur = (e: React.FocusEvent<HTMLInputElement>) => {
+		if (!e.target.value) {
+			setField(error ? initialFieldError : initialField);
+		}
+		return onBlur(e);
+	};
 
-    const focus = (e: React.FocusEvent<HTMLInputElement>) => {
-        setField(`${error ? onActiveError : onActive}`);
-        return onFocus(e);
-    };
+	const focus = (e: React.FocusEvent<HTMLInputElement>) => {
+		setField(`${error ? onActiveError : onActive}`);
+		return onFocus(e);
+	};
 
-    const change = (e: React.ChangeEvent<HTMLInputElement>) => onChange(e);
+	const change = (e: React.ChangeEvent<HTMLInputElement>) => onChange(e);
 
-    const toggle = () => setType(changeType(stateType, type) as InputTypes);
+	const toggle = () => setType(changeType(stateType, type) as InputTypes);
 
-    if (type === "password") {
-        return (
-            <div style={divStyle} className={`${field} ${divClassName}`}>
-                <label
-                    style={{
-                        width: "100%",
-                        color: labelColor,
-                        cursor: disabled ? "not-allowed" : "pointer",
-                        ...labelStyle
-                    }}
-                    title={placeholder}
-                    htmlFor={name}
-                    className={`form-field__label ${labelClassName}`}
-                >
-                    {placeholder}
-                </label>
-                <Input
-                    {...inputHtml}
-                    className={`form-field__input ${className}${disabled ? " not-allowed" : ""}`}
-                    disabled={disabled}
-                    id={name}
-                    mask={maskType}
-                    name={name}
-                    onBlur={blur}
-                    onChange={change}
-                    onFocus={focus}
-                    style={{ cursor: disabled ? "not-allowed" : "pointer", ...inputHtml.style }}
-                    type={stateType}
-                    value={value}
-                />
-                <button disabled={disabled} type="button" onClick={toggle} className="toggle-password">
-                    {(stateType === "password" && viewPasswordIcon) || hidePasswordIcon}
-                </button>
-                {!!message && <small>{message}</small>}
-            </div>
-        );
-    }
+	if (type === "password") {
+		return (
+			<div style={divStyle} className={`${field} ${divClassName}`}>
+				<label
+					style={{
+						width: "100%",
+						color: labelColor,
+						cursor: disabled ? "not-allowed" : "pointer",
+						...labelStyle
+					}}
+					title={placeholder}
+					htmlFor={name}
+					className={`form-field__label ${labelClassName}`}
+				>
+					{placeholder}
+				</label>
+				<Input
+					{...inputHtml}
+					className={`form-field__input ${className}${disabled ? " not-allowed" : ""}`}
+					disabled={disabled}
+					id={name}
+					mask={maskType}
+					name={name}
+					onBlur={blur}
+					onChange={change}
+					onFocus={focus}
+					style={{ cursor: disabled ? "not-allowed" : "pointer", ...inputHtml.style }}
+					type={stateType}
+					value={value}
+				/>
+				<button disabled={disabled} type="button" onClick={toggle} className="toggle-password">
+					{(stateType === "password" && viewPasswordIcon) || hidePasswordIcon}
+				</button>
+				{!!message && <small>{message}</small>}
+			</div>
+		);
+	}
 
-    return (
-        <div style={divStyle} className={`${field} ${divClassName}`}>
-            <label
-                className={`form-field__label ${labelClassName}`}
-                htmlFor={name}
-                style={{ color: labelColor, width: "100%", ...labelStyle }}
-                title={placeholder}
-            >
-                {placeholder}
-            </label>
-            <Input
-                {...inputHtml}
-                className={`form-field__input ${className}${disabled ? " not-allowed" : ""}`}
-                disabled={disabled}
-                id={name}
-                mask={maskType}
-                name={name}
-                onBlur={blur}
-                onChange={change}
-                onFocus={focus}
-                type={type}
-                usePlaceholder={false}
-                value={value}
-            />
-            {loading && <Loader className="toggle-password" size={1.2} border={0.1} color={loaderColor} />}
-            {!!message && <small>{message}</small>}
-        </div>
-    );
+	return (
+		<div style={divStyle} className={`${field} ${divClassName}`}>
+			<label
+				className={`form-field__label ${labelClassName}`}
+				htmlFor={name}
+				style={{ color: labelColor, width: "100%", ...labelStyle }}
+				title={placeholder}
+			>
+				{placeholder}
+			</label>
+			<Input
+				{...inputHtml}
+				className={`form-field__input ${className}${disabled ? " not-allowed" : ""}`}
+				disabled={disabled}
+				id={name}
+				mask={maskType}
+				name={name}
+				onBlur={blur}
+				onChange={change}
+				onFocus={focus}
+				type={type}
+				usePlaceholder={false}
+				value={value}
+			/>
+			{loading && <Loader className="toggle-password" size={1.2} border={0.1} color={loaderColor} />}
+			{!!message && <small>{message}</small>}
+		</div>
+	);
 };
 
 export default StyleInput;

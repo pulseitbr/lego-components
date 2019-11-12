@@ -1,72 +1,91 @@
-//@ts-ignore
-import Tabs, { TabPane } from "rc-tabs";
-import "rc-tabs/assets/index.css";
-//@ts-ignore
-import ScrollableInkTabBar from "rc-tabs/lib/ScrollableInkTabBar";
-//@ts-ignore
-import TabContent from "rc-tabs/lib/SwipeableTabContent";
-import React from "react";
-import { Container } from "../base";
-import useReducer from "../hooks/useReducer";
+import classNames from "classnames";
+import React, { Fragment, useRef } from "react";
+import Slider from "react-slick";
+import styled from "styled-components";
+import { Colors } from "..";
+import { Container, View } from "../base";
+import StyleSheet from "../styles/StyleSheet";
 
-const defaultTabKey = "1";
+const styles = StyleSheet.create({
+	header: {
+		padding: "0.6rem",
+		flexDirection: "row",
+		display: "inline-flex",
+		overflow: "auto",
+		whiteSpace: "nowrap",
+		width: "100%",
+		flexShrink: 0,
+		flexWrap: "nowrap",
+		borderBottom: "0.5px solid #eee"
+	},
+	view: { marginTop: "0.5rem" }
+});
 
-const PanelContent = ({ children }: any) => <Container style={{ overflow: "auto" }}>{children}</Container>;
+const PanelHeaderScroll = styled(View).attrs((props: { scrollColor: string }) => props)`
+	::-webkit-scrollbar {
+		height: 0.1rem;
+		width: 0.1rem;
+		background: ${Colors.disabled};
+	}
+	::-webkit-scrollbar-thumb:horizontal {
+		background: ${(props) => props.scrollColor};
+		border-radius: 0.1rem;
+	}
+`;
 
-const initialState = {
-	start: 0,
-	tabKey: ""
-};
+export const Tab = (props: any) => <Container>{props.children}</Container>;
 
-const Component = () => {
-	const [state, dispatch] = useReducer(initialState, {
-		onChange(state: typeof initialState, action: any) {
-			return { ...state, tabKey: action.key };
-		},
-		tick(state: typeof initialState, action: any) {
-			return { ...state, start: state.start + 10 };
-		}
-	});
-	const start = state.start;
+export const PanelHeader = ({ currentIndex, setTab }: { currentIndex: number; setTab: (e: number) => void }) => (
+	{ props }: any,
+	i: number
+) => {
+	const onClick = () => setTab(i);
+	const active = currentIndex === i;
+	const classnames = classNames("tabs-header", { active });
 	return (
-		<div>
-			<h1>Simple Tabs Component</h1>
-			<p>current: {state.tabKey}</p>
-			<Tabs
-				destroyInactiveTabPane
-				defaultActiveKey={defaultTabKey}
-				//@ts-ignore
-				renderTabBar={() => <ScrollableInkTabBar onTabClick={this.onTabClick} />}
-				renderTabContent={() => <TabContent />}
-				onChange={(key: string) => dispatch({ type: "onChange", key })}
-			>
-				<TabPane tab="Benefits Overview" key="1" id="test1">
-					<PanelContent id={start}>Content for Benefits Overview</PanelContent>
-				</TabPane>
-				<TabPane tab="Drug Coverage" key="2">
-					<PanelContent id={start}>Content for Drug Coverage</PanelContent>
-				</TabPane>
-				<TabPane tab="In-Network Pharmacies" key="3">
-					<PanelContent id={start}>Content for In-Network Pharmacies</PanelContent>
-				</TabPane>
-				<TabPane tab="Claims" key="4">
-					<PanelContent id={start}>Content for Claims</PanelContent>
-				</TabPane>
-				<TabPane tab="Another Tab" key="5">
-					<PanelContent id={start + 4}>Panel content 4</PanelContent>
-				</TabPane>
-				<TabPane tab="And Another Tab" key="6">
-					<PanelContent id={start + 5}>Panel content 5</PanelContent>
-				</TabPane>
-			</Tabs>
-		</div>
+		<header role="button" onClick={onClick} className={classnames}>
+			{props.title}
+		</header>
 	);
 };
 
-export default function App() {
+export const TabPanel = ({ children, initialTab = 0, ...props }: any) => {
+	const ref = useRef(null);
+	const currentIndex = useRef(initialTab);
+	const childrens = React.Children.toArray(children);
+
+	const beforeChange = (_: number, nextSlide: number) => {
+		currentIndex.current = nextSlide;
+	};
+
+	const setTab = (index: number) => (ref!.current! as any).slickGoTo(index);
+
 	return (
-		<div className="App">
-			<Component />
-		</div>
+		<Fragment>
+			<PanelHeaderScroll scrollColor={Colors.primaryLight} span="100%" style={styles.header}>
+				{childrens.map(PanelHeader({ currentIndex: currentIndex.current, setTab }))}
+			</PanelHeaderScroll>
+			<View span="100%" style={styles.view}>
+				<Slider
+					accessibility
+					arrows={false}
+					beforeChange={beforeChange}
+					dots={false}
+					draggable
+					fade
+					infinite
+					initialSlide={initialTab}
+					ref={ref}
+					rows={1}
+					slide={Container}
+					slidesToScroll={1}
+					slidesToShow={1}
+					speed={500}
+					waitForAnimate
+				>
+					{children}
+				</Slider>
+			</View>
+		</Fragment>
 	);
-}
+};
