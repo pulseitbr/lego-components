@@ -18,7 +18,7 @@
 	"scripts": {
 		"build": "rollup -c",
 		"start": "rollup -c -w",
-		"prepare": "rollup -c",gi
+		"prepare": "rollup -c",
 		"format": "prettier --write \"{.,src/**}/*.{js,jsx,ts,tsx}\""
 	},
 	"dependencies": {
