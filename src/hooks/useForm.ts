@@ -1,5 +1,5 @@
-import useReducer from "./useReducer";
 import { useEffect, useMemo, useRef } from "react";
+import useReducer from "./useReducer";
 
 type MessageField = string | number | React.ReactNode;
 type FieldMessage = { [key: string]: { message: MessageField; hasError: boolean; blurEventTrigger: boolean } };
@@ -59,10 +59,10 @@ export default <T>(fields: T, { updateOnChange = true, validations = {}, blurs =
 		InternalState<T>,
 		Function
 	];
-	const values = state.fields;
-	const valuesDependency = Object.values(values);
 
+	const values = state.fields;
 	const fieldNames = Object.keys(fields);
+	const valuesDependency = Object.values(values);
 
 	if (valuesDependency.length !== fieldNames.length) {
 		const names = valuesDependency.filter((x: string) => !fieldNames.includes(x));
@@ -91,7 +91,6 @@ export default <T>(fields: T, { updateOnChange = true, validations = {}, blurs =
 				if (checkKeys(validations, values, x)) {
 					const fn = validations[x];
 					const { isValid, msg } = fn(value, values);
-					console.log(value, isValid, stateErrors[x], stateErrors[x].blurEventTrigger);
 					if (stateErrors[x].blurEventTrigger && !isValid) {
 						cache.current[x] = true;
 						stateErrors[x] = {
@@ -111,7 +110,7 @@ export default <T>(fields: T, { updateOnChange = true, validations = {}, blurs =
 			});
 			dispatch({ type: "updateErrors", errors: stateErrors });
 		}
-	}, [dispatch, state.errors, updateOnChange, validations, values]);
+	}, [updateOnChange, state.fields, values]);
 
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		event.persist();
@@ -122,7 +121,7 @@ export default <T>(fields: T, { updateOnChange = true, validations = {}, blurs =
 		() =>
 			getKeys(blurs).reduce((acc, el) => {
 				if (!!blurs && blurs.hasOwnProperty(el)) {
-					const validationFn = validations[el] || undefined;
+					const validationFn = validations[el] || null;
 					const onBlurHandler = (event: React.FocusEvent<HTMLInputElement>) => {
 						if (!!validationFn) {
 							const validation = validationFn(event.target.value, state.fields);
