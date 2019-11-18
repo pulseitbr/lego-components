@@ -2,7 +2,7 @@ import classNames from "classnames";
 import React, { Fragment, useRef } from "react";
 import Slider from "react-slick";
 import styled from "styled-components";
-import { Colors } from "..";
+import { Colors } from "lego";
 import { Container, View } from "../base";
 import StyleSheet from "../styles/StyleSheet";
 
@@ -49,7 +49,11 @@ export const PanelHeader = ({ currentIndex, setTab }: { currentIndex: number; se
 	);
 };
 
-export const TabPanel = ({ children, initialTab = 0, ...props }: any) => {
+type TabPanelProps = {
+	children: React.ReactNode;
+	initialTab: number;
+};
+export const TabPanel = ({ children, initialTab = 0 }: TabPanelProps) => {
 	const ref = useRef(null);
 	const currentIndex = useRef(initialTab);
 	const childrens = React.Children.toArray(children);

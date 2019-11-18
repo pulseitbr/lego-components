@@ -4,7 +4,7 @@ import { MdClose } from "react-icons/md";
 import styled, { ThemedStyledFunction } from "styled-components";
 import { TypeContainer, View } from "../base";
 import useBlockScroll from "../hooks/useBlockScroll";
-import Colors from "../styles";
+import { Colors } from "lego";
 import ReactPortal from "../utils/Portal";
 import StyleSheet from "../styles/StyleSheet";
 import { HtmlTag } from "../@types";

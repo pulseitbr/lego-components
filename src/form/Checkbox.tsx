@@ -1,4 +1,4 @@
-import Colors from "../styles";
+import { Colors } from "lego";
 import React from "react";
 import styled from "styled-components";
 

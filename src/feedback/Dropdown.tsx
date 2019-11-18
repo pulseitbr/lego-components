@@ -8,7 +8,7 @@ import "tippy.js/animations/shift-away.css";
 import "tippy.js/animations/shift-toward.css";
 import "tippy.js/dist/backdrop.css";
 import { Container } from "../base";
-import Colors from "../styles";
+import { Colors } from "lego";
 
 export const tippyPlugins = [sticky, inlinePositioning];
 

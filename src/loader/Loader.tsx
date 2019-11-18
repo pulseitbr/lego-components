@@ -1,5 +1,5 @@
 import React from "react";
-import Colors from "../styles";
+import {Colors} from "lego";
 import styled from "styled-components";
 
 export type Props = {

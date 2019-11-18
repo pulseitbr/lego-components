@@ -7,9 +7,9 @@ import Radiobox from "../form/Radiobox";
 import { MdHome, MdStore } from "react-icons/md";
 import { transparentize } from "polished";
 import Colors from "../styles";
-import { isEmpty } from "sidekicker/lib/comparable";
 import Constants, { SOFT_RADIUS } from "../styles/Constants";
 import StyleSheet from "../styles/StyleSheet";
+import { IsEmpty } from "lego";
 
 const styles = StyleSheet.create({
 	view: { padding: Constants.UNIT_1, textAlign: "left", cursor: "pointer" }
@@ -150,7 +150,7 @@ const AddressBox = ({
 	}, [listGetter]);
 
 	useEffect(() => {
-		if (!isEmpty(dataSource)) {
+		if (!IsEmpty(dataSource)) {
 			const id = dataSource[0].nrSeqEndereco!;
 			setIdSelectAddress(id);
 			onChange(id);

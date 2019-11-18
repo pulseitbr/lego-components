@@ -1,5 +1,4 @@
-import { isEmpty } from "sidekicker/lib/comparable";
-import { onlyNumbers, trueTrim } from "sidekicker/lib/strings/Utils";
+import { IsEmpty, OnlyNumbers, Trim } from "lego";
 import Colors from "../styles";
 
 const placeholder = { class: "", phone: { text: "", number: "" }, style: {}, user: "" };
@@ -86,7 +85,7 @@ const parser = (params: ParserParams = { colors: {} }) => (str: string) => {
 	const keyOperator: FunctionMap = {
 		class: (value) => value.trim(),
 		url: (value) => toSecureHttps(value),
-		phone: (value) => `https://wa.me/${onlyNumbers(value)}`,
+		phone: (value) => `https://wa.me/${OnlyNumbers(value)}`,
 		user: (value) => `https://instagram.com/@${value}`,
 		page: (value) => `https://facebook.com/@${value}`,
 		text: (value) => encodeURIComponent(clearQuote(value.trim())),
@@ -134,7 +133,7 @@ const parser = (params: ParserParams = { colors: {} }) => (str: string) => {
 		if (!!attrs.page) {
 			innerAttributes += `href="${attrs.page}" `;
 		}
-		if (!isEmpty(attrs.style)) {
+		if (!IsEmpty(attrs.style)) {
 			const ok = Object.entries(attrs.style)
 				.map((x) => `${x[0].replace(/mark/, "background-color")}:${x[1]}`)
 				.join(";");
@@ -143,7 +142,7 @@ const parser = (params: ParserParams = { colors: {} }) => (str: string) => {
 		return `${openTag} ${innerAttributes}>`;
 	};
 
-	return trueTrim(sanitizeHTML(str))
+	return Trim(sanitizeHTML(str))
 		.replace(openRegex, matchOpenCommands)
 		.replace(closeRegex, matchCloseCommands);
 };

@@ -1,15 +1,26 @@
-import { useEffect, KeyboardEvent } from "react";
-
-const elementsToIgnore = ["input"];
+import { KeyboardEvent, useEffect, useState } from "react";
 type KeyboardHandler = (e: KeyboardEvent) => any;
+const fill = ["input"];
+const useKeyDown = (callback: KeyboardHandler, ignoredHtmlElements: string[] = fill) => {
+	const [ignoreElements, setIgnoreElements] = useState(ignoredHtmlElements);
 
-const useKeyDown = (callback: KeyboardHandler) => {
 	const fn = (e: any) => {
 		const { target } = e;
-		if (!elementsToIgnore.includes(target.nodeName.toLowerCase)) {
+		if (!ignoreElements.includes(target.nodeName.toLowerCase)) {
 			callback(e as KeyboardEvent);
 		}
 	};
+
+	useEffect(() => {
+		const oldList = ignoreElements;
+		ignoredHtmlElements.forEach((element) => {
+			if (!oldList.includes(element)) {
+				oldList.push(element);
+			}
+		});
+		setIgnoreElements(oldList);
+	}, [ignoredHtmlElements]);
+
 	useEffect(() => {
 		window.addEventListener("keydown", fn);
 		return () => window.removeEventListener("keydown", fn);

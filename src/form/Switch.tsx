@@ -1,13 +1,27 @@
-import Colors from "../styles";
-import Constants from "../styles/Constants";
-import React, { InputHTMLAttributes } from "react";
+import { Colors } from "lego";
+import React, { InputHTMLAttributes, Fragment } from "react";
 import styled from "styled-components";
 
-const Label = styled.label`
+type Props = {
+	name: string;
+	color?: string;
+	round?: boolean;
+	value?: boolean;
+	animationTime?: number;
+	labelClassName?: string;
+} & Omit<InputHTMLAttributes<any>, "value">;
+
+type LabelType = { color: string; animationTime: number };
+
+const Label = styled.label.attrs(({ color = Colors.primary, animationTime = 400, ...props }: LabelType) => ({
+	...props,
+	color,
+	animationTime
+}))`
 	position: relative;
 	display: inline-block;
-	width: 2rem;
-	height: 1.3rem;
+	width: 2.25rem;
+	height: 1rem;
 
 	& input {
 		opacity: 0;
@@ -22,21 +36,19 @@ const Label = styled.label`
 		left: 0;
 		right: 0;
 		bottom: 0;
-		background-color: ${Colors.disabledLight};
-		-webkit-transition: 0.4s;
-		transition: 0.4s;
+		background-color: ${Colors.disabled};
+		transition: ${(props) => props.animationTime}ms;
 	}
 
 	.slider:before {
 		position: absolute;
 		content: "";
-		height: 0.9rem;
-		width: 0.9rem;
-		left: ${Constants.UNIT_1};
-		bottom: ${Constants.UNIT_1};
+		height: 0.8rem;
+		width: 0.8rem;
+		left: 0.15rem;
+		bottom: 0.0995rem;
 		background-color: white;
-		-webkit-transition: 0.4s;
-		transition: 0.4s;
+		transition: ${(props) => props.animationTime}ms;
 	}
 
 	input:checked + .slider {
@@ -44,15 +56,15 @@ const Label = styled.label`
 	}
 
 	input:focus + .slider {
-		box-shadow: 0 0 0.0625rem ${(props) => props.color};
+		box-shadow: 0 0 0px ${(props) => props.color};
 	}
 
 	input:checked + .slider:before {
-		transform: translateX(0.65rem);
+		transform: translateX(1.2rem);
 	}
 
 	.slider.round {
-		border-radius: 2.125rem;
+		border-radius: 2rem;
 	}
 
 	.slider.round:before {
@@ -60,18 +72,11 @@ const Label = styled.label`
 	}
 `;
 
-type Props = {
-	round?: boolean;
-	color?: string;
-	name: string;
-	value?: boolean;
-	labelClassName?: string;
-} & Omit<InputHTMLAttributes<any>, "value">;
-
 const Switch = ({
 	round = true,
 	color = Colors.primary,
 	onChange = () => {},
+	animationTime = 400,
 	className = "",
 	labelClassName = "",
 	name,
@@ -82,24 +87,29 @@ const Switch = ({
 }: Props) => {
 	const isChecked = value || checked;
 	const roundClassName = round ? "slider round" : "slider";
+	const ariaChecked = value.toString() as "false" | "true";
+
 	const change = (event: React.ChangeEvent<HTMLInputElement>) => {
 		event.persist();
 		const internalCheck = event.target.checked;
 		return onChange({ ...event, target: { ...event.target, name, value: internalCheck } });
 	};
+
 	return (
-		<Label className={labelClassName} color={color}>
-			<input
-				{...html}
-				name={name}
-				type="checkbox"
-				onChange={change}
-				checked={isChecked}
-				aria-checked={value.toString() as "false" | "true"}
-			/>
-			<span className={roundClassName} />
-			{children}
-		</Label>
+		<Fragment>
+			<Label className={labelClassName} color={color} animationTime={animationTime}>
+				<input
+					{...html}
+					name={name}
+					type="checkbox"
+					onChange={change}
+					checked={isChecked}
+					aria-checked={ariaChecked}
+				/>
+				<span className={roundClassName} />
+			</Label>
+			<span style={{ lineHeight: 1, marginLeft: "0.2rem" }}>{children}</span>
+		</Fragment>
 	);
 };
 

@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { isEmpty } from "sidekicker/lib/comparable";
+import { IsNotEmpty } from "lego";
 
 export type FlatListTypes<T> = {
 	data: T[];
@@ -15,7 +15,7 @@ function ClosureComponent<T>(props: FlatListTypes<T>) {
 }
 
 function FlatList<E>(props: FlatListTypes<E>) {
-	const hasData = !isEmpty(props.data);
+	const hasData = IsNotEmpty(props.data);
 	if (props.hidden) {
 		return <Fragment />;
 	}

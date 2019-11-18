@@ -1,19 +1,18 @@
-import { formatCpf } from "sidekicker/lib/strings/Format";
-import { onlyNumbers, toInt } from "sidekicker/lib/strings/Utils";
+import { FormatCpf, OnlyNumbers, ToInt } from "lego";
 
-const toCpf = (str: string) => formatCpf(str || "");
-const toCnpj = (str: string) => onlyNumbers(str).replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
+const toCpf = (str: string) => FormatCpf(str || "");
+const toCnpj = (str: string) => OnlyNumbers(str).replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
 
 const toCellphone = (str: string) => {
 	if (str.length === 11) {
-		return onlyNumbers(str).replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+		return OnlyNumbers(str).replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
 	}
 	return str;
 };
 
 const toTelephone = (str: string) => {
 	if (str.length === 10) {
-		return onlyNumbers(str).replace(/(\d{2})(\d{4})(\d{4})/, "($1) $2-$3");
+		return OnlyNumbers(str).replace(/(\d{2})(\d{4})(\d{4})/, "($1) $2-$3");
 	}
 	return str;
 };
@@ -21,10 +20,10 @@ const toTelephone = (str: string) => {
 export const maskConverter = {
 	cellphone: toCellphone,
 	cnpj: (str: string) => (str.length === 14 ? toCnpj(str) : str),
-	color: (str: string) => (str.length === 7 ? `#${onlyNumbers(str)}` : str),
+	color: (str: string) => (str.length === 7 ? `#${OnlyNumbers(str)}` : str),
 	cpf: (str: string) => (str.length === 11 ? toCpf(str) : str),
 	telephone: toTelephone,
-	cep: (str: string) => onlyNumbers(str).replace(/(\d{5})(\d{3})/, "$1-$2"),
+	cep: (str: string) => OnlyNumbers(str).replace(/(\d{5})(\d{3})/, "$1-$2"),
 	cpfCnpj: (str: string) => {
 		if (str.length === 14) {
 			return toCpf(str);
@@ -35,19 +34,19 @@ export const maskConverter = {
 	},
 	isoDate: (str: string) => {
 		if (str.length === 8) {
-			return onlyNumbers(str).replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
+			return OnlyNumbers(str).replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
 		}
 		return str;
 	},
 	date: (str: string) => {
 		if (str.length === 8) {
-			return onlyNumbers(str).replace(/(\d{2})(\d{2})(\d{4})/, "$1/$2/$3");
+			return OnlyNumbers(str).replace(/(\d{2})(\d{2})(\d{4})/, "$1/$2/$3");
 		}
 		return str;
 	},
 	creditCard: (str: string) => {
 		if (str.length === 16) {
-			return onlyNumbers(str).replace(/(\d{4})(\d{4})(\d{4})(\d{4})/, "$1 $2 $3 $4");
+			return OnlyNumbers(str).replace(/(\d{4})(\d{4})(\d{4})(\d{4})/, "$1 $2 $3 $4");
 		}
 		return str;
 	},
@@ -69,9 +68,9 @@ export const masks = {
 	cpf: [/\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "-", /\d/, /\d/],
 	telephone: ["(", /\d/, /\d/, ")", " ", /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/],
 	date: (str: string) => {
-		const numbers = onlyNumbers(str) || "";
+		const numbers = OnlyNumbers(str) || "";
 		if (numbers.length === 2) {
-			const day = toInt(numbers.substring(0, 2));
+			const day = ToInt(numbers.substring(0, 2));
 			if (day === 31) {
 				return [/[0123]/, /\d/, "/", /[01]/, /[12356789]/, "/", /\d/, /\d/, /\d/, /\d/];
 			}

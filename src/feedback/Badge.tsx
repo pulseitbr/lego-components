@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Colors from "../styles";
+import { Colors } from "lego";
 import Constants from "../styles/Constants";
 import StyleSheet from "../styles/StyleSheet";
 

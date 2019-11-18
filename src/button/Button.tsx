@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Loader from "../loader/Loader";
-import Colors from "../styles";
+import { Colors } from "lego";
 import { ThemeProperty, defineTheme } from "../styles/ThemeProperty";
 
 interface IButtonProps {

@@ -1,4 +1,4 @@
-import Colors from "../../styles";
+import { Colors } from "lego";
 
 export type NotifyTheme = {
 	icon: {
