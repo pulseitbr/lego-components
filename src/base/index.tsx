@@ -61,12 +61,12 @@ type ResponsiveProps = {
 } & TypeContainer;
 
 const Responsive = ({
+	children,
+	Component = Flex,
+	htmlTag = "div",
 	isCollapse = false,
 	show = true,
 	time = 500,
-	Component = Flex,
-	children,
-	htmlTag = "div",
 	...props
 }: ResponsiveProps) => {
 	if (!isCollapse) {
@@ -86,14 +86,12 @@ const Responsive = ({
 };
 
 export const Left = styled(Responsive)`
-	flex: 1;
 	text-align: left;
 	align-items: flex-start;
 	align-self: center;
 `;
 
 export const Right = styled(Responsive)`
-	flex: 1;
 	text-align: right;
 	align-items: flex-end;
 	align-self: center;
@@ -104,37 +102,37 @@ export const View = styled(Responsive)`
 	flex-wrap: wrap;
 `;
 export const Page = styled(Responsive)`
-	width: 100%;
-	height: 100%;
-	display: flex;
-	flex-wrap: wrap;
-	min-width: 100%;
-	min-height: 100%;
-	align-items: center;
 	align-content: center;
+	align-items: center;
+	display: flex;
 	flex-direction: column;
+	flex-wrap: wrap;
+	height: 100%;
+	min-height: 100%;
+	min-width: 100%;
+	width: 100%;
 `;
 export const Body = styled(Responsive)`
-	flex: 1 0 auto;
-	width: 100%;
-	min-width: 100%;
-	flex-wrap: wrap;
 	align-items: center;
 	align-self: center;
+	flex-wrap: wrap;
+	flex: 1 0 auto;
+	min-width: 100%;
+	width: 100%;
 `;
 export const Container = styled(Responsive)`
 	display: flex;
-	justify-items: center;
 	flex-wrap: wrap;
+	justify-items: center;
 	min-width: 100%;
 `;
 export const Footer = styled(Container)`
-	flex: 0;
+	align-content: center;
+	align-items: center;
+	align-self: center;
 	flex-shrink: 0;
 	flex-wrap: wrap;
-	align-self: center;
-	align-items: center;
-	align-content: center;
+	flex: 0;
 	justify-content: center;
 `;
 
