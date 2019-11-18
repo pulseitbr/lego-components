@@ -27,6 +27,7 @@
 		"decimal.js": "^10.2.0",
 		"filesize": "^6.0.1",
 		"indexof": "^0.0.1",
+		"lego": "git+ssh://git@github.com/pulseitbr/lego.git",
 		"polished": "^3.4.1",
 		"rc-notification": "^3.3.1",
 		"react-circular-progressbar": "^2.0.2",
@@ -39,7 +40,6 @@
 		"tippy.js": "^5.1.1"
 	},
 	"peerDependencies": {
-		"lego": "git+ssh://git@github.com/pulseitbr/lego.git",
 		"react": "16.10.2",
 		"react-dom": "16.10.2",
 		"styled-components": ">= 4"
