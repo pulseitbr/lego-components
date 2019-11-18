@@ -61,10 +61,13 @@ const Wrapper = styled.div.attrs(
 		borderBottomActiveColor
 	})
 )`
+	width: 100%;
 	position: relative;
 	margin-bottom: 2.8125rem;
+	background-color: transparent;
 
 	input {
+		background-color: transparent;
 		font-size: 1rem;
 		padding: 1rem 0 0 0;
 		display: block;
