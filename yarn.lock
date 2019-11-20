@@ -5140,11 +5140,6 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "^2.0.0"
 
-fetch-interceptor@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/fetch-interceptor/-/fetch-interceptor-1.1.0.tgz#62364d3158a125f5e16e6eaa0cd6f94367180797"
-  integrity sha512-VUxtHYiO7KDL2XGkm/1LrTbQFhkMhsPsYWwDVZc4Rr8rSehipI4JWwB+zmsdTD/HWVBDogi5ik61Hgnjg1Nc8w==
-
 figures@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/figures/-/figures-2.0.0.tgz#3ab1a2d2a62c8bfb431a0c94cb797a2fce27c962"
@@ -7487,12 +7482,11 @@ left-pad@^1.3.0:
   resolved "https://registry.yarnpkg.com/left-pad/-/left-pad-1.3.0.tgz#5b8a3a7765dfe001261dde915589e782f8c94d1e"
   integrity sha512-XI5MPzVNApjAyhQzphX8BkmKsKUxD4LdyK24iZeQGinBN9yTQT3bFlCBy/aVx2HrNcqQGsdot8ghrjyrvMCoEA==
 
-"lego@git+ssh://git@github.com/pulseitbr/lego.git":
-  version "1.0.0"
-  resolved "git+ssh://git@github.com/pulseitbr/lego.git#df69a0114e4ea69eabc6a3e3a7680676999fc00e"
+"lego@git+https://357db6a50f26c9ff848f6b915c5cb00eb794852b:x-oauth-basic@github.com/pulseitbr/lego.git":
+  version "1.0.1"
+  resolved "git+https://357db6a50f26c9ff848f6b915c5cb00eb794852b:x-oauth-basic@github.com/pulseitbr/lego.git#84b38cbca7279ce0efd3f9d3dc8015ea5ad69862"
   dependencies:
     decimal.js "^10.2.0"
-    fetch-interceptor "^1.1.0"
     moment "^2.24.0"
 
 leven@^2.1.0:

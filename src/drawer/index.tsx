@@ -2,10 +2,10 @@ import { Keyboard } from "lego";
 import React, { useEffect, useRef } from "react";
 import { MdClose } from "react-icons/md";
 import styled, { ThemedStyledFunction } from "styled-components";
-import { Portal } from "..";
 import { Container, View } from "../base";
 import useKeyDown from "../hooks/useKeyDown";
 import StyleSheet from "../styles/StyleSheet";
+import Portal from "../utils/Portal";
 
 type ModalPortal = {
 	speed?: number;
