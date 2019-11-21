@@ -1,20 +1,13 @@
-import Notification, { NotifyType } from "./Notification";
+import Notification, { NotificationProps } from "./Notification";
 
-type SnackbarType = Partial<NotifyType>;
-
-const Snackbar = ({ children, ...props }: SnackbarType) =>
+const Snackbar = ({ message, ...props }: NotificationProps) =>
 	Notification({
-		containerClass: "tc center",
-		position: "bottomCenter",
-		clickClose: true,
-		closable: false,
-		hasIcon: false,
-		theme: "dark",
-		center: true,
-		duration: 3,
+		...props,
+		position: "bottom-center",
 		title: "",
-		children,
-		...props
+		theme: "dark",
+		showIcon: false,
+		message
 	});
 
 export default Snackbar;

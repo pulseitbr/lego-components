@@ -1,162 +1,85 @@
-// @ts-ignore
-import RcNotify from "rc-notification";
+import classnames from "classnames";
+import { Uuid } from "lego";
 import React from "react";
-import themes, { NotifyTheme } from "./feedback-utils/themes";
-import positions from "./feedback-utils/positions";
-import { MdInfoOutline } from "react-icons/md";
+import { MdClose, MdDone, MdError, MdInfoOutline, MdWarning } from "react-icons/md";
+import { toast, Toast, ToastOptions } from "react-toastify";
+import { Container, View } from "../base";
+import { SubTitle } from "../typography";
 
-const notificationInstance: { [key: string]: any } = {};
-const prefixCls = "notify";
+toast.configure({
+	autoClose: 6000,
+	draggable: true,
+	newestOnTop: true,
+	pauseOnFocusLoss: true,
+	enableMultiContainer: true,
+	pauseOnHover: true,
+	closeButton: (
+		<button className="Toastify__close-button Toastify__close-button--default" type="button" aria-label="close">
+			<MdClose style={{ fontSize: "1.3rem" }} />
+		</button>
+	),
+	closeOnClick: true
+});
 
-// tslint:disable-next-line: prefer-const
-let defaultGetContainer: () => HTMLElement;
+export type Themes = "info" | "success" | "warning" | "error" | "default" | "danger" | "dark";
+export type ToastyThemes = "info" | "success" | "warning" | "error" | "default";
 
-function instanceNotify(placement: string, callback: (n: any) => void): any {
-	const cacheKey = `${prefixCls}-${placement}`;
-	if (notificationInstance[cacheKey]) {
-		callback(notificationInstance[cacheKey]);
-		return;
+export type NotificationProps = {
+	message: React.ReactNode;
+	title?: React.ReactNode;
+	icon?: React.ReactNode;
+	showIcon?: boolean;
+	theme?: Themes;
+	toastId?: string;
+} & ToastOptions;
+
+const iconStyle = { verticalAlign: "middle", display: "inline-flex", marginBottom: "8px", marginRight: "2px" };
+
+const getToastyCall = (theme: Themes, toasty: Toast): Toast => {
+	if (theme === "default" || theme === "dark") {
+		return toasty;
 	}
-	return RcNotify.newInstance(
-		{
-			prefixCls,
-			style: positions[placement],
-			getContainer: defaultGetContainer
-		},
-		(notification: any) => {
-			notificationInstance[cacheKey] = notification;
-			callback(notification);
-		}
-	);
-}
-
-const destroy = (canDestroy: boolean) =>
-	canDestroy
-		? Object.keys(notificationInstance).forEach((cacheKey) => {
-				notificationInstance[cacheKey].destroy();
-				delete notificationInstance[cacheKey];
-		  })
-		: null;
-
-export type NotifyType = {
-	always?: boolean;
-	center?: boolean;
-	children: string | React.ReactNode;
-	clickClose?: boolean;
-	closable?: boolean;
-	containerClass?: string;
-	duration?: number | null;
-	hasIcon?: boolean;
-	icon?: string;
-	maxNotifications?: number;
-	onClick?: Function;
-	onClose?: Function;
-	position?: "default" | "center" | "topLeft" | "topCenter" | "bottomRight" | "bottomLeft" | "bottomCenter";
-	style?: React.CSSProperties;
-	theme?: "info" | "success" | "warn" | "danger" | "default" | "dark" | NotifyTheme;
-	title: string | React.ReactNode;
-	titleClassName?: string;
+	if (theme === "danger") {
+		return toasty.error as Toast;
+	}
+	return toasty[theme];
 };
 
-const getTitle = (props: NotifyType & { styles: any }) => {
-	if (typeof props.title === "string") {
-		if (props.title !== "") {
-			return (
-				<div className={`${prefixCls}-description f4 mb2 ${props.titleClassName || ""}`}>
-					{props.hasIcon && (
-						<div className="mb2" style={{ color: props.styles.icon.color }}>
-							{(!!props.icon && props.icon) || (
-								<MdInfoOutline
-									style={{
-										fontSize: "0.95em",
-										color: props.styles.icon.color
-									}}
-									type="info-circle"
-								/>
-							)}{" "}
-							{props.title}
-						</div>
-					)}
-				</div>
-			);
-		}
-	}
-	return props.title;
+const iconThemes: { [key: string]: JSX.Element } = {
+	info: <MdInfoOutline style={iconStyle} />,
+	dark: <MdInfoOutline style={iconStyle} />,
+	success: <MdDone style={iconStyle} />,
+	warning: <MdWarning style={iconStyle} />,
+	error: <MdError style={iconStyle} />,
+	danger: <MdError style={iconStyle} />,
+	default: <MdInfoOutline style={iconStyle} />
 };
 
-export function Notification({
-	hasIcon = true,
-	clickClose = false,
-	maxNotifications = 6,
-	duration = 5,
-	containerClass = "",
-	onClick = () => {},
-	onClose = () => {},
-	position = "default",
-	always = false,
-	center = false,
-	closable = true,
-	icon,
+const Notification = ({
 	theme = "default",
-	titleClassName = "",
+	toastId = Uuid(),
+	showIcon = true,
+	message,
+	title,
+	icon,
 	...props
-}: NotifyType) {
-	const styles = typeof theme === "string" ? themes(theme) : theme;
-	const title = getTitle({ ...props, hasIcon, theme, styles, icon });
-	const click = () => {
-		destroy(clickClose);
-		onClick();
-	};
-	return instanceNotify(position, (notification: any) =>
-		notification.notice({
-			duration: always ? 0 : duration,
-			maxCount: maxNotifications,
-			onClose,
-			closable,
-			style: { right: "50%", ...props.style, ...styles.box, textAlign: center ? "center" : "inherit" },
-			content: (
-				<div role="alert" onClick={click} style={{ zIndex: Number.MAX_SAFE_INTEGER }}>
-					{title}
-					<div
-						style={{ textAlign: center ? "center" : "inherit" }}
-						className={`${prefixCls}-description tc center ${containerClass}`}
-					>
-						{props.children}
-					</div>
-				</div>
-			)
-		})
+}: NotificationProps): { toast: Toast; id: string } => {
+	const toastCall = getToastyCall(theme, toast);
+	const viewIcon = !!icon ? icon : iconThemes[theme];
+	toastCall(
+		<Container>
+			{!!title && (
+				<View className="mb2" span="100%">
+					<SubTitle style={{ color: "inherit" }} size={0.65}>
+						{showIcon && viewIcon} {title}
+					</SubTitle>
+				</View>
+			)}
+			<View span="100%">{message}</View>
+		</Container>,
+		{ ...props, className: classnames({ "Toastify__toast--dark": theme === "dark" }, props.className) }
 	);
-}
-
-Notification.error = (props: NotifyType) =>
-	Notification({
-		theme: "danger",
-		...props
-	});
-
-Notification.success = (props: NotifyType) =>
-	Notification({
-		theme: "success",
-		...props
-	});
-
-Notification.info = (props: NotifyType) =>
-	Notification({
-		theme: "info",
-		...props
-	});
-
-Notification.warn = (props: NotifyType) =>
-	Notification({
-		theme: "warn",
-		...props
-	});
-
-Notification.danger = (props: NotifyType) =>
-	Notification({
-		theme: "danger",
-		...props
-	});
+	return { id: toastId, toast };
+};
 
 export default Notification;
