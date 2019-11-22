@@ -55,7 +55,7 @@ const iconThemes: { [key: string]: JSX.Element } = {
 	default: <MdInfoOutline style={iconStyle} />
 };
 
-const Notification = ({
+const Notify = ({
 	theme = "default",
 	toastId = Uuid(),
 	showIcon = true,
@@ -82,4 +82,4 @@ const Notification = ({
 	return { id: toastId, toast };
 };
 
-export default Notification;
+export default Notify;

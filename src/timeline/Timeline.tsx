@@ -18,7 +18,7 @@ const rightItem = "timeline-item-right";
 const leftItem = "timeline-item-left";
 const isLast = (items: number, index: number) => (items - 1 === index ? "timeline-item-last" : "");
 
-export default function Timeline({
+const Timeline = ({
 	reverse = false,
 	mode = "left",
 	pending = null,
@@ -26,14 +26,14 @@ export default function Timeline({
 	children,
 	className,
 	...props
-}: TimelineProps) {
+}: TimelineProps) => {
 	const prefixCls = customizePrefixCls;
 	const pendingNode = typeof pending === "boolean" ? null : pending;
 	const classString = classNames(
 		prefixCls,
 		{
-			[`timeline-pending`]: !!pending,
-			[`timeline-reverse`]: !!reverse,
+			"timeline-pending": !!pending,
+			"timeline-reverse": !!reverse,
 			[`timeline-${mode}`]: !!mode
 		},
 		className
@@ -81,4 +81,6 @@ export default function Timeline({
 			{items}
 		</ul>
 	);
-}
+};
+
+export default Timeline;

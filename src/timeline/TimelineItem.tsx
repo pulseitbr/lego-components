@@ -1,6 +1,6 @@
-import { timelineTestBorder } from "./";
 import classNames from "classnames";
 import React, { FunctionComponent } from "react";
+import { timelineTestBorder } from "./";
 
 export type TimeLineItemProps = {
 	className?: string;

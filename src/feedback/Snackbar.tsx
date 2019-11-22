@@ -1,7 +1,7 @@
-import Notification, { NotificationProps } from "./Notification";
+import Notify, { NotificationProps } from "./Notify";
 
 const Snackbar = ({ message, ...props }: NotificationProps) =>
-	Notification({
+	Notify({
 		...props,
 		position: "bottom-center",
 		title: "",
