@@ -35,6 +35,7 @@ type Props = {
 	distance?: number;
 	className?: string;
 	animation?: Animations;
+	theme?: "dark" | "light";
 	contentProps?: React.DetailedHTMLProps<any, HTMLDivElement>;
 	position?: Placements;
 	bgColor?: string;
@@ -61,6 +62,7 @@ export const Dropdown = ({
 	triggers = ["click"],
 	bgColor = Colors.lightLight,
 	itens,
+	theme = "light",
 	animation = "perspective",
 	position = "bottom-end"
 }: Props) => {
@@ -68,24 +70,28 @@ export const Dropdown = ({
 	const triggerString = triggers.join(" ");
 
 	const content = (
-		<Container>
+		<Container style={{ backgroundColor: bgColor }}>
 			<ul style={style}>{itens}</ul>
 		</Container>
 	);
 
 	return (
 		<Tippy
-			lazy
-			sticky
-			inertia
-			interactive
-			maxWidth="30rem"
-			inlinePositioning
-			content={content}
-			placement={position}
-			className={className}
+			animateFill
 			animation={animation}
+			arrow={false}
+			className={className}
+			content={content}
+			inertia
+			inlinePositioning
+			interactive
+			lazy
+			maxWidth="30rem"
+			placement={position}
 			plugins={tippyPlugins}
+			sticky
+			theme={theme}
+			touch
 			trigger={triggerString}
 		>
 			{children as any}
