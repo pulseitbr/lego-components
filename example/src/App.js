@@ -1,31 +1,90 @@
-import { Uuid, Colors } from "lego";
-import { Container, View, Title } from "lego-components";
-import React, { Fragment } from "react";
+import { Colors, Uuid, IsEmpty } from "lego";
+import { Button, Container, Loader, Right, StyleSheet, Title, useReducer, View } from "lego-components";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
-import { useState } from "react";
-
-const invokeOrString = (value, record, index, entireList) => {
-	if (typeof value === "function") {
-		return value(record, index, entireList);
-	}
-	return value;
-};
+import { MdAdd, MdRemove } from "react-icons/md";
 
 const reactKey = (key, record) => record[key] || Uuid();
+
+const $range = (start, end = 0, steps = 1) => {
+	const arr = [];
+	if (end === 0) {
+		for (let i = 0; i < start; i += steps) {
+			arr.push(i);
+		}
+	} else {
+		for (let i = start; i < end; i += steps) {
+			arr.push(i);
+		}
+	}
+	return arr;
+};
+
+const paginate = (array = [], page, range) => [...array].splice(page * range, range);
+
+const dispatches = {
+	setChunk(state, action) {
+		return { ...state, chunk: action.list, range: action.range };
+	},
+	setViewPage(state, action) {
+		return { ...state, page: action.page };
+	},
+	goForward(state) {
+		return { ...state, page: state.page + 1 };
+	},
+	goBackward(state) {
+		return { ...state, page: state.page - 1 };
+	}
+};
+
+const usePagination = ({ itensPerPage = 5, initialPage = 0, dataSource = [] }) => {
+	const [{ chunk, page, range }, dispatch] = useReducer({ chunk: [], page: initialPage, range: [] }, dispatches);
+	const pages = Math.ceil(dataSource.length / itensPerPage);
+
+	const emptyData = IsEmpty(dataSource);
+
+	useEffect(() => {
+		const effectRange = $range(0, pages);
+		dispatch({ type: "setChunk", range: effectRange, list: paginate(dataSource, page, itensPerPage) });
+	}, [dataSource, page, itensPerPage]);
+
+	const setViewPage = useCallback(
+		(pageParameter) => {
+			dispatch({ type: "setViewPage", page: pageParameter });
+		},
+		[page]
+	);
+
+	const goForward = useCallback(() => {
+		dispatch;
+		dispatch({ type: "goForward" });
+	}, [page]);
+
+	const goBackward = useCallback(() => {
+		dispatch({ type: "goBackward" });
+	}, [page]);
+
+	return {
+		range,
+		pages,
+		goForward,
+		goBackward,
+		list: chunk,
+		page: page,
+		isFirst: emptyData ? true : page === 0,
+		isLast: emptyData ? true : page === pages - 1,
+		setPage: setViewPage,
+		totalItens: dataSource.length
+	};
+};
 
 const Table = styled.table`
 	width: 100%;
 	border-spacing: 0;
 	border-collapse: collapse;
 
-	tr:nth-of-type(odd) {
-		background: var(--light);
-	}
-
-	tr:hover {
-		/* background: var(--lightDarkest);
-		color: var(--light); */
-		cursor: pointer;
+	tr:nth-child(even) {
+		background-color: var(--light);
 	}
 
 	th {
@@ -36,8 +95,9 @@ const Table = styled.table`
 
 	td,
 	th {
-		padding: 0.625rem;
-		border: 0.5px solid var(--dark);
+		padding: 0.625rem 0;
+		border: 0.5px solid var(--darkLightest);
+		border-top: 0;
 		text-align: left;
 		font-size: 1rem;
 	}
@@ -63,12 +123,12 @@ const Table = styled.table`
 		}
 
 		tr {
-			border: 1px solid var(--darkAlpha);
+			border: 1px solid var(--dark);
 		}
 
 		td {
 			border: none;
-			border-bottom: 0.5px solid var(--darkAlpha);
+			border-bottom: 1px solid var(--darkLightest);
 			position: relative;
 			padding-left: 50%;
 		}
@@ -87,45 +147,143 @@ const Table = styled.table`
 	}
 `;
 
-const TableLess = (props) => {
-	const id = props.rowKey || "id";
+const voidFn = (record, index, data) => ({});
+
+const styles = StyleSheet.create({
+	loaderTd: { border: "1px solid transparent", padding: 0 },
+	loaderDiv: {
+		alignContent: "center",
+		alignItems: "center",
+		justifyContent: "center"
+	},
+	paginateButton: {
+		flex: 1,
+		padding: "0.6rem",
+		borderRadius: 0,
+		...StyleSheet.marginHorizontal(1)
+	}
+});
+
+const LoadingTable = () => (
+	<td colSpan={columns.length} style={styles.loaderTd}>
+		<Container style={styles.loaderDiv}>
+			<div className="pa2">
+				<Loader></Loader>
+			</div>
+		</Container>
+	</td>
+);
+
+const TableLess = ({
+	rowKey,
+	expandViewIcon = <MdAdd />,
+	expandHideIcon = <MdRemove />,
+	loading = false,
+	rowProps = voidFn,
+	dataSource,
+	itensPerPage = 75,
+	hasExpandRow = false,
+	columns
+}) => {
+	const id = rowKey || "id";
+	const [expandedRows, setExpandedRows] = useState([]);
+	const pagination = usePagination({ dataSource, itensPerPage });
 	return (
-		<Container style={{ overflowX: "auto", height: "100%" }}>
+		<Container className="pv2">
 			<View span="100%">
-				<Table className="fixed_header">
+				<Table>
 					<thead>
 						<tr>
-							{props.columns.map((x) => (
+							{hasExpandRow && <th></th>}
+							{columns.map((x) => (
 								<th key={`head-${x.title}`}>{x.title}</th>
 							))}
 						</tr>
 					</thead>
-					<tbody>
-						{props.data.map((record, index) => {
-							const uniqueKey = reactKey(id, record);
-							const rowProps = !!props.rowProps ? props.rowProps(record, index, data) : {};
-							return (
-								<Fragment key={`row-${uniqueKey}`}>
-									<tr {...rowProps}>
-										{props.columns.map((x) => (
-											<td key={`body-${uniqueKey}-${x.key}`} fluid-data={x.title}>
-												{record[x.key]}
+					{(loading && <LoadingTable />) || (
+						<tbody>
+							{pagination.list.map((record, index) => {
+								const uniqueKey = reactKey(id, record);
+								const getRowProps = rowProps(record, index, data);
+								const fragKey = getRowProps.key || `row-${uniqueKey}`;
+								const show = expandedRows.includes(record[rowKey]);
+								return [
+									<tr key={fragKey} {...getRowProps}>
+										{hasExpandRow && (
+											<td
+												style={{ textAlign: "center" }}
+												onClick={() => {
+													if (show) {
+														return setExpandedRows((p) =>
+															p.filter((x) => x !== record[rowKey])
+														);
+													}
+													setExpandedRows((p) => [...p, record[rowKey]]);
+												}}
+											>
+												<div role="button" className="pointer bg-animate bg-transparent">
+													{show ? expandHideIcon : expandViewIcon}
+												</div>
 											</td>
-										))}
-									</tr>
-									<tr hidden>
-										<td colSpan={props.columns.length}>
-											<Container isCollapse show>
-												<Title>Oh modafoca</Title>
-											</Container>
-										</td>
-									</tr>
-								</Fragment>
-							);
-						})}
-					</tbody>
+										)}
+										{columns.map((x) => {
+											const colKey = x.key;
+											const render = !!x.render
+												? x.render(record[colKey], record)
+												: record[colKey];
+											return (
+												<td key={`body-${uniqueKey}-${colKey}`} fluid-data={x.title}>
+													{render}
+												</td>
+											);
+										})}
+									</tr>,
+									show && (
+										<tr key={`${fragKey}-sub-item`}>
+											<td colSpan={columns.length + 1}>
+												<Container isCollapse show={show}>
+													<Title>Oh modafoca</Title>
+												</Container>
+											</td>
+										</tr>
+									)
+								];
+							})}
+						</tbody>
+					)}
 				</Table>
 			</View>
+			<Right span="100%" style={{ marginTop: "0.3rem" }}>
+				<Button
+					transparent
+					style={styles.paginateButton}
+					disabled={pagination.isFirst}
+					onPress={pagination.goBackward}
+				>
+					{"<"}
+				</Button>
+				{pagination.range.map((x) => (
+					<Button
+						transparent
+						style={{
+							...styles.paginateButton,
+							border: x === pagination.page ? `1px solid ${Colors.primaryLight}` : undefined
+						}}
+						key={`paginate-button-${x}`}
+						onPress={() => pagination.setPage(x)}
+					>
+						{x + 1}
+					</Button>
+				))}
+				<Button
+					transparent
+					style={styles.paginateButton}
+					disabled={pagination.isLast}
+					onPress={pagination.goForward}
+				>
+					{">"}
+				</Button>
+			</Right>
 		</Container>
 	);
 };
@@ -140,17 +298,36 @@ const data = [
 	{ id: "7", name: "Liu", skill: "Mortal" },
 	{ id: "8", name: "Kang", skill: "Kombat" },
 	{ id: "9", name: "Shao", skill: "Exo" },
-	{ id: "00", name: "Kahn", skill: "terra" },
+	{ id: "10", name: "Kahn", skill: "terra" },
 	{ id: "11", name: "Scorpion", skill: "Fogo" },
 	{ id: "12", name: "Subzero", skill: "Gelo" },
 	{ id: "13", name: "Kratos", skill: "War" },
 	{ id: "14", name: "SpiderMan", skill: "Web" },
 	{ id: "15", name: "IronMan", skill: "Tech" },
-	{ id: "15", name: "Black Panther", skill: "Money" }
+	{ id: "17", name: "Black Panther", skill: "Money" },
+	{ id: "18", name: "Black Panther", skill: "Money" },
+	{ id: "19", name: "Black Panther", skill: "Money" },
+	{ id: "20", name: "Black Panther", skill: "Money" },
+	{ id: "21", name: "Black Panther", skill: "Money" },
+	{ id: "22", name: "Black Panther", skill: "Money" },
+	{ id: "23", name: "Black Panther", skill: "Money" },
+	{ id: "24", name: "Black Panther", skill: "Money" },
+	{ id: "25", name: "Black Panther", skill: "Money" },
+	{ id: "26", name: "Black Panther", skill: "Money" },
+	{ id: "27", name: "Black Panther", skill: "Money" },
+	{ id: "28", name: "Black Panther", skill: "Money" },
+	{ id: "29", name: "Black Panther", skill: "Money" },
+	{ id: "30", name: "Black Panther", skill: "Money" }
 ];
 
 const columns = [
-	{ title: "Code", key: "id" },
+	{
+		title: "Code",
+		key: "id",
+		render(e) {
+			return `# ${e}`;
+		}
+	},
 	{ title: "Name", key: "name" },
 	{ title: "Skill", key: "skill" }
 ];
@@ -158,18 +335,7 @@ const columns = [
 export default function App() {
 	return (
 		<Container>
-			<TableLess
-				columns={columns}
-				data={data}
-				id="title"
-				rowProps={(a, index) => {
-					return {
-						style:
-							index % 2 === 0 ? { background: Colors.lightLight } : { background: Colors.disabledAlpha }
-					};
-				}}
-			/>
-			<h1>AEEE</h1>
+			<TableLess itensPerPage={20} rowKey="id" columns={columns} hasExpandRow dataSource={data} />
 		</Container>
 	);
 }
