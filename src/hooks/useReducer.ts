@@ -15,7 +15,7 @@ export default <S extends {}, T extends string>(
 	state: S,
 	fn: { [type in T]: (state: S, action: any) => S }
 ): UseReducer<S, T> => {
-	const [reducerState, dispatch] = useReducer(createReducer<S>(fn), state, () => state);
-	const memoize = useCallback(dispatch, []);
-	return [reducerState, memoize];
+	const [reducerState, useReducerDispatch] = useReducer(createReducer<S>(fn), state, () => state);
+	const dispatch = useCallback(useReducerDispatch, []);
+	return [reducerState, dispatch];
 };

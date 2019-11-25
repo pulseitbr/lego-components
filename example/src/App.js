@@ -3,10 +3,12 @@ import { Button, Container, Loader, Right, StyleSheet, Title, useReducer, View }
 import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { MdAdd, MdRemove } from "react-icons/md";
+import { Fragment } from "react";
+import { useMemo } from "react";
 
 const reactKey = (key, record) => record[key] || Uuid();
 
-const $range = (start, end = 0, steps = 1) => {
+const createRange = (start, end = 0, steps = 1) => {
 	const arr = [];
 	if (end === 0) {
 		for (let i = 0; i < start; i += steps) {
@@ -39,13 +41,17 @@ const dispatches = {
 
 const usePagination = ({ itensPerPage = 5, initialPage = 0, dataSource = [] }) => {
 	const [{ chunk, page, range }, dispatch] = useReducer({ chunk: [], page: initialPage, range: [] }, dispatches);
-	const pages = Math.ceil(dataSource.length / itensPerPage);
 
+	const pages = Math.ceil(dataSource.length / itensPerPage);
 	const emptyData = IsEmpty(dataSource);
 
 	useEffect(() => {
-		const effectRange = $range(0, pages);
-		dispatch({ type: "setChunk", range: effectRange, list: paginate(dataSource, page, itensPerPage) });
+		if (emptyData) {
+			dispatch({ type: "setChunk", range: [], list: [] });
+		} else {
+			const effectRange = createRange(0, pages);
+			dispatch({ type: "setChunk", range: effectRange, list: paginate(dataSource, page, itensPerPage) });
+		}
 	}, [dataSource, page, itensPerPage]);
 
 	const setViewPage = useCallback(
@@ -55,14 +61,9 @@ const usePagination = ({ itensPerPage = 5, initialPage = 0, dataSource = [] }) =
 		[page]
 	);
 
-	const goForward = useCallback(() => {
-		dispatch;
-		dispatch({ type: "goForward" });
-	}, [page]);
+	const goForward = useCallback(() => dispatch({ type: "goForward" }), [page]);
 
-	const goBackward = useCallback(() => {
-		dispatch({ type: "goBackward" });
-	}, [page]);
+	const goBackward = useCallback(() => dispatch({ type: "goBackward" }), [page]);
 
 	return {
 		range,
@@ -100,6 +101,10 @@ const Table = styled.table`
 		border-top: 0;
 		text-align: left;
 		font-size: 1rem;
+	}
+
+	.expand-td {
+		text-align: center;
 	}
 
 	@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
@@ -144,6 +149,10 @@ const Table = styled.table`
 			color: var(--dark);
 			font-weight: bold;
 		}
+
+		.expand-td {
+			text-align: left;
+		}
 	}
 `;
 
@@ -173,6 +182,34 @@ const LoadingTable = () => (
 		</Container>
 	</td>
 );
+
+const Pagination = ({ pagination }) => {
+	const pressNumberPagination = (x) => () => pagination.setPage(x);
+
+	return (
+		<Fragment>
+			<Button transparent style={styles.paginateButton} disabled={pagination.isFirst} onPress={pagination.goBackward}>
+				{"<"}
+			</Button>
+			{pagination.range.map((x) => (
+				<Button
+					transparent
+					style={{
+						...styles.paginateButton,
+						border: x === pagination.page ? `1px solid ${Colors.primaryLight}` : undefined
+					}}
+					key={`paginate-button-${x}`}
+					onPress={pressNumberPagination}
+				>
+					{x + 1}
+				</Button>
+			))}
+			<Button transparent style={styles.paginateButton} disabled={pagination.isLast} onPress={pagination.goForward}>
+				{">"}
+			</Button>
+		</Fragment>
+	);
+};
 
 const TableLess = ({
 	rowKey,
@@ -204,23 +241,22 @@ const TableLess = ({
 						<tbody>
 							{pagination.list.map((record, index) => {
 								const uniqueKey = reactKey(id, record);
-								const getRowProps = rowProps(record, index, data);
+								const getRowProps = rowProps(record, index);
 								const fragKey = getRowProps.key || `row-${uniqueKey}`;
-								const show = expandedRows.includes(record[rowKey]);
+								const recordKey = record[rowKey];
+								const show = expandedRows.includes(recordKey);
+
+								const expandOperation = () => {
+									if (show) {
+										return setExpandedRows((p) => p.filter((x) => x !== record[rowKey]));
+									}
+									return setExpandedRows((p) => [...p, record[rowKey]]);
+								};
+
 								return [
 									<tr key={fragKey} {...getRowProps}>
 										{hasExpandRow && (
-											<td
-												style={{ textAlign: "center" }}
-												onClick={() => {
-													if (show) {
-														return setExpandedRows((p) =>
-															p.filter((x) => x !== record[rowKey])
-														);
-													}
-													setExpandedRows((p) => [...p, record[rowKey]]);
-												}}
-											>
+											<td className="expand-td" onClick={expandOperation}>
 												<div role="button" className="pointer bg-animate bg-transparent">
 													{show ? expandHideIcon : expandViewIcon}
 												</div>
@@ -228,9 +264,8 @@ const TableLess = ({
 										)}
 										{columns.map((x) => {
 											const colKey = x.key;
-											const render = !!x.render
-												? x.render(record[colKey], record)
-												: record[colKey];
+											const colRender = record[colKey];
+											const render = !!x.render ? x.render(colRender, record, index) : colRender;
 											return (
 												<td key={`body-${uniqueKey}-${colKey}`} fluid-data={x.title}>
 													{render}
@@ -254,35 +289,7 @@ const TableLess = ({
 				</Table>
 			</View>
 			<Right span="100%" style={{ marginTop: "0.3rem" }}>
-				<Button
-					transparent
-					style={styles.paginateButton}
-					disabled={pagination.isFirst}
-					onPress={pagination.goBackward}
-				>
-					{"<"}
-				</Button>
-				{pagination.range.map((x) => (
-					<Button
-						transparent
-						style={{
-							...styles.paginateButton,
-							border: x === pagination.page ? `1px solid ${Colors.primaryLight}` : undefined
-						}}
-						key={`paginate-button-${x}`}
-						onPress={() => pagination.setPage(x)}
-					>
-						{x + 1}
-					</Button>
-				))}
-				<Button
-					transparent
-					style={styles.paginateButton}
-					disabled={pagination.isLast}
-					onPress={pagination.goForward}
-				>
-					{">"}
-				</Button>
+				<Pagination pagination={pagination} />
 			</Right>
 		</Container>
 	);
