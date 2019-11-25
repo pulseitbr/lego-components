@@ -77,7 +77,6 @@ export const Dropdown = ({
 
 	return (
 		<Tippy
-			animateFill
 			animation={animation}
 			arrow={false}
 			className={className}

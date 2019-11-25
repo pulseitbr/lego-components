@@ -12,12 +12,13 @@ import Keyboard from "../utils/Keyboard";
 
 const lightenClose = lighten(0.6);
 
-const ModalPortal = styled.div.attrs((props: any) => ({
+const ModalPortal = styled.div.attrs(({ visible = false, ...props }: any) => ({
 	...props,
 	speed: props.speed,
-	visible: !!props.visible ? "block" : "none",
+	visible: visible,
 	paddingVertical: props.paddingVertical || "3rem"
 }))`
+	display: ${(props) => (props.visible ? "block" : "none")};
 	top: 0;
 	left: 0;
 	z-index: 9998;
@@ -27,7 +28,6 @@ const ModalPortal = styled.div.attrs((props: any) => ({
 	position: fixed;
 	padding-top: ${(props) => props.paddingVertical};
 	padding-bottom: ${(props) => props.paddingVertical};
-	display: ${(props) => props.visible};
 	background-color: rgba(0, 0, 0, 0.65);
 	animation: fading ${(props) => props.speed}ms forwards ease-out;
 
@@ -75,6 +75,7 @@ type Props = {
 	onClose: () => any;
 	title?: React.ReactNode;
 	footer?: React.ReactNode;
+	closeIcon?: React.ReactNode;
 	visible?: boolean;
 	children: React.ReactNode;
 	animationTime?: number;
@@ -97,6 +98,7 @@ const Modal = ({
 	visible,
 	width = "60%",
 	footer,
+	closeIcon = <MdClose />,
 	onClose,
 	maskPaddingVertical = "3rem",
 	headerProps = defaultModalPartProps,
@@ -151,7 +153,7 @@ const Modal = ({
 				<ModalContent onClick={onModalClick} width={width}>
 					<View {...headerViewProps}>
 						<Close color={closeColor} onClick={onClose}>
-							<MdClose />
+							{closeIcon}
 						</Close>
 						{title}
 					</View>
