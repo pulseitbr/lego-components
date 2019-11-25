@@ -20,7 +20,7 @@ const ModalPortal = styled.div.attrs((props: any) => ({
 }))`
 	top: 0;
 	left: 0;
-	z-index: 1;
+	z-index: 9998;
 	width: 100%;
 	height: 100%;
 	overflow: auto;
@@ -43,9 +43,10 @@ const ModalPortal = styled.div.attrs((props: any) => ({
 
 type Content = ThemedStyledFunction<"div", any, any, any> & { width: string | number };
 
-const ModalContent = styled.dialog.attrs((props: Content) => props)`
+const ModalContent = styled.div.attrs((props: Content) => props)`
 	background-color: ${Colors.lightLight};
 	margin: auto;
+	z-index: 9999;
 	min-width: ${StyleSheet.minWidthMobile};
 	max-width: 100%;
 	overflow-y: hidden;
@@ -146,13 +147,8 @@ const Modal = ({
 
 	return (
 		<ReactPortal>
-			<ModalPortal
-				onClick={onClickMask}
-				visible={visible}
-				maskPaddingVertical={maskPaddingVertical}
-				speed={animationTime}
-			>
-				<ModalContent open={visible} onClick={onModalClick} width={width}>
+			<ModalPortal onClick={onClickMask} visible={visible} maskPaddingVertical={maskPaddingVertical} speed={animationTime}>
+				<ModalContent onClick={onModalClick} width={width}>
 					<View {...headerViewProps}>
 						<Close color={closeColor} onClick={onClose}>
 							<MdClose />

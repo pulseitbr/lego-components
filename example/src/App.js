@@ -1,4 +1,4 @@
-import { Body, Button, Container, Drawer, Notification, Snackbar, Page, useForm, Badge } from "lego-components";
+import { Badge, Body, Button, Container, Modal, Notification, Page, Snackbar, useForm } from "lego-components";
 import React, { useEffect, useState } from "react";
 
 export default function App() {
@@ -29,15 +29,17 @@ export default function App() {
 					<Button onPress={() => setView(true)}>OpenModal</Button>
 				</Container>
 				<Container>
-					<Badge size={0.8} color="orange">Aguardando Pagamento</Badge>
+					<Badge size={0.8} color="orange">
+						Aguardando Pagamento
+					</Badge>
 				</Container>
 				<form>
 					<input value={state.name} onChange={onChange} name="name" />
 				</form>
 			</Body>
-			<Drawer width="90%" maskClickClose onClose={() => setView(false)} title="Modal Bolado" visible={view}>
+			<Modal width="40%" onClose={() => setView(false)} title="Modal Bolado" visible={view}>
 				Drawer Body
-			</Drawer>
+			</Modal>
 		</Page>
 	);
 }
