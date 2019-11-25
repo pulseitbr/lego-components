@@ -1,5 +1,5 @@
 import { lighten } from "polished";
-import React, { CSSProperties, useEffect } from "react";
+import React, { CSSProperties, useEffect, useCallback } from "react";
 import { MdClose } from "react-icons/md";
 import styled, { ThemedStyledFunction } from "styled-components";
 import { TypeContainer, View } from "../base";
@@ -93,7 +93,7 @@ const defaultModalPartProps = {
 } as Partial<TypeContainer>;
 
 const Modal = ({
-	visible = false,
+	visible,
 	width = "60%",
 	footer,
 	onClose,
@@ -107,13 +107,13 @@ const Modal = ({
 	children,
 	animationTime = 950
 }: Props) => {
-	const toggleVisibility = (e: KeyboardEvent) => {
+	const toggleVisibility = useCallback((e: KeyboardEvent) => {
 		if (e.keyCode === Keyboard.esc && closeOnEsc) {
 			onClose();
 		}
-	};
+	}, []);
 
-	useBlockScroll(visible);
+	useBlockScroll(!!visible);
 
 	useEffect(() => {
 		window.addEventListener("keydown", toggleVisibility);
@@ -143,10 +143,6 @@ const Modal = ({
 		...footerProps,
 		style: { textAlign: "right" as "right", ...defaultModalPartProps.style, ...footerProps.style }
 	};
-
-	if (!visible) {
-		return null;
-	}
 
 	return (
 		<ReactPortal>
