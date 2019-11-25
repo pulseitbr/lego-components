@@ -1,4 +1,4 @@
-import { useReducer, Dispatch } from "react";
+import { useReducer, Dispatch, useCallback } from "react";
 
 type Action = { type: string; [key: string]: any };
 type UseReducer<State, Types> = [State, Dispatch<{ type: Types; [key: string]: any }>];
@@ -14,4 +14,8 @@ const createReducer = <State>(reducer: { [key: string]: Function } & Object) => 
 export default <S extends {}, T extends string>(
 	state: S,
 	fn: { [type in T]: (state: S, action: any) => S }
-): UseReducer<S, T> => useReducer(createReducer<S>(fn), state, () => state);
+): UseReducer<S, T> => {
+	const [reducerState, useReducerDispatch] = useReducer(createReducer<S>(fn), state, () => state);
+	const dispatch = useCallback(useReducerDispatch, []);
+	return [reducerState, dispatch];
+};

@@ -42,10 +42,10 @@ const ThinButton = styled.button<ButtonProps & { pill?: boolean }>`
 	transition: background-color 0.35s ease-in-out;
 	width: ${(props: any) => (props.full ? "100%" : "auto")};
 	cursor: ${(props: any) => (props.loading ? "wait" : "pointer")};
-	border-radius: ${(props: any) => (props.pill ? "9999px" : "5px")};
+	border-radius: ${(props: any) => (props.pill ? "9999px" : "2px")};
 
 	&:disabled {
-		cursor: wait;
+		cursor: not-allowed;
 		pointer-events: none;
 		color: ${Colors.darkAlpha};
 		background-color: ${Colors.disabled};
@@ -72,14 +72,15 @@ const ghostStyle = (primaryColor: string, hoverColor: string, bgColor: string, c
 `;
 
 const styledProps = {
-	warn: ghostStyle(Colors.warn, Colors.light, Colors.warn, Colors.warnDark),
-	info: ghostStyle(Colors.info, Colors.light, Colors.info, Colors.infoDark),
-	dark: ghostStyle(Colors.dark, Colors.light, Colors.dark, Colors.darkDarkest),
-	light: ghostStyle(Colors.light, Colors.lightDark, Colors.light, Colors.lightDark),
 	danger: ghostStyle(Colors.danger, Colors.light, Colors.danger, Colors.dangerDark),
+	dark: ghostStyle(Colors.dark, Colors.light, Colors.dark, Colors.darkDarkest),
+	disabled: `${ghostStyle(Colors.disabled, Colors.darkAlpha, "transparent", "transparent")} cursor: not-allowed;`,
+	info: ghostStyle(Colors.info, Colors.light, Colors.info, Colors.infoDark),
+	light: ghostStyle(Colors.light, Colors.lightDark, Colors.light, Colors.lightDark),
 	primary: ghostStyle(Colors.primary, Colors.light, Colors.primary, Colors.primaryDark),
 	success: ghostStyle(Colors.success, Colors.light, Colors.success, Colors.successDark),
-	disabled: `${ghostStyle(Colors.disabled, Colors.darkAlpha, "transparent", "transparent")} cursor: not-allowed;`,
+	transparent: ghostStyle("transparent", "transparent", "transparent", "transparent"),
+	warn: ghostStyle(Colors.warn, Colors.light, Colors.warn, Colors.warnDark),
 	disabledTransparent: `${ghostStyle(
 		Colors.disabled,
 		Colors.disabled,
@@ -163,15 +164,22 @@ const Button = ({
 		}
 	};
 
+	const commonProps = {
+		style: { cursor, ...style },
+		onClick: onClickButton,
+		type,
+		disabled: loading ? true : !!disabled
+	};
+
 	if (themeDefined === "transparent") {
 		return (
-			<RippleButton {...html} onClick={onClickButton} rippleColor={rippleColor}>
+			<RippleButton {...html} {...commonProps} rippleColor={rippleColor}>
 				{children}
 			</RippleButton>
 		);
 	} else if (themeDefined === "none") {
 		return (
-			<Transparent {...html} onClick={onClickButton}>
+			<Transparent {...html} {...commonProps}>
 				{children}
 			</Transparent>
 		);
@@ -180,16 +188,13 @@ const Button = ({
 	return (
 		<ParentButton
 			{...html}
-			type={type}
+			{...commonProps}
 			full={full}
 			size={size}
 			pill={!square}
 			bgColor={Colors.primary}
-			onClick={onClickButton}
-			style={{ cursor, ...style }}
 			textColor={Colors.lightLight}
 			theme={styledProps[ifDisable]}
-			disabled={loading ? true : !!disabled}
 		>
 			{loading && (
 				<React.Fragment>
