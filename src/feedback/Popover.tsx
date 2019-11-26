@@ -33,6 +33,7 @@ type Placements =
 export type Animations = "perspective" | "fade" | "scale" | "shift-away" | "shift-toward";
 export type PopoverTheme = "dark" | "light";
 type Props = {
+	arrow?: boolean;
 	onCreate?: any;
 	theme?: PopoverTheme;
 	distance?: number;
@@ -51,20 +52,20 @@ export const Popover = ({
 	className = "",
 	triggers = ["click"],
 	itens,
+	arrow = true,
 	theme = "light",
 	animation = "shift-away",
 	position = "bottom-end"
 }: Props) => {
-	const triggerString = triggers.join(" ");
 	return (
 		<Tippy
 			lazy
 			flip
-			arrow
 			sticky
 			inertia
 			interactive
 			theme={theme}
+			arrow={arrow}
 			content={itens}
 			maxWidth="30rem"
 			boundary="viewport"
@@ -73,7 +74,7 @@ export const Popover = ({
 			className={className}
 			animation={animation}
 			plugins={tippyPlugins}
-			trigger={triggerString}
+			trigger={triggers.join(" ")}
 		>
 			<span>{children as any}</span>
 		</Tippy>
