@@ -1,9 +1,9 @@
 import classNames from "classnames";
-import React, { Fragment, useRef } from "react";
+import React, { Fragment, useRef, useState } from "react";
 import Slider from "react-slick";
 import styled from "styled-components";
 import { Colors } from "lego";
-import { Container, View } from "../base";
+import { View, Container } from "../base";
 import StyleSheet from "../styles/StyleSheet";
 
 const styles = StyleSheet.create({
@@ -35,13 +35,10 @@ const PanelHeaderScroll = styled(View).attrs((props: { scrollColor: string }) =>
 
 export const Tab = (props: any) => <Container>{props.children}</Container>;
 
-export const PanelHeader = ({ currentIndex, setTab }: { currentIndex: number; setTab: (e: number) => void }) => (
-	{ props }: any,
-	i: number
-) => {
+export const PanelHeader = ({ currentIndex, setTab }: { currentIndex: number; setTab: (e: number) => void }) => ({ props }: any, i: number) => {
 	const onClick = () => setTab(i);
 	const active = currentIndex === i;
-	const classnames = classNames("tabs-header", { active });
+	const classnames = classNames("tabs-header", ["tabs-header-active" && active]);
 	return (
 		<header role="button" onClick={onClick} className={classnames}>
 			{props.title}
@@ -55,19 +52,30 @@ type TabPanelProps = {
 };
 export const TabPanel = ({ children, initialTab = 0 }: TabPanelProps) => {
 	const ref = useRef(null);
-	const currentIndex = useRef(initialTab);
-	const childrens = React.Children.toArray(children);
+	const [currentIndex, setCurrentIndex] = useState(initialTab);
 
 	const beforeChange = (_: number, nextSlide: number) => {
-		currentIndex.current = nextSlide;
+		setCurrentIndex(nextSlide);
 	};
+
+	const childrens = React.Children.toArray(children);
 
 	const setTab = (index: number) => (ref!.current! as any).slickGoTo(index);
 
 	return (
 		<Fragment>
 			<PanelHeaderScroll scrollColor={Colors.primaryLight} span="100%" style={styles.header}>
-				{childrens.map(PanelHeader({ currentIndex: currentIndex.current, setTab }))}
+				{childrens.map((x: any, i) => {
+					const onClick = () => setTab(i);
+					const active = currentIndex === i;
+					const classnames = classNames("tabs-header", { "tabs-header-active": active });
+					console.log(i, active, x.props.title);
+					return (
+						<header key={`header-key-tab-${i}`} role="button" onClick={onClick} className={classnames}>
+							{x?.props?.title}
+						</header>
+					);
+				})}
 			</PanelHeaderScroll>
 			<View span="100%" style={styles.view}>
 				<Slider
