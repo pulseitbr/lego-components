@@ -20,21 +20,21 @@ const Label = styled.label`
 		position: absolute;
 		top: 0;
 		left: 0;
-		height: 1.05rem;
-		width: 1.05rem;
+		width: 1rem;
+		height: 1rem;
 		border-radius: 100%;
 		background-color: transparent;
-		border: 2px solid ${Colors.disabled};
+		border: 0.125rem solid ${Colors.disabled};
 	}
 
 	&:hover input ~ .checkmark {
 		background-color: transparent;
-		border: 2px solid ${Colors.disabled};
+		border: 0.125rem solid ${Colors.disabled};
 	}
 
 	& input:checked ~ .checkmark {
 		background-color: transparent;
-		border: 2px solid ${(props) => props.color};
+		border: 0.125rem solid ${(props) => props.color};
 	}
 
 	.checkmark:after {
@@ -48,10 +48,10 @@ const Label = styled.label`
 	}
 
 	& .checkmark:after {
-		top: 1.22px;
-		left: 1.2px;
-		width: 0.6rem;
-		height: 0.6rem;
+		top: 0.1rem;
+		left: 0.13rem;
+		width: 0.5rem;
+		height: 0.5rem;
 		border-radius: 100%;
 		animation: fade 500ms ease-out;
 		text-rendering: optimizeLegibility;
@@ -75,9 +75,7 @@ type OmitOnClick = Omit<OmitOnChange, "onClick">;
 type EventCustom = EventTarget & {
 	target: { name: string; value: boolean; checked: boolean; stopPropagation(): void; persist(): void };
 };
-export type RadioboxTrigger = React.MouseEvent<HTMLInputElement, MouseEvent> &
-	EventCustom &
-	React.InputHTMLAttributes<any>;
+export type RadioboxTrigger = React.MouseEvent<HTMLInputElement, MouseEvent> & EventCustom & React.InputHTMLAttributes<any>;
 type Props = OmitOnClick & {
 	round?: boolean;
 	checkColor?: string;
@@ -119,14 +117,7 @@ const Radiobox = ({
 	};
 	return (
 		<Label className={`${labelClassName} pointer`} color={color}>
-			<input
-				{...html}
-				name={name}
-				type="radio"
-				onChange={change}
-				checked={checkedValue}
-				aria-checked={valString}
-			/>
+			<input {...html} name={name} type="radio" onChange={change} checked={checkedValue} aria-checked={valString} />
 			<span className="checkmark" role="checkbox" aria-checked={valString} /> {children}
 		</Label>
 	);
