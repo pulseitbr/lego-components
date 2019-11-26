@@ -9,7 +9,7 @@ import Portal from "../utils/Portal";
 
 type ModalPortal = {
 	speed?: number;
-	visible?: boolean;
+	visible: boolean;
 } & ThemedStyledFunction<"div", any, {}, never>;
 
 const ModalPortal: any = styled.div.attrs((props: ModalPortal) => ({

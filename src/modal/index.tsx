@@ -76,7 +76,7 @@ type Props = {
 	title?: React.ReactNode;
 	footer?: React.ReactNode;
 	closeIcon?: React.ReactNode;
-	visible?: boolean;
+	visible: boolean;
 	children: React.ReactNode;
 	animationTime?: number;
 	width?: string | number;
