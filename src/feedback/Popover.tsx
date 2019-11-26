@@ -53,30 +53,32 @@ export const Popover = ({
 	triggers = ["click"],
 	itens,
 	arrow = true,
+	onCreate,
 	theme = "light",
 	animation = "shift-away",
 	position = "bottom-end"
-}: Props) => {
-	return (
-		<Tippy
-			lazy
-			flip
-			sticky
-			inertia
-			interactive
-			theme={theme}
-			arrow={arrow}
-			content={itens}
-			maxWidth="30rem"
-			boundary="viewport"
-			duration={[350, 200]}
-			placement={position}
-			className={className}
-			animation={animation}
-			plugins={tippyPlugins}
-			trigger={triggers.join(" ")}
-		>
-			<span>{children as any}</span>
-		</Tippy>
-	);
-};
+}: Props) => (
+	<Tippy
+		lazy
+		flip
+		sticky
+		inertia
+		interactive
+		followCursor
+		hideOnClick
+		onCreate={onCreate}
+		theme={theme}
+		arrow={arrow}
+		content={itens}
+		maxWidth="30rem"
+		boundary="viewport"
+		duration={[350, 200]}
+		placement={position}
+		className={className}
+		animation={animation}
+		plugins={tippyPlugins}
+		trigger={triggers.join(" ")}
+	>
+		<span>{children as any}</span>
+	</Tippy>
+);
