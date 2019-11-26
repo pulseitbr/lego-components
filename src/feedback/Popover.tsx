@@ -51,7 +51,6 @@ export const Popover = ({
 	className = "",
 	triggers = ["click"],
 	itens,
-	onCreate,
 	theme = "light",
 	animation = "shift-away",
 	position = "bottom-end"
@@ -64,14 +63,12 @@ export const Popover = ({
 			arrow
 			sticky
 			inertia
-			multiple
 			interactive
 			theme={theme}
 			content={itens}
 			maxWidth="30rem"
 			boundary="viewport"
 			duration={[350, 200]}
-			onCreate={onCreate}
 			placement={position}
 			className={className}
 			animation={animation}
