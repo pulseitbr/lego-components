@@ -120,7 +120,12 @@ export const TabPanel = ({ children, onClose = voidFn, initialTab = 0 }: TabPane
 					speed={500}
 					waitForAnimate
 				>
-					{children}
+					{elements.map((x: any, i: number) => {
+						if (i === currentIndex) {
+							return x;
+						}
+						return <Fragment key={`miss-key-tab${i}`}> </Fragment>;
+					})}
 				</Slider>
 			</View>
 		</Fragment>
