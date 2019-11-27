@@ -1,94 +1,147 @@
-import { Badge, Body, Button, Container, Modal, Notification, Page, Snackbar, useForm } from "lego-components";
-import React, { useEffect, useState } from "react";
-import Tippy from "@tippy.js/react";
-import { sticky } from "tippy.js";
-import "tippy.js/animations/perspective.css";
-import "tippy.js/animations/scale.css";
-import "tippy.js/animations/shift-away.css";
-import "tippy.js/animations/shift-toward.css";
-import "tippy.js/dist/backdrop.css";
-import "tippy.js/dist/svg-arrow.css";
-import "tippy.js/dist/tippy.css";
-import "tippy.js/themes/light.css";
+import classNames from "classnames";
+import { Colors } from "lego";
+import { Button, Container, StyleSheet, Title, View } from "lego-components";
+import React, { Fragment, useEffect, useRef, useState } from "react";
+import { MdClose } from "react-icons/md";
+import Slider from "react-slick";
+import styled from "styled-components";
 
-export const tippyPlugins = [sticky];
-export const Popover = ({
-	children,
-	className = "",
-	triggers = ["click"],
-	itens,
-	arrow = true,
-	onCreate = () => {},
-	theme = "light",
-	animation = "shift-away",
-	position = "bottom-end"
-}) => (
-	<Tippy
-		lazy
-		flip
-		sticky
-		inertia
-		interactive
-		followCursor
-		hideOnClick
-		onCreate={onCreate}
-		theme={theme}
-		arrow={arrow}
-		content={itens}
-		maxWidth="30rem"
-		boundary="viewport"
-		duration={[350, 200]}
-		placement={position}
-		className={className}
-		animation={animation}
-		plugins={tippyPlugins}
-		trigger={triggers.join(" ")}
-	>
-		<span>{children}</span>
-	</Tippy>
-);
+const styles = StyleSheet.create({
+	header: {
+		padding: "0.1rem",
+		flexDirection: "row",
+		display: "inline-flex",
+		overflow: "auto",
+		whiteSpace: "nowrap",
+		width: "100%",
+		flexShrink: 0,
+		flexWrap: "nowrap",
+		borderBottom: "0.5px solid #eee"
+	},
+	view: { marginTop: "0.5rem" }
+});
 
-export default function App() {
-	const [view, setView] = useState(false);
-	const { state, onChange } = useForm(
-		{ name: "", age: "" },
-		{
-			updateOnChange: true
-		}
+const PanelHeaderScroll = styled(View)`
+	::-webkit-scrollbar {
+		height: 2px;
+		width: 2px;
+		background: ${Colors.disabled};
+	}
+	::-webkit-scrollbar-thumb:horizontal {
+		background: ${(props) => props.scrollColor};
+		border-radius: 0.1rem;
+	}
+`;
+
+export const Tab = (props) => <View span="100%">{props.children}</View>;
+
+export const PanelHeader = ({ currentIndex, setTab }) => (props, i) => {
+	const onClick = () => setTab(i);
+	const active = currentIndex === i;
+	const classnames = classNames("tabs-header", ["tabs-header-active" && active]);
+	return (
+		<header role="button" onClick={onClick} className={classnames}>
+			{props.title}
+		</header>
 	);
+};
+
+const voidFn = (a) => {};
+export const TabPanel = ({ children, onClose = voidFn, initialTab = 0 }) => {
+	const ref = useRef(null);
+	const [elements, setElements] = useState(React.Children.toArray(children));
+	const [currentIndex, setCurrentIndex] = useState(initialTab);
+
 	useEffect(() => {
-		Notification({
-			title: "AEEEE",
-			theme: "dark",
-			message: "Mensagem"
-		});
-		Snackbar({
-			title: "AEEEE",
-			theme: "info",
-			message: "Mensagem"
-		});
-	}, []);
+		setElements(React.Children.toArray(children));
+	}, [children]);
+
+	const goto = (slide) => {
+		ref.current.slickGoTo(slide);
+		setCurrentIndex(slide);
+	};
+
+	const closeTab = (i) => {
+		goto(i > 1 ? i - 1 : 0);
+		const { props } = elements[i];
+		setTimeout(() => {
+			onClose(props.name);
+		}, 200);
+	};
+
+	const beforeChange = (_, nextSlide) => {
+		setCurrentIndex(nextSlide);
+	};
+
+	const setTab = (index) => ref.current.slickGoTo(index);
 
 	return (
-		<Page>
-			<Body>
+		<Fragment>
+			<PanelHeaderScroll scrollColor={Colors.primaryLight} span="100%" style={styles.header}>
+				{elements.map((x, i) => {
+					const onClick = () => setTab(i);
+					const close = () => closeTab(i);
+					const { closable, className, color = Colors.primary } = x.props;
+					const closeIcon = typeof closable === "boolean" ? <MdClose /> : closable;
+					const css = classNames("tabs-header", className);
+					const style = currentIndex === i ? { color, borderBottom: `2px solid ${color}` } : {};
+					return (
+						<header key={`header-key-tab-${i}`} role="button" onClick={onClick} className={css} style={style}>
+							<Fragment>
+								{x.props.title}{" "}
+								{closable && (
+									<Button transparent onPress={close}>
+										{closeIcon}
+									</Button>
+								)}
+							</Fragment>
+						</header>
+					);
+				})}
+			</PanelHeaderScroll>
+			<View span="100%" style={styles.view}>
+				<Slider
+					accessibility
+					arrows={false}
+					beforeChange={beforeChange}
+					dots={false}
+					draggable
+					fade
+					infinite
+					initialSlide={initialTab}
+					ref={ref}
+					rows={1}
+					slide={Container}
+					slidesToScroll={1}
+					slidesToShow={1}
+					speed={500}
+					waitForAnimate
+				>
+					{children}
+				</Slider>
+			</View>
+		</Fragment>
+	);
+};
+
+export default function App() {
+	const [t, setT] = useState([]);
+
+	const onClose = (i) => setT((p) => p.filter((x) => i !== x));
+
+	return (
+		<TabPanel onClose={onClose}>
+			<Tab name="first" color="red" title={<Fragment>AEE</Fragment>}>
+				<Title>Tab 01</Title>
 				<Container>
-					<Button onPress={() => setView(true)}>OpenModal</Button>
+					<Button onPress={() => setT((p) => p.concat(`element-${t.length + 1}`))}>Add</Button>
 				</Container>
-				<Container>
-					<Popover itens={"AEEE"}>
-						<Badge size={0.8} color="orange">
-							Aguardando Pagamento
-						</Badge>
-					</Popover>
-				</Container>
-				<form>
-					<input value={state.name} onChange={onChange} name="name" />
-				</form>
-			</Body>
-			<Modal width="40%" onClose={() => setView(false)} title="Modal Bolado" visible={view}>
-				Drawer Body
-			</Modal>
-		</Page>
+			</Tab>
+			{t.map((x) => (
+				<Tab key={x} name={x} title={<Fragment>{x}</Fragment>} closable>
+					<Title>Tab 01 - {x}</Title>
+				</Tab>
+			))}
+		</TabPanel>
 	);
 }

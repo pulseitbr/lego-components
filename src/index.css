@@ -6035,17 +6035,10 @@ label {
 .tabs-header {
     flex: 0 0 1;
     display: inline-block;
-    padding: 0.2rem;
     margin-left: 2rem;
 }
 
-.tabs-header-active {
-    color: var(--primary);
-    border-bottom: 0.0625rem solid var(--primary);
-}
-
 .tabs-header:first-child {
-    padding: 0.2rem;
     margin-left: 0.6rem;
 }
 

@@ -47,13 +47,15 @@ type Props = {
 	itens: React.ReactChild;
 	onShow?: (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => any;
 };
+
+const voidFn = () => {};
 export const Popover = ({
 	children,
 	className = "",
 	triggers = ["click"],
 	itens,
 	arrow = true,
-	onCreate,
+	onCreate = voidFn,
 	theme = "light",
 	animation = "shift-away",
 	position = "bottom-end"
@@ -64,7 +66,6 @@ export const Popover = ({
 		sticky
 		inertia
 		interactive
-		followCursor
 		hideOnClick
 		onCreate={onCreate}
 		theme={theme}
