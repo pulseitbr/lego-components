@@ -39,7 +39,7 @@ const PanelHeaderScroll = styled(View).attrs((props: PanelHeaderScrollProps) => 
 `;
 
 type TabProps = {
-	color: string;
+	color?: string;
 	title: React.ReactNode;
 	children: React.ReactNode;
 	className?: string;
