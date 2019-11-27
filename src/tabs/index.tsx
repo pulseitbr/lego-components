@@ -1,12 +1,11 @@
 import classNames from "classnames";
 import { Colors } from "lego";
-import compose from "@seznam/compose-react-refs";
-import { Container, View } from "../base";
-import React, { Fragment, useEffect, useRef, useState } from "react";
-import Button from "../button/Button";
+import React, { Fragment, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { MdClose } from "react-icons/md";
 import Slider from "react-slick";
 import styled from "styled-components";
+import { Container, View } from "../base";
+import Button from "../button/Button";
 import StyleSheet from "../styles/StyleSheet";
 
 const styles = StyleSheet.create({
@@ -66,13 +65,13 @@ export const TabPanel = React.forwardRef(({ children, onClose = voidFn, initialT
 		setElements(React.Children.toArray(children));
 	}, [children]);
 
-	const goto = (slide: number) => {
+	const _goto = (slide: number) => {
 		ref.current!.slickGoTo(slide);
 		setCurrentIndex(slide);
 	};
 
-	const closeTab = (i: number) => () => {
-		goto(i > 1 ? i - 1 : 0);
+	const _closeTab = (i: number) => {
+		_goto(i > 1 ? i - 1 : 0);
 		const { props } = elements[i];
 		setTimeout(() => {
 			onClose(props.tabName);
@@ -82,6 +81,25 @@ export const TabPanel = React.forwardRef(({ children, onClose = voidFn, initialT
 	const beforeChange = (_: number, nextSlide: number) => setCurrentIndex(nextSlide);
 
 	const setTab = (index: number) => () => ref.current.slickGoTo(index);
+
+	const execIf = (name: string, callback: (index: number) => void) => {
+		let index = null;
+		elements.forEach((x: any, i: number) => (index = x.props.name === name ? i : null));
+		if (index !== null) {
+			callback(index);
+		}
+	};
+
+	useImperativeHandle(externalRef, () => ({
+		closeTab(name: string) {
+			execIf(name, _closeTab);
+		},
+		goto(name: string) {
+			execIf(name, _goto);
+		}
+	}));
+
+	const bindClick = (index: number) => () => _closeTab(index);
 
 	return (
 		<Fragment>
@@ -95,7 +113,7 @@ export const TabPanel = React.forwardRef(({ children, onClose = voidFn, initialT
 						<header key={`header-key-tab-${name}`} role="button" onClick={setTab(i)} className={css} style={style}>
 							{title}{" "}
 							{closable && (
-								<Button transparent onPress={closeTab(i)}>
+								<Button transparent onPress={bindClick}>
 									{closeIcon}
 								</Button>
 							)}
@@ -114,7 +132,7 @@ export const TabPanel = React.forwardRef(({ children, onClose = voidFn, initialT
 					infinite
 					initialSlide={initialTab}
 					// @ts-ignore
-					ref={compose(ref, externalRef)}
+					ref={ref}
 					rows={1}
 					slide={Container}
 					slidesToScroll={1}
@@ -126,7 +144,7 @@ export const TabPanel = React.forwardRef(({ children, onClose = voidFn, initialT
 						if (i === currentIndex) {
 							return x;
 						}
-						return <Fragment key={`miss-key-tab${i}`}> </Fragment>;
+						return <Fragment key={`miss-key-tab-${x.props.name}`}> </Fragment>;
 					})}
 				</Slider>
 			</View>
