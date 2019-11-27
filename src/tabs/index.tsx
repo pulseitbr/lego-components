@@ -63,7 +63,7 @@ export const TabPanel = React.forwardRef(({ children, onClose = voidFn, initialT
 
 	useEffect(() => {
 		setElements(React.Children.toArray(children));
-	}, [children]);
+	}, [children, setElements]);
 
 	const _goto = (slide: number) => {
 		ref.current!.slickGoTo(slide);
@@ -78,13 +78,23 @@ export const TabPanel = React.forwardRef(({ children, onClose = voidFn, initialT
 		}, 200);
 	};
 
-	const beforeChange = (_: number, nextSlide: number) => setCurrentIndex(nextSlide);
+	const beforeChange = (_: number, nextSlide: number) => {''
+		ref.current!.slickGoTo(nextSlide);
+		setCurrentIndex(nextSlide);
+	};
 
 	const setTab = (index: number) => () => ref.current.slickGoTo(index);
 
 	const execIf = (name: string, callback: (index: number) => void) => {
 		let index = null;
-		elements.forEach((x: any, i: number) => (index = x.props.name === name ? i : null));
+		elements.forEach((x: any, i: number) => {
+			console.log(x.props.name, name);
+			console.log(typeof x.props.name, typeof name);
+			if (x.props.name === name) {
+				index = i;
+			}
+		});
+		console.log("AEE", index, callback);
 		if (index !== null) {
 			callback(index);
 		}
@@ -137,8 +147,7 @@ export const TabPanel = React.forwardRef(({ children, onClose = voidFn, initialT
 					slide={Container}
 					slidesToScroll={1}
 					slidesToShow={1}
-					speed={500}
-					waitForAnimate
+					speed={600}
 				>
 					{elements.map((x: any, i: number) => {
 						if (i === currentIndex) {
