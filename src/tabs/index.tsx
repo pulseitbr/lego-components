@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { Colors } from "lego";
+import compose from "@seznam/compose-react-refs";
 import { Container, View } from "../base";
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import Button from "../button/Button";
@@ -56,7 +57,7 @@ type TabPanelProps = {
 	initialTab?: number;
 };
 
-export const TabPanel = ({ children, onClose = voidFn, initialTab = 0 }: TabPanelProps) => {
+export const TabPanel = React.forwardRef(({ children, onClose = voidFn, initialTab = 0 }: TabPanelProps, externalRef) => {
 	const ref = useRef(null) as any;
 	const [elements, setElements] = useState(React.Children.toArray(children)) as any;
 	const [currentIndex, setCurrentIndex] = useState(initialTab);
@@ -112,7 +113,8 @@ export const TabPanel = ({ children, onClose = voidFn, initialTab = 0 }: TabPane
 					fade
 					infinite
 					initialSlide={initialTab}
-					ref={ref}
+					// @ts-ignore
+					ref={compose(ref, externalRef)}
 					rows={1}
 					slide={Container}
 					slidesToScroll={1}
@@ -130,4 +132,4 @@ export const TabPanel = ({ children, onClose = voidFn, initialTab = 0 }: TabPane
 			</View>
 		</Fragment>
 	);
-};
+});

@@ -5,6 +5,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "@seznam/compose-react-refs": "^1.0.4",
     "lego-components": "link:..",
     "prop-types": "^15.6.2",
     "rc-tabs": "^9.6.7",

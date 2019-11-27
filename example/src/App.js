@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import composeRefs from "@seznam/compose-react-refs";
 import { Colors } from "lego";
 import { Button, Container, StyleSheet, Title, View } from "lego-components";
 import React, { Fragment, useEffect, useRef, useState } from "react";
@@ -48,19 +49,8 @@ export const PanelHeader = ({ currentIndex, setTab }) => (props, i) => {
 
 const voidFn = (a) => {};
 
-const createRenderArray = (size, fillElementPosition, fill) => {
-	const arr = [];
-	for (let i = 0; i < size; i += 1) {
-		if (i === fillElementPosition) {
-			arr.push(fill);
-		} else {
-			arr.push(<Fragment key={`null-element-tab-${i}`}></Fragment>);
-		}
-	}
-	return arr;
-};
-export const TabPanel = ({ children, onClose = voidFn, initialTab = 0 }) => {
-	const ref = useRef(null);
+export const TabPanel = React.forwardRef(({ children, onClose = voidFn, initialTab = 0 }, extenalRef) => {
+	const innerRef = useRef(null);
 	const childs = React.Children.toArray(children);
 	const [elements, setElements] = useState(childs);
 	const [currentIndex, setCurrentIndex] = useState(initialTab);
@@ -70,7 +60,7 @@ export const TabPanel = ({ children, onClose = voidFn, initialTab = 0 }) => {
 	}, [children]);
 
 	const goto = (slide) => {
-		ref.current.slickGoTo(slide);
+		innerRef.current.slickGoTo(slide);
 		setCurrentIndex(slide);
 	};
 
@@ -86,7 +76,7 @@ export const TabPanel = ({ children, onClose = voidFn, initialTab = 0 }) => {
 		setCurrentIndex(nextSlide);
 	};
 
-	const setTab = (index) => ref.current.slickGoTo(index);
+	const setTab = (index) => innerRef.current.slickGoTo(index);
 
 	return (
 		<Fragment>
@@ -122,7 +112,7 @@ export const TabPanel = ({ children, onClose = voidFn, initialTab = 0 }) => {
 					fade
 					infinite
 					initialSlide={initialTab}
-					ref={ref}
+					ref={composeRefs(innerRef, extenalRef)}
 					rows={1}
 					slide={"section"}
 					slidesToScroll={1}
@@ -140,15 +130,13 @@ export const TabPanel = ({ children, onClose = voidFn, initialTab = 0 }) => {
 			</View>
 		</Fragment>
 	);
-};
+});
 
 export default function App() {
-	const [t, setT] = useState([]);
-
-	const onClose = (i) => setT((p) => p.filter((x) => i !== x));
+	const ref = useRef(null);
 
 	return (
-		<TabPanel onClose={onClose}>
+		<TabPanel ref={ref}>
 			<Tab name="first" color="red" title={<Fragment>AEE</Fragment>}>
 				<Title>Tab 11</Title>
 				<Container>
@@ -158,24 +146,22 @@ export default function App() {
 						name="cep"
 						pattern="[0-9]{5}-[0-9]{3}"
 						title="Informe o CEP no padrão correto"
-						inputmode="decimal"
 						type="text"
 						placeholder=""
-						value=""
 					/>
-					<Button onPress={() => setT((p) => p.concat(`element-${t.length + 1}`))}>Add</Button>
+					<Button>Add</Button>
 				</Container>
 			</Tab>
 			<Tab name="sec" color="red" title={<Fragment>AEE</Fragment>}>
 				<Title>Tab 22</Title>
 				<Container>
-					<Button onPress={() => setT((p) => p.concat(`element-${t.length + 1}`))}>Add</Button>
+					<Button>Add</Button>
 				</Container>
 			</Tab>
 			<Tab name="thi" color="red" title={<Fragment>AEE</Fragment>}>
 				<Title>Tab 33</Title>
 				<Container>
-					<Button onPress={() => setT((p) => p.concat(`element-${t.length + 1}`))}>Add</Button>
+					<Button>Add</Button>
 				</Container>
 			</Tab>
 		</TabPanel>
