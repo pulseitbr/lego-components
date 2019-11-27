@@ -1,8 +1,7 @@
 import classNames from "classnames";
-import composeRefs from "@seznam/compose-react-refs";
 import { Colors } from "lego";
 import { Button, Container, StyleSheet, Title, View } from "lego-components";
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState, useImperativeHandle } from "react";
 import { MdClose } from "react-icons/md";
 import Slider from "react-slick";
 import styled from "styled-components";
@@ -49,7 +48,7 @@ export const PanelHeader = ({ currentIndex, setTab }) => (props, i) => {
 
 const voidFn = (a) => {};
 
-export const TabPanel = React.forwardRef(({ children, onClose = voidFn, initialTab = 0 }, extenalRef) => {
+export const TabPanel = React.forwardRef(({ children, onClose = voidFn, initialTab = 0 }, externalRef) => {
 	const innerRef = useRef(null);
 	const childs = React.Children.toArray(children);
 	const [elements, setElements] = useState(childs);
@@ -59,13 +58,13 @@ export const TabPanel = React.forwardRef(({ children, onClose = voidFn, initialT
 		setElements(React.Children.toArray(children));
 	}, [children]);
 
-	const goto = (slide) => {
+	const _goto = (slide) => {
 		innerRef.current.slickGoTo(slide);
 		setCurrentIndex(slide);
 	};
 
-	const closeTab = (i) => {
-		goto(i > 1 ? i - 1 : 0);
+	const _closeTab = (i) => {
+		_goto(i > 1 ? i - 1 : 0);
 		const { props } = elements[i];
 		setTimeout(() => {
 			onClose(props.name);
@@ -76,6 +75,23 @@ export const TabPanel = React.forwardRef(({ children, onClose = voidFn, initialT
 		setCurrentIndex(nextSlide);
 	};
 
+	const execIf = (name, callback) => {
+		let index = undefined;
+		elements.forEach((x, i) => (index = x.props.name === name ? i : undefined));
+		if (index !== undefined) {
+			callback(index);
+		}
+	};
+
+	useImperativeHandle(externalRef, () => ({
+		closeTab(name) {
+			execIf(name, _closeTab);
+		},
+		goto(name) {
+			execIf(name, _goto);
+		}
+	}));
+
 	const setTab = (index) => innerRef.current.slickGoTo(index);
 
 	return (
@@ -83,7 +99,7 @@ export const TabPanel = React.forwardRef(({ children, onClose = voidFn, initialT
 			<PanelHeaderScroll scrollColor={Colors.primaryLight} span="100%" style={styles.header}>
 				{elements.map((x, i) => {
 					const onClick = () => setTab(i);
-					const close = () => closeTab(i);
+					const close = () => _closeTab(i);
 					const { closable, className, color = Colors.primary } = x.props;
 					const closeIcon = typeof closable === "boolean" ? <MdClose /> : closable;
 					const css = classNames("tabs-header", className);
@@ -112,7 +128,7 @@ export const TabPanel = React.forwardRef(({ children, onClose = voidFn, initialT
 					fade
 					infinite
 					initialSlide={initialTab}
-					ref={composeRefs(innerRef, extenalRef)}
+					ref={innerRef}
 					rows={1}
 					slide={"section"}
 					slidesToScroll={1}
@@ -134,24 +150,33 @@ export const TabPanel = React.forwardRef(({ children, onClose = voidFn, initialT
 
 export default function App() {
 	const ref = useRef(null);
+	const [show, setShow] = useState(true);
 
 	return (
-		<TabPanel ref={ref}>
-			<Tab name="first" color="red" title={<Fragment>AEE</Fragment>}>
-				<Title>Tab 11</Title>
-				<Container>
-					<input
-						required=""
-						id="cep"
-						name="cep"
-						pattern="[0-9]{5}-[0-9]{3}"
-						title="Informe o CEP no padrão correto"
-						type="text"
-						placeholder=""
-					/>
-					<Button>Add</Button>
-				</Container>
-			</Tab>
+		<TabPanel ref={ref} onClose={() => setShow((e) => !e)}>
+			{show && (
+				<Tab name="first" color="red" title={<Fragment>AEE</Fragment>}>
+					<Title>Tab 11</Title>
+					<Container>
+						<input
+							required=""
+							id="cep"
+							name="cep"
+							pattern="[0-9]{5}-[0-9]{3}"
+							title="Informe o CEP no padrão correto"
+							type="text"
+							placeholder=""
+						/>
+						<Button
+							onPress={(e) => {
+								ref.current.goto("thi");
+							}}
+						>
+							Add
+						</Button>
+					</Container>
+				</Tab>
+			)}
 			<Tab name="sec" color="red" title={<Fragment>AEE</Fragment>}>
 				<Title>Tab 22</Title>
 				<Container>

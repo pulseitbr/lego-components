@@ -1,0 +1,481 @@
+
+{
+  "header": {
+    "reportVersion": 1,
+    "event": "Allocation failed - JavaScript heap out of memory",
+    "trigger": "FatalError",
+    "filename": "report.20191127.163414.15682.0.001.json",
+    "dumpEventTime": "2019-11-27T16:34:14Z",
+    "dumpEventTimeStamp": "1574883254244",
+    "processId": 15682,
+    "cwd": "/home/garcez/Workspace/lego-components/example",
+    "commandLine": [
+      "/home/garcez/.asdf/installs/nodejs/13.0.1/bin/node",
+      "/home/garcez/Workspace/lego-components/example/node_modules/react-scripts/scripts/start.js"
+    ],
+    "nodejsVersion": "v13.0.1",
+    "glibcVersionRuntime": "2.27",
+    "glibcVersionCompiler": "2.17",
+    "wordSize": 64,
+    "arch": "x64",
+    "platform": "linux",
+    "componentVersions": {
+      "node": "13.0.1",
+      "v8": "7.8.279.17-node.14",
+      "uv": "1.33.1",
+      "zlib": "1.2.11",
+      "brotli": "1.0.7",
+      "ares": "1.15.0",
+      "modules": "79",
+      "nghttp2": "1.39.2",
+      "napi": "5",
+      "llhttp": "1.1.4",
+      "openssl": "1.1.1d",
+      "cldr": "35.1",
+      "icu": "64.2",
+      "tz": "2019a",
+      "unicode": "12.1"
+    },
+    "release": {
+      "name": "node",
+      "headersUrl": "https://nodejs.org/download/release/v13.0.1/node-v13.0.1-headers.tar.gz",
+      "sourceUrl": "https://nodejs.org/download/release/v13.0.1/node-v13.0.1.tar.gz"
+    },
+    "osName": "Linux",
+    "osRelease": "5.0.0-36-generic",
+    "osVersion": "#39~18.04.1-Ubuntu SMP Tue Nov 12 11:09:50 UTC 2019",
+    "osMachine": "x86_64",
+    "cpus": [
+      {
+        "model": "Intel(R) Core(TM) i7-8565U CPU @ 1.80GHz",
+        "speed": 2359,
+        "user": 20224600,
+        "nice": 17600,
+        "sys": 3358900,
+        "idle": 156493100,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-8565U CPU @ 1.80GHz",
+        "speed": 2394,
+        "user": 19784100,
+        "nice": 15400,
+        "sys": 3504200,
+        "idle": 156998300,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-8565U CPU @ 1.80GHz",
+        "speed": 2394,
+        "user": 20291000,
+        "nice": 21500,
+        "sys": 3420300,
+        "idle": 156594700,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-8565U CPU @ 1.80GHz",
+        "speed": 2339,
+        "user": 20135300,
+        "nice": 15100,
+        "sys": 3432000,
+        "idle": 156135300,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-8565U CPU @ 1.80GHz",
+        "speed": 2338,
+        "user": 18911700,
+        "nice": 19200,
+        "sys": 3529400,
+        "idle": 157164400,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-8565U CPU @ 1.80GHz",
+        "speed": 2361,
+        "user": 18749000,
+        "nice": 16100,
+        "sys": 3626200,
+        "idle": 157963000,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-8565U CPU @ 1.80GHz",
+        "speed": 2357,
+        "user": 18947100,
+        "nice": 15600,
+        "sys": 3512200,
+        "idle": 157867000,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-8565U CPU @ 1.80GHz",
+        "speed": 2349,
+        "user": 18938400,
+        "nice": 16400,
+        "sys": 3515600,
+        "idle": 157960200,
+        "irq": 0
+      }
+    ],
+    "networkInterfaces": [
+      {
+        "name": "lo",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "127.0.0.1",
+        "netmask": "255.0.0.0",
+        "family": "IPv4"
+      },
+      {
+        "name": "wlo1",
+        "internal": false,
+        "mac": "64:32:a8:a0:96:d2",
+        "address": "192.168.1.27",
+        "netmask": "255.255.255.0",
+        "family": "IPv4"
+      },
+      {
+        "name": "lo",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "::1",
+        "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "wlo1",
+        "internal": false,
+        "mac": "64:32:a8:a0:96:d2",
+        "address": "fe80::cfb1:9cec:63b1:9ff0",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 3
+      }
+    ],
+    "host": "haskell"
+  },
+  "javascriptStack": {
+    "message": "No stack.",
+    "stack": [
+      "Unavailable."
+    ]
+  },
+  "nativeStack": [
+    {
+      "pc": "0x0000000000b0d955",
+      "symbol": "report::TriggerNodeReport(v8::Isolate*, node::Environment*, char const*, char const*, std::string const&, v8::Local<v8::String>) [/home/garcez/.asdf/installs/nodejs/13.0.1/bin/node]"
+    },
+    {
+      "pc": "0x00000000009e9573",
+      "symbol": "node::OnFatalError(char const*, char const*) [/home/garcez/.asdf/installs/nodejs/13.0.1/bin/node]"
+    },
+    {
+      "pc": "0x0000000000b4333e",
+      "symbol": "v8::Utils::ReportOOMFailure(v8::internal::Isolate*, char const*, bool) [/home/garcez/.asdf/installs/nodejs/13.0.1/bin/node]"
+    },
+    {
+      "pc": "0x0000000000b436b9",
+      "symbol": "v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, bool) [/home/garcez/.asdf/installs/nodejs/13.0.1/bin/node]"
+    },
+    {
+      "pc": "0x0000000000cf0495",
+      "symbol": " [/home/garcez/.asdf/installs/nodejs/13.0.1/bin/node]"
+    },
+    {
+      "pc": "0x0000000000cf0b26",
+      "symbol": "v8::internal::Heap::RecomputeLimits(v8::internal::GarbageCollector) [/home/garcez/.asdf/installs/nodejs/13.0.1/bin/node]"
+    },
+    {
+      "pc": "0x0000000000cfd35a",
+      "symbol": "v8::internal::Heap::PerformGarbageCollection(v8::internal::GarbageCollector, v8::GCCallbackFlags) [/home/garcez/.asdf/installs/nodejs/13.0.1/bin/node]"
+    },
+    {
+      "pc": "0x0000000000cfe265",
+      "symbol": "v8::internal::Heap::CollectGarbage(v8::internal::AllocationSpace, v8::internal::GarbageCollectionReason, v8::GCCallbackFlags) [/home/garcez/.asdf/installs/nodejs/13.0.1/bin/node]"
+    },
+    {
+      "pc": "0x0000000000d00d0c",
+      "symbol": "v8::internal::Heap::AllocateRawWithRetryOrFail(int, v8::internal::AllocationType, v8::internal::AllocationOrigin, v8::internal::AllocationAlignment) [/home/garcez/.asdf/installs/nodejs/13.0.1/bin/node]"
+    },
+    {
+      "pc": "0x0000000000cc75cb",
+      "symbol": "v8::internal::Factory::NewFillerObject(int, bool, v8::internal::AllocationType, v8::internal::AllocationOrigin) [/home/garcez/.asdf/installs/nodejs/13.0.1/bin/node]"
+    },
+    {
+      "pc": "0x000000000100b6de",
+      "symbol": "v8::internal::Runtime_AllocateInYoungGeneration(int, unsigned long*, v8::internal::Isolate*) [/home/garcez/.asdf/installs/nodejs/13.0.1/bin/node]"
+    },
+    {
+      "pc": "0x000000000138df79",
+      "symbol": " [/home/garcez/.asdf/installs/nodejs/13.0.1/bin/node]"
+    }
+  ],
+  "javascriptHeap": {
+    "totalMemory": 2165817344,
+    "totalCommittedMemory": 2162297040,
+    "usedMemory": 1878846552,
+    "availableMemory": 176570104,
+    "memoryLimit": 2197815296,
+    "heapSpaces": {
+      "read_only_space": {
+        "memorySize": 262144,
+        "committedMemory": 33088,
+        "capacity": 32808,
+        "used": 32808,
+        "available": 0
+      },
+      "new_space": {
+        "memorySize": 33554432,
+        "committedMemory": 30934888,
+        "capacity": 16759296,
+        "used": 3499064,
+        "available": 13260232
+      },
+      "old_space": {
+        "memorySize": 2014949376,
+        "committedMemory": 2014351784,
+        "capacity": 1874987032,
+        "used": 1760434408,
+        "available": 114552624
+      },
+      "code_space": {
+        "memorySize": 1740800,
+        "committedMemory": 1667104,
+        "capacity": 1484768,
+        "used": 1484768,
+        "available": 0
+      },
+      "map_space": {
+        "memorySize": 3936256,
+        "committedMemory": 3935840,
+        "capacity": 2179280,
+        "used": 2179280,
+        "available": 0
+      },
+      "large_object_space": {
+        "memorySize": 111325184,
+        "committedMemory": 111325184,
+        "capacity": 111213440,
+        "used": 111213440,
+        "available": 0
+      },
+      "code_large_object_space": {
+        "memorySize": 49152,
+        "committedMemory": 49152,
+        "capacity": 2784,
+        "used": 2784,
+        "available": 0
+      },
+      "new_large_object_space": {
+        "memorySize": 0,
+        "committedMemory": 0,
+        "capacity": 16759296,
+        "used": 0,
+        "available": 16759296
+      }
+    }
+  },
+  "resourceUsage": {
+    "userCpuSeconds": 267.244,
+    "kernelCpuSeconds": 23.0541,
+    "cpuConsumptionPercent": 179.196,
+    "maxRss": 2405847040,
+    "pageFaults": {
+      "IORequired": 3,
+      "IONotRequired": 1042886
+    },
+    "fsActivity": {
+      "reads": 48320,
+      "writes": 160
+    }
+  },
+  "uvthreadResourceUsage": {
+    "userCpuSeconds": 128.887,
+    "kernelCpuSeconds": 5.99244,
+    "cpuConsumptionPercent": 83.259,
+    "fsActivity": {
+      "reads": 36976,
+      "writes": 80
+    }
+  },
+  "libuv": [
+  ],
+  "environmentVariables": {
+    "KDE_FULL_SESSION": "true",
+    "npm_package_dependencies__seznam_compose_react_refs": "^1.0.4",
+    "PAM_KWALLET5_LOGIN": "/run/user/1000/kwallet5.socket",
+    "USER": "garcez",
+    "LC_TIME": "pt_BR.UTF-8",
+    "npm_config_version_commit_hooks": "true",
+    "npm_config_user_agent": "yarn/1.19.2 npm/? node/v13.0.1 linux x64",
+    "QT_SCREEN_SCALE_FACTORS": "eDP-1=1;HDMI-1=1;DP-1=1;HDMI-2=1;",
+    "XDG_SEAT": "seat0",
+    "npm_config_bin_links": "true",
+    "SSH_AGENT_PID": "1216",
+    "XDG_SESSION_TYPE": "x11",
+    "npm_node_execpath": "/home/garcez/.asdf/installs/nodejs/13.0.1/bin/node",
+    "npm_config_init_version": "1.0.0",
+    "XCURSOR_SIZE": "0",
+    "SHLVL": "1",
+    "npm_package_devDependencies__storybook_addon_links": "^5.2.1",
+    "LESS": "-R",
+    "ASDF_DIR": "/home/garcez/.asdf",
+    "OLDPWD": "/home/garcez/Workspace/lego-components",
+    "CHROME_DESKTOP": "code-url-handler.desktop",
+    "HOME": "/home/garcez",
+    "DESKTOP_SESSION": "/usr/share/xsessions/plasma",
+    "TERM_PROGRAM_VERSION": "1.40.2",
+    "ZSH": "/home/garcez/.oh-my-zsh",
+    "LSCOLORS": "Gxfxcxdxbxegedabagacad",
+    "npm_config_init_license": "MIT",
+    "PAGER": "less",
+    "XDG_SEAT_PATH": "/org/freedesktop/DisplayManager/Seat0",
+    "GTK_RC_FILES": "/etc/gtk/gtkrc:/home/garcez/.gtkrc:/home/garcez/.config/gtkrc",
+    "KDE_SESSION_VERSION": "5",
+    "YARN_WRAP_OUTPUT": "false",
+    "npm_config_version_tag_prefix": "v",
+    "LC_MONETARY": "pt_BR.UTF-8",
+    "DBUS_SESSION_BUS_ADDRESS": "unix:abstract=/tmp/dbus-wxRIgEirPH,guid=1a769d821b4e86aa0dc51f3f5dde890a",
+    "npm_package_dependencies_rc_tabs": "^9.6.7",
+    "COLORTERM": "truecolor",
+    "npm_package_description": "- [Updating to New Releases](#updating-to-new-releases) - [Sending Feedback](#sending-feedback) - [Folder Structure](#folder-structure) - [Available Scripts](#available-scripts) - [npm start](#npm-start) - [npm test](#npm-test) - [npm run build](#npm-run-build) - [npm run eject](#npm-run-eject) - [Supported Language Features and Polyfills](#supported-language-features-and-polyfills) - [Syntax Highlighting in the Editor](#syntax-highlighting-in-the-editor) - [Displaying Lint Output in the Editor](#displaying-lint-output-in-the-editor) - [Debugging in the Editor](#debugging-in-the-editor) - [Formatting Code Automatically](#formatting-code-automatically) - [Changing the Page `<title>`](#changing-the-page-title) - [Installing a Dependency](#installing-a-dependency) - [Importing a Component](#importing-a-component) - [Code Splitting](#code-splitting) - [Adding a Stylesheet](#adding-a-stylesheet) - [Post-Processing CSS](#post-processing-css) - [Adding a CSS Preprocessor (Sass, Less etc.)](#adding-a-css-preprocessor-sass-less-etc) - [Adding Images, Fonts, and Files](#adding-images-fonts-and-files) - [Using the `public` Folder](#using-the-public-folder) - [Changing the HTML](#changing-the-html) - [Adding Assets Outside of the Module System](#adding-assets-outside-of-the-module-system) - [When to Use the `public` Folder](#when-to-use-the-public-folder) - [Using Global Variables](#using-global-variables) - [Adding Bootstrap](#adding-bootstrap) - [Using a Custom Theme](#using-a-custom-theme) - [Adding Flow](#adding-flow) - [Adding Custom Environment Variables](#adding-custom-environment-variables) - [Referencing Environment Variables in the HTML](#referencing-environment-variables-in-the-html) - [Adding Temporary Environment Variables In Your Shell](#adding-temporary-environment-variables-in-your-shell) - [Adding Development Environment Variables In `.env`](#adding-development-environment-variables-in-env) - [Can I Use Decorators?](#can-i-use-decorators) - [Integrating with an API Backend](#integrating-with-an-api-backend) - [Node](#node) - [Ruby on Rails](#ruby-on-rails) - [Proxying API Requests in Development](#proxying-api-requests-in-development) - [\"Invalid Host Header\" Errors After Configuring Proxy](#invalid-host-header-errors-after-configuring-proxy) - [Configuring the Proxy Manually](#configuring-the-proxy-manually) - [Configuring a WebSocket Proxy](#configuring-a-websocket-proxy) - [Using HTTPS in Development](#using-https-in-development) - [Generating Dynamic `<meta>` Tags on the Server](#generating-dynamic-meta-tags-on-the-server) - [Pre-Rendering into Static HTML Files](#pre-rendering-into-static-html-files) - [Injecting Data from the Server into the Page](#injecting-data-from-the-server-into-the-page) - [Running Tests](#running-tests) - [Filename Conventions](#filename-conventions) - [Command Line Interface](#command-line-interface) - [Version Control Integration](#version-control-integration) - [Writing Tests](#writing-tests) - [Testing Components](#testing-components) - [Using Third Party Assertion Libraries](#using-third-party-assertion-libraries) - [Initializing Test Environment](#initializing-test-environment) - [Focusing and Excluding Tests](#focusing-and-excluding-tests) - [Coverage Reporting](#coverage-reporting) - [Continuous Integration](#continuous-integration) - [Disabling jsdom](#disabling-jsdom) - [Snapshot Testing](#snapshot-testing) - [Editor Integration](#editor-integration) - [Developing Components in Isolation](#developing-components-in-isolation) - [Getting Started with Storybook](#getting-started-with-storybook) - [Getting Started with Styleguidist](#getting-started-with-styleguidist) - [Making a Progressive Web App](#making-a-progressive-web-app) - [Opting Out of Caching](#opting-out-of-caching) - [Offline-First Considerations](#offline-first-considerations) - [Progressive Web App Metadata](#progressive-web-app-metadata) - [Analyzing the Bundle Size](#analyzing-the-bundle-size) - [Deployment](#deployment) - [Static Server](#static-server) - [Other Solutions](#other-solutions) - [Serving Apps with Client-Side Routing](#serving-apps-with-client-side-routing) - [Building for Relative Paths](#building-for-relative-paths) - [Azure](#azure) - [Firebase](#firebase) - [GitHub Pages](#github-pages) - [Heroku](#heroku) - [Netlify](#netlify) - [Now](#now) - [S3 and CloudFront](#s3-and-cloudfront) - [Surge](#surge) - [Advanced Configuration](#advanced-configuration) - [Troubleshooting](#troubleshooting) - [`npm start` doesn’t detect changes](#npm-start-doesnt-detect-changes) - [`npm test` hangs on macOS Sierra](#npm-test-hangs-on-macos-sierra) - [`npm run build` exits too early](#npm-run-build-exits-too-early) - [`npm run build` fails on Heroku](#npm-run-build-fails-on-heroku) - [`npm run build` fails to minify](#npm-run-build-fails-to-minify) - [Moment.js locales are missing](#momentjs-locales-are-missing) - [Something Missing?](#something-missing)",
+    "npm_package_devDependencies_babel_loader": "^8.0.6",
+    "npm_package_dependencies_react_scripts": "^1.1.4",
+    "npm_package_readmeFilename": "README.md",
+    "npm_package_homepage": "https://pulseitbr.github.io/lego-components",
+    "ARCHFLAGS": "-arch x86_64",
+    "MANDATORY_PATH": "/usr/share/gconf//usr/share/xsessions/plasma.mandatory.path",
+    "LOGNAME": "garcez",
+    "QT_AUTO_SCREEN_SCALE_FACTOR": "0",
+    "npm_package_private": "true",
+    "npm_config_prefix": "/home/garcez/.asdf/installs/nodejs/13.0.1/.npm",
+    "DEFAULTS_PATH": "/usr/share/gconf//usr/share/xsessions/plasma.default.path",
+    "XDG_SESSION_CLASS": "user",
+    "npm_config_registry": "https://registry.yarnpkg.com",
+    "XDG_SESSION_ID": "3",
+    "TERM": "xterm-color",
+    "npm_package_devDependencies__storybook_addon_actions": "^5.2.1",
+    "npm_package_devDependencies__babel_core": "^7.6.2",
+    "npm_package_scripts_start": "react-scripts start",
+    "npm_config_ignore_scripts": "",
+    "GTK2_RC_FILES": "/etc/gtk-2.0/gtkrc:/home/garcez/.gtkrc-2.0:/home/garcez/.config/gtkrc-2.0",
+    "PATH": "/tmp/yarn--1574883091764-0.4846976915206125:/home/garcez/Workspace/lego-components/example/node_modules/.bin:/home/garcez/.config/yarn/link/node_modules/.bin:/home/garcez/.asdf/installs/nodejs/13.0.1/libexec/lib/node_modules/npm/bin/node-gyp-bin:/home/garcez/.asdf/installs/nodejs/13.0.1/lib/node_modules/npm/bin/node-gyp-bin:/home/garcez/.asdf/installs/nodejs/13.0.1/bin/node_modules/npm/bin/node-gyp-bin:/home/garcez/.asdf/installs/nodejs/13.0.1/bin:/home/garcez/.asdf/installs/nodejs/13.0.1/.npm/bin:/home/garcez/.yarn/bin:/home/garcez/.config/yarn/global/node_modules/.bin:/home/garcez/.asdf/shims:/home/garcez/.asdf/bin:/home/garcez/.yarn/bin:/home/garcez/.config/yarn/global/node_modules/.bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/garcez/.local/bin:/home/garcez/dotfiles/bin:/home/garcez/.dotnet/tools:/home/garcez/.local/bin:/home/garcez/dotfiles/bin:/home/garcez/.dotnet/tools",
+    "NODE": "/home/garcez/.asdf/installs/nodejs/13.0.1/bin/node",
+    "SESSION_MANAGER": "local/haskell:@/tmp/.ICE-unix/1277,unix/haskell:/tmp/.ICE-unix/1277",
+    "npm_package_name": "lego-components-example",
+    "LC_ADDRESS": "pt_BR.UTF-8",
+    "XCURSOR_THEME": "El_Capitan_CursorsMODNew",
+    "XDG_RUNTIME_DIR": "/run/user/1000",
+    "XDG_SESSION_PATH": "/org/freedesktop/DisplayManager/Session1",
+    "DISPLAY": ":0",
+    "npm_package_scripts_eject": "react-scripts eject",
+    "LANG": "en_US.UTF-8",
+    "XDG_CURRENT_DESKTOP": "KDE",
+    "LC_TELEPHONE": "pt_BR.UTF-8",
+    "npm_package_dependencies_react_dom": "^16.10.1",
+    "LS_COLORS": "rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:",
+    "TERM_PROGRAM": "vscode",
+    "XDG_SESSION_DESKTOP": "KDE",
+    "SDKMAN_DIR": "/home/garcez/.sdkman",
+    "XAUTHORITY": "/tmp/xauth-1000-_0",
+    "npm_lifecycle_script": "react-scripts start",
+    "SSH_AUTH_SOCK": "/tmp/ssh-XGiMdypFx6zI/agent.1174",
+    "npm_package_devDependencies__storybook_addons": "^5.2.1",
+    "npm_package_scripts_test": "react-scripts test --env=jsdom",
+    "npm_config_version_git_message": "v%s",
+    "LC_NAME": "pt_BR.UTF-8",
+    "SHELL": "/bin/zsh",
+    "npm_lifecycle_event": "start",
+    "npm_package_version": "0.0.0",
+    "NO_AT_BRIDGE": "1",
+    "QT_ACCESSIBILITY": "1",
+    "npm_config_argv": "{\"remain\":[],\"cooked\":[\"run\",\"start\"],\"original\":[\"start\"]}",
+    "npm_package_scripts_build": "react-scripts build",
+    "LC_MEASUREMENT": "pt_BR.UTF-8",
+    "npm_config_version_git_tag": "true",
+    "npm_config_version_git_sign": "",
+    "GPG_AGENT_INFO": "/run/user/1000/gnupg/S.gpg-agent:0:1",
+    "LC_IDENTIFICATION": "pt_BR.UTF-8",
+    "npm_package_dependencies_lego_components": "link:..",
+    "npm_package_license": "MIT",
+    "npm_config_strict_ssl": "true",
+    "XDG_VTNR": "1",
+    "PWD": "/home/garcez/Workspace/lego-components/example",
+    "npm_execpath": "/home/garcez/.asdf/installs/nodejs/13.0.1/.npm/lib/node_modules/yarn/bin/yarn.js",
+    "XDG_DATA_DIRS": "/usr/share//usr/share/xsessions/plasma:/home/garcez/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share",
+    "XDG_CONFIG_DIRS": "/etc/xdg/xdg-/usr/share/xsessions/plasma:/etc/xdg",
+    "LC_NUMERIC": "pt_BR.UTF-8",
+    "npm_package_scripts_build_storybook": "build-storybook -s public",
+    "npm_package_dependencies_prop_types": "^15.6.2",
+    "npm_config_save_prefix": "^",
+    "npm_config_ignore_optional": "",
+    "LC_PAPER": "pt_BR.UTF-8",
+    "KDE_SESSION_UID": "1000",
+    "npm_package_scripts_storybook": "start-storybook -p 9009 -s public",
+    "MANPATH": "/usr/local/man:/usr/local/man:",
+    "npm_package_devDependencies__storybook_react": "^5.2.1",
+    "INIT_CWD": "/home/garcez/Workspace/lego-components/example",
+    "EDITOR": "nvim",
+    "NPM_CONFIG_PREFIX": "/home/garcez/.asdf/installs/nodejs/13.0.1/.npm",
+    "npm_package_dependencies_react": "^16.10.1",
+    "BABEL_ENV": "development",
+    "NODE_ENV": "development",
+    "NODE_PATH": ""
+  },
+  "userLimits": {
+    "core_file_size_blocks": {
+      "soft": 0,
+      "hard": "unlimited"
+    },
+    "data_seg_size_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "file_size_blocks": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "max_locked_memory_bytes": {
+      "soft": 16777216,
+      "hard": 16777216
+    },
+    "max_memory_size_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "open_files": {
+      "soft": 1048576,
+      "hard": 1048576
+    },
+    "stack_size_bytes": {
+      "soft": 8388608,
+      "hard": "unlimited"
+    },
+    "cpu_time_seconds": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "max_user_processes": {
+      "soft": 62729,
+      "hard": 62729
+    },
+    "virtual_memory_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    }
+  },
+  "sharedObjects": [
+    "linux-vdso.so.1",
+    "/lib/x86_64-linux-gnu/libdl.so.2",
+    "/usr/lib/x86_64-linux-gnu/libstdc++.so.6",
+    "/lib/x86_64-linux-gnu/libm.so.6",
+    "/lib/x86_64-linux-gnu/libgcc_s.so.1",
+    "/lib/x86_64-linux-gnu/libpthread.so.0",
+    "/lib/x86_64-linux-gnu/libc.so.6",
+    "/lib64/ld-linux-x86-64.so.2",
+    "/lib/x86_64-linux-gnu/libnss_files.so.2"
+  ]
+}
