@@ -113,7 +113,7 @@ export const TabPanel = React.forwardRef(({ children, onClose = voidFn, initialT
 						<header key={`header-key-tab-${name}`} role="button" onClick={setTab(i)} className={css} style={style}>
 							{title}{" "}
 							{closable && (
-								<Button transparent onPress={bindClick}>
+								<Button transparent onPress={bindClick(i)}>
 									{closeIcon}
 								</Button>
 							)}
