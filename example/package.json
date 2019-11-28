@@ -5,6 +5,7 @@
 	"license": "MIT",
 	"private": true,
 	"dependencies": {
+		"@transferwise/components": "^17.5.1",
 		"lego-components": "link:..",
 		"prop-types": "^15.6.2",
 		"rc-tabs": "^9.6.7",
