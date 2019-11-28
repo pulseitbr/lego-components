@@ -75,37 +75,34 @@ export const TabPanel = React.forwardRef(({ children, onClose = voidFn, initialT
 		const { props } = elements[i];
 		setTimeout(() => {
 			onClose(props.tabName);
-		}, 200);
+		}, 100);
 	};
 
-	const beforeChange = (_: number, nextSlide: number) => {''
+	const beforeChange = (_: number, nextSlide: number) => {
 		ref.current!.slickGoTo(nextSlide);
 		setCurrentIndex(nextSlide);
 	};
 
 	const setTab = (index: number) => () => ref.current.slickGoTo(index);
 
-	const execIf = (name: string, callback: (index: number) => void) => {
-		let index = null;
+	const execIf = (name: string, callback: (index: number | null) => void, timeout: number = 150) => {
+		let index: number | null = null;
 		elements.forEach((x: any, i: number) => {
-			console.log(x.props.name, name);
-			console.log(typeof x.props.name, typeof name);
 			if (x.props.name === name) {
 				index = i;
 			}
 		});
-		console.log("AEE", index, callback);
 		if (index !== null) {
-			callback(index);
+			setTimeout(() => callback(index), timeout);
 		}
 	};
 
 	useImperativeHandle(externalRef, () => ({
-		closeTab(name: string) {
-			execIf(name, _closeTab);
+		closeTab(name: string, timeout: number = 200) {
+			execIf(name, _closeTab, timeout);
 		},
-		goto(name: string) {
-			execIf(name, _goto);
+		goto(name: string, timeout: number = 200) {
+			execIf(name, _goto, timeout);
 		}
 	}));
 
@@ -141,7 +138,6 @@ export const TabPanel = React.forwardRef(({ children, onClose = voidFn, initialT
 					fade
 					infinite
 					initialSlide={initialTab}
-					// @ts-ignore
 					ref={ref}
 					rows={1}
 					slide={Container}
