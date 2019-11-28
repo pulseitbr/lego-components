@@ -47,6 +47,7 @@ export { default as Console } from "./utils/Console";
 export { default as Dimensions } from "./utils/Dimensions";
 export { default as Keyboard } from "./utils/Keyboard";
 export { default as Portal } from "./utils/Portal";
+export { default as Steps } from "./steps";
 export const GlobalStyle = createGlobalStyle`
   * {
     margin: 0;
