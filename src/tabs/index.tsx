@@ -5,8 +5,8 @@ import { MdClose } from "react-icons/md";
 import Slider from "react-slick";
 import styled from "styled-components";
 import { Container, View } from "../base";
-import Button from "../button/Button";
 import StyleSheet from "../styles/StyleSheet";
+import Button from '../button/Button';
 
 const styles = StyleSheet.create({
 	header: {
@@ -65,13 +65,13 @@ export const TabPanel = React.forwardRef(({ children, onClose = voidFn, initialT
 		setElements(React.Children.toArray(children));
 	}, [children, setElements]);
 
-	const _goto = (slide: number) => {
-		ref.current!.slickGoTo(slide);
+	const goto = (slide: number) => {
 		setCurrentIndex(slide);
+		ref.current!.slickGoTo(slide);
 	};
 
-	const _closeTab = (i: number) => {
-		_goto(i > 1 ? i - 1 : 0);
+	const closeTab = (i: number) => {
+		goto(i > 1 ? i - 1 : 0);
 		const { props } = elements[i];
 		setTimeout(() => {
 			onClose(props.tabName);
@@ -79,80 +79,86 @@ export const TabPanel = React.forwardRef(({ children, onClose = voidFn, initialT
 	};
 
 	const beforeChange = (_: number, nextSlide: number) => {
-		ref.current!.slickGoTo(nextSlide);
 		setCurrentIndex(nextSlide);
+		ref.current!.slickGoTo(nextSlide);
 	};
 
-	const setTab = (index: number) => () => beforeChange(0, index);
+	const setTab = (index: number) => () => setCurrentIndex(index);
 
-	const execIf = (name: string, callback: (index: number | null) => void, timeout: number = 150) => {
-		let index: number | null = null;
+	const execIf = (name: string, callback: (index: number) => void, timeout = 150) => {
+		let index: any = null;
 		elements.forEach((x: any, i: number) => {
 			if (x.props.name === name) {
 				index = i;
 			}
 		});
 		if (index !== null) {
-			setTimeout(() => callback(index), timeout);
+			setTimeout(() => callback(index!), timeout);
 		}
 	};
 
 	useImperativeHandle(externalRef, () => ({
-		closeTab(name: string, timeout: number = 200) {
-			execIf(name, _closeTab, timeout);
+		closeTab(name: string, timeout = 200) {
+			execIf(name, closeTab, timeout);
 		},
-		goto(name: string, timeout: number = 200) {
-			execIf(name, _goto, timeout);
+		goto(name: string, timeout = 200) {
+			execIf(name, goto, timeout);
 		}
 	}));
 
-	const bindClick = (index: number) => () => _closeTab(index);
+	const bindClick = (index: number) => () => closeTab(index);
 
 	return (
 		<Fragment>
-			<PanelHeaderScroll scrollColor={Colors.primaryLight} span="100%" style={styles.header}>
-				{elements.map((x: any, i: number) => {
-					const { closable, name, title, className, color = Colors.primary } = x.props as TabProps;
-					const closeIcon = typeof closable === "boolean" ? <MdClose /> : closable;
-					const css = classNames("tabs-header", className);
-					const style = currentIndex === i ? { color, borderBottom: `2px solid ${color}` } : {};
-					return (
-						<header key={`header-key-tab-${name}`} role="button" onClick={setTab(i)} className={css} style={style}>
-							{title}{" "}
-							{closable && (
-								<Button transparent onPress={bindClick(i)}>
-									{closeIcon}
-								</Button>
-							)}
-						</header>
-					);
-				})}
-			</PanelHeaderScroll>
-			<View span="100%" style={styles.view}>
-				<Slider
-					accessibility
-					arrows={false}
-					beforeChange={beforeChange}
-					dots={false}
-					draggable
-					fade
-					infinite
-					initialSlide={initialTab}
-					ref={ref}
-					rows={1}
-					slide={Container}
-					slidesToScroll={1}
-					slidesToShow={1}
-					speed={600}
-				>
-					{elements.map((x: any, i: number) => {
-						if (i === currentIndex) {
-							return x;
-						}
-						return <Fragment key={`miss-key-tab-${x.props.name}`}> </Fragment>;
-					})}
-				</Slider>
-			</View>
+			<Container>
+				<View span="100%">
+					<PanelHeaderScroll scrollColor={Colors.primaryLight} span="100%" style={styles.header}>
+						{elements.map((x: any, i: number) => {
+							const { closable, name, title, className, color = Colors.primary } = x.props as TabProps;
+							const closeIcon = typeof closable === "boolean" ? <MdClose /> : closable;
+							const css = classNames("tabs-header", className);
+							const style =
+								currentIndex === i ? { color, borderBottom: `2px solid ${color}`, cursor: "pointer" } : { cursor: "pointer" };
+							return (
+								<header key={`header-key-tab-${name}`} role="button" onClick={setTab(i)} className={css} style={style}>
+									{title}{" "}
+									{closable && (
+										<Button transparent onPress={bindClick(i)}>
+											{closeIcon}
+										</Button>
+									)}
+								</header>
+							);
+						})}
+					</PanelHeaderScroll>
+				</View>
+				<View span="100%" style={styles.view}>
+					<Slider
+						accessibility
+						arrows={false}
+						beforeChange={beforeChange}
+						dots={false}
+						fade
+						infinite
+						// initialSlide={initialTab}
+						ref={ref}
+						rows={1}
+						slide="div"
+						slidesToScroll={1}
+						slidesToShow={1}
+						speed={600}
+					>
+						<Container>
+							{elements.map((x: any, i: number) => {
+								if (i === currentIndex) {
+									return x;
+								}
+								return <Fragment key={`miss-key-tab-${x.props.name}`} />;
+							})}
+						</Container>
+					</Slider>
+				</View>
+			</Container>
 		</Fragment>
 	);
 });
