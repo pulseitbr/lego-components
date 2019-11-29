@@ -83,7 +83,7 @@ export const TabPanel = React.forwardRef(({ children, onClose = voidFn, initialT
 		setCurrentIndex(nextSlide);
 	};
 
-	const setTab = (index: number) => () => ref.current.slickGoTo(index);
+	const setTab = (index: number) => () => beforeChange(0, index);
 
 	const execIf = (name: string, callback: (index: number | null) => void, timeout: number = 150) => {
 		let index: number | null = null;
