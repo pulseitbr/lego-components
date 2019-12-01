@@ -1,11 +1,18 @@
-import { MaterialInput } from "lego-components";
+import { Body, Drawer, Page } from "lego-components";
 import React, { Fragment, useState } from "react";
 
 export default function App() {
-	const [state, setState] = useState("");
+	const [state, setState] = useState(false);
 	return (
-		<Fragment>
-			<MaterialInput name="test" mask="cellTelephone" value={state} onChange={(e) => setState(e.target.value)} />
-		</Fragment>
+		<Page>
+			<Body>
+				<Fragment>
+					<button onClick={() => setState(true)}>Click</button>
+				</Fragment>
+			</Body>
+			<Drawer title="Infos" visible={state} onClose={() => setState(false)}>
+				MUITAS INFOSSSSSSSSSSSSSSSS
+			</Drawer>
+		</Page>
 	);
 }
