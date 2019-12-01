@@ -122,7 +122,7 @@ const Drawer = ({
 						<View span="95%" xsmall="90%" small="90%">
 							{title}
 						</View>
-						<View style={styles.closeIcon} span="3%" xsmall="3%" small="3%">
+						<View role="button" onClick={onClose} style={styles.closeIcon} span="3%" xsmall="3%" small="3%">
 							{closeIcon}
 						</View>
 					</Container>

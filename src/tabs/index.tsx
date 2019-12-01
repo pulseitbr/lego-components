@@ -6,7 +6,7 @@ import Slider from "react-slick";
 import styled from "styled-components";
 import { Container, View } from "../base";
 import StyleSheet from "../styles/StyleSheet";
-import Button from '../button/Button';
+import Button from "../button/Button";
 
 const styles = StyleSheet.create({
 	header: {
@@ -117,8 +117,7 @@ export const TabPanel = React.forwardRef(({ children, onClose = voidFn, initialT
 							const { closable, name, title, className, color = Colors.primary } = x.props as TabProps;
 							const closeIcon = typeof closable === "boolean" ? <MdClose /> : closable;
 							const css = classNames("tabs-header", className);
-							const style =
-								currentIndex === i ? { color, borderBottom: `2px solid ${color}`, cursor: "pointer" } : { cursor: "pointer" };
+							const style = currentIndex === i ? { color, cursor: "pointer" } : { cursor: "pointer" };
 							return (
 								<header key={`header-key-tab-${name}`} role="button" onClick={setTab(i)} className={css} style={style}>
 									{title}{" "}
