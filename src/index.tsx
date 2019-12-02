@@ -26,6 +26,8 @@ export { default as useOnClickOutside } from "./hooks/useOnClickOutside";
 export { default as useReducer } from "./hooks/useReducer";
 export { default as useSetState } from "./hooks/useSetState";
 export { default as useWidth } from "./hooks/useWidth";
+export { default as usePagination } from "./hooks/usePagination";
+export { default as Pagination } from "./pagination";
 export { default as FlatList } from "./list/FlatList";
 export { default as Loader } from "./loader/Loader";
 export { default as Modal } from "./modal";
