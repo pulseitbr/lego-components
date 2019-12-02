@@ -117,7 +117,7 @@ export const TabPanel = React.forwardRef(({ children, onClose = voidFn, initialT
 							const { closable, name, title, className, color = Colors.primary } = x.props as TabProps;
 							const closeIcon = typeof closable === "boolean" ? <MdClose /> : closable;
 							const css = classNames("tabs-header", className);
-							const style = currentIndex === i ? { color, cursor: "pointer" } : { cursor: "pointer" };
+							const style = currentIndex === i ? { color, fontWeight: 900, cursor: "pointer" } : { cursor: "pointer" };
 							return (
 								<header key={`header-key-tab-${name}`} role="button" onClick={setTab(i)} className={css} style={style}>
 									{title}{" "}

@@ -985,11 +985,6 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@seznam/compose-react-refs@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@seznam/compose-react-refs/-/compose-react-refs-1.0.4.tgz#9dd29c8c503b85955b4478bf115caa608b4e87ab"
-  integrity sha512-TwrojUAFVSd+HPAdnul0o65X8mIam+dJOxcWI6LhHAUIpVRk2cJp2dyWXWl6sJvZTY9ODSJpOibt7JKSNUjVfQ==
-
 "@svgr/babel-plugin-add-jsx-attribute@^4.2.0":
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/@svgr/babel-plugin-add-jsx-attribute/-/babel-plugin-add-jsx-attribute-4.2.0.tgz#dadcb6218503532d6884b210e7f3c502caaa44b1"
@@ -1717,11 +1712,6 @@ atob@^2.1.1:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
-
-attr-accept@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/attr-accept/-/attr-accept-2.0.0.tgz#8422fef5ee4a511c207796c888227ab5de03306f"
-  integrity sha512-I9SDP4Wvh2ItYYoafEg8hFpsBe96pfQ+eabceShXt3sw2fbIP96+Aoj9zZE0vkZNAkXXzHJATVRuWz+h9FxJxQ==
 
 autoprefixer@7.1.6:
   version "7.1.6"
@@ -5153,13 +5143,6 @@ file-loader@1.1.5:
   dependencies:
     loader-utils "^1.0.2"
     schema-utils "^0.3.0"
-
-file-selector@^0.1.12:
-  version "0.1.12"
-  resolved "https://registry.yarnpkg.com/file-selector/-/file-selector-0.1.12.tgz#fe726547be219a787a9dcc640575a04a032b1fd0"
-  integrity sha512-Kx7RTzxyQipHuiqyZGf+Nz4vY9R1XGxuQl/hLoJwq+J4avk/9wxxgZyHKtbyIPJmbD4A66DWGYfyykWNpcYutQ==
-  dependencies:
-    tslib "^1.9.0"
 
 filename-regex@^2.0.0:
   version "2.0.1"
@@ -9835,11 +9818,6 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-circular-progressbar@^2.0.2:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/react-circular-progressbar/-/react-circular-progressbar-2.0.3.tgz#fa8eb59f8db168d2904bae4590641792c80f5991"
-  integrity sha512-YKN+xAShXA3gYihevbQZbavfiJxo83Dt1cUxqg/cltj4VVsRQpDr7Fg1mvjDG3x1KHGtd9NmYKvJ2mMrPwbKyw==
-
 react-content-loader@^4.3.2:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/react-content-loader/-/react-content-loader-4.3.2.tgz#2f6546c883707d399a2abc2efd00edcb8f584618"
@@ -9869,15 +9847,6 @@ react-dev-utils@^5.0.2:
     strip-ansi "3.0.1"
     text-table "0.2.0"
 
-react-dropzone@^10.1.10:
-  version "10.2.0"
-  resolved "https://registry.yarnpkg.com/react-dropzone/-/react-dropzone-10.2.0.tgz#6b3df4866045e7c078ddabe795fb8789dbbc4598"
-  integrity sha512-VvJtg6GKtM1Xu+SsMcBNBcB2XcOi27xbNLBMDkrpqsk3cSILFiBVoCuW96FSOWkCK1IFeNg67FjKu/c/KuUhkg==
-  dependencies:
-    attr-accept "^2.0.0"
-    file-selector "^0.1.12"
-    prop-types "^15.7.2"
-
 react-error-overlay@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-4.0.1.tgz#417addb0814a90f3a7082eacba7cee588d00da89"
@@ -9894,13 +9863,6 @@ react-is@^16.10.2, react-is@^16.8.1, react-is@^16.8.4:
   version "16.12.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
   integrity sha512-rPCkf/mWBtKc97aLL9/txD8DZdemK0vkA3JMLShjlJB3Pj3s+lpf1KaBzMfQrAmhMQB0n1cU/SUGgKKBCe837Q==
-
-react-notifications-component@^2.2.3:
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/react-notifications-component/-/react-notifications-component-2.2.3.tgz#38045b34dfe8c9eb851e9f266341c4f82867595b"
-  integrity sha512-EVRAfxbRSL46PnvIz4pwtFiUUWZLj7s0g6X9yE2ZK2W4epL2fGiuWdlldDITMbSYdmy7O3cuIZa2S33becu0Tg==
-  dependencies:
-    prop-types "^15.6.2"
 
 react-scripts-ts@^3.1.0:
   version "3.1.0"
