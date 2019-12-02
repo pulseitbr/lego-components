@@ -50,6 +50,7 @@ export { default as Steps } from "./steps";
 export { default as Portal } from "./utils/Portal";
 export const GlobalStyle = createGlobalStyle`
   * {
+	scroll-behavior: smooth;
     margin: 0;
     padding: 0;
     outline: 0;

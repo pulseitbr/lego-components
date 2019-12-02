@@ -128,7 +128,7 @@ const pending = "step-item step-item-pending";
 
 export default function TestApp() {
 	const steps = ["Aguardando pagamento", "Recebemos seu pagamento", "Produzindo seu cartão", "Cartão a caminho", "Você recebeu seu cartão"];
-	const index = 0;
+	const index = 3;
 	const currentIcon = <MdInfo />;
 	const doneIcon = <MdDone />;
 	const pendingIcon = <MdClose />;
