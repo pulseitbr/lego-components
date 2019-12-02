@@ -8,15 +8,12 @@ import StyleSheet from "../styles/StyleSheet";
 import Portal from "../utils/Portal";
 
 type ModalPortal = {
-	speed?: number;
 	visible: boolean;
 } & ThemedStyledFunction<"div", any, {}, never>;
 
-const ModalPortal: any = styled.div.attrs((props: ModalPortal) => ({
-	...props,
-	speed: props.speed || 500,
-	visible: !!props.visible ? "block" : "none"
-}))`
+const speed = 350;
+
+const ModalPortal: any = styled.div.attrs((props: ModalPortal) => props)`
 	top: 0;
 	left: 0;
 	z-index: 1;
@@ -24,10 +21,10 @@ const ModalPortal: any = styled.div.attrs((props: ModalPortal) => ({
 	height: 100%;
 	overflow: auto;
 	position: fixed;
-	transition: 550ms;
-	display: ${(props: any) => props.visible};
+	transition: ${speed};
+	display: block;
 	background-color: rgba(0, 0, 0, 0.65);
-	animation: fading ${(props: any) => props.speed}ms forwards ease-out;
+	animation: fading ${speed}ms forwards ease-out;
 
 	@keyframes fading {
 		0% {
@@ -48,7 +45,7 @@ const DrawerContainer = styled.div`
 	position: fixed;
 	right: 0;
 	top: 0;
-	transition: 550ms ease-out;
+	transition: ${speed}ms ease-out;
 	width: 0;
 `;
 
@@ -83,20 +80,36 @@ const Drawer = ({
 	width = "60%",
 	children
 }: Props) => {
-	const ref = useRef(null);
+	const ref = useRef(null) as React.RefObject<HTMLDivElement>;
+
+	const show = () => {
+		ref.current!.style.width = width;
+		ref.current!.style.minWidth = StyleSheet.minWidthMobile;
+	};
+
+	const hide = () => {
+		ref.current!.style.width = "0";
+		ref.current!.style.minWidth = "0";
+	};
+
+	const close = () => {
+		hide();
+		setTimeout(() => onClose(), speed);
+	};
+
 	const toggleView = () => {
 		if (ref.current !== null) {
 			if (visible) {
-				(ref.current! as any).style.width = width;
+				show();
 			} else {
-				(ref.current! as any).style.width = 0;
+				hide();
 			}
 		}
 	};
 
 	useKeyDown((event: any) => {
 		if (event.keyCode === Keyboard.esc && closeOnEsc) {
-			onClose();
+			close();
 		}
 	}, []);
 
@@ -106,7 +119,7 @@ const Drawer = ({
 
 	const onMaskClick = () => {
 		if (maskClickClose) {
-			onClose();
+			close();
 		}
 	};
 
@@ -122,7 +135,7 @@ const Drawer = ({
 						<View span="95%" xsmall="90%" small="90%">
 							{title}
 						</View>
-						<View style={styles.closeIcon} span="3%" xsmall="3%" small="3%">
+						<View role="button" onClick={close} style={styles.closeIcon} span="3%" xsmall="3%" small="3%">
 							{closeIcon}
 						</View>
 					</Container>

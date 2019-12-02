@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Colors, Container, View } from "lego-components";
 import React from "react";
 import { MdClose, MdDone, MdInfo } from "react-icons/md";
@@ -132,38 +133,43 @@ export default function TestApp() {
 	const currentIcon = <MdInfo />;
 	const doneIcon = <MdDone />;
 	const pendingIcon = <MdClose />;
+=======
+import { Body, Drawer, Page } from "lego-components";
+import React, { Fragment, useState } from "react";
+import Table from "./table";
+import { Uuid } from "lego";
+
+const cols = [
+	{ title: "Chave", key: "id" },
+	{ title: "Nome", key: "name" },
+	{ title: "Sobrenome", key: "surname" },
+	{ title: "Sobrenome", key: "surname" },
+	{ title: "Sobrenome", key: "surname" },
+	{ title: "Sobrenome", key: "surname" },
+	{ title: "Chave", key: "id" },
+];
+
+const data = [
+	{ id: Uuid(), name: "Fu", surname: "Ba" },
+	{ id: Uuid(), name: "Fu", surname: "Ba" },
+	{ id: Uuid(), name: "Fu", surname: "Ba" },
+	{ id: Uuid(), name: "Fu", surname: "Ba" },
+	{ id: Uuid(), name: "Fu", surname: "Ba" },
+	{ id: Uuid(), name: "Fu", surname: "Ba" },
+	{ id: Uuid(), name: "Fu", surname: "Ba" }
+];
+
+export default function App() {
+	const [state, setState] = useState(false);
+>>>>>>> b12b736e5f35e2e004677974b29c3f872e627132
 	return (
-		<Container>
-			<View span="100%">
-				<Wrap>
-					<ul className="step-list">
-						{steps.map((title, i) => {
-							if (index === i) {
-								return (
-									<li key={title} className={current}>
-										<span className="step-list-icon">{currentIcon}</span>
-										<span className="step-list-title">{title}</span>
-									</li>
-								);
-							}
-							if (i < index) {
-								return (
-									<li key={title} className={done}>
-										<span className="step-list-icon">{doneIcon}</span>
-										<span className="step-list-title">{title}</span>
-									</li>
-								);
-							}
-							return (
-								<li key={title} className={pending}>
-									<span className="step-list-icon">{pendingIcon}</span>
-									<span className="step-list-title">{title}</span>
-								</li>
-							);
-						})}
-					</ul>
-				</Wrap>
-			</View>
-		</Container>
+		<Page>
+			<Body>
+				<Table dataSource={data} columns={cols} />
+			</Body>
+			<Drawer title="Infos" visible={state} onClose={() => setState(false)}>
+				MUITAS INFOSSSSSSSSSSSSSSSS
+			</Drawer>
+		</Page>
 	);
 }

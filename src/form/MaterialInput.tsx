@@ -48,7 +48,7 @@ const EyePassword = styled.button`
 	cursor: pointer;
 `;
 
-const Wrapper = styled.div.attrs(
+const MaterialContainer = styled.div.attrs(
 	({
 		borderBottomActiveColor = Colors.primaryLight,
 		labelColor = Colors.darkAlpha,
@@ -74,6 +74,16 @@ const Wrapper = styled.div.attrs(
 		width: 100%;
 		border: none;
 		border-bottom: 1px solid ${(props) => props.borderBottomColor};
+	}
+
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+
+	input[type="number"] {
+		-moz-appearance: textfield;
 	}
 
 	input:focus {
@@ -106,9 +116,9 @@ const Wrapper = styled.div.attrs(
 	.bar:before,
 	.bar:after {
 		content: "";
-		height: 1.5px;
+		height: 1px;
 		width: 0;
-		bottom: 1.5px;
+		bottom: 1px;
 		position: absolute;
 		background: ${(props) => props.borderBottomActiveColor};
 		transition: 400ms ease all;
@@ -213,7 +223,7 @@ const MaterialInput = ({
 
 	if (type === "password") {
 		return (
-			<Wrapper className={divClassName}>
+			<MaterialContainer className={divClassName}>
 				<Input
 					{...inputHtml}
 					className={`${className}${disabled ? " not-allowed" : ""}`}
@@ -247,12 +257,12 @@ const MaterialInput = ({
 					</EyePassword>
 				</RightIcons>
 				{!!message && <small>{message}</small>}
-			</Wrapper>
+			</MaterialContainer>
 		);
 	}
 
 	return (
-		<Wrapper style={divStyle} className={divClassName}>
+		<MaterialContainer style={divStyle} className={divClassName}>
 			<Input
 				{...inputHtml}
 				className={`${className}${disabled ? " not-allowed" : ""}`}
@@ -266,17 +276,12 @@ const MaterialInput = ({
 				value={value}
 			/>
 			<span className="bar" />
-			<label
-				className={labelClassName}
-				htmlFor={name}
-				style={{ color: labelColor, width: "100%", ...labelStyle }}
-				title={placeholder}
-			>
+			<label className={labelClassName} htmlFor={name} style={{ color: labelColor, width: "100%", ...labelStyle }} title={placeholder}>
 				{placeholder}
 			</label>
-			{loading && <Loader className="toggle-password" size={1.2} border={0.1} color={loaderColor} />}
+			<RightIcons>{loading && <Loader size={0.9} border={0.075} color={loaderColor} />}</RightIcons>
 			{!!message && <small>{message}</small>}
-		</Wrapper>
+		</MaterialContainer>
 	);
 };
 

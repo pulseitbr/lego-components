@@ -49,6 +49,8 @@ type Props = MaskInputProps & CurrencyInputType & InputHTMLAttributes<any>;
 
 type ValueType = string | number | string[] | undefined;
 
+type MaskType = (string | RegExp)[] | ((value: string) => (string | RegExp)[]);
+
 const createPlaceholder = (maskRegex: string) => convertMaskToString(maskRegex);
 
 const instanceMaskValues = (mask: MasksTypes, usePl: boolean, html: any, value: ValueType, props: Props) => {
@@ -76,13 +78,7 @@ const Input = ({ title = "", type = "text", mask, usePlaceholder = true, ...html
 	}
 	const options = { mask, name: html.name, value, type };
 	if (typeof mask === "string" && masks.hasOwnProperty(mask)) {
-		const { extraProps, maskRegex, maskedValue, placeholder } = instanceMaskValues(
-			mask,
-			usePlaceholder,
-			html,
-			value,
-			html
-		);
+		const { extraProps, maskRegex, maskedValue, placeholder } = instanceMaskValues(mask, usePlaceholder, html, value, html);
 		return (
 			<MaskedInput
 				{...html}
@@ -96,8 +92,7 @@ const Input = ({ title = "", type = "text", mask, usePlaceholder = true, ...html
 		);
 	}
 	if (Array.isArray(mask)) {
-		//@ts-ignore
-		return <MaskedInput {...html} guide {...options} />;
+		return <MaskedInput guide {...html} {...options} mask={mask as MaskType} />;
 	}
 	return <input {...html} {...options} />;
 };
