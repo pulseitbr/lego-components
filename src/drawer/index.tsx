@@ -1,5 +1,5 @@
 import { Keyboard } from "lego";
-import React, { useEffect, useRef, useCallback } from "react";
+import React, { useEffect, useRef } from "react";
 import { MdClose } from "react-icons/md";
 import styled, { ThemedStyledFunction } from "styled-components";
 import { Container, View } from "../base";
@@ -98,7 +98,7 @@ const Drawer = ({
 		setTimeout(() => onClose(), speed);
 	};
 
-	const toggleView = useCallback(() => {
+	const toggleView = () => {
 		if (ref.current !== null) {
 			if (visible) {
 				show();
@@ -106,7 +106,7 @@ const Drawer = ({
 				hide();
 			}
 		}
-	}, []);
+	};
 
 	useKeyDown((event: any) => {
 		if (event.keyCode === Keyboard.esc && closeOnEsc) {
@@ -116,7 +116,7 @@ const Drawer = ({
 
 	useEffect(() => {
 		toggleView();
-	}, [ref, width, visible, toggleView]);
+	}, [ref, width, visible]);
 
 	const onMaskClick = () => {
 		if (maskClickClose) {
