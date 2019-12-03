@@ -1,5 +1,5 @@
 import { Keyboard } from "lego";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useCallback } from "react";
 import { MdClose } from "react-icons/md";
 import styled, { ThemedStyledFunction } from "styled-components";
 import { Container, View } from "../base";
@@ -40,7 +40,8 @@ const DrawerContainer = styled.div`
 	background-color: #fff;
 	display: block;
 	height: 100%;
-	max-height: 100%;
+	overflow-y: auto;
+	min-height: 100%;
 	min-width: ${StyleSheet.minWidthMobile};
 	position: fixed;
 	right: 0;
@@ -97,7 +98,7 @@ const Drawer = ({
 		setTimeout(() => onClose(), speed);
 	};
 
-	const toggleView = () => {
+	const toggleView = useCallback(() => {
 		if (ref.current !== null) {
 			if (visible) {
 				show();
@@ -105,7 +106,7 @@ const Drawer = ({
 				hide();
 			}
 		}
-	};
+	}, []);
 
 	useKeyDown((event: any) => {
 		if (event.keyCode === Keyboard.esc && closeOnEsc) {
@@ -115,7 +116,7 @@ const Drawer = ({
 
 	useEffect(() => {
 		toggleView();
-	}, [ref, width, visible]);
+	}, [ref, width, visible, toggleView]);
 
 	const onMaskClick = () => {
 		if (maskClickClose) {
@@ -139,7 +140,7 @@ const Drawer = ({
 							{closeIcon}
 						</View>
 					</Container>
-					<Container style={styles.modalMargin}>{children}</Container>
+					<Container style={{ ...styles.modalMargin, overflowY: "auto" }}>{children}</Container>
 				</DrawerContainer>
 			</ModalPortal>
 		</Portal>
