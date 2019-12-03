@@ -63,7 +63,7 @@ const BindCard = (props: BindProps) => (addr: AddressBoxItem) => {
 			>
 				<Container
 					style={{
-						padding: "0.1rem",
+						padding: "0.625rem",
 						borderRadius: SOFT_RADIUS,
 						border: `1px solid ${Colors.darkAlpha}`,
 						backgroundColor: isSelected ? transparentBackground : "transparent"
