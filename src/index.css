@@ -981,6 +981,7 @@ label {
 */
 
 .--collapse {
+    width: 100%;
     max-width: 100%;
     transition: height 500ms;
 }
