@@ -2,6 +2,7 @@
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
 		"importHelpers": true,
+		
 		"alwaysStrict": true,
 		"downlevelIteration": true,
 		"skipDefaultLibCheck": true,

@@ -2,6 +2,7 @@ import { Body, Container, Drawer, Page, Skeleton } from "lego-components";
 import React, { Fragment, useState } from "react";
 import Table from "./table";
 import { Uuid, Colors } from "lego";
+import RadioBox from "./radio";
 
 const cols = [
 	{ title: "Chave", key: "id" },
@@ -28,6 +29,11 @@ export default function App() {
 	return (
 		<Page>
 			<Body style={{ backgroundColor: Colors.light }}>
+				<Container className="pa4">
+					<RadioBox name="numeroDocumento" checked>
+						<span className="ml1">CPF</span>
+					</RadioBox>
+				</Container>
 				<Table dataSource={data} columns={cols} />
 				<Container className="pa3">
 					{Array(5)

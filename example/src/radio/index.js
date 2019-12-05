@@ -55,7 +55,7 @@ const Label = styled.label`
 		border-radius: 50%;
 		animation: fade 500ms ease-out;
 		text-rendering: geometricPrecision;
-		background: ${(props: any) => props.color};
+		background: ${(props) => props.color};
 	}
 
 	@keyframes fade {
@@ -67,25 +67,6 @@ const Label = styled.label`
 		}
 	}
 `;
-
-type OmitValue = Omit<React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "value">;
-type OmitOnChange = Omit<OmitValue, "onChange">;
-type OmitOnClick = Omit<OmitOnChange, "onClick">;
-
-type EventCustom = EventTarget & {
-	target: { name: string; value: boolean; checked: boolean; stopPropagation(): void; persist(): void };
-};
-export type RadioboxTrigger = React.MouseEvent<HTMLInputElement, MouseEvent> & EventCustom & React.InputHTMLAttributes<any>;
-type Props = OmitOnClick & {
-	round?: boolean;
-	checkColor?: string;
-	value?: boolean;
-	labelClassName?: string;
-	name: string;
-	onChange?(event: RadioboxTrigger): any;
-	onClick?(event: RadioboxTrigger): any;
-};
-
 const nullFn = () => {};
 
 const Radiobox = ({
@@ -100,11 +81,11 @@ const Radiobox = ({
 	labelClassName = "",
 	name,
 	...html
-}: Props) => {
+}) => {
 	const triggerEvent = onClick || onChange || nullFn;
 	const checkedValue = !!(value || checked);
-	const valString = `${checkedValue}` as "false" | "true";
-	const change = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const valString = `${checkedValue}`;
+	const change = (event) => {
 		event.persist();
 		const isChecked = !checkedValue;
 		return triggerEvent({
