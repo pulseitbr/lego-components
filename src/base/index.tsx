@@ -60,15 +60,7 @@ type ResponsiveProps = {
 	Component?: StyledComponent<"div", any, any>;
 } & TypeContainer;
 
-const Responsive = ({
-	children,
-	Component = Flex,
-	htmlTag = "div",
-	isCollapse = false,
-	show = true,
-	time = 500,
-	...props
-}: ResponsiveProps) => {
+const Responsive = ({ children, Component = Flex, htmlTag = "div", isCollapse = false, show = true, time = 500, ...props }: ResponsiveProps) => {
 	if (!isCollapse) {
 		return (
 			<Component as={htmlTag} {...props}>
@@ -156,7 +148,7 @@ export const Row = styled(GridComponent).attrs((props: RowProps) => ({
 	spacing: props.spacing
 }))`
 	width: 100%;
-	column-gap: ${(props) => props.spacing};
+	column-gap: ${(props: RowProps) => props.spacing};
 `;
 
 export const Col = styled(GridComponent).attrs((props: LegoMediaQuery) => {
