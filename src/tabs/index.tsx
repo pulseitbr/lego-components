@@ -61,7 +61,10 @@ export const TabPanel = React.forwardRef(({ children, onChange = voidFn, onClose
 	const [elements, setElements] = useState(React.Children.toArray(children)) as any;
 
 	const [currentIndex, setCurrentIndex] = useState(0);
+
 	const isMobile = useMobile();
+
+	const onChangeIndex = (index: number) => onChange(elements[index].props.name as string);
 
 	const execIf = (name: string, callback: (index: number) => void, timeout = 150) => {
 		let index: any = null;
@@ -81,7 +84,7 @@ export const TabPanel = React.forwardRef(({ children, onChange = voidFn, onClose
 
 	const goto = (slide: number) => {
 		setCurrentIndex(slide);
-		onChange(elements[slide].props.name as string);
+		onChangeIndex(slide);
 	};
 
 	const closeTab = (i: number) => {
@@ -95,10 +98,13 @@ export const TabPanel = React.forwardRef(({ children, onChange = voidFn, onClose
 	const beforeChange = (_: number, nextSlide: number) => {
 		setCurrentIndex(nextSlide);
 		ref.current!.slickGoTo(nextSlide);
-		onChange(elements[nextSlide].props.name as string);
+		onChangeIndex(nextSlide);
 	};
 
-	const setTab = (index: number) => () => setCurrentIndex(index);
+	const setTab = (index: number) => () => {
+		setCurrentIndex(index);
+		onChangeIndex(index);
+	};
 
 	useImperativeHandle(externalRef, () => ({
 		closeTab(name: string, timeout = 100) {
