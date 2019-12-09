@@ -53,9 +53,10 @@ const voidFn = () => {};
 type TabPanelProps = {
 	children: React.ReactNode;
 	onClose?(tabName: string): void;
+	onChange?(tab: string): void;
 };
 
-export const TabPanel = React.forwardRef(({ children, onClose = voidFn }: TabPanelProps, externalRef) => {
+export const TabPanel = React.forwardRef(({ children, onChange = voidFn, onClose = voidFn }: TabPanelProps, externalRef) => {
 	const ref = useRef(null) as any;
 	const [elements, setElements] = useState(React.Children.toArray(children)) as any;
 
@@ -78,7 +79,10 @@ export const TabPanel = React.forwardRef(({ children, onClose = voidFn }: TabPan
 		setElements(React.Children.toArray(children));
 	}, [children, setElements]);
 
-	const goto = (slide: number) => setCurrentIndex(slide);
+	const goto = (slide: number) => {
+		setCurrentIndex(slide);
+		onChange(elements[slide].props.name as string);
+	};
 
 	const closeTab = (i: number) => {
 		goto(i > 1 ? i - 1 : 0);
@@ -91,6 +95,7 @@ export const TabPanel = React.forwardRef(({ children, onClose = voidFn }: TabPan
 	const beforeChange = (_: number, nextSlide: number) => {
 		setCurrentIndex(nextSlide);
 		ref.current!.slickGoTo(nextSlide);
+		onChange(elements[nextSlide].props.name as string);
 	};
 
 	const setTab = (index: number) => () => setCurrentIndex(index);
