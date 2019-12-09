@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import React from "react";
 import { MdSync } from "react-icons/md";
 import TimelineItem from "./TimelineItem";
@@ -18,26 +17,24 @@ const rightItem = "timeline-item-right";
 const leftItem = "timeline-item-left";
 const isLast = (items: number, index: number) => (items - 1 === index ? "timeline-item-last" : "");
 
-const Timeline = ({
-	reverse = false,
-	mode = "left",
-	pending = null,
-	pendingDot,
-	children,
-	className,
-	...props
-}: TimelineProps) => {
+const setClassName = (mode: string, pending: boolean, reverse: boolean) => {
+	if (pending) {
+		return "timeline-pending";
+	}
+	if (reverse) {
+		return "timeline-reverse";
+	}
+	if (!!mode) {
+		return `timeline-${mode}`;
+	}
+	return "";
+};
+
+const Timeline = ({ reverse = false, mode = "left", pending = null, pendingDot, children, className = "", ...props }: TimelineProps) => {
 	const prefixCls = customizePrefixCls;
 	const pendingNode = typeof pending === "boolean" ? null : pending;
-	const classString = classNames(
-		prefixCls,
-		{
-			"timeline-pending": !!pending,
-			"timeline-reverse": !!reverse,
-			[`timeline-${mode}`]: !!mode
-		},
-		className
-	);
+	const clsCompose = setClassName(mode, !!pending, !!reverse);
+	const classString = `${prefixCls} ${clsCompose} ${className}}`;
 	const pendingItem = !!pending ? (
 		<TimelineItem pending={!!pending} dot={pendingDot || <MdSync />}>
 			{pendingNode}
@@ -72,7 +69,7 @@ const Timeline = ({
 
 	const items = React.Children.map(truthyItems, (el: React.ReactElement<any>, index) =>
 		React.cloneElement(el, {
-			className: classNames([el.props.className, isLast(listSize, index), getPositionCls(el, index)])
+			className: `${el.props.className || ""} ${isLast(listSize, index)} ${getPositionCls(el, index)}`
 		})
 	);
 

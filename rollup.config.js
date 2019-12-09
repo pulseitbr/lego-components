@@ -22,6 +22,12 @@ export default {
 			format: "es",
 			exports: "named",
 			sourcemap: false
+		},
+		{
+			file: pkg.module,
+			format: "esm",
+			exports: "named",
+			sourcemap: false
 		}
 	],
 	external: ["react", "sidekicker", "styled-components"],

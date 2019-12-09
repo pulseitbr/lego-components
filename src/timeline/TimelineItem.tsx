@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import React, { FunctionComponent } from "react";
 import { timelineTestBorder } from "./";
 
@@ -13,7 +12,7 @@ export type TimeLineItemProps = {
 };
 
 const TimelineItem: FunctionComponent<TimeLineItemProps> = ({
-	className,
+	className = "",
 	color = "primary",
 	children,
 	pending = false,
@@ -23,19 +22,9 @@ const TimelineItem: FunctionComponent<TimeLineItemProps> = ({
 	...restProps
 }) => {
 	const prefixCls = "timeline";
-	const itemClassName = classNames(
-		{
-			[`${prefixCls}-item`]: true,
-			[`${prefixCls}-item-pending`]: pending
-		},
-		className
-	);
+	const itemClassName = `${prefixCls}-item ${pending ? `${prefixCls}-item-pending` : ""}`;
 
-	const dotClassName = classNames({
-		[`${prefixCls}-item-head`]: true,
-		[`${prefixCls}-item-head-custom`]: dot,
-		[`${prefixCls}-item-head-${color}`]: true
-	});
+	const dotClassName = `${`${prefixCls}-item-head`} ${dot ? `${prefixCls}-item-head-custom` : ""} ${prefixCls}-item-head-${color}`;
 
 	return (
 		<li {...restProps} className={itemClassName}>

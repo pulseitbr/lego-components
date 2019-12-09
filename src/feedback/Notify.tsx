@@ -1,4 +1,3 @@
-import classnames from "classnames";
 import { Uuid } from "lego";
 import React from "react";
 import { MdClose, MdDone, MdError, MdInfoOutline, MdWarning } from "react-icons/md";
@@ -77,7 +76,7 @@ const Notify = ({
 			)}
 			<View span="100%">{message}</View>
 		</Container>,
-		{ ...props, className: classnames({ "Toastify__toast--dark": theme === "dark" }, props.className) }
+		{ ...props, className: `${theme === "dark" ? "Toastify__toast--dark" : ""} ${props.className}` }
 	);
 	return { id: toastId, toast };
 };

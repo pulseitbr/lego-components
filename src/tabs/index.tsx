@@ -1,12 +1,12 @@
-import classNames from "classnames";
 import { Colors } from "lego";
 import React, { Fragment, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { MdClose } from "react-icons/md";
 import Slider from "react-slick";
 import styled from "styled-components";
 import { Container, View } from "../base";
-import StyleSheet from "../styles/StyleSheet";
 import Button from "../button/Button";
+import useMobile from "../hooks/useMobile";
+import StyleSheet from "../styles/StyleSheet";
 
 const styles = StyleSheet.create({
 	header: {
@@ -53,22 +53,32 @@ const voidFn = () => {};
 type TabPanelProps = {
 	children: React.ReactNode;
 	onClose?(tabName: string): void;
-	initialTab?: number;
 };
 
-export const TabPanel = React.forwardRef(({ children, onClose = voidFn, initialTab = 0 }: TabPanelProps, externalRef) => {
+export const TabPanel = React.forwardRef(({ children, onClose = voidFn }: TabPanelProps, externalRef) => {
 	const ref = useRef(null) as any;
 	const [elements, setElements] = useState(React.Children.toArray(children)) as any;
-	const [currentIndex, setCurrentIndex] = useState(initialTab);
+
+	const [currentIndex, setCurrentIndex] = useState(0);
+	const isMobile = useMobile();
+
+	const execIf = (name: string, callback: (index: number) => void, timeout = 150) => {
+		let index: any = null;
+		elements.forEach((x: any, i: number) => {
+			if (x.props.name === name) {
+				index = i;
+			}
+		});
+		if (index !== null) {
+			setTimeout(() => callback(index!), timeout);
+		}
+	};
 
 	useEffect(() => {
 		setElements(React.Children.toArray(children));
 	}, [children, setElements]);
 
-	const goto = (slide: number) => {
-		setCurrentIndex(slide);
-		ref.current!.slickGoTo(slide);
-	};
+	const goto = (slide: number) => setCurrentIndex(slide);
 
 	const closeTab = (i: number) => {
 		goto(i > 1 ? i - 1 : 0);
@@ -85,23 +95,11 @@ export const TabPanel = React.forwardRef(({ children, onClose = voidFn, initialT
 
 	const setTab = (index: number) => () => setCurrentIndex(index);
 
-	const execIf = (name: string, callback: (index: number) => void, timeout = 150) => {
-		let index: any = null;
-		elements.forEach((x: any, i: number) => {
-			if (x.props.name === name) {
-				index = i;
-			}
-		});
-		if (index !== null) {
-			setTimeout(() => callback(index!), timeout);
-		}
-	};
-
 	useImperativeHandle(externalRef, () => ({
-		closeTab(name: string, timeout = 200) {
+		closeTab(name: string, timeout = 100) {
 			execIf(name, closeTab, timeout);
 		},
-		goto(name: string, timeout = 200) {
+		goto(name: string, timeout = 100) {
 			execIf(name, goto, timeout);
 		}
 	}));
@@ -116,7 +114,7 @@ export const TabPanel = React.forwardRef(({ children, onClose = voidFn, initialT
 						{elements.map((x: any, i: number) => {
 							const { closable, name, title, className, color = Colors.primary } = x.props as TabProps;
 							const closeIcon = typeof closable === "boolean" ? <MdClose /> : closable;
-							const css = classNames("tabs-header", className);
+							const css = `tabs-header ${className}`;
 							const style = currentIndex === i ? { color, fontWeight: 900, cursor: "pointer" } : { cursor: "pointer" };
 							return (
 								<header key={`header-key-tab-${name}`} role="button" onClick={setTab(i)} className={css} style={style}>
@@ -134,18 +132,20 @@ export const TabPanel = React.forwardRef(({ children, onClose = voidFn, initialT
 				<View span="100%" style={styles.view}>
 					<Slider
 						accessibility
-						arrows={false}
+						swipe={isMobile}
+						swipeToSlide={isMobile}
+						touchMove={isMobile}
+						arrows={isMobile}
 						beforeChange={beforeChange}
 						dots={false}
 						fade
 						infinite
-						// initialSlide={initialTab}
 						ref={ref}
 						rows={1}
 						slide="div"
 						slidesToScroll={1}
 						slidesToShow={1}
-						speed={600}
+						speed={700}
 					>
 						<Container>
 							{elements.map((x: any, i: number) => {
