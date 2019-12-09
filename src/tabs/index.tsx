@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 		width: "100%",
 		flexShrink: 0,
 		flexWrap: "nowrap",
-		borderBottom: "0.5px solid #eee"
+		borderBottom: `0.5px solid ${Colors.disabled}`
 	},
 	view: { marginTop: "0.5rem" }
 });

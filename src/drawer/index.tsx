@@ -1,4 +1,4 @@
-import { Keyboard } from "lego";
+import { Keyboard, Colors } from "lego";
 import React, { useEffect, useRef } from "react";
 import { MdClose } from "react-icons/md";
 import styled, { ThemedStyledFunction } from "styled-components";
@@ -37,7 +37,7 @@ const ModalPortal: any = styled.div.attrs((props: ModalPortal) => props)`
 `;
 
 const DrawerContainer = styled.div`
-	background-color: #fff;
+	background-color: ${Colors.light};
 	display: block;
 	height: 100%;
 	overflow-y: auto;

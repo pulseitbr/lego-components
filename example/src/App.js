@@ -12,7 +12,7 @@ export default function App() {
 		<Page>
 			<Body>
 				<Button onPress={() => ref.current.goto("third")}>Click</Button>
-				<Tabs ref={ref}>
+				<Tabs onChange={(e) => console.log("CHANGED TAB", e)} ref={ref}>
 					<Tab title="Koe" name="first">
 						Primeiro Tab
 					</Tab>

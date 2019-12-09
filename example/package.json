@@ -5,10 +5,7 @@
 	"license": "MIT",
 	"private": true,
 	"dependencies": {
-		"@transferwise/components": "^17.5.1",
 		"lego-components": "link:..",
-		"prop-types": "^15.6.2",
-		"rc-tabs": "^9.7.0",
 		"react": "^16.10.1",
 		"react-dom": "^16.10.1",
 		"react-scripts": "^1.1.4",

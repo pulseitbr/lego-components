@@ -25,12 +25,12 @@ const Label = styled.label`
 		left: 0;
 		height: 20px;
 		width: 20px;
-		background-color: #eee;
+		background-color: ${Colors.light};
 		animation: fade 400ms ease-in-out;
 	}
 
 	&:hover input ~ .checkmark {
-		background-color: #ccc;
+		background-color: ${Colors.disabled};
 	}
 
 	& input:checked ~ .checkmark {
@@ -75,9 +75,7 @@ type OmitOnClick = Omit<OmitOnChange, "onClick">;
 type EventCustom = EventTarget & {
 	target: { name: string; value: boolean; checked: boolean; stopPropagation(): void; persist(): void };
 };
-export type CheckboxTrigger = React.MouseEvent<HTMLInputElement, MouseEvent> &
-	EventCustom &
-	React.InputHTMLAttributes<any>;
+export type CheckboxTrigger = React.MouseEvent<HTMLInputElement, MouseEvent> & EventCustom & React.InputHTMLAttributes<any>;
 type Props = OmitOnClick & {
 	round?: boolean;
 	checkColor?: string;

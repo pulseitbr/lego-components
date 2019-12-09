@@ -6011,12 +6011,10 @@ label {
     content: '-';
     text-align: center;
     opacity: .25;
-    color: #000
 }
 
 .slick-dots li.slick-active button:before {
     opacity: .75;
-    color: #000
 }
 
 .tabs-header {

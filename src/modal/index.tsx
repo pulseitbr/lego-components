@@ -105,7 +105,7 @@ const Modal = ({
 	bodyProps = defaultModalPartProps,
 	footerProps = defaultModalPartProps,
 	title,
-	closeColor = "#121212",
+	closeColor = Colors.dark,
 	closeOnEsc = true,
 	children,
 	animationTime = 950
