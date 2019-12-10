@@ -4,12 +4,16 @@ import svgr from "@svgr/rollup";
 import commonjs from "rollup-plugin-commonjs";
 import external from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
+import strip from "@rollup/plugin-strip";
 import typescript from "rollup-plugin-typescript2";
 import visualizer from "rollup-plugin-visualizer";
 import pkg from "./package.json";
 
 export default {
 	input: "src/index.tsx",
+	cache: true,
+	format: "iife",
+	sourceMap: false,
 	output: [
 		{
 			file: pkg.main,
@@ -30,8 +34,9 @@ export default {
 			sourcemap: false
 		}
 	],
-	external: ["react", "sidekicker", "styled-components"],
+	external: ["react", "styled-components"],
 	plugins: [
+		strip(),
 		external(),
 		postcss({
 			inject: true,
@@ -44,7 +49,10 @@ export default {
 		visualizer(),
 		svgr(),
 		resolve({
-			browser: true
+			jsnext: true,
+			module: true,
+			browser: true,
+			preferBuiltins: false
 		}),
 		typescript({
 			rollupCommonJSResolveHack: true,
@@ -52,6 +60,7 @@ export default {
 		}),
 		commonjs({
 			sourceMap: false,
+			ignoreGlobal: false,
 			namedExports: {
 				"react-is": ["isElement", "isValidElementType", "ForwardRef"],
 				react: ["cloneElement", "Fragment", "createContext", "Component", "createElement"]

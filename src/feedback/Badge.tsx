@@ -5,13 +5,13 @@ import styled from "styled-components";
 import Constants from "../styles/Constants";
 import StyleSheet from "../styles/StyleSheet";
 
-const Dot = styled.span`
+const Dot = styled.span.attrs(({ size = 1, ...props }: any) => ({ ...props, size }))`
 	background-color: ${(props) => props.color};
 	display: inline-block;
 	text-align: center;
 	border-radius: 50%;
-	min-height: 0.6rem;
-	min-width: 0.6rem;
+	min-height: ${(props) => 0.6 * props.size}rem;
+	min-width: ${(props) => 0.6 * props.size}rem;
 	margin-bottom: 4px;
 `;
 
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
 		...StyleSheet.paddingHorizontal("0.75rem"),
 		alignItems: "baseline",
 		fontWeight: "bolder",
-		textAlign: "center",
+		textAlign: "center"
 	}
 });
 
@@ -39,7 +39,7 @@ const Badge = ({ children, size = 1, style = {}, type = "tag", color = Colors.in
 	if (type === "dot") {
 		return (
 			<span style={{ ...style, ...styles.margin }}>
-				<Dot color={color} /> {children}
+				<Dot size={size} color={color} /> {children}
 			</span>
 		);
 	}

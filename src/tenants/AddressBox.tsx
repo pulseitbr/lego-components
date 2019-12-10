@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { Container, View, Right, Left } from "../base";
-import FlatList from "../list/FlatList";
-import { SubTitle, Text } from "../typography";
-import { formatCep } from "sidekicker/lib/strings/Format";
-import Radiobox from "../form/Radiobox";
-import { MdHome, MdStore } from "react-icons/md";
+import { IsEmpty } from "lego";
 import { transparentize } from "polished";
+import React, { useEffect, useState } from "react";
+import { MdHome, MdStore } from "react-icons/md";
+import { Container, Left, Right, View } from "../base";
+import Radiobox from "../form/Radiobox";
+import FlatList from "../list/FlatList";
 import Colors from "../styles";
 import Constants, { SOFT_RADIUS } from "../styles/Constants";
 import StyleSheet from "../styles/StyleSheet";
-import { IsEmpty } from "lego";
+import { SubTitle, Text } from "../typography";
+
+const formatCep = (str = "") => str.replace(/[^0-9]/g, "").replace(/(\d{5})(\d{3})/, "$1-$2");
 
 const styles = StyleSheet.create({
 	view: { padding: Constants.UNIT_1, textAlign: "left", cursor: "pointer" }

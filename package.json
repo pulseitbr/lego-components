@@ -32,7 +32,6 @@
 		"react-slick": "^0.25.2",
 		"react-text-mask": "^5.4.3",
 		"react-toastify": "^5.4.1",
-		"sidekicker": "^0.0.28",
 		"tippy.js": "^5.1.2"
 	},
 	"peerDependencies": {

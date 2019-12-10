@@ -1,4 +1,3 @@
-import { isEmpty } from "sidekicker/lib/comparable";
 import ThemeConfig from "./ThemeConfig";
 export type TypeColors = {
 	primary: string;
@@ -80,7 +79,8 @@ declare global {
 	}
 }
 
-const emptyGlobalBP = isEmpty(window.$__BP__);
+// eslint-disable-next-line no-undefined
+const emptyGlobalBP = window.$__BP__ === undefined;
 
 if (emptyGlobalBP) {
 	window.$__BP__ = {

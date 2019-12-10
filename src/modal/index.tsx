@@ -1,14 +1,14 @@
+import { Colors } from "lego";
 import { lighten } from "polished";
-import React, { CSSProperties, useEffect, useCallback } from "react";
+import React, { CSSProperties, useCallback, useEffect } from "react";
 import { MdClose } from "react-icons/md";
 import styled, { ThemedStyledFunction } from "styled-components";
+import { HtmlTag } from "../@types";
 import { TypeContainer, View } from "../base";
 import useBlockScroll from "../hooks/useBlockScroll";
-import { Colors } from "lego";
-import ReactPortal from "../utils/Portal";
 import StyleSheet from "../styles/StyleSheet";
-import { HtmlTag } from "../@types";
 import Keyboard from "../utils/Keyboard";
+import ReactPortal from "../utils/Portal";
 
 const lightenClose = lighten(0.6);
 
