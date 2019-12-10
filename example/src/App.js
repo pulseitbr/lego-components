@@ -1,28 +1,41 @@
-import React, { useRef, useEffect } from "react";
-import { Tab, Tabs, Page, Body, Button } from "lego-components";
+import { Body, Container, Form, MaterialInput, Page } from "lego-components";
+import React from "react";
+import useForm from "./useForm";
 
 export default function App() {
-	const ref = useRef({});
-
-	useEffect(() => {
-		ref.current.goto("second");
-	}, []);
-
+	const { state, onChange, errors, blurEvents } = useForm(
+		{ email: "" },
+		{
+			updateOnChange: true,
+			validations: {
+				email: (email) => ({ isValid: email === "allan.f.garcez@gmail.com", msg: "Email não é o meu" })
+			},
+			blurs: { email() {} }
+		}
+	);
 	return (
 		<Page>
 			<Body>
-				<Button onPress={() => ref.current.goto("third")}>Click</Button>
-				<Tabs onChange={(e) => console.log("CHANGED TAB", e)} ref={ref}>
-					<Tab title="Koe" name="first">
-						Primeiro Tab
-					</Tab>
-					<Tab title="Blz" name="second">
-						Segunda Tab
-					</Tab>
-					<Tab title="Eai" name="third">
-						Terceira tab
-					</Tab>
-				</Tabs>
+				<Form onSubmit={(e) => console.log("SUBMIT", e)}>
+					<Container className="pa4">
+						<MaterialInput
+							required
+							onInvalid={(e) => console.log(e.target.setCustomValidity(""))}
+							type="email"
+							name="email"
+							onBlur={blurEvents.email}
+							onChange={onChange}
+							value={state.email}
+							message={
+								errors.email.hasError ? (
+									<span style={{ color: "red" }}>{errors.email.message}</span>
+								) : (
+									<span style={{ color: "green" }}>Tudo certo - {errors.email.blurEventTrigger.toString()}</span>
+								)
+							}
+						/>
+					</Container>
+				</Form>
 			</Body>
 		</Page>
 	);

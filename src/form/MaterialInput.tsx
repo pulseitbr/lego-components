@@ -1,5 +1,5 @@
 import { Colors } from "lego";
-import React, { useState } from "react";
+import React, { useImperativeHandle, useRef, useState } from "react";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import styled from "styled-components";
 import Loader from "../loader/Loader";
@@ -184,105 +184,101 @@ type FloatInputType = React.InputHTMLAttributes<HTMLInputElement> & Props & Mask
 
 const changeType = (type: InputTypes, prev: string) => (type === "password" && type === prev ? "text" : "password");
 
-const voidFn = () => "";
-
 const iconStyle = { color: Colors.primaryLight };
 
-const MaterialInput = ({
-	className = "",
-	disabled = false,
-	divClassName = "",
-	divColor = Colors.primaryLight,
-	divStyle = {},
-	error = false,
-	hidePasswordIcon = <MdVisibilityOff style={iconStyle} />,
-	inputColor = Colors.primary,
-	inputErrorColor = Colors.danger,
-	labelClassName = "",
-	labelColor = Colors.primaryLight,
-	labelStyle,
-	loaderColor = Colors.primary,
-	loading = false,
-	mainColor = Colors.primary,
-	mask: maskType,
-	message,
-	name,
-	onBlur = voidFn,
-	onChange = voidFn,
-	onFocus = voidFn,
-	placeholder = "",
-	type = "text",
-	value = "",
-	viewPasswordIcon = <MdVisibility style={iconStyle} />,
-	...inputHtml
-}: FloatInputType) => {
-	const [stateType, setType] = useState(type);
+const MaterialInput = React.forwardRef(
+	(
+		{
+			className = "",
+			disabled = false,
+			divClassName = "",
+			divStyle = {},
+			hidePasswordIcon = <MdVisibilityOff style={iconStyle} />,
+			labelClassName = "",
+			labelColor = Colors.primaryLight,
+			labelStyle,
+			loaderColor = Colors.primary,
+			loading = false,
+			mask: maskType,
+			message,
+			name,
+			placeholder = "",
+			type = "text",
+			value = "",
+			viewPasswordIcon = <MdVisibility style={iconStyle} />,
+			...inputHtml
+		}: FloatInputType,
+		externalRef
+	) => {
+		const [stateType, setType] = useState(type);
+		const internalRef = useRef<HTMLInputElement>(null);
+		useImperativeHandle(externalRef, () => internalRef);
 
-	const change = (e: React.ChangeEvent<HTMLInputElement>) => onChange(e);
-	const toggle = () => setType(changeType(stateType, type) as InputTypes);
+		const toggle = () => setType(changeType(stateType, type) as InputTypes);
 
-	if (type === "password") {
+		if (type === "password") {
+			return (
+				<MaterialContainer className={divClassName}>
+					<Input
+						{...inputHtml}
+						ref={internalRef}
+						className={`${className}${disabled ? " not-allowed" : ""}`}
+						disabled={disabled}
+						id={name}
+						mask={maskType}
+						name={name}
+						style={{ cursor: disabled ? "not-allowed" : "pointer", ...inputHtml.style }}
+						type={stateType}
+						value={value}
+					/>
+					<span className="bar" />
+					<label
+						style={{
+							width: "100%",
+							color: labelColor,
+							cursor: disabled ? "not-allowed" : "pointer",
+							...labelStyle
+						}}
+						title={placeholder}
+						htmlFor={name}
+						className={labelClassName}
+					>
+						{placeholder}
+					</label>
+					<RightIcons>
+						{loading && <Loader size={0.9} border={0.075} color={loaderColor} />}
+						<EyePassword disabled={disabled} type="button" onClick={toggle}>
+							{(stateType === "password" && viewPasswordIcon) || hidePasswordIcon}
+						</EyePassword>
+					</RightIcons>
+					{!!message && <small>{message}</small>}
+				</MaterialContainer>
+			);
+		}
+
 		return (
-			<MaterialContainer className={divClassName}>
+			<MaterialContainer style={divStyle} className={divClassName}>
 				<Input
 					{...inputHtml}
+					ref={internalRef}
 					className={`${className}${disabled ? " not-allowed" : ""}`}
 					disabled={disabled}
 					id={name}
 					mask={maskType}
 					name={name}
-					onChange={change}
-					style={{ cursor: disabled ? "not-allowed" : "pointer", ...inputHtml.style }}
-					type={stateType}
+					type={type}
+					usePlaceholder={false}
 					value={value}
 				/>
 				<span className="bar" />
-				<label
-					style={{
-						width: "100%",
-						color: labelColor,
-						cursor: disabled ? "not-allowed" : "pointer",
-						...labelStyle
-					}}
-					title={placeholder}
-					htmlFor={name}
-					className={labelClassName}
-				>
+				<label className={labelClassName} htmlFor={name} style={{ color: labelColor, width: "100%", ...labelStyle }} title={placeholder}>
 					{placeholder}
 				</label>
-				<RightIcons>
-					{loading && <Loader size={0.9} border={0.075} color={loaderColor} />}
-					<EyePassword disabled={disabled} type="button" onClick={toggle}>
-						{(stateType === "password" && viewPasswordIcon) || hidePasswordIcon}
-					</EyePassword>
-				</RightIcons>
+				<RightIcons>{loading && <Loader size={0.9} border={0.075} color={loaderColor} />}</RightIcons>
 				{!!message && <small>{message}</small>}
 			</MaterialContainer>
 		);
 	}
-
-	return (
-		<MaterialContainer style={divStyle} className={divClassName}>
-			<Input
-				{...inputHtml}
-				className={`${className}${disabled ? " not-allowed" : ""}`}
-				disabled={disabled}
-				id={name}
-				mask={maskType}
-				name={name}
-				onChange={change}
-				type={type}
-				usePlaceholder={false}
-				value={value}
-			/>
-			<span className="bar" />
-			<label className={labelClassName} htmlFor={name} style={{ color: labelColor, width: "100%", ...labelStyle }} title={placeholder}>
-				{placeholder}
-			</label>
-			<RightIcons>{loading && <Loader size={0.9} border={0.075} color={loaderColor} />}</RightIcons>
-			{!!message && <small>{message}</small>}
-		</MaterialContainer>
-	);
-};
+);
 
 export default MaterialInput;

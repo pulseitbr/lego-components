@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes } from "react";
+import React, { InputHTMLAttributes, useImperativeHandle, useRef } from "react";
 import MaskedInput from "react-text-mask";
 import CurrencyInput, { CurrencyInputType } from "./CurrencyInput";
 import { convertMaskToString, decimalKeyboard, maskConverter, masks } from "./form-utils/masks";
@@ -42,6 +42,7 @@ export type MaskInputProps = {
 	mask?: MasksTypes | Array<string | RegExp>;
 	name: string;
 	value: string;
+	ref?: any;
 	onChange(e: React.ChangeEvent<HTMLInputElement>): any;
 };
 
@@ -71,14 +72,16 @@ const instanceMaskValues = (mask: MasksTypes, usePl: boolean, html: any, value: 
 
 const noMask = ["matricula"];
 
-const Input = ({ title = "", type = "text", mask, usePlaceholder = true, ...html }: Props) => {
+const Input = React.forwardRef(({ type = "text", mask, usePlaceholder = true, ...html }: Props, externalRef) => {
+	const internalRef = useRef<HTMLInputElement>(null);
+	useImperativeHandle(externalRef, () => internalRef);
 	const { value } = html;
 	if (mask === "currency") {
-		return <CurrencyInput {...html} value={value} />;
+		return <CurrencyInput {...html} value={value} ref={internalRef} />;
 	}
 	const options = { mask, name: html.name, value, type };
 	if (typeof mask === "string" && masks.hasOwnProperty(mask)) {
-		const { extraProps, maskRegex, maskedValue, placeholder } = instanceMaskValues(mask, usePlaceholder, html, value, html);
+		const { extraProps, maskRegex, maskedValue, placeholder } = instanceMaskValues(mask, usePlaceholder, html, value, html as any);
 		return (
 			<MaskedInput
 				{...html}
@@ -88,13 +91,15 @@ const Input = ({ title = "", type = "text", mask, usePlaceholder = true, ...html
 				mask={maskRegex}
 				value={maskedValue}
 				placeholder={placeholder}
+				innerRef={internalRef}
 			/>
 		);
 	}
 	if (Array.isArray(mask)) {
-		return <MaskedInput guide {...html} {...options} mask={mask as MaskType} />;
+		// @ts-ignore
+		return <MaskedInput guide {...html} {...options} innerRef={externalRef} mask={mask as MaskType} />;
 	}
-	return <input {...html} {...options} />;
-};
+	return <input {...html} {...options} ref={internalRef} />;
+});
 
 export default Input;

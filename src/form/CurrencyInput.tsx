@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useImperativeHandle } from "react";
 import Decimal from "decimal.js";
 
 const formatBrlToFloat = (currency: string) => {
@@ -11,6 +11,7 @@ const formatBrlToFloat = (currency: string) => {
 export type CurrencyInputType = React.InputHTMLAttributes<HTMLInputElement> & {
 	prefix?: string;
 	name: string;
+	ref: any;
 	value: string;
 	separator?: string;
 	onChange(e: React.ChangeEvent<HTMLInputElement> & { target: { rawValue: number } }): any;
@@ -44,9 +45,11 @@ export const toCurrency = (value: string, separator = ",", prefix = "R$ ") => {
 
 const safeConvert = (str: string | number | string[] = "0") => toCurrency(Number.parseFloat(`${str}`).toFixed(2));
 
-const CurrencyInput = ({ prefix = "R$ ", separator = ",", defaultValue, ...props }: CurrencyInputType) => {
+const CurrencyInput = React.forwardRef(({ prefix = "R$ ", separator = ",", ...props }: CurrencyInputType, externalRef) => {
 	const convert = safeConvert(props.value);
 	const [value, setValue] = useState(convert);
+	const internalRef = useRef<HTMLInputElement>(null);
+	useImperativeHandle(externalRef, () => internalRef);
 
 	useEffect(() => {
 		setValue(convert);
@@ -56,8 +59,8 @@ const CurrencyInput = ({ prefix = "R$ ", separator = ",", defaultValue, ...props
 		const valueAsCurrency = toCurrency(e.target.value, separator, prefix);
 		const realValue = formatBrlToFloat(valueAsCurrency);
 		setValue(valueAsCurrency);
+		e.persist();
 		if (props.onChange) {
-			e.persist();
 			return props.onChange({
 				...e,
 				target: {
@@ -73,6 +76,7 @@ const CurrencyInput = ({ prefix = "R$ ", separator = ",", defaultValue, ...props
 		<input
 			{...props}
 			type="text"
+			ref={internalRef}
 			value={value}
 			name={props.name}
 			onChange={change}
@@ -80,6 +84,6 @@ const CurrencyInput = ({ prefix = "R$ ", separator = ",", defaultValue, ...props
 			pattern="^[A-Z]{1,3}[0-9$,. ]+$"
 		/>
 	);
-};
+});
 
 export default CurrencyInput;
