@@ -12,8 +12,6 @@ import pkg from "./package.json";
 export default {
 	input: "src/index.tsx",
 	cache: true,
-	format: "iife",
-	sourceMap: false,
 	output: [
 		{
 			file: pkg.main,
@@ -49,8 +47,6 @@ export default {
 		visualizer(),
 		svgr(),
 		resolve({
-			jsnext: true,
-			module: true,
 			browser: true,
 			preferBuiltins: false
 		}),

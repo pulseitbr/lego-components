@@ -92,12 +92,12 @@ const Input = React.forwardRef(({ type = "text", mask, usePlaceholder = true, ..
 				value={maskedValue}
 				placeholder={placeholder}
 				innerRef={internalRef}
+				ref={internalRef}
 			/>
 		);
 	}
 	if (Array.isArray(mask)) {
-		// @ts-ignore
-		return <MaskedInput guide {...html} {...options} innerRef={externalRef} mask={mask as MaskType} />;
+		return <MaskedInput guide {...html} {...options} mask={mask as MaskType} />;
 	}
 	return <input {...html} {...options} ref={internalRef} />;
 });
