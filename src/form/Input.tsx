@@ -74,7 +74,7 @@ const noMask = ["matricula"];
 
 const Input = React.forwardRef(({ type = "text", mask, usePlaceholder = true, ...html }: Props, externalRef) => {
 	const internalRef = useRef<HTMLInputElement>(null);
-	useImperativeHandle(externalRef, () => internalRef);
+	useImperativeHandle(externalRef, () => internalRef.current);
 	const { value } = html;
 	if (mask === "currency") {
 		return <CurrencyInput {...html} value={value} ref={internalRef} />;

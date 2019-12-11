@@ -9,6 +9,7 @@ type Props = {
 	className?: string;
 	divClassName?: string;
 	divColor?: string;
+	fontSize?: number;
 	divStyle?: React.CSSProperties;
 	error?: boolean;
 	hidePasswordIcon?: React.ReactNode;
@@ -30,6 +31,7 @@ type WrapperType = {
 	borderBottomColor: string;
 	borderBottomActiveColor: string;
 	labelColor: string;
+	size: number;
 };
 
 const RightIcons = styled.span`
@@ -53,9 +55,11 @@ const MaterialContainer = styled.div.attrs(
 		borderBottomActiveColor = Colors.primaryLight,
 		labelColor = Colors.darkAlpha,
 		borderBottomColor = Colors.darkLightest,
+		size = 1,
 		...props
 	}: WrapperType) => ({
 		...props,
+		size,
 		labelColor,
 		borderBottomColor,
 		borderBottomActiveColor
@@ -68,7 +72,7 @@ const MaterialContainer = styled.div.attrs(
 
 	input {
 		background-color: transparent;
-		font-size: 1rem;
+		font-size: ${(props) => 1.4 * props.size}rem;
 		padding: 1rem 0 0 0;
 		display: block;
 		width: 100%;
@@ -92,7 +96,7 @@ const MaterialContainer = styled.div.attrs(
 
 	label {
 		color: ${(props) => props.labelColor};
-		font-size: 0.9rem;
+		font-size: ${(props) => props.size * 1.1}rem;
 		font-weight: bolder;
 		position: absolute;
 		pointer-events: none;
@@ -191,6 +195,7 @@ const MaterialInput = React.forwardRef(
 		{
 			className = "",
 			disabled = false,
+			fontSize = 1,
 			divClassName = "",
 			divStyle = {},
 			hidePasswordIcon = <MdVisibilityOff style={iconStyle} />,
@@ -212,37 +217,37 @@ const MaterialInput = React.forwardRef(
 	) => {
 		const [stateType, setType] = useState(type);
 		const internalRef = useRef<HTMLInputElement>(null);
-		useImperativeHandle(externalRef, () => internalRef);
+		useImperativeHandle(externalRef, () => internalRef.current);
 
 		const toggle = () => setType(changeType(stateType, type) as InputTypes);
 
+		const labelInternalStyle = {
+			width: "100%",
+			color: labelColor,
+			cursor: disabled ? "not-allowed" : "pointer",
+			...labelStyle
+		};
+
+		const containerProps = { style: divStyle, className: divClassName, size: fontSize };
+		const internalInputStyle = { cursor: disabled ? "not-allowed" : "pointer", ...inputHtml.style };
+
+		const inputCommonProps = {
+			className: `${className}${disabled ? " not-allowed" : ""}`,
+			style: internalInputStyle,
+			name,
+			id: name,
+			value,
+			mask: maskType,
+			disabled,
+			ref: internalRef
+		};
+
 		if (type === "password") {
 			return (
-				<MaterialContainer className={divClassName}>
-					<Input
-						{...inputHtml}
-						ref={internalRef}
-						className={`${className}${disabled ? " not-allowed" : ""}`}
-						disabled={disabled}
-						id={name}
-						mask={maskType}
-						name={name}
-						style={{ cursor: disabled ? "not-allowed" : "pointer", ...inputHtml.style }}
-						type={stateType}
-						value={value}
-					/>
+				<MaterialContainer {...containerProps}>
+					<Input {...inputHtml} {...inputCommonProps} type={stateType} />
 					<span className="bar" />
-					<label
-						style={{
-							width: "100%",
-							color: labelColor,
-							cursor: disabled ? "not-allowed" : "pointer",
-							...labelStyle
-						}}
-						title={placeholder}
-						htmlFor={name}
-						className={labelClassName}
-					>
+					<label style={labelInternalStyle} title={placeholder} htmlFor={name} className={labelClassName}>
 						{placeholder}
 					</label>
 					<RightIcons>
@@ -257,21 +262,10 @@ const MaterialInput = React.forwardRef(
 		}
 
 		return (
-			<MaterialContainer style={divStyle} className={divClassName}>
-				<Input
-					{...inputHtml}
-					ref={internalRef}
-					className={`${className}${disabled ? " not-allowed" : ""}`}
-					disabled={disabled}
-					id={name}
-					mask={maskType}
-					name={name}
-					type={type}
-					usePlaceholder={false}
-					value={value}
-				/>
+			<MaterialContainer {...containerProps}>
+				<Input {...inputHtml} {...inputCommonProps} usePlaceholder={false} />
 				<span className="bar" />
-				<label className={labelClassName} htmlFor={name} style={{ color: labelColor, width: "100%", ...labelStyle }} title={placeholder}>
+				<label className={labelClassName} htmlFor={name} style={labelInternalStyle} title={placeholder}>
 					{placeholder}
 				</label>
 				<RightIcons>{loading && <Loader size={0.9} border={0.075} color={loaderColor} />}</RightIcons>

@@ -49,7 +49,7 @@ const CurrencyInput = React.forwardRef(({ prefix = "R$ ", separator = ",", ...pr
 	const convert = safeConvert(props.value);
 	const [value, setValue] = useState(convert);
 	const internalRef = useRef<HTMLInputElement>(null);
-	useImperativeHandle(externalRef, () => internalRef);
+	useImperativeHandle(externalRef, () => internalRef.current);
 
 	useEffect(() => {
 		setValue(convert);

@@ -23,6 +23,8 @@ export default function App() {
 							onInvalid={(e) => console.log(e.target.setCustomValidity(""))}
 							type="email"
 							name="email"
+							fontSize={1}
+							placeholder="Digite seu email"
 							onBlur={blurEvents.email}
 							onChange={onChange}
 							value={state.email}

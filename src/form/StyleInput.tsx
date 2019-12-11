@@ -1,8 +1,8 @@
+import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
+import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import Loader from "../loader/Loader";
 import Colors from "../styles";
-import React, { useEffect, useState, useRef, useImperativeHandle } from "react";
 import Input, { InputTypes, MaskInputProps } from "./Input";
-import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 
 const onActive = "form-field__control form-field--is-active";
 const onActiveError = "form-field__control form-field--is-active form-field__input-error";
@@ -67,7 +67,7 @@ const StyleInput = React.forwardRef(
 		const [field, setField] = useState(initialField);
 		const [stateType, setType] = useState(type);
 		const internalRef = useRef(null);
-		useImperativeHandle(externalRef, () => internalRef);
+		useImperativeHandle(externalRef, () => internalRef.current);
 
 		useEffect(() => {
 			if (!!value || maskType === "currency") {
