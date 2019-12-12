@@ -211,7 +211,7 @@ const MaterialInput = React.forwardRef(
 			message,
 			name,
 			placeholder = "",
-			lineAnimationTime: 500,
+			lineAnimationTime = 500,
 			type = "text",
 			value = "",
 			viewPasswordIcon = <MdVisibility style={iconStyle} />,
