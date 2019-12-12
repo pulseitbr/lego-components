@@ -6,6 +6,7 @@ import Loader from "../loader/Loader";
 import Input, { InputTypes, MaskInputProps } from "./Input";
 
 type Props = {
+	rightIcons?: React.ReactNode;
 	className?: string;
 	divClassName?: string;
 	divColor?: string;
@@ -32,6 +33,7 @@ type WrapperType = {
 	borderBottomActiveColor: string;
 	labelColor: string;
 	size: number;
+	transition: number;
 };
 
 const RightIcons = styled.span`
@@ -67,7 +69,6 @@ const MaterialContainer = styled.div.attrs(
 )`
 	width: 100%;
 	position: relative;
-	margin-bottom: 2.8125rem;
 	background-color: transparent;
 
 	input {
@@ -125,7 +126,7 @@ const MaterialContainer = styled.div.attrs(
 		bottom: 1px;
 		position: absolute;
 		background: ${(props) => props.borderBottomActiveColor};
-		transition: 400ms ease all;
+		transition: ${(props) => props.transition}ms ease all;
 	}
 
 	.bar:before {
@@ -152,7 +153,7 @@ const MaterialContainer = styled.div.attrs(
 	}
 
 	input:focus ~ .highlight {
-		animation: inputHighlighter 400ms ease;
+		animation: inputHighlighter ${(props) => props.transition}ms ease;
 	}
 
 	@-webkit-keyframes inputHighlighter {
@@ -190,9 +191,10 @@ const changeType = (type: InputTypes, prev: string) => (type === "password" && t
 
 const iconStyle = { color: Colors.primaryLight };
 
-const MaterialInput = React.forwardRef(
+const MaterialInput: React.FC = React.forwardRef(
 	(
 		{
+			rightIcons = null,
 			className = "",
 			disabled = false,
 			fontSize = 1,
@@ -242,21 +244,30 @@ const MaterialInput = React.forwardRef(
 			ref: internalRef
 		};
 
+		const Label = (
+			<label style={labelInternalStyle} title={placeholder} htmlFor={name} className={labelClassName}>
+				{placeholder}
+			</label>
+		);
+
+		const messageComponent = !!message ? <small>{message}</small> : null;
+
+		const loader = loading ? <Loader size={0.9} border={0.075} color={loaderColor} /> : null;
+
 		if (type === "password") {
 			return (
 				<MaterialContainer {...containerProps}>
 					<Input {...inputHtml} {...inputCommonProps} type={stateType} />
 					<span className="bar" />
-					<label style={labelInternalStyle} title={placeholder} htmlFor={name} className={labelClassName}>
-						{placeholder}
-					</label>
+					{Label}
 					<RightIcons>
-						{loading && <Loader size={0.9} border={0.075} color={loaderColor} />}
+						{rightIcons}
+						{loader}
 						<EyePassword disabled={disabled} type="button" onClick={toggle}>
-							{(stateType === "password" && viewPasswordIcon) || hidePasswordIcon}
+							{stateType === "password" ? viewPasswordIcon : hidePasswordIcon}
 						</EyePassword>
 					</RightIcons>
-					{!!message && <small>{message}</small>}
+					{messageComponent}
 				</MaterialContainer>
 			);
 		}
@@ -265,11 +276,12 @@ const MaterialInput = React.forwardRef(
 			<MaterialContainer {...containerProps}>
 				<Input {...inputHtml} {...inputCommonProps} usePlaceholder={false} />
 				<span className="bar" />
-				<label className={labelClassName} htmlFor={name} style={labelInternalStyle} title={placeholder}>
-					{placeholder}
-				</label>
-				<RightIcons>{loading && <Loader size={0.9} border={0.075} color={loaderColor} />}</RightIcons>
-				{!!message && <small>{message}</small>}
+				{Label}
+				<RightIcons>
+					{rightIcons}
+					{loader}
+				</RightIcons>
+				{messageComponent}
 			</MaterialContainer>
 		);
 	}
