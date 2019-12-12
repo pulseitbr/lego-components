@@ -6,6 +6,7 @@ import Loader from "../loader/Loader";
 import Input, { InputTypes, MaskInputProps } from "./Input";
 
 type Props = {
+	lineAnimationTime?: number;
 	rightIcons?: React.ReactNode;
 	className?: string;
 	divClassName?: string;
@@ -210,6 +211,7 @@ const MaterialInput = React.forwardRef(
 			message,
 			name,
 			placeholder = "",
+			lineAnimationTime: 500,
 			type = "text",
 			value = "",
 			viewPasswordIcon = <MdVisibility style={iconStyle} />,
@@ -230,7 +232,7 @@ const MaterialInput = React.forwardRef(
 			...labelStyle
 		};
 
-		const containerProps = { style: divStyle, className: divClassName, size: fontSize };
+		const containerProps = { style: divStyle, className: divClassName, size: fontSize, transition: lineAnimationTime };
 		const internalInputStyle = { cursor: disabled ? "not-allowed" : "pointer", ...inputHtml.style };
 
 		const inputCommonProps = {
