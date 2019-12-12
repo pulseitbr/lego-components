@@ -191,7 +191,7 @@ const changeType = (type: InputTypes, prev: string) => (type === "password" && t
 
 const iconStyle = { color: Colors.primaryLight };
 
-const MaterialInput: React.FC = React.forwardRef(
+const MaterialInput = React.forwardRef(
 	(
 		{
 			rightIcons = null,
