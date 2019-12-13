@@ -1,4 +1,4 @@
-import { Body, Container, Form, MaterialInput, Page, CheckBox as RadioBox } from "lego-components";
+import { Body, Timeline, TimelineItem, Container, Form, MaterialInput, Page, CheckBox as RadioBox, Colors } from "lego-components";
 import React from "react";
 import useForm from "./useForm";
 
@@ -17,63 +17,15 @@ export default function App() {
 		<Page>
 			<Body>
 				<Form onSubmit={(e) => console.log("SUBMIT", e)}>
-					<Container>
-						<RadioBox>
-							{" "}
-							<span class="ml1">AEE</span>{" "}
-						</RadioBox>
-						<RadioBox checked>
-							{" "}
-							<span class="ml1">AEE</span>{" "}
-						</RadioBox>
-						<RadioBox checked>
-							{" "}
-							<span class="ml1">AEE</span>{" "}
-						</RadioBox>
-						<RadioBox checked>
-							{" "}
-							<span class="ml1">AEE</span>{" "}
-						</RadioBox>
-						<RadioBox>
-							{" "}
-							<span class="ml1">AEE</span>{" "}
-						</RadioBox>
-						<RadioBox checked>
-							{" "}
-							<span class="ml1">AEE</span>{" "}
-						</RadioBox>
-						<RadioBox checked>
-							{" "}
-							<span class="ml1">AEE</span>{" "}
-						</RadioBox>
-						<RadioBox checked>
-							{" "}
-							<span class="ml1">AEE</span>{" "}
-						</RadioBox>
-						<RadioBox checked>
-							{" "}
-							<span class="ml1">AEE</span>{" "}
-						</RadioBox>
-						<RadioBox checked>
-							{" "}
-							<span class="ml1">AEE</span>{" "}
-						</RadioBox>
-						<RadioBox checked>
-							{" "}
-							<span class="ml1">AEE</span>{" "}
-						</RadioBox>
-						<RadioBox checked>
-							{" "}
-							<span class="ml1">AEE</span>{" "}
-						</RadioBox>
-						<RadioBox checked>
-							{" "}
-							<span class="ml1">AEE</span>{" "}
-						</RadioBox>
-						<RadioBox checked>
-							{" "}
-							<span class="ml1">AEE</span>{" "}
-						</RadioBox>
+					<Container className="pa3">
+						<Timeline>
+							<TimelineItem color="black">AEEE</TimelineItem>
+							<TimelineItem color={Colors.primary}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.info}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.danger}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.dangerAlpha}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.successLight}>AEEE</TimelineItem>
+						</Timeline>
 					</Container>
 					<Container className="pa4">
 						<MaterialInput

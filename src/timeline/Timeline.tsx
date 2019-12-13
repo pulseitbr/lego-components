@@ -36,7 +36,7 @@ const Timeline = ({ reverse = false, mode = "left", pending = null, pendingDot, 
 	const clsCompose = setClassName(mode, !!pending, !!reverse);
 	const classString = `${prefixCls} ${clsCompose} ${className}}`;
 	const pendingItem = !!pending ? (
-		<TimelineItem pending={!!pending} dot={pendingDot || <MdSync />}>
+		<TimelineItem isLast pending={!!pending} dot={pendingDot || <MdSync />}>
 			{pendingNode}
 		</TimelineItem>
 	) : null;
@@ -63,16 +63,15 @@ const Timeline = ({ reverse = false, mode = "left", pending = null, pendingDot, 
 		}
 		return el.props.position === "right" ? rightItem : "";
 	};
-
 	const truthyItems: any[] = timeLineItems.filter((item) => !!item);
 	const listSize = React.Children.count(truthyItems);
-
-	const items = React.Children.map(truthyItems, (el: React.ReactElement<any>, index) =>
-		React.cloneElement(el, {
-			className: `${el.props.className || ""} ${isLast(listSize, index)} ${getPositionCls(el, index)}`
-		})
-	);
-
+	const items = React.Children.map(truthyItems, (el: React.ReactElement<any>, index) => {
+		const last = isLast(listSize, index);
+		return React.cloneElement(el, {
+			isLast: last,
+			className: `${el.props.className || ""} ${isLast} ${getPositionCls(el, index)}`
+		});
+	});
 	return (
 		<ul {...props} className={classString}>
 			{items}

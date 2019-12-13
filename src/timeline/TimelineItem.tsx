@@ -12,15 +12,13 @@ export type TimeLineItemProps = {
 	children: React.ReactNode;
 };
 
-const TimelineItem = ({ color = "primary", children, pending = false, dot, ...restProps }: TimeLineItemProps) => {
+const TimelineItem = ({ color = "primary", isLast, children, pending = false, dot, ...restProps }: TimeLineItemProps) => {
 	const prefixCls = "timeline";
 	const itemClassName = `${prefixCls}-item ${pending ? `${prefixCls}-item-pending` : ""}`;
-
 	const dotClassName = `${`${prefixCls}-item-head`} ${dot ? `${prefixCls}-item-head-custom` : ""} ${prefixCls}-item-head-${color}`;
-
 	return (
 		<li {...restProps} className={itemClassName}>
-			{/* {!isLast && <div className={`${prefixCls}-item-tail`} />} */}
+			{!isLast && <div className={`${prefixCls}-item-tail`} />}
 			<div className={dotClassName} style={{ borderColor: timelineTestBorder(color) }}>
 				{dot}
 			</div>
