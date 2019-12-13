@@ -17,7 +17,7 @@ export type RuleObject = {
 };
 
 export type RuleValid = {
-	[name: string]: Boolean;
+	[name: string]: boolean;
 };
 
 export type DefaultIcons = {
@@ -32,9 +32,9 @@ type Props = {
 	viewChecks: boolean;
 	rules?: RuleObject[];
 	placeholder?: string;
-	useDefault: Boolean;
-	selfControl?: Boolean;
-	disabled?: Boolean;
+	useDefault: boolean;
+	selfControl?: boolean;
+	disabled?: boolean;
 	timelineClassName?: string;
 	defaultIcons?: DefaultIcons;
 	textStyle?: React.CSSProperties;
@@ -42,7 +42,7 @@ type Props = {
 	timeLineStyle?: React.CSSProperties;
 	onChange(e: React.ChangeEvent<HTMLInputElement>): any;
 	onFocus?(e: React.ChangeEvent<HTMLInputElement>): any;
-	onBlur?(e: React.ChangeEvent<HTMLInputElement> & { rules: RuleValid[] }): any;
+	onBlur?(e: React.ChangeEvent<HTMLInputElement> & { rules: RuleValid }): any;
 };
 
 const check = (correct: boolean) => (assert: React.ReactNode, error: React.ReactNode) => (correct ? assert : error);
@@ -80,7 +80,6 @@ function findType(object: RuleObject, value: string, key: number, defaultIcons?:
 }
 
 type State = {
-	input: string;
 	useDefault: Boolean;
 	rules?: RuleObject[];
 };
@@ -90,37 +89,29 @@ export default class PasswordStrength extends React.Component<Props, State> {
 		super(props);
 		if (!this.props.useDefault) {
 			this.state = {
-				input: this.props.value,
 				rules: this.props.rules,
 				useDefault: this.props.useDefault
 			};
 		} else {
 			this.state = {
-				input: "",
 				useDefault: this.props.useDefault,
 				rules: defaults.concat(this.props.rules || [])
 			};
 		}
 	}
 
-	public onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		this.setState({ input: e.target.value });
-		return !!this.props.onChange ? this.props.onChange(e) : e;
-	};
-
 	public onBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (!!this.state.rules) {
-			//@ts-ignore
-			const rules: RuleValid[] = this.state.rules
-				.map((x) => ({ [x.name]: !!x.matcher(this.state.input) }))
+			const rules = this.state.rules
+				.map((x) => ({ [x.name]: !!x.matcher(this.props.value) }))
 				.reduce((accumulator, element) => ({ ...accumulator, ...element }), {});
-			const send: React.ChangeEvent<HTMLInputElement> & { rules: RuleValid[] } = { ...e, rules };
+			const send = { ...e, rules };
 			return !!this.props.onBlur ? this.props.onBlur(send) : send;
 		}
 	};
 
 	public render() {
-		const { input } = this.state;
+		const input = this.props.value;
 		const passwordCorrect = this.props.rules!.filter((x) => x.matcher(input));
 		const ok = passwordCorrect.length !== this.props.rules!.length && !!input && input !== "";
 		const showChecks = ok || this.props.viewChecks;
@@ -131,7 +122,7 @@ export default class PasswordStrength extends React.Component<Props, State> {
 					name={this.props.name}
 					onFocus={this.props.onFocus}
 					onBlur={this.onBlur}
-					value={this.state.input}
+					value={this.props.value}
 					onChange={this.props.onChange}
 					disabled={!!this.props.disabled}
 					placeholder={this.props.placeholder}

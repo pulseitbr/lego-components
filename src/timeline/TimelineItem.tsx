@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React from "react";
 import { timelineTestBorder } from "./";
 
 export type TimeLineItemProps = {
@@ -9,18 +9,10 @@ export type TimeLineItemProps = {
 	position?: string;
 	style?: React.CSSProperties;
 	isLast?: boolean;
+	children: React.ReactNode;
 };
 
-const TimelineItem: FunctionComponent<TimeLineItemProps> = ({
-	className = "",
-	color = "primary",
-	children,
-	pending = false,
-	isLast = false,
-	position = "",
-	dot,
-	...restProps
-}) => {
+const TimelineItem = ({ color = "primary", children, pending = false, dot, ...restProps }: TimeLineItemProps) => {
 	const prefixCls = "timeline";
 	const itemClassName = `${prefixCls}-item ${pending ? `${prefixCls}-item-pending` : ""}`;
 
@@ -28,7 +20,7 @@ const TimelineItem: FunctionComponent<TimeLineItemProps> = ({
 
 	return (
 		<li {...restProps} className={itemClassName}>
-			{!isLast && <div className={`${prefixCls}-item-tail`} />}
+			{/* {!isLast && <div className={`${prefixCls}-item-tail`} />} */}
 			<div className={dotClassName} style={{ borderColor: timelineTestBorder(color) }}>
 				{dot}
 			</div>
