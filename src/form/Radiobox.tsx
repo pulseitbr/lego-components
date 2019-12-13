@@ -20,21 +20,21 @@ const Label = styled.label`
 		position: absolute;
 		top: 0;
 		left: 0;
-		width: 1rem;
-		height: 1rem;
+		width: 16px;
+		height: 16px;
 		border-radius: 50%;
 		background-color: transparent;
-		border: 0.1rem solid ${Colors.disabled};
+		border: 2px solid ${Colors.disabled};
 	}
 
 	&:hover input ~ .checkmark {
 		background-color: transparent;
-		border: 0.1rem solid ${Colors.disabled};
+		border: 2px solid ${Colors.disabled};
 	}
 
 	& input:checked ~ .checkmark {
 		background-color: transparent;
-		border: 0.1rem solid ${(props) => props.color};
+		border: 2px solid ${(props) => props.color};
 	}
 
 	.checkmark:after {
@@ -48,10 +48,10 @@ const Label = styled.label`
 	}
 
 	& .checkmark:after {
-		top: 0.08rem;
-		left: 0.08rem;
-		width: 0.65rem;
-		height: 0.65rem;
+		top: 1px;
+		left: 1px;
+		width: 10px;
+		height: 10px;
 		border-radius: 50%;
 		animation: fade 500ms ease-out;
 		text-rendering: geometricPrecision;
@@ -116,9 +116,9 @@ const Radiobox = ({
 		});
 	};
 	return (
-		<Label className={`${labelClassName} pointer`} color={color}>
+		<Label className={`pointer`} color={color}>
 			<input {...html} name={name} type="radio" onChange={change} checked={checkedValue} aria-checked={valString} />
-			<span className="checkmark" role="checkbox" aria-checked={valString} /> {children}
+			<span className="checkmark" role="checkbox" aria-checked={valString} /> <span className={`${labelClassName}`}>{children}</span>
 		</Label>
 	);
 };

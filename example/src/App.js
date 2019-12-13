@@ -1,4 +1,4 @@
-import { Body, Container, Form, MaterialInput, Page } from "lego-components";
+import { Body, Container, Form, MaterialInput, Page, CheckBox as RadioBox } from "lego-components";
 import React from "react";
 import useForm from "./useForm";
 
@@ -17,6 +17,64 @@ export default function App() {
 		<Page>
 			<Body>
 				<Form onSubmit={(e) => console.log("SUBMIT", e)}>
+					<Container>
+						<RadioBox>
+							{" "}
+							<span class="ml1">AEE</span>{" "}
+						</RadioBox>
+						<RadioBox checked>
+							{" "}
+							<span class="ml1">AEE</span>{" "}
+						</RadioBox>
+						<RadioBox checked>
+							{" "}
+							<span class="ml1">AEE</span>{" "}
+						</RadioBox>
+						<RadioBox checked>
+							{" "}
+							<span class="ml1">AEE</span>{" "}
+						</RadioBox>
+						<RadioBox>
+							{" "}
+							<span class="ml1">AEE</span>{" "}
+						</RadioBox>
+						<RadioBox checked>
+							{" "}
+							<span class="ml1">AEE</span>{" "}
+						</RadioBox>
+						<RadioBox checked>
+							{" "}
+							<span class="ml1">AEE</span>{" "}
+						</RadioBox>
+						<RadioBox checked>
+							{" "}
+							<span class="ml1">AEE</span>{" "}
+						</RadioBox>
+						<RadioBox checked>
+							{" "}
+							<span class="ml1">AEE</span>{" "}
+						</RadioBox>
+						<RadioBox checked>
+							{" "}
+							<span class="ml1">AEE</span>{" "}
+						</RadioBox>
+						<RadioBox checked>
+							{" "}
+							<span class="ml1">AEE</span>{" "}
+						</RadioBox>
+						<RadioBox checked>
+							{" "}
+							<span class="ml1">AEE</span>{" "}
+						</RadioBox>
+						<RadioBox checked>
+							{" "}
+							<span class="ml1">AEE</span>{" "}
+						</RadioBox>
+						<RadioBox checked>
+							{" "}
+							<span class="ml1">AEE</span>{" "}
+						</RadioBox>
+					</Container>
 					<Container className="pa4">
 						<MaterialInput
 							required
