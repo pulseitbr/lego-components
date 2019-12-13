@@ -26,6 +26,7 @@ export type DefaultIcons = {
 };
 
 type Props = {
+	message?: React.ReactNode;
 	name: string;
 	value: string;
 	viewChecks: boolean;
@@ -134,9 +135,10 @@ export default class PasswordStrength extends React.Component<Props, State> {
 					onChange={this.props.onChange}
 					disabled={!!this.props.disabled}
 					placeholder={this.props.placeholder}
+					message={this.props.message}
 					style={this.props.inputStyle}
 				/>
-				<Container isCollapse show={showChecks}>
+				<Container isCollapse show={showChecks} className={showChecks ? "mt3" : ""}>
 					{showChecks && (
 						<Timeline
 							className={this.props.timelineClassName || ""}
