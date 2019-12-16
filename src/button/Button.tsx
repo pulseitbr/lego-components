@@ -48,8 +48,8 @@ const ThinButton = styled.button<ButtonProps & { pill?: boolean }>`
 		cursor: not-allowed;
 		pointer-events: none;
 		color: ${Colors.darkAlpha};
-		background-color: ${Colors.disabled};
-		border-color: ${Colors.disabledDark};
+		background-color: ${Colors.disabledLight};
+		border-color: ${Colors.disabled};
 	}
 `;
 
@@ -132,10 +132,8 @@ const RippleButton = styled(Transparent)`
 
 const Button = ({
 	full = false,
-	circle = false,
 	loading = false,
 	square = false,
-	loadingHeight = 35,
 	style = {},
 	styleType = "primary",
 	rippleColor = Colors.primary,
