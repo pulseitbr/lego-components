@@ -41,7 +41,7 @@ const RightIcons = styled.span`
 	background: none;
 	border: none;
 	position: absolute;
-	right: 0.5rem;
+	right: 1rem;
 	top: 10px;
 	z-index: 5;
 	cursor: pointer;

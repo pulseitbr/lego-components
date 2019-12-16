@@ -42,7 +42,7 @@ const ThinButton = styled.button<ButtonProps & { pill?: boolean }>`
 	transition: background-color 0.35s ease-in-out;
 	width: ${(props: any) => (props.full ? "100%" : "auto")};
 	cursor: ${(props: any) => (props.loading ? "wait" : "pointer")};
-	border-radius: ${(props: any) => (props.pill ? "9999px" : "2px")};
+	border-radius: ${(props: any) => (props.pill ? "0.5rem" : "3px")};
 
 	&:disabled {
 		cursor: not-allowed;
