@@ -19,7 +19,7 @@ const PaperA4 = styled.div.attrs((props: TypesPaperA4) => ({
 	color: ${(props) => props.color};
 
 	table {
-		font-family: arial, sans-serif;
+		font-family: "Arial", sans-serif;
 		border-collapse: collapse;
 		width: 100%;
 	}

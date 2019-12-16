@@ -29,7 +29,9 @@
 		"lego": "git+https://357db6a50f26c9ff848f6b915c5cb00eb794852b:x-oauth-basic@github.com/pulseitbr/lego.git",
 		"polished": "^3.4.2",
 		"react-icons": "^3.8.0",
+		"react-motion": "^0.5.2",
 		"react-slick": "^0.25.2",
+		"react-spring": "^8.0.27",
 		"react-text-mask": "^5.4.3",
 		"react-toastify": "^5.4.1",
 		"tippy.js": "^5.1.2"

@@ -1,5 +1,5 @@
-import { Body, Timeline, TimelineItem, Container, Form, MaterialInput, Page, CheckBox as RadioBox, Colors } from "lego-components";
-import React from "react";
+import { Body, Colors, Container, Form, MaterialInput, Page, Tab, Tabs, Timeline, TimelineItem } from "lego-components";
+import React, { useState } from "react";
 import useForm from "./useForm";
 
 export default function App() {
@@ -13,6 +13,9 @@ export default function App() {
 			blurs: { email() {} }
 		}
 	);
+
+	const [tab, setTab] = useState("second");
+
 	return (
 		<Page>
 			<Body>
@@ -27,10 +30,50 @@ export default function App() {
 							<TimelineItem color={Colors.successLight}>AEEE</TimelineItem>
 						</Timeline>
 					</Container>
+					<Container className="pa3">
+						<Timeline>
+							<TimelineItem color="black">AEEE</TimelineItem>
+							<TimelineItem color={Colors.primary}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.info}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.danger}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.dangerAlpha}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.successLight}>AEEE</TimelineItem>
+						</Timeline>
+					</Container>
+					<Container className="pa3">
+						<Timeline>
+							<TimelineItem color="black">AEEE</TimelineItem>
+							<TimelineItem color={Colors.primary}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.info}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.danger}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.dangerAlpha}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.successLight}>AEEE</TimelineItem>
+						</Timeline>
+					</Container>
+					<Container className="pa3">
+						<Timeline>
+							<TimelineItem color="black">AEEE</TimelineItem>
+							<TimelineItem color={Colors.primary}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.info}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.danger}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.dangerAlpha}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.successLight}>AEEE</TimelineItem>
+						</Timeline>
+					</Container>
+					<Container className="pa3">
+						<Timeline>
+							<TimelineItem color="black">AEEE</TimelineItem>
+							<TimelineItem color={Colors.primary}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.info}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.danger}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.dangerAlpha}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.successLight}>AEEE</TimelineItem>
+						</Timeline>
+					</Container>
 					<Container className="pa4">
 						<MaterialInput
 							required
-							onInvalid={(e) => console.log(e.target.setCustomValidity(""))}
+				 			onInvalid={(e) => console.log(e.target.setCustomValidity(""))}
 							type="email"
 							name="email"
 							fontSize={1}
@@ -48,6 +91,19 @@ export default function App() {
 						/>
 					</Container>
 				</Form>
+				<Container>
+					<Tabs currentTab={tab} onChange={(e) => setTab(e)}>
+						<Tab title="Um" name="first">
+							First content
+						</Tab>
+						<Tab title="Dois" name="second">
+							Second content
+						</Tab>
+						<Tab title="Três" name="third">
+							Third content
+						</Tab>
+					</Tabs>
+				</Container>
 			</Body>
 		</Page>
 	);
