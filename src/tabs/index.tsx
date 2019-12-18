@@ -58,6 +58,38 @@ type TabPanelProps = {
 	onChange?(tab: string): void;
 };
 
+const Header = styled.header`
+	cursor: "pointer";
+	display: inline-block;
+	text-decoration: none;
+
+	&::after {
+		display: block;
+		content: "";
+		border-bottom: solid 3px #019fb6;
+		transform: scaleX(0);
+		transition: transform 250ms ease-in-out;
+	}
+
+	& .left-hover::after {
+		transform-origin: 0% 50%;
+	}
+
+	&::after {
+		content: "";
+		display: block;
+		width: 0;
+		height: 2px;
+		background: #000;
+		transition: width 0.3s;
+	}
+
+	&:hover::after {
+		width: 100%;
+		transition: width 0.3s;
+	}
+`;
+
 export const TabPanel = React.forwardRef(({ children, transition, currentTab, onChange = voidFn, onClose = voidFn }: TabPanelProps, externalRef) => {
 	const ref = useRef(null) as any;
 	const [elements, setElements] = useState(React.Children.toArray(children)) as any;
@@ -129,19 +161,19 @@ export const TabPanel = React.forwardRef(({ children, transition, currentTab, on
 				<View span="100%">
 					<PanelHeaderScroll scrollColor={Colors.primaryLight} span="100%" style={styles.header}>
 						{elements.map((x: any, i: number) => {
-							const { closable, name, title, className, color = Colors.primary } = x.props as TabProps;
+							const { closable, name, title, className = "", color = Colors.primary } = x.props as TabProps;
 							const closeIcon = typeof closable === "boolean" ? <MdClose /> : closable;
-							const css = `tabs-header ${className}`;
-							const style = currentIndex === i ? { color, fontWeight: 900, cursor: "pointer" } : { cursor: "pointer" };
+							const css = `left-hover tabs-header ${className}`;
+							const style = currentIndex === i ? { color, fontWeight: 900 } : {};
 							return (
-								<header key={`header-key-tab-${name}`} role="button" onClick={setTab(i)} className={css} style={style}>
+								<Header key={`header-key-tab-${name}`} role="button" onClick={setTab(i)} className={css} style={style}>
 									{title}{" "}
 									{closable && (
 										<Button transparent onPress={bindClick(i)}>
 											{closeIcon}
 										</Button>
 									)}
-								</header>
+								</Header>
 							);
 						})}
 					</PanelHeaderScroll>

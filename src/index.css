@@ -1857,7 +1857,8 @@ label {
 .tabs-header {
     flex: 0 0 1;
     display: inline-block;
-    margin-left: 2rem;
+	margin-left: 2rem;
+	cursor: pointer;
 }
 
 .tabs-header:first-child {
