@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 		width: "100%",
 		flexShrink: 0,
 		flexWrap: "nowrap",
-		borderBottom: `0.5px solid ${Colors.disabled}`
+		borderBottom: `0.5px solid ${Colors.disabledAlpha}`
 	},
 	view: { marginTop: "0.5rem" }
 });
@@ -27,14 +27,14 @@ type PanelHeaderScrollProps = { scrollColor: string; disabledColor: string };
 
 const PanelHeaderScroll = styled(View).attrs((props: PanelHeaderScrollProps) => props)`
 	::-webkit-scrollbar {
-		height: 2px;
-		width: 2px;
-		background: ${(props) => props.disabledColor};
+		height: 2px !important;
+		width: 2px !important;
+		background: ${(props) => props.disabledColor} !important;
 	}
 
 	::-webkit-scrollbar-thumb:horizontal {
-		background: ${(props) => props.scrollColor};
-		border-radius: 0.1rem;
+		background: ${(props) => props.scrollColor} !important;
+		border-radius: 0.1rem !important;
 	}
 `;
 
@@ -51,17 +51,17 @@ export const Tab = ({ children }: TabProps) => <View span="100%">{children}</Vie
 const voidFn = () => {};
 
 type TabPanelProps = {
+	transition?: number;
 	children: React.ReactNode;
+	currentTab?: string;
 	onClose?(tabName: string): void;
 	onChange?(tab: string): void;
 };
 
-export const TabPanel = React.forwardRef(({ children, onChange = voidFn, onClose = voidFn }: TabPanelProps, externalRef) => {
+export const TabPanel = React.forwardRef(({ children, transition, currentTab, onChange = voidFn, onClose = voidFn }: TabPanelProps, externalRef) => {
 	const ref = useRef(null) as any;
 	const [elements, setElements] = useState(React.Children.toArray(children)) as any;
-
 	const [currentIndex, setCurrentIndex] = useState(0);
-
 	const isMobile = useMobile();
 
 	const onChangeIndex = (index: number) => onChange(elements[index].props.name as string);
@@ -78,14 +78,20 @@ export const TabPanel = React.forwardRef(({ children, onChange = voidFn, onClose
 		}
 	};
 
-	useEffect(() => {
-		setElements(React.Children.toArray(children));
-	}, [children, setElements]);
-
 	const goto = (slide: number) => {
 		setCurrentIndex(slide);
 		onChangeIndex(slide);
 	};
+
+	useEffect(() => {
+		if (!!currentTab) {
+			execIf(currentTab, goto, 100);
+		}
+	}, [currentTab]);
+
+	useEffect(() => {
+		setElements(React.Children.toArray(children));
+	}, [children, setElements]);
 
 	const closeTab = (i: number) => {
 		goto(i > 1 ? i - 1 : 0);
@@ -146,22 +152,23 @@ export const TabPanel = React.forwardRef(({ children, onChange = voidFn, onClose
 						swipe={isMobile}
 						swipeToSlide={isMobile}
 						touchMove={isMobile}
-						arrows={isMobile}
+						arrows={false}
 						beforeChange={beforeChange}
 						dots={false}
 						fade
 						infinite
+						className="z-auto"
 						ref={ref}
 						rows={1}
 						slide="div"
 						slidesToScroll={1}
 						slidesToShow={1}
-						speed={700}
+						speed={transition}
 					>
 						<Container>
 							{elements.map((x: any, i: number) => {
 								if (i === currentIndex) {
-									return x;
+									return <Container style={{ userSelect: "text", zIndex: "auto" }}>{x}</Container>;
 								}
 								return <Fragment key={`miss-key-tab-${x.props.name}`} />;
 							})}

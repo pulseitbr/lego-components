@@ -1,15 +1,13 @@
 import styled from "styled-components";
 
-export const Title = styled.h1`
+export const Title = styled.h1.attrs(({ size = 1, ...props }: { size: number }) => ({ ...props, size }))`
 	font-weight: bold;
-	font-size: 2.25rem;
-	font-family: "Comfortaa", Arial, Helvetica, sans-serif;
+	font-size: ${(props: any) => 2.25 * props.size}rem;
 `;
 
 export const SubTitle = styled.h3.attrs(({ size = 1, ...props }: { size: number }) => ({ ...props, size }))`
 	font-weight: bold;
 	font-size: ${(props: any) => 1.65 * props.size}rem;
-	font-family: "Comfortaa", Arial, Helvetica, sans-serif;
 `;
 type TextType = {
 	paragraph: boolean | string;

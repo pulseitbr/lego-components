@@ -1,5 +1,5 @@
 import { Colors } from "lego";
-import { Body, useForm, Button, CheckBox as RadioBox, StyleSheet, Container, Form, MaterialInput, Page, useMobile, View } from "lego-components";
+import { Body, Button, Container, Form, MaterialInput, Page, StyleSheet, Timeline, TimelineItem, useForm, useMobile, View } from "lego-components";
 import React, { Fragment, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { MdClose } from "react-icons/md";
 import Slider from "react-slick";
@@ -7,7 +7,9 @@ import styled from "styled-components";
 
 const styles = StyleSheet.create({
 	header: {
-		padding: "0.1rem",
+		paddingTop: "0.1rem",
+		paddingLeft: "0.1rem",
+		paddingRight: "0.1rem",
 		flexDirection: "row",
 		display: "inline-flex",
 		overflow: "auto",
@@ -33,16 +35,53 @@ const PanelHeaderScroll = styled(View).attrs((props) => props)`
 	}
 `;
 
-export const Tab = ({ children }: TabProps) => <View span="100%">{children}</View>;
+export const Tab = ({ children }) => <View span="100%">{children}</View>;
 
 const voidFn = () => {};
 
-export const TabPanel = React.forwardRef(({ children, onChange = voidFn, onClose = voidFn }, externalRef) => {
+const Header = styled.header`
+	display: inline-block;
+	cursor: pointer;
+	text-decoration: none;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	border-bottom: 2px solid ${(props) => (props.active ? props.color : "transparent")};
+	display: inline-block;
+	vertical-align: middle;
+	-webkit-transform: perspective(1px) translateZ(0);
+	transform: perspective(1px) translateZ(0);
+	box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+	position: relative;
+	overflow: hidden;
+
+	&:before {
+		content: "";
+		position: absolute;
+		z-index: -1;
+		left: 51%;
+		right: 51%;
+		bottom: 1px;
+		background: ${(props) => props.color};
+		height: 2px;
+		-webkit-transition-property: left, right;
+		transition-property: left, right;
+		-webkit-transition-duration: 0.3s;
+		transition-duration: 0.3s;
+		-webkit-transition-timing-function: ease-out;
+		transition-timing-function: ease-out;
+	}
+	&:hover:before,
+	&:focus:before,
+	&:active:before {
+		left: 0;
+		right: 0;
+	}
+`;
+
+export const Tabs = React.forwardRef(({ children, onChange = voidFn, onClose = voidFn }, externalRef) => {
 	const ref = useRef(null);
 	const [elements, setElements] = useState(React.Children.toArray(children));
-
 	const [currentIndex, setCurrentIndex] = useState(0);
-
 	const isMobile = useMobile();
 
 	const onChangeIndex = (index) => onChange(elements[index].props.name);
@@ -104,19 +143,21 @@ export const TabPanel = React.forwardRef(({ children, onChange = voidFn, onClose
 				<View span="100%">
 					<PanelHeaderScroll scrollColor={Colors.primaryLight} span="100%" style={styles.header}>
 						{elements.map((x, i) => {
-							const { closable, name, title, className, color = Colors.primary } = x.props;
+							const { closable, name, title, className: cls = "", color = Colors.primary } = x.props;
 							const closeIcon = typeof closable === "boolean" ? <MdClose /> : closable;
-							const css = `tabs-header ${className}`;
-							const style = currentIndex === i ? { color, fontWeight: 900, cursor: "pointer" } : { cursor: "pointer" };
+							const css = `tabs-header ${cls}`;
+							const active = currentIndex === i;
+							const style = active ? { color, fontWeight: 900 } : undefined;
+							const headerProps = { style, css, active, key: `header-key-tab-${name}`, role: "button", onClick: setTab(i), color };
 							return (
-								<header key={`header-key-tab-${name}`} role="button" onClick={setTab(i)} className={css} style={style}>
+								<Header {...headerProps}>
 									{title}{" "}
 									{closable && (
 										<Button transparent onPress={bindClick(i)}>
 											{closeIcon}
 										</Button>
 									)}
-								</header>
+								</Header>
 							);
 						})}
 					</PanelHeaderScroll>
@@ -165,67 +206,62 @@ export default function App() {
 			blurs: { email() {} }
 		}
 	);
+
+	const [tab, setTab] = useState("second");
+
 	return (
 		<Page>
 			<Body>
 				<Form onSubmit={(e) => console.log("SUBMIT", e)}>
-					<Container>
-						<RadioBox>
-							{" "}
-							<span class="ml1">AEE</span>{" "}
-						</RadioBox>
-						<RadioBox checked>
-							{" "}
-							<span class="ml1">AEE</span>{" "}
-						</RadioBox>
-						<RadioBox checked>
-							{" "}
-							<span class="ml1">AEE</span>{" "}
-						</RadioBox>
-						<RadioBox checked>
-							{" "}
-							<span class="ml1">AEE</span>{" "}
-						</RadioBox>
-						<RadioBox>
-							{" "}
-							<span class="ml1">AEE</span>{" "}
-						</RadioBox>
-						<RadioBox checked>
-							{" "}
-							<span class="ml1">AEE</span>{" "}
-						</RadioBox>
-						<RadioBox checked>
-							{" "}
-							<span class="ml1">AEE</span>{" "}
-						</RadioBox>
-						<RadioBox checked>
-							{" "}
-							<span class="ml1">AEE</span>{" "}
-						</RadioBox>
-						<RadioBox checked>
-							{" "}
-							<span class="ml1">AEE</span>{" "}
-						</RadioBox>
-						<RadioBox checked>
-							{" "}
-							<span class="ml1">AEE</span>{" "}
-						</RadioBox>
-						<RadioBox checked>
-							{" "}
-							<span class="ml1">AEE</span>{" "}
-						</RadioBox>
-						<RadioBox checked>
-							{" "}
-							<span class="ml1">AEE</span>{" "}
-						</RadioBox>
-						<RadioBox checked>
-							{" "}
-							<span class="ml1">AEE</span>{" "}
-						</RadioBox>
-						<RadioBox checked>
-							{" "}
-							<span class="ml1">AEE</span>{" "}
-						</RadioBox>
+					<Container className="pa3">
+						<Timeline>
+							<TimelineItem color="black">AEEE</TimelineItem>
+							<TimelineItem color={Colors.primary}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.info}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.danger}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.dangerAlpha}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.successLight}>AEEE</TimelineItem>
+						</Timeline>
+					</Container>
+					<Container className="pa3">
+						<Timeline>
+							<TimelineItem color="black">AEEE</TimelineItem>
+							<TimelineItem color={Colors.primary}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.info}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.danger}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.dangerAlpha}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.successLight}>AEEE</TimelineItem>
+						</Timeline>
+					</Container>
+					<Container className="pa3">
+						<Timeline>
+							<TimelineItem color="black">AEEE</TimelineItem>
+							<TimelineItem color={Colors.primary}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.info}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.danger}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.dangerAlpha}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.successLight}>AEEE</TimelineItem>
+						</Timeline>
+					</Container>
+					<Container className="pa3">
+						<Timeline>
+							<TimelineItem color="black">AEEE</TimelineItem>
+							<TimelineItem color={Colors.primary}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.info}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.danger}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.dangerAlpha}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.successLight}>AEEE</TimelineItem>
+						</Timeline>
+					</Container>
+					<Container className="pa3">
+						<Timeline>
+							<TimelineItem color="black">AEEE</TimelineItem>
+							<TimelineItem color={Colors.primary}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.info}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.danger}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.dangerAlpha}>AEEE</TimelineItem>
+							<TimelineItem color={Colors.successLight}>AEEE</TimelineItem>
+						</Timeline>
 					</Container>
 					<Container className="pa4">
 						<MaterialInput
@@ -248,6 +284,19 @@ export default function App() {
 						/>
 					</Container>
 				</Form>
+				<Container>
+					<Tabs currentTab={tab} onChange={(e) => setTab(e)}>
+						<Tab title="Um" name="first">
+							First content
+						</Tab>
+						<Tab title="Dois" name="second">
+							Second content
+						</Tab>
+						<Tab title="Três" name="third">
+							Third content
+						</Tab>
+					</Tabs>
+				</Container>
 			</Body>
 		</Page>
 	);
