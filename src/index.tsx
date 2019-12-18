@@ -19,6 +19,7 @@ export { default as RadioBox } from "./form/Radiobox";
 export { default as StyleInput } from "./form/StyleInput";
 export { default as Switch } from "./form/Switch";
 export { default as useBlockScroll } from "./hooks/useBlockScroll";
+export { default as useMobile } from "./hooks/useMobile";
 export { default as useForm } from "./hooks/useForm";
 export { default as useImagePreview } from "./hooks/useImagePreview";
 export { default as useKeyDown } from "./hooks/useKeyDown";

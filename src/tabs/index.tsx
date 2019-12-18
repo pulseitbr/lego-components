@@ -58,35 +58,43 @@ type TabPanelProps = {
 	onChange?(tab: string): void;
 };
 
-const Header = styled.header`
-	cursor: "pointer";
+type HeaderProps = { color: string; active: boolean };
+
+const Header = styled.header<HeaderProps>`
+	cursor: pointer;
 	display: inline-block;
+	box-sizing: border-box;
 	text-decoration: none;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	margin-left: 0.1em;
+	margin-right: 0.1em;
+	display: inline-block;
+	vertical-align: middle;
+	transform: perspective(1px) translateZ(0);
+	position: relative;
+	color: ${(props) => props.color};
+	transition: font-weight 350ms cubic-bezier(0.51, 0.22, 0.16, 0.83);
 
-	&::after {
-		display: block;
+	&:before {
 		content: "";
-		border-bottom: solid 3px #019fb6;
-		transform: scaleX(0);
-		transition: transform 250ms ease-in-out;
-	}
-
-	& .left-hover::after {
-		transform-origin: 0% 50%;
-	}
-
-	&::after {
-		content: "";
-		display: block;
-		width: 0;
+		position: absolute;
+		z-index: -1;
+		left: ${(props) => (props.active ? "0" : "51%")};
+		right: ${(props) => (props.active ? "0" : "51%")};
+		bottom: 0;
+		background: ${(props) => props.color};
 		height: 2px;
-		background: #000;
-		transition: width 0.3s;
+		transition-property: left, right;
+		transition-duration: 350ms;
+		transition-timing-function: cubic-bezier(0.51, 0.22, 0.16, 0.83);
 	}
 
-	&:hover::after {
-		width: 100%;
-		transition: width 0.3s;
+	&:hover:before,
+	&:focus:before,
+	&:active:before {
+		left: 0;
+		right: 0;
 	}
 `;
 
@@ -161,12 +169,13 @@ export const TabPanel = React.forwardRef(({ children, transition, currentTab, on
 				<View span="100%">
 					<PanelHeaderScroll scrollColor={Colors.primaryLight} span="100%" style={styles.header}>
 						{elements.map((x: any, i: number) => {
-							const { closable, name, title, className = "", color = Colors.primary } = x.props as TabProps;
+							const { closable, name, title, className: cls = "", color = Colors.primary } = x.props;
 							const closeIcon = typeof closable === "boolean" ? <MdClose /> : closable;
-							const css = `left-hover tabs-header ${className}`;
-							const style = currentIndex === i ? { color, fontWeight: 900 } : {};
+							const css = `tabs-header ${cls}`;
+							const active = currentIndex === i;
+							const headerProps = { className: css, active, role: "button", onClick: setTab(i), color };
 							return (
-								<Header key={`header-key-tab-${name}`} role="button" onClick={setTab(i)} className={css} style={style}>
+								<Header key={`header-tab-${name}`} {...headerProps}>
 									{title}{" "}
 									{closable && (
 										<Button transparent onPress={bindClick(i)}>
