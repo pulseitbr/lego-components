@@ -61,20 +61,21 @@ type TabPanelProps = {
 type HeaderProps = { color: string; active: boolean };
 
 const Header = styled.header<HeaderProps>`
+	box-sizing: border-box;
+	color: ${(props) => props.color};
 	cursor: pointer;
 	display: inline-block;
-	box-sizing: border-box;
-	text-decoration: none;
-	padding-left: 0.5em;
-	padding-right: 0.5em;
+	display: inline-block;
+	font-size: 1.25rem;
 	margin-left: 0.1em;
 	margin-right: 0.1em;
-	display: inline-block;
-	vertical-align: middle;
-	transform: perspective(1px) translateZ(0);
+	padding-left: 0.5em;
+	padding-right: 0.5em;
 	position: relative;
-	color: ${(props) => props.color};
+	text-decoration: none;
+	transform: perspective(1px) translateZ(0);
 	transition: font-weight 350ms cubic-bezier(0.51, 0.22, 0.16, 0.83);
+	vertical-align: middle;
 
 	&:before {
 		content: "";
