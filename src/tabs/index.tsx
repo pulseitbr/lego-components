@@ -66,7 +66,7 @@ const Header = styled.header<HeaderProps>`
 	cursor: pointer;
 	display: inline-block;
 	display: inline-block;
-	font-size: 1.25rem;
+	font-size: 1.05rem;
 	margin-left: 0.1em;
 	margin-right: 0.1em;
 	padding-left: 0.5em;
