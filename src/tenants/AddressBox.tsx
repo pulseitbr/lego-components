@@ -38,7 +38,6 @@ type BindProps = {
 };
 
 type Props = {
-	listGetter: () => any;
 	dataSource: AddressBoxItem[];
 	emptyHomeMessage: React.ReactNode;
 	emptyStoreMessage: React.ReactNode;
@@ -129,26 +128,12 @@ const BindCard = (props: BindProps) => (addr: AddressBoxItem) => {
 	);
 };
 
-const AddressBox = ({
-	dataSource,
-	emptyHomeMessage,
-	emptyStoreMessage,
-	listGetter,
-	onChange,
-	inlineLayout = false,
-	isHome = true,
-	span,
-	medium
-}: Props) => {
+const AddressBox = ({ dataSource, emptyHomeMessage, emptyStoreMessage, onChange, inlineLayout = false, isHome = true, span, medium }: Props) => {
 	const [idSelectAddress, setIdSelectAddress] = useState(null as number | null);
 
 	const useInlineLayout = inlineLayout || dataSource.length > 5;
 
 	const emptyMessage = isHome ? emptyHomeMessage : emptyStoreMessage;
-
-	useEffect(() => {
-		listGetter();
-	}, [listGetter]);
 
 	useEffect(() => {
 		if (!IsEmpty(dataSource)) {
@@ -159,7 +144,7 @@ const AddressBox = ({
 			setIdSelectAddress(null);
 			onChange(null);
 		}
-	}, [dataSource, dataSource.length, onChange]);
+	}, [dataSource, dataSource.length]);
 
 	const changeSelect = (id: number) => {
 		setIdSelectAddress(id);

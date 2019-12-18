@@ -10,5 +10,5 @@ const createReducer = <State>(reducer: { [key: string]: ReducerFunction<State> }
 	return reducer.hasOwnProperty(key) ? reducer[key](state, action) : state;
 };
 
-export default <S extends {}, T extends string>(state: S, fn: { [type in T]: (state: S, action: any) => S }): UseReducer<S, T> =>
-	useReducer(createReducer<S>(fn), state, () => state);
+export default <S extends {}, T extends string>(state: S, functions: { [type in T]: (state: S, action: any) => S }): UseReducer<S, T> =>
+	useReducer(createReducer<S>(functions), state, () => state);
