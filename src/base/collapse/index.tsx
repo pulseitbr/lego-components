@@ -65,11 +65,7 @@ class Collapse extends React.Component<Props, any> {
 	shouldComponentUpdate(nextProps: any) {
 		const { theme, isOpened, children } = this.props;
 
-		return (
-			children !== nextProps.children ||
-			isOpened !== nextProps.isOpened ||
-			Object.keys(theme).some((c) => theme[c] !== nextProps.theme[c])
-		);
+		return children !== nextProps.children || isOpened !== nextProps.isOpened || Object.keys(theme).some((c) => theme[c] !== nextProps.theme[c]);
 	}
 
 	getSnapshotBeforeUpdate() {

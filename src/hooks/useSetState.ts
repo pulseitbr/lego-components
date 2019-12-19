@@ -28,10 +28,7 @@ const useSetState = (initialState = {}) => {
 				newState = { ...newState, ...result };
 			}
 		} else {
-			throw new Error(
-				"Invalid argument passed to setState. Expected a function or object, but received: " +
-					partialObjOrCallback
-			);
+			throw new Error("Invalid argument passed to setState. Expected a function or object, but received: " + partialObjOrCallback);
 		}
 
 		if (abortUpdate) {

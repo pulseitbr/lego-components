@@ -81,27 +81,7 @@ export const masks = {
 		return [/[0123]/, /\d/, "/", /[01]/, /\d/, "/", /\d/, /\d/, /\d/, /\d/];
 	},
 	isoDate: [/\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, "-", /\d/, /\d/],
-	creditCard: [
-		/\d/,
-		/\d/,
-		/\d/,
-		/\d/,
-		" ",
-		/\d/,
-		/\d/,
-		/\d/,
-		/\d/,
-		" ",
-		/\d/,
-		/\d/,
-		/\d/,
-		/\d/,
-		" ",
-		/\d/,
-		/\d/,
-		/\d/,
-		/\d/
-	],
+	creditCard: [/\d/, /\d/, /\d/, /\d/, " ", /\d/, /\d/, /\d/, /\d/, " ", /\d/, /\d/, /\d/, /\d/, " ", /\d/, /\d/, /\d/, /\d/],
 	matricula: [
 		/[\S]/,
 		/[\S]/,
@@ -127,26 +107,7 @@ export const masks = {
 	cpfCnpj: (value: string) => {
 		const mask = value.replace(/[^0-9]/g, "");
 		if (mask.length > 11) {
-			return [
-				/\d/,
-				/\d/,
-				".",
-				/\d/,
-				/\d/,
-				/\d/,
-				".",
-				/\d/,
-				/\d/,
-				/\d/,
-				"/",
-				/\d/,
-				/\d/,
-				/\d/,
-				/\d/,
-				"-",
-				/\d/,
-				/\d/
-			];
+			return [/\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/];
 		}
 		return [/\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "-", /\d/, /\d/];
 	},
@@ -178,17 +139,7 @@ export function convertMaskToString(mask: any) {
 	return placeholder;
 }
 
-export const decimalsInput = [
-	"cpf",
-	"cellphone",
-	"cnpj",
-	"cep",
-	"telephone",
-	"date",
-	"matricula",
-	"cellTelephone",
-	"cpfCnpj"
-];
+export const decimalsInput = ["cpf", "cellphone", "cnpj", "cep", "telephone", "date", "matricula", "cellTelephone", "cpfCnpj"];
 
 export const decimalKeyboard = {
 	date: {

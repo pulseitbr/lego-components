@@ -55,10 +55,7 @@ export default <T>(fields: T, { updateOnChange = true, validations = {}, blurs =
 	const cache = useRef(fill(fields, false));
 	const errors: FieldMessage = useMemo(() => fill(fields, messageFill), [fields]);
 
-	const [state, dispatch] = useReducer({ fields, errors } as InternalState<T>, actions) as [
-		InternalState<T>,
-		Function
-	];
+	const [state, dispatch] = useReducer({ fields, errors } as InternalState<T>, actions) as [InternalState<T>, Function];
 
 	const values = state.fields;
 	const fieldNames = Object.keys(fields);
@@ -69,19 +66,14 @@ export default <T>(fields: T, { updateOnChange = true, validations = {}, blurs =
 		throw new Error(`You need the field names in your inputs: ${fieldNames} - ${names}`);
 	}
 
-	const setState = useMemo(() => (newProps: Partial<T>) => dispatch({ type: "setState", state: { ...newProps } }), [
-		dispatch
+	const setState = useMemo(() => (newProps: Partial<T>) => dispatch({ type: "setState", state: { ...newProps } }), [dispatch]);
+
+	const setErrors = useMemo(() => (errorsObject: FieldMessage) => dispatch({ type: "aggregateErrors", errors: errorsObject }), [dispatch]);
+
+	const clearState = useMemo(() => (emptyState?: Partial<T>) => dispatch({ type: "setState", state: { ...fields, ...emptyState } }), [
+		dispatch,
+		fields
 	]);
-
-	const setErrors = useMemo(
-		() => (errorsObject: FieldMessage) => dispatch({ type: "aggregateErrors", errors: errorsObject }),
-		[dispatch]
-	);
-
-	const clearState = useMemo(
-		() => (emptyState?: Partial<T>) => dispatch({ type: "setState", state: { ...fields, ...emptyState } }),
-		[dispatch, fields]
-	);
 
 	useEffect(() => {
 		if (updateOnChange) {

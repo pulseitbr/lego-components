@@ -48,7 +48,7 @@ const ThinButton = styled.button<ButtonProps & { pill?: boolean }>`
 		cursor: not-allowed;
 		pointer-events: none;
 		color: ${Colors.darkAlpha};
-		background-color: ${Colors.disabledLight};
+		background-color: transparent;
 		border-color: ${Colors.disabled};
 	}
 `;
@@ -81,15 +81,11 @@ const styledProps = {
 	success: ghostStyle(Colors.success, Colors.light, Colors.success, Colors.successDark),
 	transparent: ghostStyle("transparent", "transparent", "transparent", "transparent"),
 	warn: ghostStyle(Colors.warn, Colors.light, Colors.warn, Colors.warnDark),
-	disabledTransparent: `${ghostStyle(
-		Colors.disabled,
-		Colors.disabled,
-		"transparent",
-		"transparent"
-	)} cursor: not-allowed; &:disabled {
-    background-color: transparent;
-    border-color: transparent;
-  }`
+	disabledTransparent: `${ghostStyle(Colors.disabled, Colors.disabled, "transparent", "transparent")}
+	cursor: not-allowed; &:disabled {
+    	background-color: transparent;
+    	border-color: transparent;
+  	}`
 };
 
 const Transparent = styled(ThinButton)`
@@ -98,7 +94,6 @@ const Transparent = styled(ThinButton)`
 	position: relative;
 	background-color: transparent;
 	outline: 0;
-	color: ${Colors.primary};
 	border: 1px solid transparent;
 	cursor: pointer;
 `;
