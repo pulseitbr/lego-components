@@ -21,7 +21,7 @@ const ModalPortal = styled.div.attrs(({ visible = false, ...props }: any) => ({
 	display: ${(props) => (props.visible ? "block" : "none")};
 	top: 0;
 	left: 0;
-	z-index: 9998;
+	z-index: 5;
 	width: 100%;
 	height: 100%;
 	overflow: auto;
@@ -46,7 +46,7 @@ type Content = ThemedStyledFunction<"div", any, any, any> & { width: string | nu
 const ModalContent = styled.div.attrs((props: Content) => props)`
 	background-color: ${Colors.lightLight};
 	margin: auto;
-	z-index: 9999;
+	z-index: 4;
 	min-width: ${StyleSheet.minWidthMobile};
 	max-width: 100%;
 	overflow-y: hidden;

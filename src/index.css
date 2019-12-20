@@ -578,101 +578,6 @@ label {
     }
 }
 
-.notify {
-    position: fixed;
-    z-index: 1000;
-}
-
-.notify-notice {
-    padding: 0.5rem 1.2rem 0.5rem 1rem;
-    border-radius: 5px;
-    border: 1px solid var(--light);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    border: 0px solid rgba(0, 0, 0, 0);
-    background: var(--lightLight);
-    display: block;
-    width: auto;
-    line-height: 1.5;
-    vertical-align: middle;
-    position: relative;
-    margin: 10px 0;
-}
-
-.notify-notice-closable {
-    padding-right: 1.2rem;
-}
-
-.notify-notice-close {
-    position: absolute;
-    right: 5px;
-    top: 3px;
-    color: var(--dark);
-    cursor: pointer;
-    outline: none;
-    font-size: 1rem;
-    font-weight: 700;
-    line-height: 1;
-    text-shadow: 0 1px 0 transparent;
-    opacity: 0.9;
-    text-decoration: none;
-}
-
-.notify-notice-close-x:after {
-    content: "⨯";
-    font-weight: normal;
-    font-size: 1.2rem;
-}
-
-.notify-notice-close:hover {
-    opacity: 1;
-    text-decoration: none;
-}
-
-.notify-fade-enter {
-    opacity: 0;
-    animation-duration: 0.4s;
-    animation-fill-mode: both;
-    animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
-    animation-play-state: paused;
-}
-
-.notify-fade-leave {
-    animation-duration: 0.4s;
-    animation-fill-mode: both;
-    animation-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2);
-    animation-play-state: paused;
-}
-
-.notify-fade-enter.notify-fade-enter-active {
-    animation-name: rcNotificationFadeIn;
-    animation-play-state: running;
-}
-
-.notify-fade-leave.notify-fade-leave-active {
-    animation-name: rcDialogFadeOut;
-    animation-play-state: running;
-}
-
-@keyframes rcNotificationFadeIn {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
-@keyframes rcDialogFadeOut {
-    0% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 0;
-    }
-}
-
 .form-field--is-active .form-field__control::after {
     border-bottom: 0.1rem solid var(--primaryLight);
     transform: scaleX(300);
@@ -1854,9 +1759,17 @@ label {
     background: center center no-repeat transparent;
 }
 
+.tab-master {
+    max-width: 411px;
+    overflow: auto;
+}
+
+.tab-master li {
+    display: inline;
+}
+
 .tabs-header {
-    flex: 0 0 1;
-    display: inline-block;
+    display: inline;
     cursor: pointer;
 }
 
