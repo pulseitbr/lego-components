@@ -7,7 +7,7 @@ import Button from "../button/Button";
 import styled from "styled-components";
 import { View, Container } from "../base";
 import StyleSheet from "../styles/StyleSheet";
-import useWidth from '../hooks/useWidth';
+import useWidth from "../hooks/useWidth";
 
 const styles = StyleSheet.create({
 	header: {
@@ -116,12 +116,12 @@ export const TabPanel = React.forwardRef(({ children, transition, currentTab, on
 	const onChangeIndex = (index: number) => onChange(elements[index].props.name as string);
 
 	const execIf = (name: string, callback: (index: number) => void, timeout = 150) => {
-		let index: any = null;
-		elements.forEach((x: any, i: number) => {
+		const index = elements.reduce((acc: any, x: any, i: number) => {
 			if (x.props.name === name) {
-				index = i;
+				return i;
 			}
-		});
+			return acc;
+		}, null);
 		if (index !== null) {
 			setTimeout(() => callback(index!), timeout);
 		}

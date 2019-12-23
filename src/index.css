@@ -549,6 +549,7 @@ label {
 }
 
 @media print {
+
     .no-print,
     .no-print * {
         display: none !important;
@@ -1656,9 +1657,7 @@ label {
 .slick-slider,
 .slick-track {
     position: relative;
-    display: block;
-    z-index: auto;
-    user-select: auto;
+    display: block
 }
 
 .slick-loading .slick-slide,
@@ -1722,18 +1721,23 @@ label {
     display: none;
     float: left;
     height: 100%;
-    min-height: 1px;
-    z-index: auto;
-    user-select: auto;
-}
-
-.slick-current {
-    z-index: auto;
-    user-select: auto;
+    min-height: 1px
 }
 
 [dir=rtl] .slick-slide {
     float: right
+}
+
+.slick-slide img {
+    display: block
+}
+
+.slick-slide.slick-loading img {
+    display: none
+}
+
+.slick-slide.dragging img {
+    pointer-events: none
 }
 
 .slick-initialized .slick-slide {
@@ -1746,17 +1750,8 @@ label {
     border: 1px solid transparent
 }
 
-.slick-loading .slick-list {
-    background: center center no-repeat transparent;
-}
-
-.tab-master {
-    max-width: 411px;
-    overflow: auto;
-}
-
-.tab-master li {
-    display: inline;
+.slick-arrow.slick-hidden {
+    display: none
 }
 
 .tabs-header {
