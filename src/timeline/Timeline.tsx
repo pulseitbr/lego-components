@@ -15,7 +15,7 @@ export type TimelineProps = {
 const customizePrefixCls = "timeline";
 const rightItem = "timeline-item-right";
 const leftItem = "timeline-item-left";
-const isLast = (items: number, index: number) => (items - 1 === index ? "timeline-item-last" : "");
+const isLast = (items: number, index: number) => items - 1 === index;
 
 const setClassName = (mode: string, pending: boolean, reverse: boolean) => {
 	if (pending) {
@@ -69,7 +69,7 @@ const Timeline = ({ reverse = false, mode = "left", pending = null, pendingDot, 
 		const last = isLast(listSize, index);
 		return React.cloneElement(el, {
 			isLast: last,
-			className: `${el.props.className || ""} ${isLast} ${getPositionCls(el, index)}`
+			className: `${el.props.className || ""} ${isLast ? "timeline-item-last" : ""} ${getPositionCls(el, index)}`
 		});
 	});
 	return (

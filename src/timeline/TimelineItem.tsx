@@ -19,6 +19,7 @@ const TimelineItem = ({ color = "primary", isLast, children, pending = false, do
 	return (
 		<li {...restProps} className={itemClassName}>
 			{!isLast && <div className={`${prefixCls}-item-tail`} />}
+			{isLast && <div className={`${prefixCls}-item-last`} />}
 			<div className={dotClassName} style={{ borderColor: timelineTestBorder(color) }}>
 				{dot}
 			</div>
