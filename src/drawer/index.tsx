@@ -16,7 +16,7 @@ const speed = 350;
 const ModalPortal: any = styled.div.attrs((props: ModalPortal) => props)`
 	top: 0;
 	left: 0;
-	z-index: 1;
+	z-index: 4;
 	width: 100%;
 	height: 100%;
 	overflow: auto;
@@ -42,6 +42,7 @@ const DrawerContainer = styled.div`
 	height: 100%;
 	overflow-y: auto;
 	min-height: 100%;
+	z-index: 5;
 	min-width: ${StyleSheet.minWidthMobile};
 	position: fixed;
 	right: 0;

@@ -30,11 +30,6 @@ const TEMPLATE = {
 };
 
 const maskCreator = (template = "") =>
-	template
-		.split("")
-		.reduce(
-			(acc, el) => (TEMPLATE.hasOwnProperty(el) ? acc.concat(TEMPLATE[el]) : acc.concat(el)),
-			[] as Array<string | RegExp>
-		);
+	template.split("").reduce((acc, el) => (TEMPLATE.hasOwnProperty(el) ? acc.concat(TEMPLATE[el]) : acc.concat(el)), [] as Array<string | RegExp>);
 
 export default maskCreator;

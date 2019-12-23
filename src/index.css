@@ -569,11 +569,6 @@ label {
     }
 }
 
-.notify {
-    position: fixed;
-    z-index: 1000;
-}
-
 .form-field--is-active .form-field__control::after {
     border-bottom: 0.1rem solid var(--primaryLight);
     transform: scaleX(300);
@@ -1752,17 +1747,25 @@ label {
 }
 
 .slick-loading .slick-list {
-    background: center center no-repeat #fff
+    background: center center no-repeat transparent;
+}
+
+.tab-master {
+    max-width: 411px;
+    overflow: auto;
+}
+
+.tab-master li {
+    display: inline;
 }
 
 .tabs-header {
-    flex: 0 0 1;
-    display: inline-block;
-    margin-left: 2rem;
+    display: inline;
+    cursor: pointer;
 }
 
 .tabs-header:first-child {
-    margin-left: 0.6rem;
+    margin-left: 0.2rem;
 }
 
 .tabs-header:last-child {

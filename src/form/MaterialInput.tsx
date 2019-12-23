@@ -12,6 +12,8 @@ type Props = {
 	divClassName?: string;
 	divColor?: string;
 	fontSize?: number;
+	borderBottomActiveColor?: string;
+	borderBottomColor?: string;
 	divStyle?: React.CSSProperties;
 	error?: boolean;
 	hidePasswordIcon?: React.ReactNode;
@@ -208,6 +210,8 @@ const MaterialInput = React.forwardRef(
 			loaderColor = Colors.primary,
 			loading = false,
 			mask: maskType,
+			borderBottomActiveColor,
+			borderBottomColor,
 			message,
 			name,
 			placeholder = "",
@@ -232,7 +236,14 @@ const MaterialInput = React.forwardRef(
 			...labelStyle
 		};
 
-		const containerProps = { style: divStyle, className: divClassName, size: fontSize, transition: lineAnimationTime };
+		const containerProps = {
+			style: divStyle,
+			className: divClassName,
+			size: fontSize,
+			transition: lineAnimationTime,
+			borderBottomActiveColor,
+			borderBottomColor
+		};
 		const internalInputStyle = { cursor: disabled ? "not-allowed" : "pointer", ...inputHtml.style };
 
 		const inputCommonProps = {

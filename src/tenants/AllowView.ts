@@ -9,7 +9,6 @@ type Props = {
 };
 
 const AllowView = ({ allowedProfiles, allowedTenants, profiles, tenant }: Props) =>
-	allowedProfiles.some((allowed) => profiles.some((profile) => profile === allowed)) &&
-	allowedTenants.includes(tenant);
+	allowedProfiles.some((allowed) => profiles.some((profile) => profile === allowed)) && allowedTenants.includes(tenant);
 
 export default AllowView;

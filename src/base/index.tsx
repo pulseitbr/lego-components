@@ -28,6 +28,8 @@ const Flex = styled.div.attrs(({ direction = "row", ...props }: TypeContainer) =
 	const xlarge = props.xlarge || span;
 	return { ...props, span, xsmall, medium, large, small, xlarge, direction };
 })`
+	display: flex;
+	overflow: auto;
 	flex: 0 0 ${(props: TypeContainer) => props.span};
 	flex-wrap: wrap;
 	flex-direction: ${(props: TypeContainer) => props.direction};
@@ -99,10 +101,7 @@ export const Page = styled(Responsive)`
 	display: flex;
 	flex-direction: column;
 	flex-wrap: wrap;
-	height: 100%;
-	min-height: 100%;
 	min-width: 100%;
-	width: 100%;
 `;
 export const Body = styled(Responsive)`
 	align-items: center;
@@ -110,6 +109,7 @@ export const Body = styled(Responsive)`
 	flex-wrap: wrap;
 	flex: 1 0 auto;
 	min-width: 100%;
+	min-height: max-content;
 	width: 100%;
 `;
 export const Container = styled(Responsive)`
@@ -143,6 +143,7 @@ const GridComponent = styled.div`
 type RowProps = {
 	spacing: string | number;
 } & React.HTMLAttributes<HTMLElement>;
+
 export const Row = styled(GridComponent).attrs((props: RowProps) => ({
 	...props,
 	spacing: props.spacing

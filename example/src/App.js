@@ -40,36 +40,35 @@ export const Tab = ({ children }) => <View span="100%">{children}</View>;
 const voidFn = () => {};
 
 const Header = styled.header`
-	display: inline-block;
 	cursor: pointer;
+	display: inline-block;
+	box-sizing: border-box;
 	text-decoration: none;
 	padding-left: 0.5em;
 	padding-right: 0.5em;
-	border-bottom: 2px solid ${(props) => (props.active ? props.color : "transparent")};
+	margin-left: 0.1em;
+	margin-right: 0.1em;
 	display: inline-block;
 	vertical-align: middle;
-	-webkit-transform: perspective(1px) translateZ(0);
 	transform: perspective(1px) translateZ(0);
-	box-shadow: 0 0 1px rgba(0, 0, 0, 0);
 	position: relative;
-	overflow: hidden;
+	color: ${(props) => props.color};
+	transition: font-weight 350ms cubic-bezier(.51,.22,.16,.83);
 
 	&:before {
 		content: "";
 		position: absolute;
 		z-index: -1;
-		left: 51%;
-		right: 51%;
-		bottom: 1px;
+		left: ${(props) => (props.active ? "0" : "51%")};
+		right: ${(props) => (props.active ? "0" : "51%")};
+		bottom: 0;
 		background: ${(props) => props.color};
 		height: 2px;
-		-webkit-transition-property: left, right;
 		transition-property: left, right;
-		-webkit-transition-duration: 0.3s;
-		transition-duration: 0.3s;
-		-webkit-transition-timing-function: ease-out;
-		transition-timing-function: ease-out;
+		transition-duration: 350ms;
+		transition-timing-function: cubic-bezier(.51,.22,.16,.83);
 	}
+
 	&:hover:before,
 	&:focus:before,
 	&:active:before {
@@ -147,8 +146,7 @@ export const Tabs = React.forwardRef(({ children, onChange = voidFn, onClose = v
 							const closeIcon = typeof closable === "boolean" ? <MdClose /> : closable;
 							const css = `tabs-header ${cls}`;
 							const active = currentIndex === i;
-							const style = active ? { color, fontWeight: 900 } : undefined;
-							const headerProps = { style, css, active, key: `header-key-tab-${name}`, role: "button", onClick: setTab(i), color };
+							const headerProps = { className: css, active, key: `header-key-tab-${name}`, role: "button", onClick: setTab(i), color };
 							return (
 								<Header {...headerProps}>
 									{title}{" "}

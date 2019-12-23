@@ -1,12 +1,13 @@
-import { Colors } from "lego";
-import React, { Fragment, useEffect, useImperativeHandle, useRef, useState } from "react";
-import { MdClose } from "react-icons/md";
+import React, { useRef, useEffect, useState, useImperativeHandle, Fragment } from "react";
 import Slider from "react-slick";
-import styled from "styled-components";
-import { Container, View } from "../base";
-import Button from "../button/Button";
+import { Colors } from "lego";
+import { MdClose } from "react-icons/md";
 import useMobile from "../hooks/useMobile";
+import Button from "../button/Button";
+import styled from "styled-components";
+import { View, Container } from "../base";
 import StyleSheet from "../styles/StyleSheet";
+import useWidth from '../hooks/useWidth';
 
 const styles = StyleSheet.create({
 	header: {
@@ -20,15 +21,23 @@ const styles = StyleSheet.create({
 		flexWrap: "nowrap",
 		borderBottom: `0.5px solid ${Colors.disabledAlpha}`
 	},
-	view: { marginTop: "0.5rem" }
+	view: { marginTop: "0.5rem", width: "100%", maxWidth: "100%" }
 });
 
-type PanelHeaderScrollProps = { scrollColor: string; disabledColor: string };
+type PanelHeaderScrollProps = { scrollColor: string; disabledColor: string; widthDevice: number };
 
 const PanelHeaderScroll = styled(View).attrs((props: PanelHeaderScrollProps) => props)`
+	overflow-x: auto;
+	width: auto;
+	margin: auto;
+	display: flex;
+	min-width: 320px;
+	max-width: ${(props) => props.widthDevice * 0.9}px;
+	white-space: nowrap;
+
 	::-webkit-scrollbar {
-		height: 2px !important;
-		width: 2px !important;
+		height: 1px !important;
+		width: 1px !important;
 		background: ${(props) => props.disabledColor} !important;
 	}
 
@@ -46,6 +55,7 @@ type TabProps = {
 	closable?: boolean | React.ReactNode;
 	name: string;
 };
+
 export const Tab = ({ children }: TabProps) => <View span="100%">{children}</View>;
 
 const voidFn = () => {};
@@ -58,10 +68,49 @@ type TabPanelProps = {
 	onChange?(tab: string): void;
 };
 
+type HeaderProps = { color: string; active: boolean };
+
+const Header = styled.li<HeaderProps>`
+	color: ${(props) => props.color};
+	cursor: pointer;
+	font-size: 1.05rem;
+	margin-left: 0.1em;
+	margin-right: 0.1em;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	position: relative;
+	text-decoration: none;
+	transform: perspective(1px) translateZ(0);
+	transition: font-weight 350ms cubic-bezier(0.51, 0.22, 0.16, 0.83);
+	vertical-align: middle;
+
+	&:before {
+		content: "";
+		position: absolute;
+		z-index: -1;
+		left: ${(props) => (props.active ? "0" : "51%")};
+		right: ${(props) => (props.active ? "0" : "51%")};
+		bottom: 0;
+		background: ${(props) => props.color};
+		height: 2px;
+		transition-property: left, right;
+		transition-duration: 350ms;
+		transition-timing-function: cubic-bezier(0.51, 0.22, 0.16, 0.83);
+	}
+
+	&:hover:before,
+	&:focus:before,
+	&:active:before {
+		left: 0;
+		right: 0;
+	}
+`;
+
 export const TabPanel = React.forwardRef(({ children, transition, currentTab, onChange = voidFn, onClose = voidFn }: TabPanelProps, externalRef) => {
 	const ref = useRef(null) as any;
 	const [elements, setElements] = useState(React.Children.toArray(children)) as any;
 	const [currentIndex, setCurrentIndex] = useState(0);
+	const width = useWidth();
 	const isMobile = useMobile();
 
 	const onChangeIndex = (index: number) => onChange(elements[index].props.name as string);
@@ -124,24 +173,31 @@ export const TabPanel = React.forwardRef(({ children, transition, currentTab, on
 	const bindClick = (index: number) => () => closeTab(index);
 
 	return (
-		<Fragment>
+		<Container>
 			<Container>
 				<View span="100%">
-					<PanelHeaderScroll scrollColor={Colors.primaryLight} span="100%" style={styles.header}>
+					<PanelHeaderScroll widthDevice={width} scrollColor={Colors.primaryLight} span="100%" style={styles.header}>
 						{elements.map((x: any, i: number) => {
-							const { closable, name, title, className, color = Colors.primary } = x.props as TabProps;
+							const { closable, name, title, className: cls = "", color = Colors.primary } = x.props;
 							const closeIcon = typeof closable === "boolean" ? <MdClose /> : closable;
-							const css = `tabs-header ${className}`;
-							const style = currentIndex === i ? { color, fontWeight: 900, cursor: "pointer" } : { cursor: "pointer" };
+							const css = `${cls} tabs-header`;
+							const active = currentIndex === i;
+							const headerProps = {
+								className: css,
+								active,
+								role: "button",
+								onClick: setTab(i),
+								color
+							};
 							return (
-								<header key={`header-key-tab-${name}`} role="button" onClick={setTab(i)} className={css} style={style}>
+								<Header key={`header-tab-${name}`} {...headerProps}>
 									{title}{" "}
 									{closable && (
 										<Button transparent onPress={bindClick(i)}>
 											{closeIcon}
 										</Button>
 									)}
-								</header>
+								</Header>
 							);
 						})}
 					</PanelHeaderScroll>
@@ -176,6 +232,6 @@ export const TabPanel = React.forwardRef(({ children, transition, currentTab, on
 					</Slider>
 				</View>
 			</Container>
-		</Fragment>
+		</Container>
 	);
 });

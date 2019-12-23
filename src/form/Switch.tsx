@@ -98,14 +98,7 @@ const Switch = ({
 	return (
 		<Fragment>
 			<Label className={labelClassName} color={color} animationTime={animationTime}>
-				<input
-					{...html}
-					name={name}
-					type="checkbox"
-					onChange={change}
-					checked={isChecked}
-					aria-checked={ariaChecked}
-				/>
+				<input {...html} name={name} type="checkbox" onChange={change} checked={isChecked} aria-checked={ariaChecked} />
 				<span className={roundClassName} />
 			</Label>
 			<span style={{ lineHeight: 1, marginLeft: "0.2rem" }}>{children}</span>
