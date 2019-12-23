@@ -29,7 +29,6 @@ const Flex = styled.div.attrs(({ direction = "row", ...props }: TypeContainer) =
 	return { ...props, span, xsmall, medium, large, small, xlarge, direction };
 })`
 	display: flex;
-	overflow: auto;
 	flex: 0 0 ${(props: TypeContainer) => props.span};
 	flex-wrap: wrap;
 	flex-direction: ${(props: TypeContainer) => props.direction};
