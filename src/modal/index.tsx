@@ -137,6 +137,7 @@ const Modal = ({
 		...headerProps,
 		style: {
 			borderBottom: `${StyleSheet.hairlineWidth} solid ${Colors.darkAlpha}`,
+			justifyContent: "space-between",
 			...defaultModalPartProps.style,
 			...headerProps.style
 		}
@@ -152,10 +153,10 @@ const Modal = ({
 			<ModalPortal onClick={onClickMask} visible={visible} maskPaddingVertical={maskPaddingVertical} speed={animationTime}>
 				<ModalContent onClick={onModalClick} width={width}>
 					<View {...headerViewProps}>
+						{title}
 						<Close color={closeColor} onClick={onClose}>
 							{closeIcon}
 						</Close>
-						{title}
 					</View>
 					<View {...bodyViewProps}>{children}</View>
 					{!!footer && <View {...footerViewProps}>{footer}</View>}

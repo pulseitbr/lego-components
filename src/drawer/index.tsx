@@ -1,5 +1,5 @@
 import { Keyboard, Colors } from "lego";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, CSSProperties } from "react";
 import { MdClose } from "react-icons/md";
 import styled, { ThemedStyledFunction } from "styled-components";
 import { Container, View } from "../base";
@@ -62,6 +62,8 @@ const styles = StyleSheet.create({
 });
 
 type Props = {
+	className?: string;
+	style?: CSSProperties;
 	visible: boolean;
 	title: React.ReactNode;
 	closeIcon?: React.ReactNode;
@@ -76,6 +78,8 @@ const Drawer = ({
 	visible,
 	closeIcon = <MdClose className="grow pointer" style={styles.closeIconStyle} />,
 	title,
+	style = {},
+	className = "",
 	maskClickClose = false,
 	closeOnEsc = true,
 	onClose = () => {},
@@ -132,7 +136,7 @@ const Drawer = ({
 	return (
 		<Portal>
 			<ModalPortal onClick={onMaskClick} visible={visible}>
-				<DrawerContainer ref={ref}>
+				<DrawerContainer ref={ref} className={className} style={style}>
 					<Container style={styles.modalMargin}>
 						<View span="95%" xsmall="90%" small="90%">
 							{title}

@@ -28,11 +28,11 @@ type PanelHeaderScrollProps = { scrollColor: string; disabledColor: string; widt
 
 const PanelHeaderScroll = styled(View).attrs((props: PanelHeaderScrollProps) => props)`
 	overflow-x: auto;
-	width: auto;
+	width: 100%;
 	margin: auto;
 	display: flex;
 	min-width: 320px;
-	max-width: ${(props) => props.widthDevice * 0.9}px;
+	max-width: inherit;
 	white-space: nowrap;
 
 	::-webkit-scrollbar {
