@@ -36,6 +36,10 @@ figure {
     margin: 0 0 1em;
 }
 
+form {
+    width: 100%;
+}
+
 img {
     vertical-align: middle;
     border-style: none;
