@@ -61,22 +61,24 @@ type ResponsiveProps = {
 	Component?: StyledComponent<"div", any, any>;
 } & TypeContainer;
 
-const Responsive = ({ children, Component = Flex, htmlTag = "div", isCollapse = false, show = true, time = 500, ...props }: ResponsiveProps) => {
-	if (!isCollapse) {
+const Responsive = React.forwardRef(
+	({ children, Component = Flex, htmlTag = "div", isCollapse = false, show = true, time = 500, ...props }: ResponsiveProps, ref) => {
+		if (!isCollapse) {
+			return (
+				<Component as={htmlTag} {...props} ref={ref}>
+					{children}
+				</Component>
+			);
+		}
 		return (
-			<Component as={htmlTag} {...props}>
-				{children}
-			</Component>
+			<Collapse isOpened={show} time={time}>
+				<Component as={htmlTag} {...props} ref={ref}>
+					{children}
+				</Component>
+			</Collapse>
 		);
 	}
-	return (
-		<Collapse isOpened={show} time={time}>
-			<Component as={htmlTag} {...props}>
-				{children}
-			</Component>
-		</Collapse>
-	);
-};
+);
 
 export const Left = styled(Responsive)`
 	text-align: left;
@@ -150,7 +152,6 @@ export const Row = styled(GridComponent).attrs((props: RowProps) => ({
 	width: 100%;
 	column-gap: ${(props: RowProps) => props.spacing};
 `;
-
 export const Col = styled(GridComponent).attrs((props: LegoMediaQuery) => {
 	const span = props.span || 0;
 	const xsmall = props.xsmall || "100%";
