@@ -1,5 +1,5 @@
 import { Keyboard, Colors } from "lego";
-import React, { useEffect, useRef, CSSProperties } from "react";
+import React, { useEffect, useRef, CSSProperties, useImperativeHandle } from "react";
 import { MdClose } from "react-icons/md";
 import styled, { ThemedStyledFunction } from "styled-components";
 import { Container, View } from "../base";
@@ -13,7 +13,7 @@ type ModalPortal = {
 
 const speed = 350;
 
-const ModalPortal: any = styled.div.attrs((props: ModalPortal) => props)`
+const ModalPortal = styled.div.attrs((props: ModalPortal) => props)`
 	top: 0;
 	left: 0;
 	z-index: 4;
@@ -74,82 +74,89 @@ type Props = {
 	children: React.ReactNode;
 };
 
-const Drawer = ({
-	visible,
-	closeIcon = <MdClose className="grow pointer" style={styles.closeIconStyle} />,
-	title,
-	style = {},
-	className = "",
-	maskClickClose = false,
-	closeOnEsc = true,
-	onClose = () => {},
-	width = "60%",
-	children
-}: Props) => {
-	const ref = useRef(null) as React.RefObject<HTMLDivElement>;
+const Drawer = React.forwardRef(
+	(
+		{
+			visible,
+			closeIcon = <MdClose className="grow pointer" style={styles.closeIconStyle} />,
+			title,
+			style = {},
+			className = "",
+			maskClickClose = false,
+			closeOnEsc = true,
+			onClose = () => {},
+			width = "60%",
+			children
+		}: Props,
+		externalRef
+	) => {
+		const ref = useRef(null) as React.RefObject<HTMLDivElement>;
 
-	const show = () => {
-		ref.current!.style.width = width;
-		ref.current!.style.minWidth = StyleSheet.minWidthMobile;
-	};
+		useImperativeHandle(externalRef, () => ref.current);
 
-	const hide = () => {
-		ref.current!.style.width = "0";
-		ref.current!.style.minWidth = "0";
-	};
+		const show = () => {
+			ref.current!.style.width = width;
+			ref.current!.style.minWidth = StyleSheet.minWidthMobile;
+		};
 
-	const close = () => {
-		hide();
-		setTimeout(() => onClose(), speed);
-	};
+		const hide = () => {
+			ref.current!.style.width = "0";
+			ref.current!.style.minWidth = "0";
+		};
 
-	const toggleView = () => {
-		if (ref.current !== null) {
-			if (visible) {
-				show();
-			} else {
-				hide();
+		const close = () => {
+			hide();
+			setTimeout(() => onClose(), speed);
+		};
+
+		const toggleView = () => {
+			if (ref.current !== null) {
+				if (visible) {
+					show();
+				} else {
+					hide();
+				}
 			}
+		};
+
+		useKeyDown((event: any) => {
+			if (event.keyCode === Keyboard.esc && closeOnEsc) {
+				close();
+			}
+		}, []);
+
+		useEffect(() => {
+			toggleView();
+		}, [ref, width, visible]);
+
+		const onMaskClick = () => {
+			if (maskClickClose) {
+				close();
+			}
+		};
+
+		if (!visible) {
+			return null;
 		}
-	};
 
-	useKeyDown((event: any) => {
-		if (event.keyCode === Keyboard.esc && closeOnEsc) {
-			close();
-		}
-	}, []);
-
-	useEffect(() => {
-		toggleView();
-	}, [ref, width, visible]);
-
-	const onMaskClick = () => {
-		if (maskClickClose) {
-			close();
-		}
-	};
-
-	if (!visible) {
-		return null;
+		return (
+			<Portal>
+				<ModalPortal onClick={onMaskClick} visible={visible}>
+					<DrawerContainer ref={ref} className={className} style={style}>
+						<Container style={styles.modalMargin}>
+							<View span="95%" xsmall="90%" small="90%">
+								{title}
+							</View>
+							<View role="button" onClick={close} style={styles.closeIcon} span="3%" xsmall="3%" small="3%">
+								{closeIcon}
+							</View>
+						</Container>
+						<Container style={{ ...styles.modalMargin, overflowY: "auto" }}>{children}</Container>
+					</DrawerContainer>
+				</ModalPortal>
+			</Portal>
+		);
 	}
-
-	return (
-		<Portal>
-			<ModalPortal onClick={onMaskClick} visible={visible}>
-				<DrawerContainer ref={ref} className={className} style={style}>
-					<Container style={styles.modalMargin}>
-						<View span="95%" xsmall="90%" small="90%">
-							{title}
-						</View>
-						<View role="button" onClick={close} style={styles.closeIcon} span="3%" xsmall="3%" small="3%">
-							{closeIcon}
-						</View>
-					</Container>
-					<Container style={{ ...styles.modalMargin, overflowY: "auto" }}>{children}</Container>
-				</DrawerContainer>
-			</ModalPortal>
-		</Portal>
-	);
-};
+);
 
 export default Drawer;
