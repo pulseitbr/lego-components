@@ -21,19 +21,20 @@ export type InputTypes =
 	| "week";
 
 type MasksTypes =
-	| "currency"
-	| "cpf"
-	| "creditCard"
+	| ""
 	| "cellphone"
-	| "cnpj"
-	| "cep"
-	| "telephone"
-	| "date"
-	| "matricula"
 	| "cellTelephone"
+	| "cep"
+	| "cnpj"
 	| "color"
+	| "cpf"
+	| "cpfCnpj"
+	| "creditCard"
+	| "currency"
+	| "date"
 	| "isoDate"
-	| "cpfCnpj";
+	| "matricula"
+	| "telephone";
 
 export type MaskInputProps = {
 	autoCapitalize?: "off" | "none" | "on" | "sentences" | "words" | "characters";
@@ -50,7 +51,8 @@ type Props = MaskInputProps & CurrencyInputType & InputHTMLAttributes<any>;
 
 type ValueType = string | number | string[] | undefined;
 
-type MaskType = (string | RegExp)[] | ((value: string) => (string | RegExp)[]);
+type MaskChar = string | RegExp | MasksTypes;
+type MaskType = MaskChar[] | ((value: string) => MaskChar[]);
 
 const createPlaceholder = (maskRegex: string) => convertMaskToString(maskRegex);
 
@@ -72,7 +74,7 @@ const instanceMaskValues = (mask: MasksTypes, usePl: boolean, html: any, value: 
 
 const noMask = ["matricula"];
 
-const Input = React.forwardRef(({ type = "text", mask, usePlaceholder = true, ...html }: Props, externalRef) => {
+const Input = React.forwardRef(({ type = "text", mask = "", usePlaceholder = true, ...html }: Props, externalRef) => {
 	const internalRef = useRef<HTMLInputElement>(null);
 	useImperativeHandle(externalRef, () => internalRef.current);
 	const { value } = html;
@@ -80,23 +82,22 @@ const Input = React.forwardRef(({ type = "text", mask, usePlaceholder = true, ..
 		return <CurrencyInput {...html} value={value} ref={internalRef} />;
 	}
 	const options = { mask, name: html.name, value, type };
-	if (typeof mask === "string" && masks.hasOwnProperty(mask)) {
-		const { extraProps, maskRegex, maskedValue, placeholder } = instanceMaskValues(mask, usePlaceholder, html, value, html as any);
+	if (mask in masks) {
+		const { extraProps, maskRegex, maskedValue, placeholder } = instanceMaskValues(mask as MasksTypes, usePlaceholder, html, value, html as any);
 		return (
 			<MaskedInput
 				{...html}
 				{...extraProps}
 				{...options}
-				guide={noMask.includes(mask) ? false : true}
+				guide={!noMask.includes(mask as MasksTypes)}
 				mask={maskRegex}
 				value={maskedValue}
 				placeholder={placeholder}
-				innerRef={internalRef}
 				ref={internalRef}
 			/>
 		);
 	}
-	if (Array.isArray(mask)) {
+	if (Array.isArray(mask) || typeof mask === "function") {
 		return <MaskedInput guide {...html} {...options} mask={mask as MaskType} />;
 	}
 	return <input {...html} {...options} ref={internalRef} />;

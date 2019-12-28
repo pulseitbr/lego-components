@@ -10,8 +10,11 @@ const StyleSheet = <T extends string>(props: Props<T>) => props;
 StyleSheet.create = StyleSheet;
 export const zIndex = {
 	zero: 0,
+	one: 1,
+	two: 2,
 	max: 9999,
 	negative: -1,
+	overlayMask: 5,
 	notifications: 5,
 	veryImportant: 10
 };

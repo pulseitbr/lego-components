@@ -1,11 +1,13 @@
-import { Keyboard, Colors } from "lego";
-import React, { useEffect, useRef, CSSProperties, useImperativeHandle } from "react";
+import { Colors, Keyboard } from "lego";
+import React, { useEffect, useImperativeHandle, useRef } from "react";
 import { MdClose } from "react-icons/md";
 import styled, { ThemedStyledFunction } from "styled-components";
 import { Container, View } from "../base";
 import useKeyDown from "../hooks/useKeyDown";
-import StyleSheet from "../styles/StyleSheet";
+import StyleSheet, { zIndex } from "../styles/StyleSheet";
 import Portal from "../utils/Portal";
+import useBlockScroll from "../hooks/useBlockScroll";
+import { useOnClickOutside } from "..";
 
 type ModalPortal = {
 	visible: boolean;
@@ -13,10 +15,20 @@ type ModalPortal = {
 
 const speed = 350;
 
+const styles = StyleSheet.create({
+	modalMargin: {
+		...StyleSheet.paddingHorizontal("0.2rem"),
+		...StyleSheet.paddingVertical("0.1rem"),
+		alignItems: "space-around"
+	},
+	closeIconStyle: { fontSize: "1.2rem" },
+	closeIcon: { textAlign: "right", alignItems: "flex-end", justifyContent: "flex-end" }
+});
+
 const ModalPortal = styled.div.attrs((props: ModalPortal) => props)`
 	top: 0;
 	left: 0;
-	z-index: 4;
+	z-index: ${zIndex.overlayMask};
 	width: 100%;
 	height: 100%;
 	overflow: auto;
@@ -36,34 +48,21 @@ const ModalPortal = styled.div.attrs((props: ModalPortal) => props)`
 	}
 `;
 
-const DrawerContainer = styled.div`
+const DrawerContainer = styled(Container)`
 	background-color: ${Colors.light};
 	display: block;
 	height: 100%;
-	overflow-y: auto;
 	min-height: 100%;
-	z-index: 5;
+	z-index: ${zIndex.notifications};
 	min-width: ${StyleSheet.minWidthMobile};
-	position: fixed;
+	position: absolute;
 	right: 0;
 	top: 0;
 	transition: ${speed}ms ease-out;
 	width: 0;
 `;
 
-const styles = StyleSheet.create({
-	modalMargin: {
-		...StyleSheet.paddingHorizontal("0.2rem"),
-		...StyleSheet.paddingVertical("0.1rem"),
-		alignItems: "space-around"
-	},
-	closeIconStyle: { fontSize: "1.2rem" },
-	closeIcon: { textAlign: "right", alignItems: "flex-end", justifyContent: "flex-end" }
-});
-
 type Props = {
-	className?: string;
-	style?: CSSProperties;
 	visible: boolean;
 	title: React.ReactNode;
 	closeIcon?: React.ReactNode;
@@ -71,8 +70,9 @@ type Props = {
 	closeOnEsc?: boolean;
 	onClose: () => any;
 	width?: string;
+	blockOuterScroll?: boolean;
 	children: React.ReactNode;
-};
+} & Omit<ThemedStyledFunction<"div", any, {}, never>, "attrs">;
 
 const Drawer = React.forwardRef(
 	(
@@ -80,19 +80,22 @@ const Drawer = React.forwardRef(
 			visible,
 			closeIcon = <MdClose className="grow pointer" style={styles.closeIconStyle} />,
 			title,
-			style = {},
-			className = "",
+			blockOuterScroll = true,
 			maskClickClose = false,
 			closeOnEsc = true,
 			onClose = () => {},
 			width = "60%",
-			children
+			children,
+			...htmlDivProps
 		}: Props,
 		externalRef
 	) => {
 		const ref = useRef(null) as React.RefObject<HTMLDivElement>;
-
-		useImperativeHandle(externalRef, () => ref.current);
+		const onMaskClick = () => {
+			if (maskClickClose) {
+				close();
+			}
+		};
 
 		const show = () => {
 			ref.current!.style.width = width;
@@ -106,8 +109,12 @@ const Drawer = React.forwardRef(
 
 		const close = () => {
 			hide();
-			setTimeout(() => onClose(), speed);
+			setTimeout(onClose, speed);
 		};
+
+		useOnClickOutside(ref, onMaskClick);
+		useImperativeHandle(externalRef, () => ref.current);
+		useBlockScroll(blockOuterScroll ? visible : false);
 
 		const toggleView = () => {
 			if (ref.current !== null) {
@@ -129,20 +136,14 @@ const Drawer = React.forwardRef(
 			toggleView();
 		}, [ref, width, visible]);
 
-		const onMaskClick = () => {
-			if (maskClickClose) {
-				close();
-			}
-		};
-
 		if (!visible) {
 			return null;
 		}
 
 		return (
 			<Portal>
-				<ModalPortal onClick={onMaskClick} visible={visible}>
-					<DrawerContainer ref={ref} className={className} style={style}>
+				<ModalPortal visible={visible}>
+					<DrawerContainer {...htmlDivProps} ref={ref}>
 						<Container style={styles.modalMargin}>
 							<View span="95%" xsmall="90%" small="90%">
 								{title}

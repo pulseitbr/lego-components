@@ -5,6 +5,7 @@ import { Colors } from "lego";
 import { ThemeProperty, defineTheme } from "../styles/ThemeProperty";
 
 interface IButtonProps {
+	textOnLoading?: boolean;
 	circle?: boolean;
 	danger?: boolean;
 	dark?: boolean;
@@ -126,6 +127,7 @@ const RippleButton = styled(Transparent)`
 `;
 
 const Button = ({
+	textOnLoading = true,
 	full = false,
 	loading = false,
 	square = false,
@@ -189,12 +191,12 @@ const Button = ({
 			textColor={Colors.lightLight}
 			theme={styledProps[ifDisable]}
 		>
-			{loading && (
+			{loading && textOnLoading && (
 				<React.Fragment>
 					<Loader border={0.05} size={0.5} color={Colors.disabledDark} />{" "}
 				</React.Fragment>
 			)}
-			{children}
+			{loading && textOnLoading && children}
 		</ParentButton>
 	);
 };

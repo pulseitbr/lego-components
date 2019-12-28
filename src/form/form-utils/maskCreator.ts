@@ -10,11 +10,7 @@ const binaryRegex = /[01]/;
 
 const alphaNumericRegex = /[\S]/;
 
-const any = /./;
-
 const TEMPLATE = {
-	".": any,
-	"*": any,
 	0: decimalRegex,
 	9: decimalRegex,
 	A: alphaRegex,

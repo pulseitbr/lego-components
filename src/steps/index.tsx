@@ -3,6 +3,7 @@ import React from "react";
 import { MdClose, MdDone, MdInfo } from "react-icons/md";
 import styled from "styled-components";
 import { Container, View } from "../base";
+import { zIndex } from "../styles/StyleSheet";
 
 type TypeWrap = {
 	line: string;
@@ -55,7 +56,7 @@ const Wrap = styled.div.attrs((props: TypeWrap) => props)`
 		content: "";
 		display: block;
 		position: absolute;
-		z-index: 2;
+		z-index: ${zIndex.two};
 	}
 
 	@media (min-width: 48em) {

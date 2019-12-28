@@ -4,6 +4,7 @@ import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import styled from "styled-components";
 import Loader from "../loader/Loader";
 import Input, { InputTypes, MaskInputProps } from "./Input";
+import { zIndex } from "../styles/StyleSheet";
 
 type Props = {
 	lineAnimationTime?: number;
@@ -45,7 +46,7 @@ const RightIcons = styled.span`
 	position: absolute;
 	right: 1rem;
 	top: 10px;
-	z-index: 5;
+	z-index: ${zIndex.two};
 	cursor: pointer;
 `;
 

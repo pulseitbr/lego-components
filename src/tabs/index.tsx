@@ -6,7 +6,7 @@ import useMobile from "../hooks/useMobile";
 import Button from "../button/Button";
 import styled from "styled-components";
 import { View, Container } from "../base";
-import StyleSheet from "../styles/StyleSheet";
+import StyleSheet, { zIndex } from "../styles/StyleSheet";
 import useWidth from "../hooks/useWidth";
 
 const styles = StyleSheet.create({
@@ -87,7 +87,7 @@ const Header = styled.li<HeaderProps>`
 	&:before {
 		content: "";
 		position: absolute;
-		z-index: -1;
+		z-index: ${zIndex.negative};
 		left: ${(props) => (props.active ? "0" : "51%")};
 		right: ${(props) => (props.active ? "0" : "51%")};
 		bottom: 0;
@@ -224,7 +224,11 @@ export const TabPanel = React.forwardRef(({ children, transition, currentTab, on
 						<Container>
 							{elements.map((x: any, i: number) => {
 								if (i === currentIndex) {
-									return <Container style={{ userSelect: "text", zIndex: "auto" }}>{x}</Container>;
+									return (
+										<Container key={`active-key-tab-${x.props.name}`} style={{ userSelect: "text", zIndex: "auto" }}>
+											{x}
+										</Container>
+									);
 								}
 								return <Fragment key={`miss-key-tab-${x.props.name}`} />;
 							})}

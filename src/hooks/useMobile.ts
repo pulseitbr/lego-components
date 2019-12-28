@@ -2,28 +2,24 @@ import { useEffect, useState } from "react";
 
 const isTouchableDevice = () => "ontouchstart" in document.documentElement;
 
-const getMobileDetect = (userAgent: string) => {
-	const isAndroid = () => Boolean(userAgent.match(/Android/i));
-	const isIos = () => Boolean(userAgent.match(/iPhone|iPad|iPod/i));
-	const isOpera = () => Boolean(userAgent.match(/Opera Mini/i));
-	const isWindows = () => Boolean(userAgent.match(/IEMobile/i));
+// 1024 -> Table width
+const isAcceptDesktopWidth = () => window.innerWidth <= 1024;
 
-	const isMobile = () => Boolean(isAndroid() || isIos() || isOpera() || isWindows());
-	const isDesktop = () => !isMobile();
+const isAndroid = (userAgent: string) => Boolean(userAgent.match(/Android/i));
+const isIos = (userAgent: string) => Boolean(userAgent.match(/iPhone|iPad|iPod/i));
+const isOpera = (userAgent: string) => Boolean(userAgent.match(/Opera Mini/i));
+const isWindows = (userAgent: string) => Boolean(userAgent.match(/IEMobile/i));
 
-	return { isMobile, isDesktop, isAndroid, isIos };
-};
+const testMobileFunctions = [isAndroid, isIos, isOpera, isWindows];
+
+const isMobile = (userAgent: string) => testMobileFunctions.reduce((acc, el) => acc || el(userAgent), false);
 
 const useMobile = () => {
-	const [isMobile, setIsMobile] = useState(isTouchableDevice());
-	const touchableDevice = isTouchableDevice();
+	const [mobile, setIsMobile] = useState(isTouchableDevice());
 
-	useEffect(() => {
-		const devices = getMobileDetect(navigator.userAgent);
-		setIsMobile(devices.isMobile || touchableDevice);
-	}, [touchableDevice]);
+	useEffect(() => setIsMobile(isMobile(navigator.userAgent) || isTouchableDevice() || !isAcceptDesktopWidth()));
 
-	return isMobile;
+	return mobile;
 };
 
 export default useMobile;

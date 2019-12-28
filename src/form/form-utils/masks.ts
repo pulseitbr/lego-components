@@ -1,18 +1,25 @@
 import { FormatCpf, OnlyNumbers, ToInt } from "lego";
+const cnpjReplace = /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/;
+const cellphoneReplace = /(\d{2})(\d{5})(\d{4})/;
+const telephoneReplace = /(\d{2})(\d{4})(\d{4})/;
+const cepReplace = /(\d{5})(\d{3})/;
+const isoDateReplace = /(\d{4})(\d{2})(\d{2})/;
+const brDateReplace = /(\d{2})(\d{2})(\d{4})/;
+const creditCardReplace = /(\d{4})(\d{4})(\d{4})(\d{4})/;
 
-const toCpf = (str: string) => FormatCpf(str || "");
-const toCnpj = (str: string) => OnlyNumbers(str).replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, "$1.$2.$3/$4-$5");
+const toCpf = (str: string = "") => FormatCpf(str);
+const toCnpj = (str: string = "") => OnlyNumbers(str).replace(cnpjReplace, "$1.$2.$3/$4-$5");
 
-const toCellphone = (str: string) => {
+const toCellphone = (str: string = "") => {
 	if (str.length === 11) {
-		return OnlyNumbers(str).replace(/(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+		return OnlyNumbers(str).replace(cellphoneReplace, "($1) $2-$3");
 	}
 	return str;
 };
 
-const toTelephone = (str: string) => {
+const toTelephone = (str: string = "") => {
 	if (str.length === 10) {
-		return OnlyNumbers(str).replace(/(\d{2})(\d{4})(\d{4})/, "($1) $2-$3");
+		return OnlyNumbers(str).replace(telephoneReplace, "($1) $2-$3");
 	}
 	return str;
 };
@@ -23,7 +30,7 @@ export const maskConverter = {
 	color: (str: string) => (str.length === 7 ? `#${OnlyNumbers(str)}` : str),
 	cpf: (str: string) => (str.length === 11 ? toCpf(str) : str),
 	telephone: toTelephone,
-	cep: (str: string) => OnlyNumbers(str).replace(/(\d{5})(\d{3})/, "$1-$2"),
+	cep: (str: string) => OnlyNumbers(str).replace(cepReplace, "$1-$2"),
 	cpfCnpj: (str: string) => {
 		if (str.length === 14) {
 			return toCpf(str);
@@ -34,19 +41,19 @@ export const maskConverter = {
 	},
 	isoDate: (str: string) => {
 		if (str.length === 8) {
-			return OnlyNumbers(str).replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
+			return OnlyNumbers(str).replace(isoDateReplace, "$1-$2-$3");
 		}
 		return str;
 	},
 	date: (str: string) => {
 		if (str.length === 8) {
-			return OnlyNumbers(str).replace(/(\d{2})(\d{2})(\d{4})/, "$1/$2/$3");
+			return OnlyNumbers(str).replace(brDateReplace, "$1/$2/$3");
 		}
 		return str;
 	},
 	creditCard: (str: string) => {
 		if (str.length === 16) {
-			return OnlyNumbers(str).replace(/(\d{4})(\d{4})(\d{4})(\d{4})/, "$1 $2 $3 $4");
+			return OnlyNumbers(str).replace(creditCardReplace, "$1 $2 $3 $4");
 		}
 		return str;
 	},
@@ -60,6 +67,14 @@ export const maskConverter = {
 	},
 	matricula: (str: string) => str
 };
+
+// const cellphoneMask = maskCreator("(00) 00000-0000");
+// const cepMask = maskCreator("00000-0000");
+// const cnpjMask = maskCreator("00.000.000/0000-00");
+// const colorMask = maskCreator("#000000");
+// const cpfMask = maskCreator("000.000.000-00");
+// const telephoneMask = maskCreator("(00) 0000-0000");
+
 export const masks = {
 	cellphone: ["(", /\d/, /\d/, ")", " ", /\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/],
 	cep: [/\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/],

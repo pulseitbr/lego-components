@@ -1,8 +1,7 @@
 import React, { useEffect, useState, Fragment } from "react";
+import { Tenants, TENANT } from "lego";
 
-const isMobifacilRegex = /\.mobifacil\./gi;
-
-const isMobifacil = isMobifacilRegex.test(window.location.href) || process.env.NODE_ENV === "development";
+const isMobifacil = Tenants.mobifacil === TENANT;
 
 type Props = {
 	children: React.ReactNode;
@@ -25,7 +24,7 @@ const Mobifacil = ({ children, visibleForAuthorized = false, isAuthorized = fals
 		}
 	}, [visibleForAuthorized, isAuthorized]);
 
-	return isTenant ? <Fragment>{children}</Fragment> : <Fragment />;
+	return isTenant ? children : <Fragment />;
 };
 
 export default Mobifacil;

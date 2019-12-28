@@ -1,14 +1,15 @@
 import { Colors } from "lego";
 import { lighten } from "polished";
-import React, { CSSProperties, useCallback, useEffect } from "react";
+import React, { CSSProperties, useCallback, useEffect, useRef, useImperativeHandle } from "react";
 import { MdClose } from "react-icons/md";
 import styled, { ThemedStyledFunction } from "styled-components";
 import { HtmlTag } from "../@types";
 import { TypeContainer, View } from "../base";
 import useBlockScroll from "../hooks/useBlockScroll";
-import StyleSheet from "../styles/StyleSheet";
+import StyleSheet, { zIndex } from "../styles/StyleSheet";
 import Keyboard from "../utils/Keyboard";
 import ReactPortal from "../utils/Portal";
+import useOnClickOutside from "../hooks/useOnClickOutside";
 
 const lightenClose = lighten(0.6);
 
@@ -21,7 +22,7 @@ const ModalPortal = styled.div.attrs(({ visible = false, ...props }: any) => ({
 	display: ${(props) => (props.visible ? "block" : "none")};
 	top: 0;
 	left: 0;
-	z-index: 5;
+	z-index: ${zIndex.notifications};
 	width: 100%;
 	height: 100%;
 	overflow: auto;
@@ -46,7 +47,7 @@ type Content = ThemedStyledFunction<"div", any, any, any> & { width: string | nu
 const ModalContent = styled.div.attrs((props: Content) => props)`
 	background-color: ${Colors.lightLight};
 	margin: auto;
-	z-index: 4;
+	z-index: ${zIndex.overlayMask};
 	min-width: ${StyleSheet.minWidthMobile};
 	max-width: 100%;
 	overflow-y: hidden;
@@ -77,6 +78,7 @@ type Props = {
 	footer?: React.ReactNode;
 	closeIcon?: React.ReactNode;
 	visible: boolean;
+	closeOnMask?: boolean;
 	children: React.ReactNode;
 	animationTime?: number;
 	width?: string | number;
@@ -94,76 +96,87 @@ const defaultModalPartProps = {
 	} as CSSProperties
 } as Partial<TypeContainer>;
 
-const Modal = ({
-	visible,
-	width = "60%",
-	footer,
-	closeIcon = <MdClose />,
-	onClose,
-	maskPaddingVertical = "3rem",
-	headerProps = defaultModalPartProps,
-	bodyProps = defaultModalPartProps,
-	footerProps = defaultModalPartProps,
-	title,
-	closeColor = Colors.dark,
-	closeOnEsc = true,
-	children,
-	animationTime = 950
-}: Props) => {
-	const toggleVisibility = useCallback((e: KeyboardEvent) => {
-		if (e.keyCode === Keyboard.esc && closeOnEsc) {
-			onClose();
-		}
-	}, []);
+const Modal = React.forwardRef(
+	(
+		{
+			visible,
+			width = "60%",
+			closeOnMask = true,
+			footer,
+			closeIcon = <MdClose />,
+			onClose,
+			maskPaddingVertical = "3rem",
+			headerProps = defaultModalPartProps,
+			bodyProps = defaultModalPartProps,
+			footerProps = defaultModalPartProps,
+			title,
+			closeColor = Colors.dark,
+			closeOnEsc = true,
+			children,
+			animationTime = 950
+		}: Props,
+		externalRef
+	) => {
+		const toggleVisibility = useCallback((e: KeyboardEvent) => {
+			if (e.keyCode === Keyboard.esc && closeOnEsc) {
+				onClose();
+			}
+		}, []);
+		const ref = useRef(null);
 
-	useBlockScroll(!!visible);
+		useImperativeHandle(externalRef, () => ref.current);
+		useBlockScroll(!!visible);
 
-	useEffect(() => {
-		window.addEventListener("keydown", toggleVisibility);
-		return () => window.removeEventListener("keydown", toggleVisibility);
-	}, [toggleVisibility]);
+		const onClickMask = (e: any) => {
+			if (closeOnMask) {
+				e.stopPropagation();
+				onClose();
+			}
+		};
+		useOnClickOutside(ref, onClickMask);
 
-	const onClickMask = (e: any) => {
-		e.stopPropagation();
-		onClose();
-	};
+		useEffect(() => {
+			window.addEventListener("keydown", toggleVisibility);
+			return () => window.removeEventListener("keydown", toggleVisibility);
+		}, [toggleVisibility]);
 
-	const onModalClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
-		event.persist();
-		event.stopPropagation();
-	};
+		const onModalClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+			event.persist();
+			event.stopPropagation();
+		};
 
-	const headerViewProps = {
-		...headerProps,
-		style: {
-			borderBottom: `${StyleSheet.hairlineWidth} solid ${Colors.darkAlpha}`,
-			justifyContent: "space-between",
-			...defaultModalPartProps.style,
-			...headerProps.style
-		}
-	};
-	const bodyViewProps = { ...bodyProps, style: { ...defaultModalPartProps.style, ...bodyProps.style } };
-	const footerViewProps = {
-		...footerProps,
-		style: { textAlign: "right" as "right", ...defaultModalPartProps.style, ...footerProps.style }
-	};
+		const headerViewProps = {
+			...headerProps,
+			style: {
+				borderBottom: `${StyleSheet.hairlineWidth} solid ${Colors.darkAlpha}`,
+				justifyContent: "space-between",
+				...defaultModalPartProps.style,
+				...headerProps.style
+			}
+		};
+		const bodyViewProps = { ...bodyProps, style: { ...defaultModalPartProps.style, ...bodyProps.style } };
+		const footerViewProps = {
+			...footerProps,
+			style: { textAlign: "right" as "right", ...defaultModalPartProps.style, ...footerProps.style }
+		};
 
-	return (
-		<ReactPortal>
-			<ModalPortal onClick={onClickMask} visible={visible} maskPaddingVertical={maskPaddingVertical} speed={animationTime}>
-				<ModalContent onClick={onModalClick} width={width}>
-					<View {...headerViewProps}>
-						{title}
-						<Close color={closeColor} onClick={onClose}>
-							{closeIcon}
-						</Close>
-					</View>
-					<View {...bodyViewProps}>{children}</View>
-					{!!footer && <View {...footerViewProps}>{footer}</View>}
-				</ModalContent>
-			</ModalPortal>
-		</ReactPortal>
-	);
-};
+		return (
+			<ReactPortal>
+				<ModalPortal visible={visible} maskPaddingVertical={maskPaddingVertical} speed={animationTime}>
+					<ModalContent ref={ref} onClick={onModalClick} width={width}>
+						<View {...headerViewProps}>
+							{title}
+							<Close color={closeColor} onClick={onClose}>
+								{closeIcon}
+							</Close>
+						</View>
+						<View {...bodyViewProps}>{children}</View>
+						{!!footer && <View {...footerViewProps}>{footer}</View>}
+					</ModalContent>
+				</ModalPortal>
+			</ReactPortal>
+		);
+	}
+);
 
 export default Modal;

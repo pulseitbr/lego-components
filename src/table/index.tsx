@@ -42,11 +42,9 @@ const ResponsiveTable = styled.table`
 	}
 
 	@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
-		table {
-			width: 100%;
-		}
+		width: 100%;
 
-		table,
+		&,
 		thead,
 		tbody,
 		th,
@@ -107,7 +105,7 @@ const LoadingTable = ({ columns }: LoadingTableProps) => (
 	<td colSpan={columns.length} style={styles.loaderTd}>
 		<Container style={styles.loaderDiv}>
 			<div className="pa2">
-				<Loader></Loader>
+				<Loader />
 			</div>
 		</Container>
 	</td>
