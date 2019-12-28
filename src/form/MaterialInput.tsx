@@ -104,7 +104,7 @@ const MaterialContainer = styled.div.attrs(
 		font-weight: bolder;
 		position: absolute;
 		pointer-events: none;
-		top: 1.1rem;
+		top: 1.25rem;
 		transition: 400ms ease all;
 	}
 
