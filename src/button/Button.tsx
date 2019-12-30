@@ -180,6 +180,24 @@ const Button = ({
 		);
 	}
 
+	const childrenRender = (() => {
+		if (loading && textOnLoading) {
+			return (
+				<React.Fragment>
+					<Loader border={0.05} size={0.5} color={Colors.disabledDark} /> {children}
+				</React.Fragment>
+			);
+		}
+		if (loading) {
+			return (
+				<React.Fragment>
+					<Loader border={0.05} size={0.5} color={Colors.disabledDark} />
+				</React.Fragment>
+			);
+		}
+		return children;
+	})();
+
 	return (
 		<ParentButton
 			{...html}
@@ -191,12 +209,7 @@ const Button = ({
 			textColor={Colors.lightLight}
 			theme={styledProps[ifDisable]}
 		>
-			{loading && textOnLoading && (
-				<React.Fragment>
-					<Loader border={0.05} size={0.5} color={Colors.disabledDark} />{" "}
-				</React.Fragment>
-			)}
-			{loading && textOnLoading && children}
+			{childrenRender}
 		</ParentButton>
 	);
 };

@@ -1,7 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 import "./index.css";
 export * from "./base";
-export { ButtonProps, default as Button } from "./button/Button";
+export { default as Button, ButtonProps } from "./button/Button";
 export { default as Drawer } from "./drawer";
 export { default as Badge } from "./feedback/Badge";
 export * from "./feedback/Dropdown";
