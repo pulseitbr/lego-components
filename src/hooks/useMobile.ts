@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 const isTouchableDevice = () => "ontouchstart" in document.documentElement;
 
 // 1024 -> Table width
-const isAcceptDesktopWidth = () => window.innerWidth <= 1024;
+const isTableWidth = () => window.innerWidth <= 1024;
 
 const isAndroid = (userAgent: string) => Boolean(userAgent.match(/Android/i));
 const isIos = (userAgent: string) => Boolean(userAgent.match(/iPhone|iPad|iPod/i));
@@ -17,7 +17,7 @@ const isMobile = (userAgent: string) => testMobileFunctions.reduce((acc, el) => 
 const useMobile = () => {
 	const [mobile, setIsMobile] = useState(isTouchableDevice());
 
-	useEffect(() => setIsMobile(isMobile(navigator.userAgent) || isTouchableDevice() || !isAcceptDesktopWidth()));
+	useEffect(() => setIsMobile(isMobile(navigator.userAgent) || isTouchableDevice() || isTableWidth()));
 
 	return mobile;
 };
