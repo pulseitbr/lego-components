@@ -13,7 +13,7 @@ type ModalPortal = {
 	visible: boolean;
 } & ThemedStyledFunction<"div", any, {}, never>;
 
-const speed = 350;
+const speed = 450;
 
 const styles = StyleSheet.create({
 	modalMargin: {
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
 		alignItems: "space-around"
 	},
 	closeIconStyle: { fontSize: "1.2rem" },
-	closeIcon: { textAlign: "right", alignItems: "flex-end", justifyContent: "flex-end" }
+	closeIcon: { textAlign: "right", alignItems: "flex-start", marginTop: "0.8rem", justifyContent: "flex-end" }
 });
 
 const ModalPortal = styled.div.attrs((props: ModalPortal) => props)`
@@ -52,6 +52,7 @@ const DrawerContainer = styled(Container)`
 	background-color: ${Colors.light};
 	display: block;
 	height: 100%;
+	overflow-y: auto;
 	min-height: 100%;
 	z-index: ${zIndex.notifications};
 	min-width: ${StyleSheet.minWidthMobile};

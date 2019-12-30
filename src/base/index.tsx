@@ -62,7 +62,7 @@ type ResponsiveProps = {
 } & TypeContainer;
 
 const Responsive = React.forwardRef(
-	({ children, Component = Flex, htmlTag = "div", isCollapse = false, show = true, time = 500, ...props }: ResponsiveProps, ref) => {
+	({ children, Component = Flex, htmlTag = "div", isCollapse = false, show = true, time = 750, ...props }: ResponsiveProps, ref) => {
 		if (!isCollapse) {
 			return (
 				<Component as={htmlTag} {...props} ref={ref}>
