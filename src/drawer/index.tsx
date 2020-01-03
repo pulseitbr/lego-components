@@ -1,5 +1,5 @@
 import { Colors, Keyboard } from "lego";
-import React, { useEffect, useImperativeHandle, useRef } from "react";
+import React, { useEffect, useImperativeHandle, useRef, CSSProperties } from "react";
 import { MdClose } from "react-icons/md";
 import styled, { ThemedStyledFunction } from "styled-components";
 import { useOnClickOutside } from "..";
@@ -11,6 +11,7 @@ import Portal from "../utils/Portal";
 
 type ModalPortal = {
 	visible: boolean;
+	maskColor: string;
 } & ThemedStyledFunction<"div", any, {}, never>;
 
 const speed = 450;
@@ -35,7 +36,7 @@ const ModalPortal = styled.div.attrs((props: ModalPortal) => props)`
 	position: fixed;
 	transition: ${speed};
 	display: block;
-	background-color: rgba(0, 0, 0, 0.65);
+	background-color: ${(props) => props.maskColor};
 	animation: fading ${speed}ms forwards ease-out;
 
 	@keyframes fading {
@@ -70,10 +71,13 @@ type Props = {
 	maskClickClose?: boolean;
 	closeOnEsc?: boolean;
 	onClose: () => any;
+	className?: string;
+	maskColor?: string;
+	style?: CSSProperties;
 	width?: string;
 	blockOuterScroll?: boolean;
 	children: React.ReactNode;
-} & HTMLDivElement;
+};
 
 const Drawer = React.forwardRef(
 	(
@@ -143,7 +147,7 @@ const Drawer = React.forwardRef(
 
 		return (
 			<Portal>
-				<ModalPortal visible={visible}>
+				<ModalPortal maskColor="rbga(0, 0, 0, 0.65)" visible={visible}>
 					<DrawerContainer {...htmlDivProps} ref={ref}>
 						<Container style={styles.modalMargin}>
 							<View span="95%" xsmall="90%" small="90%">
