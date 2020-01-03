@@ -31,6 +31,13 @@ interface IButtonProps {
 
 export type ButtonProps = IButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
+const getRadius = (props: any) => {
+	if (props.circle) {
+		return "50%";
+	}
+	return props.pill ? "0.5rem" : "3px";
+};
+
 const ThinButton = styled.button<ButtonProps & { pill?: boolean }>`
 	outline: none;
 	font-size: 0.9rem;
@@ -43,7 +50,7 @@ const ThinButton = styled.button<ButtonProps & { pill?: boolean }>`
 	transition: background-color 0.35s ease-in-out;
 	width: ${(props: any) => (props.full ? "100%" : "auto")};
 	cursor: ${(props: any) => (props.loading ? "wait" : "pointer")};
-	border-radius: ${(props: any) => (props.pill ? "0.5rem" : "3px")};
+	border-radius: ${(props) => getRadius(props)};
 
 	&:disabled {
 		cursor: not-allowed;
@@ -135,6 +142,7 @@ const Button = ({
 	styleType = "primary",
 	rippleColor = Colors.primary,
 	theme,
+	circle = false,
 	disabled,
 	size = 1,
 	children,
@@ -168,13 +176,13 @@ const Button = ({
 
 	if (themeDefined === "transparent") {
 		return (
-			<RippleButton {...html} {...commonProps} rippleColor={rippleColor}>
+			<RippleButton {...html} {...commonProps} circle={circle} rippleColor={rippleColor}>
 				{children}
 			</RippleButton>
 		);
 	} else if (themeDefined === "none") {
 		return (
-			<Transparent {...html} {...commonProps}>
+			<Transparent {...html} {...commonProps} circle={circle}>
 				{children}
 			</Transparent>
 		);
@@ -202,6 +210,7 @@ const Button = ({
 		<ParentButton
 			{...html}
 			{...commonProps}
+			circle={circle}
 			full={full}
 			size={size}
 			pill={!square}
