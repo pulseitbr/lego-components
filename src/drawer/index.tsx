@@ -1,5 +1,5 @@
 import { Colors, Keyboard } from "lego";
-import React, { useEffect, useImperativeHandle, useRef, CSSProperties } from "react";
+import React, { CSSProperties, useEffect, useImperativeHandle, useRef } from "react";
 import { MdClose } from "react-icons/md";
 import styled, { ThemedStyledFunction } from "styled-components";
 import { useOnClickOutside } from "..";
@@ -49,7 +49,7 @@ const ModalPortal = styled.div.attrs((props: ModalPortal) => props)`
 	}
 `;
 
-const DrawerContainer: any = styled(Container)<HTMLDivElement>`
+const DrawerContainer: any = styled(Container)`
 	background-color: ${Colors.light};
 	display: block;
 	height: 100%;
@@ -76,7 +76,7 @@ type Props = {
 	style?: CSSProperties;
 	width?: string;
 	blockOuterScroll?: boolean;
-	children: React.ReactNode;
+	children: React.ReactNode | any;
 };
 
 const Drawer = React.forwardRef(
