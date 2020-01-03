@@ -1,5 +1,5 @@
 import React from "react";
-type Props = React.DetailedHTMLProps<React.FormHTMLAttributes<HTMLFormElement>, HTMLFormElement> & {
+type Props = React.FormHTMLAttributes<HTMLFormElement> & {
 	onSubmit(event: React.FormEvent<HTMLFormElement>, formValues: unknown): any;
 	canSubmit?: () => boolean;
 };
