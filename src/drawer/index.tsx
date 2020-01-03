@@ -2,12 +2,12 @@ import { Colors, Keyboard } from "lego";
 import React, { useEffect, useImperativeHandle, useRef } from "react";
 import { MdClose } from "react-icons/md";
 import styled, { ThemedStyledFunction } from "styled-components";
+import { useOnClickOutside } from "..";
 import { Container, View } from "../base";
+import useBlockScroll from "../hooks/useBlockScroll";
 import useKeyDown from "../hooks/useKeyDown";
 import StyleSheet, { zIndex } from "../styles/StyleSheet";
 import Portal from "../utils/Portal";
-import useBlockScroll from "../hooks/useBlockScroll";
-import { useOnClickOutside } from "..";
 
 type ModalPortal = {
 	visible: boolean;
@@ -48,7 +48,7 @@ const ModalPortal = styled.div.attrs((props: ModalPortal) => props)`
 	}
 `;
 
-const DrawerContainer = styled(Container)`
+const DrawerContainer: any = styled(Container)<HTMLDivElement>`
 	background-color: ${Colors.light};
 	display: block;
 	height: 100%;
@@ -73,7 +73,7 @@ type Props = {
 	width?: string;
 	blockOuterScroll?: boolean;
 	children: React.ReactNode;
-} & Omit<ThemedStyledFunction<"div", any, {}, never>, "attrs">;
+} & HTMLDivElement;
 
 const Drawer = React.forwardRef(
 	(
