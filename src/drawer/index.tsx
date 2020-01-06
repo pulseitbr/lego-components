@@ -36,7 +36,7 @@ const ModalPortal = styled.div.attrs((props: ModalPortal) => props)`
 	position: fixed;
 	transition: ${speed};
 	display: block;
-	background-color: ${(props) => props.maskColor};
+	background-color: ${(props) => props.maskColor || "rgba(0, 0, 0, .65)"};
 	animation: fading ${speed}ms forwards ease-out;
 
 	@keyframes fading {
@@ -147,7 +147,7 @@ const Drawer = React.forwardRef(
 
 		return (
 			<Portal>
-				<ModalPortal maskColor="rbga(0, 0, 0, 0.65)" visible={visible}>
+				<ModalPortal maskColor="rgba(0, 0, 0, 0.65)" visible={visible}>
 					<DrawerContainer {...htmlDivProps} ref={ref}>
 						<Container style={styles.modalMargin}>
 							<View span="95%" xsmall="90%" small="90%">
