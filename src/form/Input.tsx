@@ -72,6 +72,8 @@ const instanceMaskValues = (mask: MasksTypes, usePl: boolean, html: any, value: 
 	};
 };
 
+const isMaskConstructor = (mask: MasksTypes | Array<string | RegExp>) => Array.isArray(mask) || typeof mask === "function";
+
 const noMask = ["matricula"];
 
 const Input = React.forwardRef(({ type = "text", mask = "", usePlaceholder = true, ...html }: Props, externalRef) => {
@@ -97,7 +99,7 @@ const Input = React.forwardRef(({ type = "text", mask = "", usePlaceholder = tru
 			/>
 		);
 	}
-	if (Array.isArray(mask) || typeof mask === "function") {
+	if (isMaskConstructor(mask)) {
 		return <MaskedInput guide {...html} {...options} mask={mask as MaskType} />;
 	}
 	return <input {...html} {...options} ref={internalRef} />;

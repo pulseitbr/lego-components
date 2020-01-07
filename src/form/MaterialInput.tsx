@@ -101,8 +101,8 @@ const MaterialContainer = styled.div.attrs(
 
 	label {
 		color: ${(props) => props.labelColor};
-		font-size: ${(props) => props.size * 1.1}rem;
-		font-weight: bolder;
+		font-size: ${(props) => props.size * 1.05}rem;
+		font-weight: normal;
 		position: absolute;
 		pointer-events: none;
 		top: 1.25rem;

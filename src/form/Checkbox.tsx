@@ -93,7 +93,6 @@ const Checkbox = ({
 	color = Colors.primary,
 	onChange,
 	onClick,
-	className = "",
 	value = false,
 	checked = false,
 	children,

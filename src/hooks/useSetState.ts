@@ -1,9 +1,7 @@
 import { useRef, useLayoutEffect, useState } from "react";
 
 const useSetState = (initialState = {}) => {
-	const pair = useState(initialState);
-	const state = pair[0];
-	const setStateObj = pair[1];
+	const [state, setStateObj] = useState(initialState);
 
 	const pendingPostUpdateCallbacks = useRef([] as Function[]);
 	useLayoutEffect(function() {
@@ -18,7 +16,7 @@ const useSetState = (initialState = {}) => {
 	function setState(partialObjOrCallback: any, maybeAfterCallback?: Function) {
 		let newState = { ...state };
 		let abortUpdate = false;
-		if (typeof partialObjOrCallback === "object" && partialObjOrCallback != null) {
+		if (typeof partialObjOrCallback === "object" && partialObjOrCallback !== null) {
 			newState = { ...partialObjOrCallback, ...newState };
 		} else if (typeof partialObjOrCallback === "function") {
 			const result = partialObjOrCallback(state);

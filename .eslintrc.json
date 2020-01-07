@@ -1,176 +1,131 @@
 {
-    "env": {
-        "browser": true
-    },
-    "extends": [],
-    "ignorePatterns": [],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "project": "tsconfig.json",
-        "sourceType": "module"
-    },
-    "plugins": [
-        "@typescript-eslint"
-    ],
-    "rules": {
-        "indent": [
-            "off"
-        ],
-        "react/jsx-indent": [
-            "off"
-        ],
-        "react/button-has-type": [
-            "warn"
-        ],
-        "react/no-direct-mutation-state": [
-            "error"
-        ],
-        "arrow-parens": [
-            "warn"
-        ],
-        "use-isnan": [
-            "error"
-        ],
-        "constructor-super": [
-            "off"
-        ],
-        "complexity": [
-            "warn",
-            20
-        ],
-        "no-prototype-builtins": [
-            "off"
-        ],
-        "react/jsx-no-target-blank": [
-            "error"
-        ],
-        "react/jsx-no-duplicate-props": [
-            "error"
-        ],
-        "react/jsx-no-bind": [
-            "warn"
-        ],
-        "react/jsx-key": [
-            "error"
-        ],
-        "react/jsx-boolean-value": [
-            "warn"
-        ],
-        "react/prefer-read-only-props": [
-            "error"
-        ],
-        "react/no-this-in-sfc": [
-            "error"
-        ],
-        "react/no-access-state-in-setstate": [
-            "error"
-        ],
-        "react/no-deprecated": [
-            "error"
-        ],
-        "react/no-array-index-key": [
-            "warn"
-        ],
-        "block-scoped-var": [
-            "error"
-        ],
-        "eqeqeq": [
-            "error"
-        ],
-        "generator-star-spacing": [
-            "off"
-        ],
-        "no-eval": [
-            "off"
-        ],
-        "no-implied-eval": [
-            "off"
-        ],
-        "no-script-url": [
-            "error"
-        ],
-        "no-unused-vars": [
-            "warn"
-        ],
-        "no-useless-catch": [
-            "warn"
-        ],
-        "radix": [
-            "error"
-        ],
-        "no-catch-shadow": [
-            "error"
-        ],
-        "no-shadow": [
-            "error"
-        ],
-        "no-undef": [
-            "error"
-        ],
-        "no-undefined": [
-            "error"
-        ],
-        "arrow-body-style": [
-            "warn",
-            "as-needed",
-            {
-                "requireReturnForObjectLiteral": false
-            }
-        ],
-        "no-useless-computed-key": [
-            "warn"
-        ],
-        "no-var": [
-            "error"
-        ],
-        "prefer-const": [
-            "warn"
-        ],
-        "prefer-destructuring": [
-            "warn"
-        ],
-        "prefer-spread": [
-            "error"
-        ],
-        "consistent-this": [
-            "warn"
-        ],
-        "default-case": [
-            "error"
-        ],
-        "class-methods-use-this": [
-            "error",
-            {
-                "exceptMethods": [
-                    "render",
-                    "getInitialState",
-                    "getDefaultProps",
-                    "getChildContext",
-                    "componentWillMount",
-                    "componentDidMount",
-                    "componentWillReceiveProps",
-                    "shouldComponentUpdate",
-                    "componentWillUpdate",
-                    "componentDidUpdate",
-                    "componentWillUnmount",
-                    "componentDidCatch",
-                    "getSnapshotBeforeUpdate"
-                ]
-            }
-        ],
-        "react-hooks/rules-of-hooks": [
-            "error"
-        ],
-        "react-hooks/exhaustive-deps": [
-            "warn"
-        ],
-        "no-mixed-spaces-and-tabs": [
-            "off"
-        ]
-    },
-    "settings": {
-        "react": {
-            "version": "detect"
-        }
-    }
+	"env": {
+		"browser": true
+	},
+	"extends": [],
+	"ignorePatterns": [],
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"project": "tsconfig.json",
+		"sourceType": "module"
+	},
+	"plugins": [
+		"@typescript-eslint"
+	],
+	"rules": {
+		"indent": [
+			"off"
+		],
+		"arrow-parens": [
+			"warn"
+		],
+		"use-isnan": [
+			"error"
+		],
+		"constructor-super": [
+			"off"
+		],
+		"complexity": [
+			"warn",
+			20
+		],
+		"no-prototype-builtins": [
+			"off"
+		],
+		"block-scoped-var": [
+			"error"
+		],
+		"eqeqeq": [
+			"error"
+		],
+		"generator-star-spacing": [
+			"off"
+		],
+		"no-eval": [
+			"off"
+		],
+		"no-implied-eval": [
+			"off"
+		],
+		"no-script-url": [
+			"error"
+		],
+		"no-unused-vars": [
+			"warn"
+		],
+		"no-useless-catch": [
+			"warn"
+		],
+		"radix": [
+			"error"
+		],
+		"no-catch-shadow": [
+			"error"
+		],
+		"no-shadow": [
+			"error"
+		],
+		"no-undef": [
+			"error"
+		],
+		"no-undefined": [
+			"error"
+		],
+		"arrow-body-style": [
+			"warn",
+			"as-needed",
+			{
+				"requireReturnForObjectLiteral": false
+			}
+		],
+		"no-useless-computed-key": [
+			"warn"
+		],
+		"no-var": [
+			"error"
+		],
+		"prefer-const": [
+			"warn"
+		],
+		"prefer-destructuring": [
+			"warn"
+		],
+		"prefer-spread": [
+			"error"
+		],
+		"consistent-this": [
+			"warn"
+		],
+		"default-case": [
+			"error"
+		],
+		"class-methods-use-this": [
+			"error",
+			{
+				"exceptMethods": [
+					"render",
+					"getInitialState",
+					"getDefaultProps",
+					"getChildContext",
+					"componentWillMount",
+					"componentDidMount",
+					"componentWillReceiveProps",
+					"shouldComponentUpdate",
+					"componentWillUpdate",
+					"componentDidUpdate",
+					"componentWillUnmount",
+					"componentDidCatch",
+					"getSnapshotBeforeUpdate"
+				]
+			}
+		],
+		"no-mixed-spaces-and-tabs": [
+			"off"
+		]
+	},
+	"settings": {
+		"react": {
+			"version": "detect"
+		}
+	}
 }
