@@ -1,13 +1,15 @@
-import React, { useRef, useEffect, useState, useImperativeHandle, Fragment } from "react";
-import Slider from "react-slick";
-import { Colors } from "lego";
+ import { Colors } from "lego";
+import React, { Fragment, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { MdClose } from "react-icons/md";
-import useMobile from "../hooks/useMobile";
-import Button from "../button/Button";
+import Slider from "react-slick";
 import styled from "styled-components";
-import { View, Container } from "../base";
-import StyleSheet, { zIndex } from "../styles/StyleSheet";
+import { Container, View } from "../base";
+import Button from "../button/Button";
+import useMobile from "../hooks/useMobile";
 import useWidth from "../hooks/useWidth";
+import StyleSheet from "../styles/StyleSheet";
+
+const { zIndex } = StyleSheet;
 
 const styles = StyleSheet.create({
 	header: {
@@ -27,12 +29,12 @@ const styles = StyleSheet.create({
 type PanelHeaderScrollProps = { scrollColor: string; disabledColor: string; widthDevice: number };
 
 const PanelHeaderScroll = styled(View).attrs((props: PanelHeaderScrollProps) => props)`
-	overflow-x: auto;
-	width: 100%;
+	overflow-x: scroll;
 	margin: auto;
 	display: flex;
+	width: 100%;
 	min-width: 320px;
-	max-width: inherit;
+	max-width: ${(props) => props.widthDevice * 0.98}px;
 	white-space: nowrap;
 
 	::-webkit-scrollbar {
@@ -48,12 +50,12 @@ const PanelHeaderScroll = styled(View).attrs((props: PanelHeaderScrollProps) => 
 `;
 
 type TabProps = {
-	color?: string;
-	title: React.ReactNode;
 	children: React.ReactNode;
 	className?: string;
 	closable?: boolean | React.ReactNode;
+	color?: string;
 	name: string;
+	title: React.ReactNode;
 };
 
 export const Tab = ({ children }: TabProps) => <View span="100%">{children}</View>;
@@ -108,6 +110,7 @@ const Header = styled.li<HeaderProps>`
 
 export const TabPanel = React.forwardRef(({ children, transition, currentTab, onChange = voidFn, onClose = voidFn }: TabPanelProps, externalRef) => {
 	const ref = useRef(null) as any;
+	const parentRef = useRef(null) as any;
 	const [elements, setElements] = useState(React.Children.toArray(children)) as any;
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const width = useWidth();
@@ -128,13 +131,12 @@ export const TabPanel = React.forwardRef(({ children, transition, currentTab, on
 	};
 
 	const goto = (slide: number) => {
-		setCurrentIndex(slide);
 		onChangeIndex(slide);
 	};
 
 	useEffect(() => {
 		if (!!currentTab) {
-			execIf(currentTab, goto, 100);
+			execIf(currentTab, goto, 0);
 		}
 	}, [currentTab]);
 
@@ -173,69 +175,67 @@ export const TabPanel = React.forwardRef(({ children, transition, currentTab, on
 	const bindClick = (index: number) => () => closeTab(index);
 
 	return (
-		<Container>
-			<Container>
-				<View span="100%">
-					<PanelHeaderScroll widthDevice={width} scrollColor={Colors.primaryLight} span="100%" style={styles.header}>
+		<Container ref={parentRef}>
+			<View span="100%">
+				<PanelHeaderScroll widthDevice={width} scrollColor={Colors.primaryAlpha} span="100%" style={styles.header}>
+					{elements.map((x: any, i: number) => {
+						const { closable, name, title, className: cls = "", color = Colors.primary } = x.props;
+						const closeIcon = typeof closable === "boolean" ? <MdClose /> : closable;
+						const css = `${cls} tabs-header`;
+						const active = currentIndex === i;
+						const headerProps = {
+							className: css,
+							active,
+							role: "button",
+							onClick: setTab(i),
+							color
+						};
+						return (
+							<Header key={`header-tab-${name}`} {...headerProps}>
+								{title}{" "}
+								{closable && (
+									<Button transparent onPress={bindClick(i)}>
+										{closeIcon}
+									</Button>
+								)}
+							</Header>
+						);
+					})}
+				</PanelHeaderScroll>
+			</View>
+			<View span="100%" style={styles.view}>
+				<Slider
+					accessibility
+					swipe={isMobile}
+					swipeToSlide={isMobile}
+					touchMove={isMobile}
+					arrows={false}
+					beforeChange={beforeChange}
+					dots={false}
+					fade
+					infinite
+					className="z-auto"
+					ref={ref}
+					rows={1}
+					slide="div"
+					slidesToScroll={1}
+					slidesToShow={1}
+					speed={transition}
+				>
+					<Container>
 						{elements.map((x: any, i: number) => {
-							const { closable, name, title, className: cls = "", color = Colors.primary } = x.props;
-							const closeIcon = typeof closable === "boolean" ? <MdClose /> : closable;
-							const css = `${cls} tabs-header`;
-							const active = currentIndex === i;
-							const headerProps = {
-								className: css,
-								active,
-								role: "button",
-								onClick: setTab(i),
-								color
-							};
-							return (
-								<Header key={`header-tab-${name}`} {...headerProps}>
-									{title}{" "}
-									{closable && (
-										<Button transparent onPress={bindClick(i)}>
-											{closeIcon}
-										</Button>
-									)}
-								</Header>
-							);
+							if (i === currentIndex) {
+								return (
+									<Container key={`active-key-tab-${x.props.name}`} style={{ userSelect: "text", zIndex: "auto" }}>
+										{x}
+									</Container>
+								);
+							}
+							return <Fragment key={`miss-key-tab-${x.props.name}`} />;
 						})}
-					</PanelHeaderScroll>
-				</View>
-				<View span="100%" style={styles.view}>
-					<Slider
-						accessibility
-						swipe={isMobile}
-						swipeToSlide={isMobile}
-						touchMove={isMobile}
-						arrows={false}
-						beforeChange={beforeChange}
-						dots={false}
-						fade
-						infinite
-						className="z-auto"
-						ref={ref}
-						rows={1}
-						slide="div"
-						slidesToScroll={1}
-						slidesToShow={1}
-						speed={transition}
-					>
-						<Container>
-							{elements.map((x: any, i: number) => {
-								if (i === currentIndex) {
-									return (
-										<Container key={`active-key-tab-${x.props.name}`} style={{ userSelect: "text", zIndex: "auto" }}>
-											{x}
-										</Container>
-									);
-								}
-								return <Fragment key={`miss-key-tab-${x.props.name}`} />;
-							})}
-						</Container>
-					</Slider>
-				</View>
-			</Container>
+					</Container>
+				</Slider>
+			</View>
 		</Container>
 	);
 });
