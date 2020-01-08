@@ -1,4 +1,4 @@
- import { Colors } from "lego";
+import { Colors } from "lego";
 import React, { Fragment, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { MdClose } from "react-icons/md";
 import Slider from "react-slick";

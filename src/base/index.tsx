@@ -20,7 +20,7 @@ export type TypeContainer = LegoMediaQuery &
 	};
 
 const Flex = styled.div.attrs(({ direction = "row", ...props }: TypeContainer) => {
-	const span = props.span || 0;
+	const span = props.span || "100%";
 	const xsmall = props.xsmall || "100%";
 	const small = props.small || "100%";
 	const medium = props.medium || span;
@@ -110,7 +110,6 @@ export const Body = styled(Responsive)`
 	flex-wrap: wrap;
 	flex: 1 0 auto;
 	min-width: 100%;
-	min-height: max-content;
 	width: 100%;
 `;
 export const Container = styled(Responsive)`

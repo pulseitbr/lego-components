@@ -14,7 +14,6 @@ const PaperA4 = styled.div.attrs((props: TypesPaperA4) => ({
 	footerForeground: "white"
 }))`
 	width: 21cm;
-	height: 29.7cm;
 	position: relative;
 	color: ${(props) => props.color};
 
