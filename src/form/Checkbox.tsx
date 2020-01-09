@@ -25,7 +25,7 @@ const Label = styled.label`
 		left: 0;
 		height: 20px;
 		width: 20px;
-		background-color: ${Colors.light};
+		background-color: ${Colors.disabledLight};
 		animation: fade 400ms ease-in-out;
 	}
 
