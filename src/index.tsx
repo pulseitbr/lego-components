@@ -40,7 +40,7 @@ export { default as SetupStyle } from "./styles/SetupStyle";
 export { default as StyleSheet } from "./styles/StyleSheet";
 export { default as PaperA4 } from "./styles/PaperA4";
 export { default as PasswordStrength } from "./form/password-strength";
-export { Tab, TabPanel, TabPanel as Tabs } from "./tabs";
+export { Tab, Tabs } from "./tabs";
 export * from "./tenants";
 export { default as AddressBox } from "./tenants/AddressBox";
 export { default as AllowView } from "./tenants/AllowView";

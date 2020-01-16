@@ -1,79 +1,39 @@
 import { Colors } from "lego";
-import React, { Fragment, useEffect, useImperativeHandle, useRef, useState } from "react";
+//@ts-ignore
+import TabContainer, { TabPane } from "rc-tabs";
+import "rc-tabs/assets/index.css";
+//@ts-ignore
+import SwipeableInkTabBar from "rc-tabs/lib/SwipeableInkTabBar";
+//@ts-ignore
+import TabContent from "rc-tabs/lib/SwipeableTabContent";
+import React from "react";
 import { MdClose } from "react-icons/md";
-import Slider from "react-slick";
 import styled from "styled-components";
-import { Container, View } from "../base";
+import { Container } from "../base";
 import Button from "../button/Button";
 import useMobile from "../hooks/useMobile";
-import useWidth from "../hooks/useWidth";
-import StyleSheet from "../styles/StyleSheet";
 
-const { zIndex } = StyleSheet;
-
-const styles = StyleSheet.create({
-	header: {
-		padding: "0.1rem",
-		flexDirection: "row",
-		display: "inline-flex",
-		overflow: "auto",
-		whiteSpace: "nowrap",
-		width: "100%",
-		flexShrink: 0,
-		flexWrap: "nowrap",
-		borderBottom: `0.5px solid ${Colors.disabledAlpha}`
-	},
-	view: { marginTop: "0.5rem", width: "100%", maxWidth: "100%" }
-});
-
-type PanelHeaderScrollProps = { scrollColor: string; disabledColor: string; widthDevice: number };
-
-const PanelHeaderScroll = styled(View).attrs((props: PanelHeaderScrollProps) => props)`
-	overflow-x: scroll;
-	margin: auto;
-	display: flex;
-	width: 100%;
-	min-width: 320px;
-	max-width: ${(props) => props.widthDevice * 0.98}px;
-	white-space: nowrap;
-
-	::-webkit-scrollbar {
-		height: 1px !important;
-		width: 1px !important;
-		background: ${(props) => props.disabledColor} !important;
-	}
-
-	::-webkit-scrollbar-thumb:horizontal {
-		background: ${(props) => props.scrollColor} !important;
-		border-radius: 0.1rem !important;
-	}
-`;
+const contentStyle = {
+	display: "flex",
+	alignItems: "center",
+	justifyContent: "center",
+	height: "auto",
+	backgroundColor: "transparent"
+};
 
 type TabProps = {
 	children: React.ReactNode;
 	className?: string;
 	closable?: boolean | React.ReactNode;
 	color?: string;
+	onClose?(): any;
 	name: string;
 	title: React.ReactNode;
 };
+type HeaderProps = { color: string };
 
-export const Tab = ({ children }: TabProps) => <View span="100%">{children}</View>;
-
-const voidFn = () => {};
-
-type TabPanelProps = {
-	transition?: number;
-	children: React.ReactNode;
-	currentTab?: string;
-	onClose?(tabName: string): void;
-	onChange?(tab: string): void;
-};
-
-type HeaderProps = { color: string; active: boolean };
-
-const Header = styled.li<HeaderProps>`
-	color: ${(props) => props.color};
+const Header = styled.span<HeaderProps>`
+	color: ${(props: any) => props.color};
 	cursor: pointer;
 	font-size: 1.05rem;
 	margin-left: 0.1em;
@@ -85,157 +45,95 @@ const Header = styled.li<HeaderProps>`
 	transform: perspective(1px) translateZ(0);
 	transition: font-weight 350ms cubic-bezier(0.51, 0.22, 0.16, 0.83);
 	vertical-align: middle;
-
-	&:before {
-		content: "";
-		position: absolute;
-		z-index: ${zIndex.negative};
-		left: ${(props) => (props.active ? "0" : "51%")};
-		right: ${(props) => (props.active ? "0" : "51%")};
-		bottom: 0;
-		background: ${(props) => props.color};
-		height: 2px;
-		transition-property: left, right;
-		transition-duration: 350ms;
-		transition-timing-function: cubic-bezier(0.51, 0.22, 0.16, 0.83);
-	}
-
-	&:hover:before,
-	&:focus:before,
-	&:active:before {
-		left: 0;
-		right: 0;
-	}
 `;
 
-export const TabPanel = React.forwardRef(({ children, transition, currentTab, onChange = voidFn, onClose = voidFn }: TabPanelProps, externalRef) => {
-	const ref = useRef(null) as any;
-	const parentRef = useRef(null) as any;
-	const [elements, setElements] = useState(React.Children.toArray(children)) as any;
-	const [currentIndex, setCurrentIndex] = useState(0);
-	const width = useWidth();
+export const Tab: React.FC<TabProps> = ({ title, onClose, closable, name, className = "", children, color = Colors.primary }) => (
+	<TabPane
+		key={name}
+		tab={
+			<Container className="justify-center">
+				<Header color={color} className={className}>
+					{title}
+					{closable && (
+						<Button
+							className="ml2"
+							transparent
+							onPress={(e) => {
+								e.stopPropagation();
+								if (!!onClose) {
+									onClose();
+								}
+							}}
+						>
+							<MdClose />
+						</Button>
+					)}
+				</Header>
+			</Container>
+		}
+	>
+		{children}
+	</TabPane>
+);
+
+type TabsProps = {
+	inkBarColor?: string;
+	onChange?(tab: string): void;
+	currentTab?: string;
+	tabBarPosition?: "left" | "right" | "top" | "bottom";
+};
+
+const voidFn = () => {};
+export const Tabs: React.FC<TabsProps> = ({ onChange, inkBarColor = Colors.primary, children, currentTab = "", tabBarPosition = "top" }) => {
 	const isMobile = useMobile();
+	const childrenMap = Array.isArray(children) ? children : React.Children.toArray(children);
+	const pageSize = isMobile ? Math.ceil(childrenMap.length) / 4 : childrenMap.length;
 
-	const onChangeIndex = (index: number) => onChange(elements[index].props.name as string);
-
-	const execIf = (name: string, callback: (index: number) => void, timeout = 150) => {
-		const index = elements.reduce((acc: any, x: any, i: number) => {
-			if (x.props.name === name) {
-				return i;
-			}
-			return acc;
-		}, null);
-		if (index !== null) {
-			setTimeout(() => callback(index!), timeout);
-		}
-	};
-
-	const goto = (slide: number) => {
-		onChangeIndex(slide);
-	};
-
-	useEffect(() => {
-		if (!!currentTab) {
-			execIf(currentTab, goto, 0);
-		}
-	}, [currentTab]);
-
-	useEffect(() => {
-		setElements(React.Children.toArray(children));
-	}, [children, setElements]);
-
-	const closeTab = (i: number) => {
-		goto(i > 1 ? i - 1 : 0);
-		const { props } = elements[i];
-		setTimeout(() => {
-			onClose(props.tabName);
-		}, 100);
-	};
-
-	const beforeChange = (_: number, nextSlide: number) => {
-		setCurrentIndex(nextSlide);
-		ref.current!.slickGoTo(nextSlide);
-		onChangeIndex(nextSlide);
-	};
-
-	const setTab = (index: number) => () => {
-		setCurrentIndex(index);
-		onChangeIndex(index);
-	};
-
-	useImperativeHandle(externalRef, () => ({
-		closeTab(name: string, timeout = 100) {
-			execIf(name, closeTab, timeout);
-		},
-		goto(name: string, timeout = 100) {
-			execIf(name, goto, timeout);
-		}
-	}));
-
-	const bindClick = (index: number) => () => closeTab(index);
+	const tabPaneList = React.Children.toArray(children).map(({ props }: any) => {
+		const { children: view, title, name, className = "", closable = false, color = Colors.primary, onClose = voidFn } = props as TabProps;
+		console.log({ name, onClose });
+		return (
+			<TabPane
+				key={name}
+				tab={
+					<Container className="justify-center">
+						<Header color={color} className={className}>
+							{title}
+							{closable && (
+								<Button
+									className="ml2"
+									transparent
+									onPress={(e) => {
+										e.stopPropagation();
+										if (!!onClose) {
+											onClose();
+										}
+									}}
+								>
+									<MdClose />
+								</Button>
+							)}
+						</Header>
+					</Container>
+				}
+			>
+				<Container style={contentStyle}>{view}</Container>
+			</TabPane>
+		);
+	});
 
 	return (
-		<Container ref={parentRef}>
-			<View span="100%">
-				<PanelHeaderScroll widthDevice={width} scrollColor={Colors.primaryAlpha} span="100%" style={styles.header}>
-					{elements.map((x: any, i: number) => {
-						const { closable, name, title, className: cls = "", color = Colors.primary } = x.props;
-						const closeIcon = typeof closable === "boolean" ? <MdClose /> : closable;
-						const css = `${cls} tabs-header`;
-						const active = currentIndex === i;
-						const headerProps = {
-							className: css,
-							active,
-							role: "button",
-							onClick: setTab(i),
-							color
-						};
-						return (
-							<Header key={`header-tab-${name}`} {...headerProps}>
-								{title}{" "}
-								{closable && (
-									<Button transparent onPress={bindClick(i)}>
-										{closeIcon}
-									</Button>
-								)}
-							</Header>
-						);
-					})}
-				</PanelHeaderScroll>
-			</View>
-			<View span="100%" style={styles.view}>
-				<Slider
-					accessibility
-					swipe={isMobile}
-					swipeToSlide={isMobile}
-					touchMove={isMobile}
-					arrows={false}
-					beforeChange={beforeChange}
-					dots={false}
-					fade
-					infinite
-					className="z-auto"
-					ref={ref}
-					rows={1}
-					slide="div"
-					slidesToScroll={1}
-					slidesToShow={1}
-					speed={transition}
-				>
-					<Container>
-						{elements.map((x: any, i: number) => {
-							if (i === currentIndex) {
-								return (
-									<Container key={`active-key-tab-${x.props.name}`} style={{ userSelect: "text", zIndex: "auto" }}>
-										{x}
-									</Container>
-								);
-							}
-							return <Fragment key={`miss-key-tab-${x.props.name}`} />;
-						})}
-					</Container>
-				</Slider>
-			</View>
+		<Container>
+			<TabContainer
+				onChange={onChange}
+				activeKey={currentTab}
+				destroyInactiveTabPane
+				renderTabBar={() => <SwipeableInkTabBar pageSize={pageSize} styles={{ inkBar: { backgroundColor: inkBarColor } }} />}
+				renderTabContent={() => <TabContent />}
+				tabBarPosition={tabBarPosition}
+			>
+				{tabPaneList}
+			</TabContainer>
 		</Container>
 	);
-});
+};
