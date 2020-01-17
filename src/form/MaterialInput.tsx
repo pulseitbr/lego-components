@@ -1,5 +1,5 @@
 import { Colors } from "lego";
-import React, { useImperativeHandle, useRef, useState } from "react";
+import React, { useImperativeHandle, useRef, useState, CSSProperties } from "react";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import styled from "styled-components";
 import Loader from "../loader/Loader";
@@ -230,7 +230,8 @@ const MaterialInput = React.forwardRef(
 
 		const toggle = () => setType(changeType(stateType, type) as InputTypes);
 
-		const labelInternalStyle = {
+		const labelInternalStyle: CSSProperties = {
+			userSelect: "text" as "text",
 			width: "100%",
 			color: labelColor,
 			cursor: disabled ? "not-allowed" : "pointer",

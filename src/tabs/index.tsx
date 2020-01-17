@@ -1,7 +1,9 @@
+import { Container } from "../base";
+import Button from "../button/Button";
+import useMobile from "../hooks/useMobile";
 import { Colors } from "lego";
 //@ts-ignore
 import TabContainer, { TabPane } from "rc-tabs";
-import "rc-tabs/assets/index.css";
 //@ts-ignore
 import SwipeableInkTabBar from "rc-tabs/lib/SwipeableInkTabBar";
 //@ts-ignore
@@ -9,15 +11,13 @@ import TabContent from "rc-tabs/lib/SwipeableTabContent";
 import React from "react";
 import { MdClose } from "react-icons/md";
 import styled from "styled-components";
-import { Container } from "../base";
-import Button from "../button/Button";
-import useMobile from "../hooks/useMobile";
 
 const contentStyle = {
 	display: "flex",
 	alignItems: "center",
 	justifyContent: "center",
 	height: "auto",
+	userSelect: "text" as "text",
 	backgroundColor: "transparent"
 };
 
@@ -47,34 +47,36 @@ const Header = styled.span<HeaderProps>`
 	vertical-align: middle;
 `;
 
-export const Tab: React.FC<TabProps> = ({ title, onClose, closable, name, className = "", children, color = Colors.primary }) => (
-	<TabPane
-		key={name}
-		tab={
-			<Container className="justify-center">
-				<Header color={color} className={className}>
-					{title}
-					{closable && (
-						<Button
-							className="ml2"
-							transparent
-							onPress={(e) => {
-								e.stopPropagation();
-								if (!!onClose) {
-									onClose();
-								}
-							}}
-						>
-							<MdClose />
-						</Button>
-					)}
-				</Header>
-			</Container>
-		}
-	>
-		{children}
-	</TabPane>
-);
+const selectStyle = { userSelect: "text" as "text", zIndex: "auto" as "auto" };
+
+const onPressClose = (maybeFunction?: Function) => (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+	e.stopPropagation();
+	if (!!maybeFunction) {
+		maybeFunction();
+	}
+};
+
+export const Tab: React.FC<TabProps> = ({ title, onClose, closable, name, className = "", children, color = Colors.primary }) => {
+	return (
+		<TabPane
+			key={name}
+			tab={
+				<Container className="justify-center" style={selectStyle}>
+					<Header color={color} className={className}>
+						{title}
+						{closable && (
+							<Button className="ml2" transparent onPress={onPressClose(onClose)}>
+								<MdClose />
+							</Button>
+						)}
+					</Header>
+				</Container>
+			}
+		>
+			<Container style={selectStyle}>{children}</Container>
+		</TabPane>
+	);
+};
 
 type TabsProps = {
 	inkBarColor?: string;
@@ -87,11 +89,9 @@ const voidFn = () => {};
 export const Tabs: React.FC<TabsProps> = ({ onChange, inkBarColor = Colors.primary, children, currentTab = "", tabBarPosition = "top" }) => {
 	const isMobile = useMobile();
 	const childrenMap = Array.isArray(children) ? children : React.Children.toArray(children);
-	const pageSize = isMobile ? Math.ceil(childrenMap.length) / 4 : childrenMap.length;
-
+	const pageSize = isMobile ? 2 : childrenMap.length;
 	const tabPaneList = React.Children.toArray(children).map(({ props }: any) => {
 		const { children: view, title, name, className = "", closable = false, color = Colors.primary, onClose = voidFn } = props as TabProps;
-		console.log({ name, onClose });
 		return (
 			<TabPane
 				key={name}
@@ -100,16 +100,7 @@ export const Tabs: React.FC<TabsProps> = ({ onChange, inkBarColor = Colors.prima
 						<Header color={color} className={className}>
 							{title}
 							{closable && (
-								<Button
-									className="ml2"
-									transparent
-									onPress={(e) => {
-										e.stopPropagation();
-										if (!!onClose) {
-											onClose();
-										}
-									}}
-								>
+								<Button className="ml2" transparent onPress={onPressClose(onClose)}>
 									<MdClose />
 								</Button>
 							)}
