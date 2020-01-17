@@ -1,8 +1,8 @@
 import { FlexDirectionProperty } from "csstype";
 import React from "react";
-import Collapse from "./collapse";
 import styled, { StyledComponent } from "styled-components";
 import { HtmlTag, TypeText } from "../@types";
+import Collapse from "./collapse";
 
 export type LegoMediaQuery = {
 	span?: TypeText;
@@ -62,7 +62,7 @@ type ResponsiveProps = {
 } & TypeContainer;
 
 const Responsive = React.forwardRef(
-	({ children, Component = Flex, htmlTag = "div", isCollapse = false, show = true, time = 750, ...props }: ResponsiveProps, ref) => {
+	({ children, Component = Flex, htmlTag = "div", isCollapse = false, show = true, time = 450, ...props }: ResponsiveProps, ref) => {
 		if (!isCollapse) {
 			return (
 				<Component as={htmlTag} {...props} ref={ref}>
@@ -140,14 +140,9 @@ const GridComponent = styled.div`
 	}
 `;
 
-type RowProps = {
-	spacing: string | number;
-} & React.HTMLAttributes<HTMLElement>;
+type RowProps = { spacing: string | number } & React.HTMLAttributes<HTMLElement>;
 
-export const Row = styled(GridComponent).attrs((props: RowProps) => ({
-	...props,
-	spacing: props.spacing
-}))`
+export const Row = styled(GridComponent).attrs((props: RowProps) => ({ ...props, spacing: props.spacing }))`
 	width: 100%;
 	column-gap: ${(props: RowProps) => props.spacing};
 `;

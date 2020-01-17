@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useImperativeHandle } from "react";
 import styled from "styled-components";
 import Loader from "../loader/loader";
 import { Colors } from "lego";
@@ -133,94 +133,103 @@ const RippleButton = styled(Transparent)`
 	}
 `;
 
-const Button = ({
-	textOnLoading = true,
-	full = false,
-	loading = false,
-	square = false,
-	style = {},
-	styleType = "primary",
-	rippleColor = Colors.primary,
-	theme,
-	circle = false,
-	disabled,
-	size = 1,
-	children,
-	type = "button",
-	onClick,
-	onPress,
-	stopPropagation = true,
-	...html
-}: ButtonProps) => {
-	const themeDefined = defineTheme(html, styleType, theme) || "primary";
-	const clickPressAction = onClick || onPress;
-	const ifDisable = !!disabled ? "disabled" : themeDefined;
-	const cursor = !!disabled ? ("not-allowed" as "not-allowed") : ("pointer" as "pointer");
+const Button = React.forwardRef(
+	(
+		{
+			textOnLoading = true,
+			full = false,
+			loading = false,
+			square = false,
+			style = {},
+			styleType = "primary",
+			rippleColor = Colors.primary,
+			theme,
+			circle = false,
+			disabled,
+			size = 1,
+			children,
+			type = "button",
+			onClick,
+			onPress,
+			stopPropagation = true,
+			...html
+		}: ButtonProps,
+		forwardRef
+	) => {
+		const ref = useRef(null);
+		const themeDefined = defineTheme(html, styleType, theme) || "primary";
+		const clickPressAction = onClick || onPress;
+		const ifDisable = !!disabled ? "disabled" : themeDefined;
+		const cursor = !!disabled ? ("not-allowed" as "not-allowed") : ("pointer" as "pointer");
 
-	const onClickButton = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-		if (stopPropagation) {
-			event.stopPropagation();
+		useImperativeHandle(forwardRef, () => ref.current);
+
+		const onClickButton = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+			if (stopPropagation) {
+				event.stopPropagation();
+			}
+			event.persist();
+			if (!!clickPressAction) {
+				return clickPressAction(event);
+			}
+		};
+
+		const commonProps = {
+			style: { cursor, ...style },
+			onClick: onClickButton,
+			type,
+			disabled: loading ? true : !!disabled
+		};
+
+		if (themeDefined === "transparent") {
+			return (
+				<RippleButton {...html} {...commonProps} circle={circle} rippleColor={rippleColor}>
+					{children}
+				</RippleButton>
+			);
+		} else if (themeDefined === "none") {
+			return (
+				<Transparent {...html} {...commonProps} circle={circle}>
+					{children}
+				</Transparent>
+			);
 		}
-		event.persist();
-		if (!!clickPressAction) {
-			return clickPressAction(event);
-		}
-	};
 
-	const commonProps = {
-		style: { cursor, ...style },
-		onClick: onClickButton,
-		type,
-		disabled: loading ? true : !!disabled
-	};
+		const childrenRender = (() => {
+			if (loading && textOnLoading) {
+				return (
+					<React.Fragment>
+						<Loader border={0.05} size={0.5} color={Colors.disabledDark} /> {children}
+					</React.Fragment>
+				);
+			}
+			if (loading) {
+				return (
+					<React.Fragment>
+						<Loader border={0.05} size={0.5} color={Colors.disabledDark} />
+					</React.Fragment>
+				);
+			}
+			return children;
+		})();
 
-	if (themeDefined === "transparent") {
 		return (
-			<RippleButton {...html} {...commonProps} circle={circle} rippleColor={rippleColor}>
-				{children}
-			</RippleButton>
-		);
-	} else if (themeDefined === "none") {
-		return (
-			<Transparent {...html} {...commonProps} circle={circle}>
-				{children}
-			</Transparent>
+			<ParentButton
+				{...html}
+				{...commonProps}
+				ref={ref.current}
+				circle={circle}
+				full={full}
+				size={size}
+				pill={!square}
+				bgColor={Colors.primary}
+				textColor={Colors.lightLight}
+				theme={styledProps[ifDisable]}
+			>
+				{childrenRender}
+			</ParentButton>
 		);
 	}
-
-	const childrenRender = (() => {
-		if (loading && textOnLoading) {
-			return (
-				<React.Fragment>
-					<Loader border={0.05} size={0.5} color={Colors.disabledDark} /> {children}
-				</React.Fragment>
-			);
-		}
-		if (loading) {
-			return (
-				<React.Fragment>
-					<Loader border={0.05} size={0.5} color={Colors.disabledDark} />
-				</React.Fragment>
-			);
-		}
-		return children;
-	})();
-
-	return (
-		<ParentButton
-			{...html}
-			{...commonProps}
-			circle={circle}
-			full={full}
-			size={size}
-			pill={!square}
-			bgColor={Colors.primary}
-			textColor={Colors.lightLight}
-			theme={styledProps[ifDisable]}
-		>
-			{childrenRender}
-		</ParentButton>
-	);
-};
+);
 
 export default Button;
