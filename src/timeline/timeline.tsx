@@ -1,6 +1,6 @@
 import React from "react";
 import { MdSync } from "react-icons/md";
-import TimelineItem from "./TimelineItem";
+import TimelineItem from "./timeline-item";
 
 export type TimelineProps = {
 	className?: string;

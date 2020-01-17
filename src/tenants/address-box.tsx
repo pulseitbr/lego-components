@@ -3,11 +3,11 @@ import { transparentize } from "polished";
 import React, { useEffect, useState } from "react";
 import { MdHome, MdStore } from "react-icons/md";
 import { Container, Left, Right, View } from "../base";
-import Radiobox from "../form/Radiobox";
+import Radiobox from "../form/radio-box";
 import FlatList from "../list/FlatList";
 import Colors from "../styles";
-import Constants, { SOFT_RADIUS } from "../styles/Constants";
-import StyleSheet from "../styles/StyleSheet";
+import Constants, { SOFT_RADIUS } from "../styles/constants";
+import StyleSheet from "../styles/style-sheet";
 import { SubTitle, Text } from "../typography";
 
 const formatCep = (str = "") => str.replace(/[^0-9]/g, "").replace(/(\d{5})(\d{3})/, "$1-$2");

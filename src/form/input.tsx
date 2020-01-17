@@ -1,6 +1,6 @@
 import React, { InputHTMLAttributes, useImperativeHandle, useRef } from "react";
 import MaskedInput from "react-text-mask";
-import CurrencyInput, { CurrencyInputType } from "./CurrencyInput";
+import CurrencyInput, { CurrencyInputType } from "./currency-input";
 import { convertMaskToString, decimalKeyboard, maskConverter, masks } from "./form-utils/masks";
 
 export type InputTypes =

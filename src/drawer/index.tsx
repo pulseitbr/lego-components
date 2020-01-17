@@ -4,10 +4,10 @@ import { MdClose } from "react-icons/md";
 import styled, { ThemedStyledFunction } from "styled-components";
 import { useOnClickOutside } from "..";
 import { Container, View } from "../base";
-import useBlockScroll from "../hooks/useBlockScroll";
-import useKeyDown from "../hooks/useKeyDown";
-import StyleSheet, { zIndex } from "../styles/StyleSheet";
-import Portal from "../utils/Portal";
+import useBlockScroll from "../hooks/use-block-scroll";
+import useKeyDown from "../hooks/use-key-down";
+import StyleSheet, { zIndex } from "../styles/style-sheet";
+import Portal from "../utils/portal";
 
 type ModalPortal = {
 	visible: boolean;

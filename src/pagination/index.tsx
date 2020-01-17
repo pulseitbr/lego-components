@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
-import Button from "../button/Button";
-import StyleSheet from "../styles/StyleSheet";
+import Button from "../button";
+import StyleSheet from "../styles/style-sheet";
 import { Colors } from "lego";
-import { TypePagination } from "../hooks/usePagination";
+import { TypePagination } from "./use-pagination";
 
 const styles = StyleSheet.create({
 	loaderTd: { border: "1px solid transparent", padding: 0 },

@@ -1,5 +1,5 @@
 import React from "react";
-import { timelineTestBorder } from "./";
+import { timelineTestBorder } from ".";
 
 export type TimeLineItemProps = {
 	className?: string;

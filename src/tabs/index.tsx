@@ -1,6 +1,6 @@
 import { Container } from "../base";
-import Button from "../button/Button";
-import useMobile from "../hooks/useMobile";
+import Button from "../button";
+import useMobile from "../hooks/use-mobile";
 import { Colors } from "lego";
 //@ts-ignore
 import TabContainer, { TabPane } from "rc-tabs";

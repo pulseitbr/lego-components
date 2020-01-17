@@ -13,7 +13,8 @@ const PaperA4 = styled.div.attrs((props: TypesPaperA4) => ({
 	footerBackground: Colors.primary,
 	footerForeground: "white"
 }))`
-	width: 21cm;
+	width: 210mm;
+	min-height: 297mm;
 	position: relative;
 	color: ${(props) => props.color};
 

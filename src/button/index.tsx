@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import Loader from "../loader/Loader";
+import Loader from "../loader/loader";
 import { Colors } from "lego";
-import { ThemeProperty, defineTheme } from "../styles/ThemeProperty";
+import { ThemeProperty, defineTheme } from "../styles/theme-property";
 
 interface IButtonProps {
 	textOnLoading?: boolean;

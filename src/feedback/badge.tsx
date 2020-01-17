@@ -2,8 +2,8 @@ import { Colors } from "lego";
 import { darken, transparentize } from "polished";
 import React, { CSSProperties } from "react";
 import styled from "styled-components";
-import Constants from "../styles/Constants";
-import StyleSheet from "../styles/StyleSheet";
+import Constants from "../styles/constants";
+import StyleSheet from "../styles/style-sheet";
 
 const Dot = styled.span.attrs(({ size = 1, ...props }: any) => ({ ...props, size }))`
 	background-color: ${(props) => props.color};

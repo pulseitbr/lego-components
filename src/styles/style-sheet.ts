@@ -2,7 +2,7 @@ import { CSSProperties } from "react";
 import { TypeText } from "../@types";
 
 type Props<T extends string> = {
-	[key in T]: CSSProperties;
+	[keyof in T]: CSSProperties;
 };
 
 const StyleSheet = <T extends string>(props: Props<T>) => props;

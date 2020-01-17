@@ -2,10 +2,10 @@ import { Uuid } from "lego";
 import React, { useState } from "react";
 import { MdAdd, MdRemove } from "react-icons/md";
 import styled from "styled-components";
-import usePagination from "../hooks/usePagination";
-import StyleSheet from "../styles/StyleSheet";
+import usePagination from "../pagination/use-pagination";
+import StyleSheet from "../styles/style-sheet";
 import { Container, View, Right } from "../base";
-import Loader from "../loader/Loader";
+import Loader from "../loader/loader";
 import { Title } from "../typography";
 import Pagination from "../pagination";
 

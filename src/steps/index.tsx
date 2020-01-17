@@ -3,7 +3,7 @@ import React from "react";
 import { MdClose, MdDone, MdInfo } from "react-icons/md";
 import styled from "styled-components";
 import { Container, View } from "../base";
-import { zIndex } from "../styles/StyleSheet";
+import { zIndex } from "../styles/style-sheet";
 
 type TypeWrap = {
 	line: string;

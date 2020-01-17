@@ -2,9 +2,9 @@ import { Colors } from "lego";
 import React, { useImperativeHandle, useRef, useState, CSSProperties } from "react";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import styled from "styled-components";
-import Loader from "../loader/Loader";
-import Input, { InputTypes, MaskInputProps } from "./Input";
-import { zIndex } from "../styles/StyleSheet";
+import Loader from "../loader/loader";
+import Input, { InputTypes, MaskInputProps } from "./input";
+import { zIndex } from "../styles/style-sheet";
 
 type Props = {
 	lineAnimationTime?: number;

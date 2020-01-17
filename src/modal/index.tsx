@@ -5,11 +5,11 @@ import { MdClose } from "react-icons/md";
 import styled, { ThemedStyledFunction } from "styled-components";
 import { HtmlTag } from "../@types";
 import { TypeContainer, View } from "../base";
-import useBlockScroll from "../hooks/useBlockScroll";
-import StyleSheet, { zIndex } from "../styles/StyleSheet";
-import Keyboard from "../utils/Keyboard";
-import ReactPortal from "../utils/Portal";
-import useOnClickOutside from "../hooks/useOnClickOutside";
+import useBlockScroll from "../hooks/use-block-scroll";
+import StyleSheet, { zIndex } from "../styles/style-sheet";
+import Keyboard from "../utils/keyboard";
+import ReactPortal from "../utils/portal";
+import useOnClickOutside from "../hooks/use-on-click-outside";
 
 const lightenClose = lighten(0.6);
 
@@ -119,16 +119,19 @@ const Modal = React.forwardRef(
 	) => {
 		const toggleVisibility = useCallback((e: KeyboardEvent) => {
 			if (e.keyCode === Keyboard.esc && closeOnEsc) {
-				onClose();
+				if (visible) {
+					onClose();
+				}
 			}
 		}, []);
+
 		const ref = useRef(null);
 
 		useImperativeHandle(externalRef, () => ref.current);
 		useBlockScroll(!!visible);
 
 		const onClickMask = (e: any) => {
-			if (closeOnMask) {
+			if (closeOnMask && visible) {
 				e.stopPropagation();
 				onClose();
 			}

@@ -1,8 +1,8 @@
 import * as React from "react";
 import { Container } from "../../base";
-import Timeline from "../../timeline/Timeline";
-import TimelineItem from "../../timeline/TimelineItem";
-import MaterialInput from "../MaterialInput";
+import Timeline from "../../timeline/timeline";
+import TimelineItem from "../../timeline/timeline-item";
+import MaterialInput from "../material-input";
 import defaults from "./defaults";
 
 export type RuleObject = {
