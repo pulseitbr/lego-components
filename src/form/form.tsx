@@ -4,7 +4,7 @@ type Props = React.FormHTMLAttributes<HTMLFormElement> & {
 	canSubmit?: () => boolean;
 };
 
-const Form = ({ children, canSubmit, onSubmit, ...props }: Props) => {
+const Form = ({ children, canSubmit = undefined, onSubmit, ...props }: Props) => {
 	const submitEvent = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		event.persist();
@@ -13,6 +13,9 @@ const Form = ({ children, canSubmit, onSubmit, ...props }: Props) => {
 				onSubmit(event);
 			}
 		};
+		if (canSubmit === undefined) {
+			submit();
+		}
 		if (!!canSubmit && canSubmit()) {
 			submit();
 		}
