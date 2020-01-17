@@ -13,9 +13,7 @@ const Form = ({ children, canSubmit, onSubmit, ...props }: Props) => {
 				onSubmit(event);
 			}
 		};
-		if (canSubmit === undefined) {
-			submit();
-		} else if (!!canSubmit && canSubmit()) {
+		if (!!canSubmit && canSubmit()) {
 			submit();
 		}
 	};

@@ -1,5 +1,5 @@
 import { Colors } from "lego";
-import React, { InputHTMLAttributes, Fragment } from "react";
+import React, { Fragment, InputHTMLAttributes } from "react";
 import styled from "styled-components";
 
 type Props = {
