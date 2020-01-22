@@ -60,20 +60,14 @@ export const maskConverter = {
 	cellTelephone: (str: string) => {
 		if (str.length === 10) {
 			return toTelephone(str);
-		} else if (str.length === 1) {
+		}
+		if (str.length === 11) {
 			return toCellphone(str);
 		}
 		return str;
 	},
 	matricula: (str: string) => str
 };
-
-// const cellphoneMask = maskCreator("(00) 00000-0000");
-// const cepMask = maskCreator("00000-0000");
-// const cnpjMask = maskCreator("00.000.000/0000-00");
-// const colorMask = maskCreator("#000000");
-// const cpfMask = maskCreator("000.000.000-00");
-// const telephoneMask = maskCreator("(00) 0000-0000");
 
 export const masks = {
 	cellphone: ["(", /\d/, /\d/, ")", " ", /\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/],
@@ -128,7 +122,10 @@ export const masks = {
 	},
 	cellTelephone: (value: string) => {
 		const mask = value.replace(/[^0-9]/g, "");
-		if (mask.length > 10) {
+		if (mask.length === 10) {
+			return ["(", /\d/, /\d/, ")", " ", /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/];
+		}
+		if (mask.length > 11) {
 			return ["(", /\d/, /\d/, ")", " ", /\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/];
 		}
 		return ["(", /\d/, /\d/, ")", " ", /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/];
