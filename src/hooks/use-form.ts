@@ -1,32 +1,31 @@
-import { useEffect, useMemo, useRef } from "react";
 import useReducer from "./use-reducer";
-
+import { useEffect, useMemo, useRef } from "react";
+type FormProperties<State> = { [P in keyof State]: string };
 type MessageField = string | number | React.ReactNode;
-type FieldMessage = { [key: string]: { message: MessageField; hasError: boolean; blurEventTrigger: boolean } };
+type FieldMessage<State> = {
+	[key in keyof State]: { message: MessageField; hasError: boolean; blurEventTrigger: boolean };
+};
 
-type Blur<T> = {
-	[key: string]: (
+type Blur<T extends { [key: string]: string }> = {
+	[key in keyof T]: (
 		event: React.FocusEvent<HTMLInputElement>,
-		state: T,
+		state: FormProperties<T>,
 		setState: (newProps: Partial<T>) => any,
-		setError: (errorsObject: FieldMessage) => any
+		setError: (errorsObject: FieldMessage<T>) => any
 	) => void;
 };
 type InternalState<T> = {
 	fields: T;
-	errors: FieldMessage;
+	errors: FieldMessage<T>;
 };
 type Errors = { isValid: boolean; msg: string };
-type InputTypes = string | number | boolean | string[];
 type UseFormType<State> = {
-	blurs?: Blur<State>;
+	blurs?: Blur<FormProperties<State>>;
 	updateOnChange?: boolean;
-	validations?: { [key: string]: (fieldValue: InputTypes, state: State) => Errors } & Object;
+	validations?: { [P in keyof State]: (fieldValue: string, state: State) => Errors };
 };
 
-const getKeys = Object.keys;
-
-const fill = <T>(obj: T, etc: unknown) => getKeys(obj).reduce((acc, e) => ({ ...acc, [e]: etc }), {});
+const fill = <T>(obj: T, etc: unknown) => Object.keys(obj).reduce((acc, e) => ({ ...acc, [e]: etc }), {});
 
 const checkKeys = (o1: Object, o2: Object, key: string) => o1.hasOwnProperty(key) && o2.hasOwnProperty(key);
 
@@ -49,28 +48,33 @@ const actions = {
 	})
 };
 
+type CacheValidate<T> = { [key in keyof T]: boolean };
+
+type ErrorsFields<State> = { [P in keyof State]: { message: MessageField; hasError: boolean; blurEventTrigger: boolean } };
+
 const messageFill = { message: "", hasError: false, blurEventTrigger: false };
 
-export default <T>(fields: T, { updateOnChange = true, validations = {}, blurs = {} }: UseFormType<T>) => {
-	const cache = useRef(fill(fields, false));
-	const errors: FieldMessage = useMemo(() => fill(fields, messageFill), [fields]);
+export default <State extends { [key in keyof State]: string }>(
+	fields: FormProperties<State>,
+	{ updateOnChange = true, validations = {} as any, blurs = {} as any }: UseFormType<State>
+) => {
+	const cache = useRef<CacheValidate<FormProperties<State>>>(fill(fields, false) as any);
+	const errors: ErrorsFields<State> = useMemo(() => fill(fields, messageFill), [fields]) as any;
+	const [state, dispatch] = useReducer({ fields, errors } as InternalState<FormProperties<State>>, actions) as [InternalState<State>, Function];
 
-	const [state, dispatch] = useReducer({ fields, errors } as InternalState<T>, actions) as [InternalState<T>, Function];
+	const fieldNames = useMemo(() => Object.keys(fields), [fields]);
+	const dependencies = useMemo(() => Object.values(state.fields), [state.fields]) as any;
 
-	const values = state.fields;
-	const fieldNames = Object.keys(fields);
-	const valuesDependency = Object.values(values);
-
-	if (valuesDependency.length !== fieldNames.length) {
-		const names = valuesDependency.filter((x: string) => !fieldNames.includes(x));
+	if (dependencies.length !== fieldNames.length) {
+		const names = dependencies.filter((x: string) => !fieldNames.includes(x as string));
 		throw new Error(`You need the field names in your inputs: ${fieldNames} - ${names}`);
 	}
 
-	const setState = useMemo(() => (newProps: Partial<T>) => dispatch({ type: "setState", state: { ...newProps } }), [dispatch]);
+	const setState = useMemo(() => (newProps: Partial<FormProperties<State>>) => dispatch({ type: "setState", state: { ...newProps } }), [dispatch]);
 
-	const setErrors = useMemo(() => (errorsObject: FieldMessage) => dispatch({ type: "aggregateErrors", errors: errorsObject }), [dispatch]);
+	const setErrors = useMemo(() => (errorsObject: FieldMessage<State>) => dispatch({ type: "aggregateErrors", errors: errorsObject }), [dispatch]);
 
-	const clearState = useMemo(() => (emptyState?: Partial<T>) => dispatch({ type: "setState", state: { ...fields, ...emptyState } }), [
+	const clearState = useMemo(() => (emptyState?: Partial<State>) => dispatch({ type: "setState", state: { ...fields, ...emptyState } }), [
 		dispatch,
 		fields
 	]);
@@ -78,11 +82,12 @@ export default <T>(fields: T, { updateOnChange = true, validations = {}, blurs =
 	useEffect(() => {
 		if (updateOnChange) {
 			const stateErrors = { ...state.errors };
-			getKeys(values).forEach((x) => {
-				const value = values[x];
-				if (checkKeys(validations, values, x)) {
+			Object.keys(state.fields).forEach((name) => {
+				const x = (name as unknown) as keyof State;
+				const value = state.fields[x];
+				if (checkKeys(validations, state.fields, x as string)) {
 					const fn = validations[x];
-					const { isValid, msg } = fn(value, values);
+					const { isValid, msg } = fn(value, state.fields);
 					if (stateErrors[x].blurEventTrigger && !isValid) {
 						cache.current[x] = true;
 						stateErrors[x] = {
@@ -102,7 +107,7 @@ export default <T>(fields: T, { updateOnChange = true, validations = {}, blurs =
 			});
 			dispatch({ type: "updateErrors", errors: stateErrors });
 		}
-	}, [updateOnChange, state.fields, values]);
+	}, [updateOnChange, state.fields]);
 
 	const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		event.persist();
@@ -111,7 +116,8 @@ export default <T>(fields: T, { updateOnChange = true, validations = {}, blurs =
 
 	const blurEvents = useMemo(
 		() =>
-			getKeys(blurs).reduce((acc, el) => {
+			Object.keys(blurs).reduce((acc, name) => {
+				const el: keyof Blur<FormProperties<State>> = name as any;
 				if (!!blurs && blurs.hasOwnProperty(el)) {
 					const validationFn = validations[el] || null;
 					const onBlurHandler = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -137,5 +143,5 @@ export default <T>(fields: T, { updateOnChange = true, validations = {}, blurs =
 		[blurs, dispatch, setErrors, setState, state.fields, validations]
 	);
 
-	return { clearState, onChange, setState, setErrors, blurEvents, errors: state.errors, state: values };
+	return { clearState, onChange, setState, setErrors, blurEvents, errors: state.errors, state: state.fields };
 };

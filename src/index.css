@@ -5937,14 +5937,14 @@ Tachyons CSS
 }
 
 .rc-tabs-left {
-    border-right: 2px solid #f3f3f3;
+    border-right: 2px solid transparent;
 }
 
 .rc-tabs-left .rc-tabs-bar {
     float: left;
     height: 100%;
     margin-right: 10px;
-    border-right: 1px solid #f3f3f3;
+    border-right: 1px solid transparent;
 }
 
 .rc-tabs-left .rc-tabs-nav-container {
@@ -6055,14 +6055,14 @@ Tachyons CSS
 }
 
 .rc-tabs-right {
-    border-left: 2px solid #f3f3f3;
+    border-left: 2px solid transparent;
 }
 
 .rc-tabs-right .rc-tabs-bar {
     float: right;
     height: 100%;
     margin-left: 10px;
-    border-left: 1px solid #f3f3f3;
+    border-left: 1px solid transparent;
 }
 
 .rc-tabs-right .rc-tabs-nav-container {
@@ -6169,7 +6169,7 @@ Tachyons CSS
 }
 
 .rc-tabs-bottom {
-    border-top: 2px solid #f3f3f3;
+    border-top: 2px solid transparent;
 }
 
 .rc-tabs-bottom .rc-tabs-content {
@@ -6177,7 +6177,7 @@ Tachyons CSS
 }
 
 .rc-tabs-bottom .rc-tabs-bar {
-    border-top: 1px solid #f3f3f3;
+    border-top: 1px solid transparent;
 }
 
 .rc-tabs-bottom .rc-tabs-nav-container-scrolling {
@@ -6290,7 +6290,7 @@ Tachyons CSS
 }
 
 .rc-tabs-top {
-    border-bottom: 2px solid #f3f3f3;
+    border-bottom: 2px solid transparent;
 }
 
 .rc-tabs-top .rc-tabs-content {
@@ -6298,7 +6298,7 @@ Tachyons CSS
 }
 
 .rc-tabs-top .rc-tabs-bar {
-    border-bottom: 1px solid #f3f3f3;
+    border-bottom: 1px solid transparent;
 }
 
 .rc-tabs-top .rc-tabs-nav-container-scrolling {
