@@ -6335,6 +6335,7 @@ Tachyons CSS
 }
 
 .rc-tabs-top .rc-tabs-nav-wrap {
+    border-bottom: 1px solid var(--disabled);
     width: 100%;
 }
 
