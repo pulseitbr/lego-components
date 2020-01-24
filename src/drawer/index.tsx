@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
 	closeIcon: { textAlign: "right", alignItems: "flex-start", marginTop: "0.8rem", justifyContent: "flex-end" }
 });
 
-const ModalPortal = styled.div.attrs((props: ModalPortal) => props)`
+const DrawerPortal = styled.div.attrs((props: ModalPortal) => props)`
 	top: 0;
 	left: 0;
 	z-index: ${zIndex.overlayMask};
@@ -65,39 +65,44 @@ const DrawerContainer: any = styled(Container)`
 `;
 
 type Props = {
-	visible: boolean;
-	title: React.ReactNode;
-	closeIcon?: React.ReactNode;
-	maskClickClose?: boolean;
-	closeOnEsc?: boolean;
-	onClose: () => any;
-	className?: string;
-	maskColor?: string;
-	style?: CSSProperties;
-	width?: string;
 	blockOuterScroll?: boolean;
-	children: React.ReactNode | any;
+	bodyClassName?: string;
+	children: React.ReactNode;
+	className?: string;
+	closeIcon?: React.ReactNode;
+	closeOnEsc?: boolean;
+	maskClickClose?: boolean;
+	maskColor?: string;
+	onClose(): any;
+	style?: CSSProperties;
+	title: React.ReactNode;
+	titleClassName?: string;
+	visible: boolean;
+	width?: string;
 };
 
 const Drawer = React.forwardRef(
 	(
 		{
-			visible,
-			closeIcon = <MdClose className="grow pointer" style={styles.closeIconStyle} />,
-			title,
 			blockOuterScroll = true,
-			maskClickClose = false,
-			closeOnEsc = true,
-			onClose = () => {},
-			width = "60%",
+			bodyClassName = "",
 			children,
+			closeIcon = <MdClose className="grow pointer" style={styles.closeIconStyle} />,
+			closeOnEsc = true,
+			maskClickClose = false,
+			onClose = () => {},
+			title,
+			titleClassName = "",
+			visible,
+			width = "60%",
 			...htmlDivProps
 		}: Props,
 		externalRef
 	) => {
 		const ref = useRef(null) as React.RefObject<HTMLDivElement>;
+
 		const onMaskClick = () => {
-			if (maskClickClose) {
+			if (maskClickClose && visible) {
 				close();
 			}
 		};
@@ -117,8 +122,8 @@ const Drawer = React.forwardRef(
 			setTimeout(onClose, speed);
 		};
 
-		useOnClickOutside(ref, onMaskClick);
 		useImperativeHandle(externalRef, () => ref.current);
+		useOnClickOutside(ref, onMaskClick);
 		useBlockScroll(blockOuterScroll ? visible : false);
 
 		const toggleView = () => {
@@ -147,9 +152,9 @@ const Drawer = React.forwardRef(
 
 		return (
 			<Portal>
-				<ModalPortal maskColor="rgba(0, 0, 0, 0.65)" visible={visible}>
+				<DrawerPortal maskColor="rgba(0, 0, 0, 0.65)" visible={visible}>
 					<DrawerContainer {...htmlDivProps} ref={ref}>
-						<Container style={styles.modalMargin}>
+						<Container className={titleClassName} style={styles.modalMargin}>
 							<View span="95%" xsmall="90%" small="90%">
 								{title}
 							</View>
@@ -157,9 +162,11 @@ const Drawer = React.forwardRef(
 								{closeIcon}
 							</View>
 						</Container>
-						<Container style={{ ...styles.modalMargin, overflowY: "auto" }}>{children}</Container>
+						<Container className={bodyClassName} style={{ ...styles.modalMargin, overflowY: "auto" }}>
+							{children}
+						</Container>
 					</DrawerContainer>
-				</ModalPortal>
+				</DrawerPortal>
 			</Portal>
 		);
 	}

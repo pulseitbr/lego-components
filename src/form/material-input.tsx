@@ -30,6 +30,7 @@ type Props = {
 	message?: React.ReactNode;
 	name: string;
 	viewPasswordIcon?: React.ReactNode;
+	iconContainerProps?: Partial<{ className: string; style: CSSProperties }>;
 };
 
 type WrapperType = {
@@ -219,6 +220,7 @@ const MaterialInput = React.forwardRef(
 			lineAnimationTime = 500,
 			type = "text",
 			value = "",
+			iconContainerProps,
 			viewPasswordIcon = <MdVisibility style={iconStyle} />,
 			...inputHtml
 		}: FloatInputType,
@@ -275,7 +277,7 @@ const MaterialInput = React.forwardRef(
 					<Input {...inputHtml} {...inputCommonProps} type={stateType} />
 					<span className="bar" />
 					{Label}
-					<RightIcons>
+					<RightIcons {...iconContainerProps}>
 						{rightIcons}
 						{loader}
 						<EyePassword disabled={disabled} type="button" onClick={toggle}>
@@ -292,7 +294,7 @@ const MaterialInput = React.forwardRef(
 				<Input {...inputHtml} {...inputCommonProps} usePlaceholder={false} />
 				<span className="bar" />
 				{Label}
-				<RightIcons>
+				<RightIcons {...iconContainerProps}>
 					{rightIcons}
 					{loader}
 				</RightIcons>

@@ -1,6 +1,8 @@
 import { KeyboardEvent, useEffect, useState } from "react";
 type KeyboardHandler = (e: KeyboardEvent) => any;
+
 const fill = ["input"];
+
 const useKeyDown = (callback: KeyboardHandler, ignoredHtmlElements: string[] = fill) => {
 	const [ignoreElements, setIgnoreElements] = useState(ignoredHtmlElements);
 
