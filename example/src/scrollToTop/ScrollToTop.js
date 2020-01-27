@@ -1,63 +1,72 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Fragment } from "react";
-export default class ScrollToTop extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			is_visible: false
+import { useEffect } from "react";
+
+const ScrollComponent = ({ scrollStepInPx }) => {
+	const [showBtn, setShowBtn] = useState(false);
+	// const [intervalId, setIntervalId] = useState(0);
+
+	useEffect(() => {
+		const scrollFn = () => {
+			toggleVisibility();
 		};
-	}
+		window.addEventListener("scroll", scrollFn);
+		return () => window.removeEventListener("scroll", scrollFn);
+	}, []);
 
-	componentDidMount() {
-		var scrollComponent = this;
-		document.addEventListener("scroll", function(e) {
-			scrollComponent.toggleVisibility();
-		});
-	}
+	const toggleVisibility = () => {
+		const body = document.body;
+		const html = document.documentElement;
+		const height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
 
-	toggleVisibility() {
-		if (window.pageYOffset > 1000) {
-			this.setState({
-				is_visible: true
-			});
-		} else {
-			this.setState({
-				is_visible: false
-			});
+		if (Math.round(window.pageYOffset + window.innerHeight) >= 0.4 * height) {
+			setShowBtn(true);
+			return;
 		}
-	}
+		setShowBtn(false);
+	};
 
-	scrollToTop() {
+	const scrollToTop = () => {
 		window.scrollTo({
-			top: 0
+			top: 0,
+			behavior: "auto"
 		});
-	}
+	};
 
-	render() {
-		const { is_visible } = this.state;
+	const Wrapper = styled.div`
+		position: fixed;
+		bottom: 1.5rem;
+		right: 1.5rem;
+		/* animation: fadeIn 700ms ease-in-out 1s both; */
+		cursor: pointer;
+	`;
 
-		const ScrollToTop = styled.div`
-			position: fixed;
-			bottom: 1.5rem;
-			right: 1.5rem;
-			/* animation: fadeIn 700ms ease-in-out 1s both; */
-			cursor: pointer;
-		`;
+	const Inner = styled.div`
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 10px;
+		border: 1px solid black;
+		border-radius: 15px;
+		background: #f9f9f9;
+		font-weight: bold;
+		font-family: Verdana, Geneva, Tahoma, sans-serif;
 
-		return (
-			<Fragment>
-				{is_visible && (
-					<ScrollToTop>
-						<div
-							onClick={() => this.scrollToTop()}
-							style={{ width: 70, height: 30, borderRadius: 15, background: "gray", textAlign: "center" }}
-						>
-							SUBIR
-						</div>
-					</ScrollToTop>
-				)}
-			</Fragment>
-		);
-	}
-}
+		&&:hover {
+			background: #ccc;
+		}
+	`;
+
+	return (
+		<Fragment>
+			{showBtn && (
+				<Wrapper onClick={() => scrollToTop()}>
+					<Inner>SUBIR</Inner>
+				</Wrapper>
+			)}
+		</Fragment>
+	);
+};
+
+export default ScrollComponent;
