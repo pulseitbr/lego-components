@@ -76,8 +76,8 @@ export const masks = {
 	color: ["#", /\d/, /\d/, /\d/, /\d/, /\d/, /\d/],
 	cpf: [/\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "-", /\d/, /\d/],
 	telephone: ["(", /\d/, /\d/, ")", " ", /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/],
-	date: (str: string) => {
-		const numbers = OnlyNumbers(str) || "";
+	date: (str: string = "") => {
+		const numbers = OnlyNumbers(str);
 		if (numbers.length === 2) {
 			const day = ToInt(numbers.substring(0, 2));
 			if (day === 31) {
@@ -113,22 +113,19 @@ export const masks = {
 		/[\S]/,
 		/[\S]/
 	],
-	cpfCnpj: (value: string) => {
-		const mask = value.replace(/[^0-9]/g, "");
+	cpfCnpj: (value: string = "") => {
+		const mask = OnlyNumbers(value);
 		if (mask.length > 11) {
 			return [/\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "/", /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/];
 		}
 		return [/\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "-", /\d/, /\d/];
 	},
-	cellTelephone: (value: string) => {
-		const mask = value.replace(/[^0-9]/g, "");
+	cellTelephone: (value: string = "") => {
+		const mask = OnlyNumbers(value);
 		if (mask.length === 10) {
 			return ["(", /\d/, /\d/, ")", " ", /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/];
 		}
-		if (mask.length > 11) {
-			return ["(", /\d/, /\d/, ")", " ", /\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/];
-		}
-		return ["(", /\d/, /\d/, ")", " ", /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/];
+		return ["(", /\d/, /\d/, ")", " ", /\d/, /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/];
 	}
 };
 
