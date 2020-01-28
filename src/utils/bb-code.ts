@@ -1,5 +1,4 @@
-import { IsEmpty, OnlyNumbers, Trim } from "lego";
-import Colors from "../styles";
+import { IsEmpty, OnlyNumbers, Trim, Colors } from "lego";
 
 const placeholder = { class: "", phone: { text: "", number: "" }, style: {}, user: "" };
 

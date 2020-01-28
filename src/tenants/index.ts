@@ -1,4 +1,4 @@
-import { $__BP__ } from "../styles";
+import { $__BP__ } from 'lego';
 
 export const TENANT = $__BP__.tenant.toLowerCase();
 export const TENANT_TITLE = $__BP__.config.tenant;

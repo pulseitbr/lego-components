@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import "./index.css";
+
 export * from "./base";
 export { ButtonProps, default as Button } from "./button";
 export { default as Drawer } from "./drawer";
@@ -9,8 +10,8 @@ export { Dropdown, DropdownItem } from "./feedback/dropdown";
 export { default as Notification, default as Notify } from "./feedback/notify";
 export { Animations, Popover, PopoverTheme, Triggers } from "./feedback/popover";
 export { default as Snackbar } from "./feedback/snackbar";
-export { default as CheckBox, CheckboxTrigger } from "./form/checkbox";
-export { default as CurrencyInput, CurrencyInputType } from "./form/currency-input";
+export { CheckboxTrigger, default as CheckBox } from "./form/checkbox";
+export { CurrencyInputType, default as CurrencyInput } from "./form/currency-input";
 export { default as Form } from "./form/form";
 export { default as Input } from "./form/input";
 export { default as MaterialInput } from "./form/material-input";
@@ -37,7 +38,6 @@ export { default as Image } from "./picture/image";
 export * from "./skeleton";
 export { default as Steps } from "./steps";
 export { default as Constants } from "./styles/constants";
-export { default as Colors } from "./styles/index";
 export { default as PaperA4 } from "./styles/paper-a4";
 export { default as SetupStyle } from "./styles/setup-style";
 export { default as StyleSheet } from "./styles/style-sheet";
@@ -55,6 +55,7 @@ export { default as Console } from "./utils/console";
 export { default as Dimensions } from "./utils/dimensions";
 export { default as Keyboard } from "./utils/keyboard";
 export { default as Portal } from "./utils/portal";
+
 export const GlobalStyle = createGlobalStyle`
   * {
 	scroll-behavior: smooth;

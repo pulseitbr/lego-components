@@ -1,4 +1,4 @@
-import Colors from ".";
+import { Colors } from 'lego';
 
 const root: any = document.querySelector(":root");
 

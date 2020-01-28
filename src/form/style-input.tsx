@@ -1,8 +1,8 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import Loader from "../loader/loader";
-import Colors from "../styles";
 import Input, { InputTypes, MaskInputProps } from "./input";
+import { Colors } from 'lego';
 
 const onActive = "form-field__control form-field--is-active";
 const onActiveError = "form-field__control form-field--is-active form-field__input-error";
