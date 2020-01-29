@@ -26,7 +26,7 @@ function FlatList<E>(props: FlatListTypes<E>) {
 		return <Fragment>{props.emptyComponent}</Fragment>;
 	}
 	if (hasData && Array.isArray) {
-		return React.Children.map(props.data, ClosureComponent<E>(props)) as any;
+		return <Fragment>{props.data.map(ClosureComponent<E>(props)) as any}</Fragment>;
 	}
 	return <Fragment>{props.emptyComponent}</Fragment>;
 }
