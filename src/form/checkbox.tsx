@@ -1,6 +1,7 @@
 import { Colors } from "lego";
 import React from "react";
 import styled from "styled-components";
+import { Fade } from '../animation/styled-animations';
 
 const Label = styled.label`
 	cursor: pointer;
@@ -54,16 +55,11 @@ const Label = styled.label`
 		border: solid ${(props: any) => props.checkColor};
 		border-width: 0 0.1rem 0.1rem 0;
 		transform: rotate(40deg);
-		animation: fade 450ms cubic-bezier(0.28, 0.65, 0.64, 0.95);
+		animation: ${Fade} 450ms cubic-bezier(0.28, 0.65, 0.64, 0.95);
 	}
 
 	@keyframes fade {
-		0% {
-			opacity: 0;
-		}
-		100% {
-			opacity: 1;
-		}
+
 	}
 `;
 

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { SkeletonLoading } from '../animation/styled-animations';
 
 type PropsSkeleton = {
 	height: string;
@@ -8,24 +9,12 @@ type PropsSkeleton = {
 const commonCSS = `
 	background: linear-gradient(-90deg, #f4f4f4, #e1e1e1, #e9f6fa, #ededed);
 	background-size: 400% 400%;
-
-	@keyframes gradientBG {
-		0% {
-			background-position: 0% 50%;
-		}
-		50% {
-			background-position: 100% 50%;
-		}
-		100% {
-			background-position: 0% 50%;
-		}
-	}
 `;
 
 export const Skeleton = styled.div.attrs(({ time = 15000, ...props }: PropsSkeleton) => ({ ...props, time }))`
 	width: 100%;
 	height: ${(props) => props.height};
-	animation: gradientBG ${(props) => props.time}ms ease-in-out infinite;
+	animation: ${SkeletonLoading} ${(props) => props.time}ms ease-in-out infinite;
 	${commonCSS}
 `;
 
@@ -39,6 +28,6 @@ export const AvatarSkeleton = styled.div.attrs(({ circle = true, size = "3rem", 
 	width: ${(props) => props.size};
 	height: ${(props) => props.size};
 	border-radius: ${(props) => (!!props.circle ? "50%" : "0.1rem")};
-	animation: gradientBG ${(props) => props.time}ms ease-in-out infinite;
+	animation: ${SkeletonLoading} ${(props) => props.time}ms ease-in-out infinite;
 	${commonCSS}
 `;

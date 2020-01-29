@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Loader from "../loader/loader";
 import Input, { InputTypes, MaskInputProps } from "./input";
 import { zIndex } from "../styles/style-sheet";
+import { InputHighlight } from '../animation/styled-animations';
 
 type Props = {
 	lineAnimationTime?: number;
@@ -158,35 +159,7 @@ const MaterialContainer = styled.div.attrs(
 	}
 
 	input:focus ~ .highlight {
-		animation: inputHighlighter ${(props) => props.transition}ms ease;
-	}
-
-	@-webkit-keyframes inputHighlighter {
-		from {
-			background: ${(props) => props.borderBottomActiveColor};
-		}
-		to {
-			width: 0;
-			background: transparent;
-		}
-	}
-	@-moz-keyframes inputHighlighter {
-		from {
-			background: ${(props) => props.borderBottomActiveColor};
-		}
-		to {
-			width: 0;
-			background: transparent;
-		}
-	}
-	@keyframes inputHighlighter {
-		from {
-			background: ${(props) => props.borderBottomActiveColor};
-		}
-		to {
-			width: 0;
-			background: transparent;
-		}
+		animation: ${(props) => InputHighlight(props.borderBottomActiveColor)} ${(props) => props.transition}ms ease;
 	}
 `;
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { Colors } from "lego";
 import styled from "styled-components";
+import { Spin } from '../animation/styled-animations';
 
 export type Props = {
 	size?: number;
@@ -12,12 +13,7 @@ export type Props = {
 
 const SpanLoader = styled.span<Props>`
 	@keyframes donut-spin {
-		0% {
-			transform: rotate(0deg);
-		}
-		100% {
-			transform: rotate(360deg);
-		}
+
 	}
 
 	& {
@@ -27,7 +23,7 @@ const SpanLoader = styled.span<Props>`
 		border-radius: 50%;
 		width: ${(props: any) => props.size}rem;
 		height: ${(props: any) => props.size}rem;
-		animation: donut-spin ${(props: any) => props.velocity}s linear infinite;
+		animation: ${Spin} ${(props: any) => props.velocity}s linear infinite;
 	}
 `;
 
