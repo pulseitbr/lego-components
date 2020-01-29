@@ -19,14 +19,14 @@ function FlatList<E>(props: FlatListTypes<E>) {
 	if (props.hidden) {
 		return <Fragment />;
 	}
-	if (!!props.loading && !!props.loadingComponent) {
-		return <Fragment>{props.loadingComponent}</Fragment>;
-	}
 	if (!hasData) {
 		return <Fragment>{props.emptyComponent}</Fragment>;
 	}
 	if (hasData && Array.isArray) {
 		return <Fragment>{props.data.map(ClosureComponent<E>(props)) as any}</Fragment>;
+	}
+	if (!!props.loading && !!props.loadingComponent) {
+		return <Fragment>{props.loadingComponent}</Fragment>;
 	}
 	return <Fragment>{props.emptyComponent}</Fragment>;
 }
