@@ -72,6 +72,7 @@ type Props = {
 	closeIcon?: React.ReactNode;
 	closeOnEsc?: boolean;
 	maskClickClose?: boolean;
+	bodyStyle?: CSSProperties;
 	maskColor?: string;
 	onClose(): any;
 	style?: CSSProperties;
@@ -79,6 +80,7 @@ type Props = {
 	titleClassName?: string;
 	visible: boolean;
 	width?: string;
+	titleStyle?: CSSProperties;
 };
 
 const Drawer = React.forwardRef(
@@ -86,6 +88,8 @@ const Drawer = React.forwardRef(
 		{
 			blockOuterScroll = true,
 			bodyClassName = "",
+			bodyStyle = {},
+			titleStyle = {},
 			children,
 			closeIcon = <MdClose className="grow pointer" style={styles.closeIconStyle} />,
 			closeOnEsc = true,
@@ -154,7 +158,7 @@ const Drawer = React.forwardRef(
 			<Portal>
 				<DrawerPortal maskColor="rgba(0, 0, 0, 0.65)" visible={visible}>
 					<DrawerContainer {...htmlDivProps} ref={ref}>
-						<Container className={titleClassName} style={styles.modalMargin}>
+						<Container className={titleClassName} style={{ ...styles.modalMargin, ...titleStyle }}>
 							<View span="95%" xsmall="90%" small="90%">
 								{title}
 							</View>
@@ -162,7 +166,7 @@ const Drawer = React.forwardRef(
 								{closeIcon}
 							</View>
 						</Container>
-						<Container className={bodyClassName} style={{ ...styles.modalMargin, overflowY: "auto" }}>
+						<Container className={bodyClassName} style={{ ...styles.modalMargin, overflowY: "auto", ...bodyStyle }}>
 							{children}
 						</Container>
 					</DrawerContainer>
