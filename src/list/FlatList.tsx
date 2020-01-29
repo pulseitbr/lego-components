@@ -7,7 +7,7 @@ export type FlatListTypes<T> = {
 	loading?: boolean;
 	emptyComponent: React.ReactNode;
 	loadingComponent?: React.ReactNode;
-	component: (data: T, index?: number) => React.ReactNode;
+	component: (data: T, index?: number) => any;
 };
 
 function ClosureComponent<T>(props: FlatListTypes<T>) {
@@ -26,7 +26,7 @@ function FlatList<E>(props: FlatListTypes<E>) {
 		return <Fragment>{props.emptyComponent}</Fragment>;
 	}
 	if (hasData && Array.isArray) {
-		return <Fragment>{props.data.map(ClosureComponent<E>(props))}</Fragment>;
+		return React.Children.map(props.data, ClosureComponent<E>(props)) as any;
 	}
 	return <Fragment>{props.emptyComponent}</Fragment>;
 }
