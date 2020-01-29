@@ -26,7 +26,6 @@ const Label = styled.label`
 		height: 20px;
 		width: 20px;
 		background-color: ${Colors.disabledLight};
-		animation: fade 400ms ease-in-out;
 	}
 
 	&:hover input ~ .checkmark {
