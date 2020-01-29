@@ -10,23 +10,19 @@ export type FlatListTypes<T> = {
 	component: (data: T, index?: number) => any;
 };
 
-function ClosureComponent<T>(props: FlatListTypes<T>) {
-	return (x: T, flatListKey: number) => props.component(x, flatListKey);
+function ClosureComponent<T>({ component }: FlatListTypes<T>) {
+	return (x: T, flatListKey: number) => component(x, flatListKey);
 }
 
 function FlatList<E>(props: FlatListTypes<E>) {
-	const hasData = IsNotEmpty(props.data);
 	if (props.hidden) {
 		return <Fragment />;
 	}
-	if (!hasData) {
-		return <Fragment>{props.emptyComponent}</Fragment>;
-	}
-	if (hasData && Array.isArray) {
-		return <Fragment>{props.data.map(ClosureComponent<E>(props)) as any}</Fragment>;
-	}
 	if (!!props.loading && !!props.loadingComponent) {
 		return <Fragment>{props.loadingComponent}</Fragment>;
+	}
+	if (IsNotEmpty(props.data)) {
+		return <Fragment>{props.data.map(ClosureComponent<E>(props))}</Fragment>;
 	}
 	return <Fragment>{props.emptyComponent}</Fragment>;
 }
