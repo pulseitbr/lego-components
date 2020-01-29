@@ -6,7 +6,7 @@ export type FlatListTypes<T> = {
 	hidden?: boolean;
 	loading?: boolean;
 	emptyComponent: React.ReactNode;
-	loadingComponent?: React.ReactNode[];
+	loadingComponent?: React.ReactNode;
 	component: (data: T, index?: number) => React.ReactNode;
 };
 
