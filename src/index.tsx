@@ -14,6 +14,7 @@ export { CheckboxTrigger, default as CheckBox } from "./form/checkbox";
 export { CurrencyInputType, default as CurrencyInput } from "./form/currency-input";
 export { default as Form } from "./form/form";
 export { default as Input } from "./form/input";
+export { default as Table } from "./table";
 export { default as MaterialInput } from "./form/material-input";
 export { default as PasswordStrength } from "./form/password-strength";
 export { default as RadioBox } from "./form/radio-box";
