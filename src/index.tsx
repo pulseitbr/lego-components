@@ -5,6 +5,7 @@ export * from "./base";
 export { ButtonProps, default as Button } from "./button";
 export { default as Drawer } from "./drawer";
 export { default as Badge } from "./feedback/badge";
+export * from "./styles/classnames";
 export * from "./feedback/dropdown";
 export { Dropdown, DropdownItem } from "./feedback/dropdown";
 export { default as Notification, default as Notify } from "./feedback/notify";
