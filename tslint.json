@@ -1,8 +1,7 @@
 {
 	"extends": [
 		"tslint-react",
-		"tslint-immutable",
-		"tslint-react-a11y"
+		"tslint-immutable"
 	],
 	"defaultSeverity": "error",
 	"linterOptions": {
