@@ -1,7 +1,7 @@
 import { Colors } from "lego";
 import React from "react";
 import styled from "styled-components";
-import { Fade } from '../animation/styled-animations';
+import { Fade } from "../animation/styled-animations";
 
 const Label = styled.label`
 	cursor: pointer;
@@ -26,11 +26,11 @@ const Label = styled.label`
 		left: 0;
 		height: 20px;
 		width: 20px;
-		background-color: ${Colors.disabledLight};
+		background-color: ${(props: any) => props.bgUnchecked};
 	}
 
 	&:hover input ~ .checkmark {
-		background-color: ${Colors.disabled};
+		background-color: ${(props: any) => props.bgUnchecked};
 	}
 
 	& input:checked ~ .checkmark {
@@ -57,21 +57,18 @@ const Label = styled.label`
 		transform: rotate(40deg);
 		animation: ${Fade} 450ms cubic-bezier(0.28, 0.65, 0.64, 0.95);
 	}
-
-	@keyframes fade {
-
-	}
 `;
 
-type OmitValue = Omit<React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "value">;
-type OmitOnChange = Omit<OmitValue, "onChange">;
-type OmitOnClick = Omit<OmitOnChange, "onClick">;
+type OmitOnClick = Omit<React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "value" | "onChange" | "onClick">;
 
 type EventCustom = EventTarget & {
 	target: { name: string; value: boolean; checked: boolean; stopPropagation(): void; persist(): void };
 };
+
 export type CheckboxTrigger = React.MouseEvent<HTMLInputElement, MouseEvent> & EventCustom & React.InputHTMLAttributes<any>;
+
 type Props = OmitOnClick & {
+	bgUnchecked: string;
 	round?: boolean;
 	checkColor?: string;
 	value?: boolean;
@@ -83,9 +80,10 @@ type Props = OmitOnClick & {
 
 const nullFn = () => {};
 
-const Checkbox = ({
+const Checkbox: React.FC<Props> = ({
 	checkColor = Colors.lightLight,
 	color = Colors.primary,
+	bgUnchecked = Colors.lightLightest,
 	onChange,
 	onClick,
 	value = false,
@@ -94,7 +92,7 @@ const Checkbox = ({
 	labelClassName = "",
 	name,
 	...html
-}: Props) => {
+}) => {
 	const triggerEvent = onClick || onChange || nullFn;
 	const checkedValue = !!(value || checked);
 	const valString = `${checkedValue}` as "false" | "true";

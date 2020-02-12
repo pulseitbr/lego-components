@@ -2,7 +2,6 @@ import { Colors } from "lego";
 import React from "react";
 import { MdClose, MdDone, MdInfo } from "react-icons/md";
 import styled from "styled-components";
-import { Container, View } from "../base";
 import { zIndex } from "../styles/style-sheet";
 
 type TypeWrap = {
@@ -144,39 +143,35 @@ type Props = {
 	pendingIcon?: React.ReactNode;
 };
 
-const Steps = ({ steps, index, currentIcon = <MdInfo />, doneIcon = <MdDone />, pendingIcon = <MdClose /> }: Props) => (
-	<Container>
-		<View span="100%">
-			<Wrap line={Colors.disabled} done={Colors.success} doneLine={Colors.successLight} current={Colors.primary} pending={Colors.disabled}>
-				<ul className="step-list">
-					{steps.map((title, i) => {
-						if (index === i) {
-							return (
-								<li key={title} className={current}>
-									<span className="step-list-icon">{currentIcon}</span>
-									<span className="step-list-title">{title}</span>
-								</li>
-							);
-						}
-						if (i < index) {
-							return (
-								<li key={title} className={done}>
-									<span className="step-list-icon">{doneIcon}</span>
-									<span className="step-list-title">{title}</span>
-								</li>
-							);
-						}
-						return (
-							<li key={title} className={pending}>
-								<span className="step-list-icon">{pendingIcon}</span>
-								<span className="step-list-title">{title}</span>
-							</li>
-						);
-					})}
-				</ul>
-			</Wrap>
-		</View>
-	</Container>
+const Steps: React.FC<Props> = ({ steps, index, currentIcon = <MdInfo />, doneIcon = <MdDone />, pendingIcon = <MdClose /> }) => (
+	<Wrap line={Colors.disabled} done={Colors.success} doneLine={Colors.successLight} current={Colors.primary} pending={Colors.disabled}>
+		<ul className="step-list">
+			{steps.map((title, i) => {
+				if (index === i) {
+					return (
+						<li key={title} className={current}>
+							<span className="step-list-icon">{currentIcon}</span>
+							<span className="step-list-title">{title}</span>
+						</li>
+					);
+				}
+				if (i < index) {
+					return (
+						<li key={title} className={done}>
+							<span className="step-list-icon">{doneIcon}</span>
+							<span className="step-list-title">{title}</span>
+						</li>
+					);
+				}
+				return (
+					<li key={title} className={pending}>
+						<span className="step-list-icon">{pendingIcon}</span>
+						<span className="step-list-title">{title}</span>
+					</li>
+				);
+			})}
+		</ul>
+	</Wrap>
 );
 
 export default Steps;

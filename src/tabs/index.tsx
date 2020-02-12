@@ -5,9 +5,9 @@ import { Colors } from "lego";
 //@ts-ignore
 import TabContainer, { TabPane } from "rc-tabs";
 //@ts-ignore
-import SwipeableInkTabBar from "rc-tabs/lib/SwipeableInkTabBar";
+import SwipeableInkTabBar from "rc-tabs/lib/ScrollableInkTabBar";
 //@ts-ignore
-import TabContent from "rc-tabs/lib/SwipeableTabContent";
+import TabContent from "rc-tabs/lib/TabContent";
 import React from "react";
 import { MdClose } from "react-icons/md";
 import styled from "styled-components";
