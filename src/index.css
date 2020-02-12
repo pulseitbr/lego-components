@@ -1,5 +1,3 @@
-@import "./styles/tachyons-custom.css";
-
 a {
     color: var(--primary);
     background-color: transparent;
