@@ -59,7 +59,7 @@ const Label = styled.label`
 	}
 `;
 
-type OmitOnClick = Omit<React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "value" | "onChange" | "onClick">;
+type CheckboxBase = Omit<React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>, "value" | "onChange" | "onClick">;
 
 type EventCustom = EventTarget & {
 	target: { name: string; value: boolean; checked: boolean; stopPropagation(): void; persist(): void };
@@ -67,8 +67,8 @@ type EventCustom = EventTarget & {
 
 export type CheckboxTrigger = React.MouseEvent<HTMLInputElement, MouseEvent> & EventCustom & React.InputHTMLAttributes<any>;
 
-type Props = OmitOnClick & {
-	bgUnchecked: string;
+type Props = CheckboxBase & {
+	bgUnchecked?: string;
 	round?: boolean;
 	checkColor?: string;
 	value?: boolean;
@@ -109,7 +109,7 @@ const Checkbox: React.FC<Props> = ({
 	};
 	return (
 		//@ts-ignore
-		<Label className={`${labelClassName} pointer`} color={color} checkColor={checkColor}>
+		<Label bgUnchecked={bgUnchecked} className={`${labelClassName} pointer`} color={color} checkColor={checkColor}>
 			<input
 				{...html}
 				name={name}
