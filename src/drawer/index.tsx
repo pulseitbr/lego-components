@@ -1,11 +1,12 @@
 import { Colors, Keyboard } from "lego";
-import React, { CSSProperties, useEffect, useImperativeHandle, useRef } from "react";
+import React, { useEffect, useImperativeHandle, useRef } from "react";
 import { MdClose } from "react-icons/md";
 import styled, { ThemedStyledFunction } from "styled-components";
-import { useOnClickOutside } from "..";
+import { Fade } from "../animation/styled-animations";
 import { Container, View } from "../base";
 import useBlockScroll from "../hooks/use-block-scroll";
 import useKeyDown from "../hooks/use-key-down";
+import useOnClickOutside from "../hooks/use-on-click-outside";
 import StyleSheet, { zIndex } from "../styles/style-sheet";
 import Portal from "../utils/portal";
 
@@ -15,16 +16,6 @@ type ModalPortal = {
 } & ThemedStyledFunction<"div", any, {}, never>;
 
 const speed = 450;
-
-const styles = StyleSheet.create({
-	modalMargin: {
-		...StyleSheet.paddingHorizontal("0.2rem"),
-		...StyleSheet.paddingVertical("0.1rem"),
-		alignItems: "space-around"
-	},
-	closeIconStyle: { fontSize: "1.2rem" },
-	closeIcon: { textAlign: "right", alignItems: "flex-start", marginTop: "0.8rem", justifyContent: "flex-end" }
-});
 
 const DrawerPortal = styled.div.attrs((props: ModalPortal) => props)`
 	top: 0;
@@ -37,16 +28,7 @@ const DrawerPortal = styled.div.attrs((props: ModalPortal) => props)`
 	transition: ${speed};
 	display: block;
 	background-color: ${(props) => props.maskColor || "rgba(0, 0, 0, .65)"};
-	animation: fading ${speed}ms forwards ease-out;
-
-	@keyframes fading {
-		0% {
-			opacity: 0;
-		}
-		100% {
-			opacity: 1;
-		}
-	}
+	animation: ${Fade} ${speed}ms forwards ease-out;
 `;
 
 const DrawerContainer: any = styled(Container)`
@@ -72,15 +54,12 @@ type Props = {
 	closeIcon?: React.ReactNode;
 	closeOnEsc?: boolean;
 	maskClickClose?: boolean;
-	bodyStyle?: CSSProperties;
 	maskColor?: string;
 	onClose(): any;
-	style?: CSSProperties;
 	title: React.ReactNode;
 	titleClassName?: string;
 	visible: boolean;
 	width?: string;
-	titleStyle?: CSSProperties;
 };
 
 const Drawer = React.forwardRef(
@@ -88,10 +67,8 @@ const Drawer = React.forwardRef(
 		{
 			blockOuterScroll = true,
 			bodyClassName = "",
-			bodyStyle = {},
-			titleStyle = {},
 			children,
-			closeIcon = <MdClose className="grow pointer" style={styles.closeIconStyle} />,
+			closeIcon = <MdClose className="grow tr items-start pointer fsn1 justify-end mt2" />,
 			closeOnEsc = true,
 			maskClickClose = false,
 			onClose = () => {},
@@ -158,16 +135,16 @@ const Drawer = React.forwardRef(
 			<Portal>
 				<DrawerPortal maskColor="rgba(0, 0, 0, 0.65)" visible={visible}>
 					<DrawerContainer {...htmlDivProps} ref={ref}>
-						<Container className={titleClassName} style={{ ...styles.modalMargin, ...titleStyle }}>
-							<View span="95%" xsmall="90%" small="90%">
-								{title}
-							</View>
-							<View role="button" onClick={close} style={styles.closeIcon} span="3%" xsmall="3%" small="3%">
-								{closeIcon}
-							</View>
-						</Container>
-						<Container className={bodyClassName} style={{ ...styles.modalMargin, overflowY: "auto", ...bodyStyle }}>
-							{children}
+						<Container className="pa3 bg-transparent">
+							<Container className={titleClassName}>
+								<View span="95%" xsmall="90%" small="90%">
+									{title}
+								</View>
+								<View className="fsn1" role="button" onClick={close} span="3%" xsmall="3%" small="3%">
+									{closeIcon}
+								</View>
+							</Container>
+							<Container className={`overflow-y-auto ${bodyClassName}`}>{children}</Container>
 						</Container>
 					</DrawerContainer>
 				</DrawerPortal>

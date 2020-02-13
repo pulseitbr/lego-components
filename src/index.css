@@ -7448,3 +7448,10 @@ label {
 .fixed {
     position: fixed;
 }
+
+.fsn {
+	font-size: 1rem;
+}
+.fsn1 {
+	font-size: 1.2rem;
+}
