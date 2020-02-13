@@ -1,4 +1,4 @@
-import { Colors, Keyboard } from "lego";
+import { Keyboard } from "lego";
 import React, { useEffect, useImperativeHandle, useRef } from "react";
 import { MdClose } from "react-icons/md";
 import styled, { ThemedStyledFunction } from "styled-components";
@@ -32,7 +32,6 @@ const DrawerPortal = styled.div.attrs((props: ModalPortal) => props)`
 `;
 
 const DrawerContainer: any = styled(Container)`
-	background-color: ${Colors.light};
 	display: block;
 	height: 100%;
 	overflow-y: auto;
@@ -76,6 +75,7 @@ const Drawer = React.forwardRef(
 			titleClassName = "",
 			visible,
 			width = "60%",
+			className = "bg-lightLight",
 			...htmlDivProps
 		}: Props,
 		externalRef
@@ -134,7 +134,7 @@ const Drawer = React.forwardRef(
 		return (
 			<Portal>
 				<DrawerPortal maskColor="rgba(0, 0, 0, 0.65)" visible={visible}>
-					<DrawerContainer {...htmlDivProps} ref={ref}>
+					<DrawerContainer {...htmlDivProps} className={className} ref={ref}>
 						<Container className="pa3 bg-transparent">
 							<Container className={titleClassName}>
 								<View span="95%" xsmall="90%" small="90%">
