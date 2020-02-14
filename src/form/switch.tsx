@@ -8,10 +8,11 @@ type Props = {
 	round?: boolean;
 	value?: boolean;
 	animationTime?: number;
+	dotCheckColor?: string;
 	labelClassName?: string;
 } & Omit<InputHTMLAttributes<any>, "value">;
 
-type LabelType = { color: string; animationTime: number };
+type LabelType = { color: string; animationTime: number; dotCheckColor: string };
 
 const Label = styled.label.attrs(({ color = Colors.primary, animationTime = 400, ...props }: LabelType) => ({
 	...props,
@@ -46,8 +47,8 @@ const Label = styled.label.attrs(({ color = Colors.primary, animationTime = 400,
 		height: 0.8rem;
 		width: 0.8rem;
 		left: 0.15rem;
-		bottom: 0.0995rem;
-		background-color: white;
+		bottom: 0.1rem;
+		background-color: ${(props) => props.dotCheckColor};
 		transition: ${(props) => props.animationTime}ms;
 	}
 
@@ -82,6 +83,7 @@ const Switch = ({
 	name,
 	children,
 	value = false,
+	dotCheckColor = Colors.lightLightest,
 	checked = false,
 	...html
 }: Props) => {
@@ -97,7 +99,7 @@ const Switch = ({
 
 	return (
 		<Fragment>
-			<Label className={labelClassName} color={color} animationTime={animationTime}>
+			<Label dotCheckColor={dotCheckColor} className={labelClassName} color={color} animationTime={animationTime}>
 				<input {...html} name={name} type="checkbox" onChange={change} checked={isChecked} aria-checked={ariaChecked} />
 				<span className={roundClassName} />
 			</Label>

@@ -5,7 +5,7 @@ import styled from "styled-components";
 import Loader from "../loader/loader";
 import Input, { InputTypes, MaskInputProps } from "./input";
 import { zIndex } from "../styles/style-sheet";
-import { InputHighlight } from '../animation/styled-animations';
+import { InputHighlight } from "../animation/styled-animations";
 
 type Props = {
 	lineAnimationTime?: number;
@@ -264,7 +264,7 @@ const MaterialInput = React.forwardRef(
 
 		return (
 			<MaterialContainer {...containerProps}>
-				<Input {...inputHtml} {...inputCommonProps} usePlaceholder={false} />
+				<Input {...inputHtml} {...inputCommonProps} type={type} usePlaceholder={false} />
 				<span className="bar" />
 				{Label}
 				<RightIcons {...iconContainerProps}>
