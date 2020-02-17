@@ -2,12 +2,12 @@ import { Uuid } from "lego";
 import React, { useState } from "react";
 import { MdAdd, MdRemove } from "react-icons/md";
 import styled from "styled-components";
+import { Container, Right, View } from "../base";
+import Loader from "../loader/loader";
+import Pagination from "../pagination";
 import usePagination from "../pagination/use-pagination";
 import StyleSheet from "../styles/style-sheet";
-import { Container, View, Right } from "../base";
-import Loader from "../loader/loader";
 import { Title } from "../typography";
-import Pagination from "../pagination";
 
 function reactKey<T>(key: string, record: T) {
 	return record[key] || Uuid();
@@ -127,14 +127,12 @@ type Props<T> = {
 	rowProps?(record: T, index: number, data: T[]): React.DetailedHTMLProps<React.HTMLAttributes<HTMLTableRowElement>, HTMLTableRowElement>;
 	itensPerPage?: number;
 	hasExpandRow?: boolean;
-	initialPage?: number;
 };
 
 const voidFn = () => ({});
 
 function Table<T>({
 	rowKey,
-	initialPage = 0,
 	expandViewIcon = <MdAdd />,
 	expandHideIcon = <MdRemove />,
 	loading = false,
@@ -146,7 +144,7 @@ function Table<T>({
 }: Props<T>) {
 	const id = rowKey || "id";
 	const [expandedRows, setExpandedRows] = useState([] as number[]);
-	const pagination = usePagination({ dataSource, page: 0, initialPage, itensPerPage });
+	const pagination = usePagination({ dataSource, itensPerPage });
 	return (
 		<Container className="pv2">
 			<View span="100%">

@@ -1,8 +1,7 @@
 import React, { Fragment } from "react";
 import Button from "../button";
 import StyleSheet from "../styles/style-sheet";
-import { Colors } from "lego";
-import { TypePagination } from "./use-pagination";
+import { PaginationType } from "./use-pagination";
 
 const styles = StyleSheet.create({
 	loaderTd: { border: "1px solid transparent", padding: 0 },
@@ -20,30 +19,16 @@ const styles = StyleSheet.create({
 });
 
 type Props<T> = {
-	pagination: TypePagination<T>;
+	pagination: PaginationType<T>;
 };
 
 function Pagination<T>({ pagination }: Props<T>) {
-	const pressNumberPagination = (x: number) => () => pagination.setPage(x);
 	return (
 		<Fragment>
-			<Button transparent style={styles.paginateButton} disabled={pagination.isFirst} onPress={pagination.goBackward}>
+			<Button transparent style={styles.paginateButton} disabled={!pagination.hasPreviousPage} onPress={pagination.prevPage}>
 				{"<"}
 			</Button>
-			{pagination.range.map((x: number) => (
-				<Button
-					transparent
-					style={{
-						...styles.paginateButton,
-						border: x === pagination.page ? `1px solid ${Colors.primaryLight}` : undefined
-					}}
-					key={`paginate-button-${x}`}
-					onPress={pressNumberPagination(x)}
-				>
-					{x + 1}
-				</Button>
-			))}
-			<Button transparent style={styles.paginateButton} disabled={pagination.isLast} onPress={pagination.goForward}>
+			<Button transparent style={styles.paginateButton} disabled={!pagination.hasNextPage} onPress={pagination.nextPage}>
 				{">"}
 			</Button>
 		</Fragment>

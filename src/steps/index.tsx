@@ -12,9 +12,9 @@ type TypeWrap = {
 	current: string;
 };
 
-const Wrap = styled.div.attrs((props: TypeWrap) => props)`
-	margin: 0.2rem auto;
+const Wrap = styled.div<TypeWrap>`
 	font-size: 1rem;
+	width: auto;
 
 	@media (min-width: 48em) {
 		max-width: 93.75rem;
