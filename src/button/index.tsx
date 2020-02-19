@@ -39,6 +39,7 @@ const getRadius = (props: any) => {
 };
 
 const ThinButton = styled.button<ButtonProps & { pill?: boolean }>`
+	height: fit-content;
 	outline: none;
 	font-size: 0.9rem;
 	box-shadow: none;
@@ -160,7 +161,6 @@ const Button = React.forwardRef(
 		const themeDefined = defineTheme(html, styleType, theme) || "primary";
 		const clickPressAction = onClick || onPress;
 		const ifDisable = !!disabled ? "disabled" : themeDefined;
-		const cursor = !!disabled ? ("not-allowed" as "not-allowed") : ("pointer" as "pointer");
 
 		useImperativeHandle(forwardRef, () => ref.current);
 
@@ -175,10 +175,10 @@ const Button = React.forwardRef(
 		};
 
 		const commonProps = {
-			style: { cursor, ...style },
+			disabled: loading ? true : !!disabled,
 			onClick: onClickButton,
-			type,
-			disabled: loading ? true : !!disabled
+			style,
+			type
 		};
 
 		if (themeDefined === "transparent") {
