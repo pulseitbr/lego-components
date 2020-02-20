@@ -1,6 +1,3 @@
-import { Container } from "../base";
-import Button from "../button";
-import useMobile from "../hooks/use-mobile";
 import { Colors } from "lego";
 //@ts-ignore
 import TabContainer, { TabPane } from "rc-tabs";
@@ -11,6 +8,9 @@ import TabContent from "rc-tabs/lib/TabContent";
 import React from "react";
 import { MdClose } from "react-icons/md";
 import styled from "styled-components";
+import { Container } from "../base";
+import Button from "../button";
+import useMobile from "../hooks/use-mobile";
 
 const contentStyle = {
 	display: "flex",
@@ -114,7 +114,7 @@ export const Tabs: React.FC<TabsProps> = ({ onChange, inkBarColor = Colors.prima
 	});
 
 	return (
-		<Container style={{ width: 300 }}>
+		<Container className="tabs-content">
 			<TabContainer
 				onChange={onChange}
 				activeKey={currentTab}

@@ -1664,6 +1664,12 @@ label {
     overflow: hidden;
 }
 
+.tabs-content {
+    max-width: 100%;
+    min-width: min-content;
+    width: 0;
+}
+
 .rc-tabs-bar,
 .rc-tabs-nav-container {
     font-size: 14px;
