@@ -114,7 +114,7 @@ export const Tabs: React.FC<TabsProps> = ({ onChange, inkBarColor = Colors.prima
 	});
 
 	return (
-		<Container>
+		<Container style={{ width: 300 }}>
 			<TabContainer
 				onChange={onChange}
 				activeKey={currentTab}
