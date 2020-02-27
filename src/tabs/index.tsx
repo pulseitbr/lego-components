@@ -73,7 +73,9 @@ export const Tab: React.FC<TabProps> = ({ title, onClose, closable, name, classN
 				</Container>
 			}
 		>
-			<Container style={selectStyle}>{children}</Container>
+			<Container className="items-center justify-center" style={selectStyle}>
+				{children}
+			</Container>
 		</TabPane>
 	);
 };

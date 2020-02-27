@@ -34,4 +34,5 @@ function usePagination<T>({ itensPerPage = 15, dataSource }: UsePaginationProps<
 		prevPage: () => setPage((p) => (p < 1 ? 1 : p - 1))
 	};
 }
+
 export default usePagination;

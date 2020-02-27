@@ -17,6 +17,7 @@ const Dot = styled.span.attrs(({ size = 1, ...props }: any) => ({ ...props, size
 
 type Props = {
 	type?: "dot" | "tag";
+	className?: string;
 	children: React.ReactNode;
 	color?: string;
 	style?: CSSProperties;
@@ -30,7 +31,6 @@ const styles = StyleSheet.create({
 		...StyleSheet.marginVertical(Constants.UNIT_1),
 		...StyleSheet.paddingHorizontal("0.75rem"),
 		alignItems: "baseline",
-		fontWeight: "bolder",
 		textAlign: "center"
 	}
 });

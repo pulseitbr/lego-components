@@ -24,17 +24,17 @@
 	"dependencies": {
 		"@tippy.js/react": "^3.1.1",
 		"decimal.js": "^10.2.0",
-		"filesize": "^6.0.1",
+		"filesize": "^6.1.0",
 		"indexof": "^0.0.1",
 		"lego": "git+https://357db6a50f26c9ff848f6b915c5cb00eb794852b:x-oauth-basic@github.com/pulseitbr/lego.git",
-		"polished": "^3.4.2",
+		"polished": "^3.4.4",
 		"rc-tabs": "^9.7.0",
-		"react-icons": "^3.8.0",
+		"react-icons": "^3.9.0",
 		"react-motion": "^0.5.2",
 		"react-spring": "^8.0.27",
 		"react-text-mask": "^5.4.3",
-		"react-toastify": "^5.4.1",
-		"tippy.js": "^5.1.2",
+		"react-toastify": "^5.5.0",
+		"tippy.js": "^5.2.1",
 		"utility-types": "^3.10.0"
 	},
 	"peerDependencies": {

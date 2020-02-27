@@ -57,7 +57,6 @@ export const useAsyncEffect = (
 			}
 		};
 		run();
-
 		return () => {
 			isCanceled.current = true;
 			onCancel.current();

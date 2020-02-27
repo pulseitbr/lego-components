@@ -1665,8 +1665,8 @@ label {
 }
 
 .tabs-content {
-    max-width: 100%;
     min-width: min-content;
+    max-width: 100%;
     width: 0;
 }
 
@@ -7456,8 +7456,9 @@ label {
 }
 
 .fsn {
-	font-size: 1rem;
+    font-size: 1rem;
 }
+
 .fsn1 {
-	font-size: 1.2rem;
+    font-size: 1.2rem;
 }
