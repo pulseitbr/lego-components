@@ -1,4 +1,4 @@
-import { Colors } from "lego";
+import { Colors, Uuid } from "lego";
 import React, { useImperativeHandle, useRef, useState, CSSProperties } from "react";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import styled from "styled-components";
@@ -199,6 +199,7 @@ const MaterialInput = React.forwardRef(
 		}: FloatInputType,
 		externalRef
 	) => {
+		const [id] = useState(`${name}-${Uuid()}`);
 		const [stateType, setType] = useState(type);
 		const internalRef = useRef<HTMLInputElement>(null);
 		useImperativeHandle(externalRef, () => internalRef.current);
@@ -227,7 +228,7 @@ const MaterialInput = React.forwardRef(
 			className: `${className}${disabled ? " not-allowed" : ""}`,
 			style: internalInputStyle,
 			name,
-			id: name,
+			id,
 			value,
 			mask: maskType,
 			disabled,
@@ -235,7 +236,7 @@ const MaterialInput = React.forwardRef(
 		};
 
 		const Label = (
-			<label style={labelInternalStyle} title={placeholder} htmlFor={name} className={labelClassName}>
+			<label style={labelInternalStyle} title={placeholder} htmlFor={id} className={labelClassName}>
 				{placeholder}
 			</label>
 		);
