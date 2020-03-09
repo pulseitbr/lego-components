@@ -1,17 +1,14 @@
 import Tippy from "@tippy.js/react";
+import { Colors } from "lego";
 import React, { CSSProperties, useMemo } from "react";
 import styled from "styled-components";
-import { inlinePositioning, sticky } from "tippy.js";
 import "tippy.js/animations/perspective.css";
 import "tippy.js/animations/scale.css";
 import "tippy.js/animations/shift-away.css";
 import "tippy.js/animations/shift-toward.css";
 import "tippy.js/dist/backdrop.css";
 import { Container } from "../base";
-import { Colors } from "lego";
-
-export const tippyPlugins = [sticky, inlinePositioning];
-
+\
 export type Triggers = "mouseenter" | "focus" | "click" | "manual";
 type Placements =
 	| "auto-start"
@@ -87,7 +84,6 @@ export const Dropdown = ({
 			lazy
 			maxWidth="30rem"
 			placement={position}
-			plugins={tippyPlugins}
 			sticky
 			theme={theme}
 			touch

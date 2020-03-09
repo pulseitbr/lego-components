@@ -1,6 +1,5 @@
 import Tippy from "@tippy.js/react";
 import React from "react";
-import { sticky } from "tippy.js";
 import "tippy.js/animations/perspective.css";
 import "tippy.js/animations/scale.css";
 import "tippy.js/animations/shift-away.css";
@@ -9,10 +8,8 @@ import "tippy.js/dist/backdrop.css";
 import "tippy.js/dist/svg-arrow.css";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/themes/light.css";
-
-export const tippyPlugins = [sticky];
-
 export type Triggers = "mouseenter" | "focus" | "click" | "manual";
+
 type Placements =
 	| "auto-start"
 	| "auto"
@@ -77,7 +74,6 @@ export const Popover = ({
 		placement={position}
 		className={className}
 		animation={animation}
-		plugins={tippyPlugins}
 		trigger={triggers.join(" ")}
 	>
 		<span>{children as any}</span>
