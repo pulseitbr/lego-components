@@ -8,7 +8,7 @@ import "tippy.js/animations/shift-away.css";
 import "tippy.js/animations/shift-toward.css";
 import "tippy.js/dist/backdrop.css";
 import { Container } from "../base";
-\
+
 export type Triggers = "mouseenter" | "focus" | "click" | "manual";
 type Placements =
 	| "auto-start"
