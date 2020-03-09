@@ -58,9 +58,9 @@ const Notify = ({
 	theme = "default",
 	toastId = Uuid(),
 	showIcon = true,
-	message,
-	title,
-	icon,
+	message = "",
+	title = "",
+	icon = "",
 	...props
 }: NotificationProps): { toast: Toast; id: string } => {
 	const toastCall = getToastyCall(theme, toast);

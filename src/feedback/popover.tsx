@@ -50,10 +50,10 @@ type Props = {
 
 const voidFn = () => {};
 export const Popover = ({
-	children,
+	children = "",
 	className = "",
 	triggers = ["click"],
-	itens,
+	itens = "",
 	arrow = true,
 	onCreate = voidFn,
 	theme = "light",

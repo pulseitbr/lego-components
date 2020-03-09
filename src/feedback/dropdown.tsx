@@ -1,5 +1,5 @@
 import Tippy from "@tippy.js/react";
-import React, { CSSProperties } from "react";
+import React, { CSSProperties, useMemo } from "react";
 import styled from "styled-components";
 import { inlinePositioning, sticky } from "tippy.js";
 import "tippy.js/animations/perspective.css";
@@ -57,17 +57,17 @@ export const DropdownItem = styled.li`
 `;
 
 export const Dropdown = ({
-	children,
+	children = "",
 	className = "",
 	triggers = ["click"],
 	bgColor = Colors.lightLight,
-	itens,
+	itens = "",
 	theme = "light",
 	animation = "perspective",
 	position = "bottom-end"
 }: Props) => {
 	const style: CSSProperties = { backgroundColor: bgColor, width: "100%", padding: "0.4rem", listStyle: "none" };
-	const triggerString = triggers.join(" ");
+	const triggerString = useMemo(() => triggers.join(" "), [triggers]);
 
 	const content = (
 		<Container style={{ backgroundColor: bgColor }}>
