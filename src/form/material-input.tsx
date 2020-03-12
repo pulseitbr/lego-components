@@ -79,7 +79,7 @@ const MaterialContainer = styled.div.attrs(
 
 	input {
 		background-color: transparent;
-		font-size: ${(props) => 1.4 * props.size}rem;
+		font-size: ${(props) => 1.1 * props.size}rem;
 		padding: 1rem 0 0 0;
 		display: block;
 		width: 100%;
@@ -103,7 +103,7 @@ const MaterialContainer = styled.div.attrs(
 
 	label {
 		color: ${(props) => props.labelColor};
-		font-size: ${(props) => props.size * 1.05}rem;
+		font-size: ${(props) => props.size * 1}rem;
 		font-weight: normal;
 		position: absolute;
 		pointer-events: none;

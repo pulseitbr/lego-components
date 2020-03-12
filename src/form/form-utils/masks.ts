@@ -1,4 +1,5 @@
 import { FormatCpf, OnlyNumbers, ToInt } from "lego";
+
 const cnpjReplace = /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/;
 const cellphoneReplace = /(\d{2})(\d{5})(\d{4})/;
 const telephoneReplace = /(\d{2})(\d{4})(\d{4})/;
@@ -7,21 +8,33 @@ const isoDateReplace = /(\d{4})(\d{2})(\d{2})/;
 const brDateReplace = /(\d{2})(\d{2})(\d{4})/;
 const creditCardReplace = /(\d{4})(\d{4})(\d{4})(\d{4})/;
 
-const toCpf = (str: string = "") => FormatCpf(str);
-const toCnpj = (str: string = "") => OnlyNumbers(str).replace(cnpjReplace, "$1.$2.$3/$4-$5");
+const toCpf = (str = "") => FormatCpf(str);
+const toCnpj = (str = "") => OnlyNumbers(str).replace(cnpjReplace, "$1.$2.$3/$4-$5");
 
-const toCellphone = (str: string = "") => {
+const toCellphone = (str = "") => {
 	if (str.length === 11) {
 		return OnlyNumbers(str).replace(cellphoneReplace, "($1) $2-$3");
 	}
 	return str;
 };
 
-const toTelephone = (str: string = "") => {
+const toTelephone = (str = "") => {
 	if (str.length === 10) {
 		return OnlyNumbers(str).replace(telephoneReplace, "($1) $2-$3");
 	}
 	return str;
+};
+
+const checkMonth = (numbers = "", day = 0, first = /[01]/, second = /\d/) => {
+	const firstDigitMonth = numbers.substring(2, 3) || "";
+	if (firstDigitMonth === "1") {
+		return [/[0123]/, /\d/, "/", /1/, /[02]/, "/", /\d/, /\d/, /\d/, /\d/];
+	}
+	if (day >= 30) {
+		return [/[0123]/, /\d/, "/", first, /[013456789]/, "/", /\d/, /\d/, /\d/, /\d/];
+	}
+
+	return [/[0123]/, /\d/, "/", first, second, "/", /\d/, /\d/, /\d/, /\d/];
 };
 
 export const maskConverter = {
@@ -76,16 +89,17 @@ export const masks = {
 	color: ["#", /\d/, /\d/, /\d/, /\d/, /\d/, /\d/],
 	cpf: [/\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, ".", /\d/, /\d/, /\d/, "-", /\d/, /\d/],
 	telephone: ["(", /\d/, /\d/, ")", " ", /\d/, /\d/, /\d/, /\d/, "-", /\d/, /\d/, /\d/, /\d/],
-	date: (str: string = "") => {
+	date: (str = "") => {
 		const numbers = OnlyNumbers(str);
-		if (numbers.length === 2) {
-			const day = ToInt(numbers.substring(0, 2));
-			if (day === 31) {
-				return [/[0123]/, /\d/, "/", /[01]/, /[12356789]/, "/", /\d/, /\d/, /\d/, /\d/];
-			}
-			if (day === 30) {
-				return [/[0123]/, /\d/, "/", /[01]/, /\d/, "/", /\d/, /\d/, /\d/, /\d/];
-			}
+		const day = ToInt(numbers.substring(0, 2) || "0");
+		if (/^3/.test(numbers)) {
+			return checkMonth(numbers, day, /[01]/, /\d/);
+		}
+		if (day === 31) {
+			checkMonth(numbers);
+		}
+		if (day === 30) {
+			checkMonth(numbers);
 		}
 		return [/[0123]/, /\d/, "/", /[01]/, /\d/, "/", /\d/, /\d/, /\d/, /\d/];
 	},

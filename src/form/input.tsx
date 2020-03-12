@@ -85,6 +85,7 @@ const Input = React.forwardRef(({ type = "text", mask = "", usePlaceholder = tru
 	}
 	const options = { mask, name: html.name, value, type };
 	if (mask in masks) {
+		console.log(mask);
 		const { extraProps, maskRegex, maskedValue, placeholder } = instanceMaskValues(mask as MasksTypes, usePlaceholder, html, value, html as any);
 		return (
 			<MaskedInput
