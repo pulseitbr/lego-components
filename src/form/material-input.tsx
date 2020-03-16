@@ -80,7 +80,7 @@ const MaterialContainer = styled.div.attrs(
 	input {
 		background-color: transparent;
 		font-size: ${(props) => 1.1 * props.size}rem;
-		padding: 1rem 0 0 0;
+		padding: 1.25rem 0 0 0;
 		display: block;
 		width: 100%;
 		border: none;
