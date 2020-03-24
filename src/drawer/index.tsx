@@ -1,4 +1,4 @@
-import { Keyboard } from "lego";
+import { Keyboard } from "@pulseitbr/lego";
 import React, { useEffect, useImperativeHandle, useRef } from "react";
 import { MdClose } from "react-icons/md";
 import styled, { ThemedStyledFunction } from "styled-components";

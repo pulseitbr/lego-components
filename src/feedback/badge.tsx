@@ -1,4 +1,4 @@
-import { Colors } from "lego";
+import { Colors } from "@pulseitbr/lego";
 import { darken, transparentize } from "polished";
 import React, { CSSProperties } from "react";
 import styled from "styled-components";

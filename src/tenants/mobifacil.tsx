@@ -1,4 +1,4 @@
-import { TENANT, Tenants } from "lego";
+import { TENANT, Tenants } from "@pulseitbr/lego";
 import React, { Fragment, useEffect, useState } from "react";
 
 const isMobifacil = Tenants.mobifacil === TENANT;

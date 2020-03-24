@@ -1,5 +1,5 @@
 import Tippy from "@tippy.js/react";
-import { Colors } from "lego";
+import { Colors } from "@pulseitbr/lego";
 import React, { CSSProperties, useMemo } from "react";
 import styled from "styled-components";
 import "tippy.js/animations/perspective.css";

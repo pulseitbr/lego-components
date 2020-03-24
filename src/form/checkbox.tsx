@@ -1,4 +1,4 @@
-import { Colors } from "lego";
+import { Colors } from "@pulseitbr/lego";
 import React from "react";
 import styled from "styled-components";
 import { Fade } from "../animation/styled-animations";

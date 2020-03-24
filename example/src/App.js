@@ -1,4 +1,4 @@
-import { OnlyNumbers, ToInt } from "lego";
+import { OnlyNumbers, ToInt } from "@pulseitbr/lego";
 import { Body, Input, Page } from "lego-components";
 import React from "react";
 

@@ -1,4 +1,4 @@
-import { Profile, Tenants } from 'lego';
+import { Profile, Tenants } from "@pulseitbr/lego";
 
 type Props = {
 	allowedProfiles: Profile[];

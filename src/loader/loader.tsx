@@ -1,5 +1,5 @@
 import React from "react";
-import { Colors } from "lego";
+import { Colors } from "@pulseitbr/lego";
 import styled from "styled-components";
 import { Spin } from '../animation/styled-animations';
 

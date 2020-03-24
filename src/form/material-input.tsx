@@ -1,4 +1,4 @@
-import { Colors, Uuid } from "lego";
+import { Colors, Uuid } from "@pulseitbr/lego";
 import React, { useImperativeHandle, useRef, useState, CSSProperties } from "react";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 import styled from "styled-components";

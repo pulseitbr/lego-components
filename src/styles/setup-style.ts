@@ -1,4 +1,4 @@
-import { Colors } from 'lego';
+import { Colors } from "@pulseitbr/lego";
 
 const root: any = document.querySelector(":root");
 

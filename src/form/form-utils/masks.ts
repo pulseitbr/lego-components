@@ -1,4 +1,4 @@
-import { FormatCpf, OnlyNumbers, ToInt } from "lego";
+import { FormatCpf, OnlyNumbers, ToInt } from "@pulseitbr/lego";
 
 const cnpjReplace = /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/;
 const cellphoneReplace = /(\d{2})(\d{5})(\d{4})/;

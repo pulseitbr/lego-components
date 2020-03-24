@@ -1,4 +1,4 @@
-import { Colors } from "lego";
+import { Colors } from "@pulseitbr/lego";
 //@ts-ignore
 import TabContainer, { TabPane } from "rc-tabs";
 //@ts-ignore

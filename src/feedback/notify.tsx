@@ -1,4 +1,4 @@
-import { Uuid } from "lego";
+import { Uuid } from "@pulseitbr/lego";
 import React from "react";
 import { MdClose, MdDone, MdError, MdInfoOutline, MdWarning } from "react-icons/md";
 import { toast, Toast, ToastOptions } from "react-toastify";

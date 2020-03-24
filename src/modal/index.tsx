@@ -1,4 +1,4 @@
-import { Colors } from "lego";
+import { Colors } from "@pulseitbr/lego";
 import { lighten } from "polished";
 import React, { CSSProperties, useCallback, useEffect, useRef, useImperativeHandle } from "react";
 import { MdClose } from "react-icons/md";

@@ -1,4 +1,4 @@
-import { IsEmpty, OnlyNumbers, Trim, Colors } from "lego";
+import { IsEmpty, OnlyNumbers, Trim, Colors } from "@pulseitbr/lego";
 
 const placeholder = { class: "", phone: { text: "", number: "" }, style: {}, user: "" };
 

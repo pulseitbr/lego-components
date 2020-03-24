@@ -1,4 +1,4 @@
-import { Uuid } from "lego";
+import { Uuid } from "@pulseitbr/lego";
 import React, { Fragment } from "react";
 import { Container } from "../base";
 import { Skeleton } from "../skeleton";

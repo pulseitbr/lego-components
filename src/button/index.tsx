@@ -1,7 +1,7 @@
 import React, { useRef, useImperativeHandle } from "react";
 import styled from "styled-components";
 import Loader from "../loader/loader";
-import { Colors } from "lego";
+import { Colors } from "@pulseitbr/lego";
 import { ThemeProperty, defineTheme } from "../styles/theme-property";
 
 interface IButtonProps {

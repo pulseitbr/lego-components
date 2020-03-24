@@ -1,4 +1,4 @@
-import { IsEmpty, Colors } from "lego";
+import { IsEmpty, Colors } from "@pulseitbr/lego";
 import { transparentize } from "polished";
 import React, { useEffect, useState } from "react";
 import { MdHome, MdStore } from "react-icons/md";

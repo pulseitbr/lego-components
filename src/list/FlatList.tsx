@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { IsNotEmpty } from "lego";
+import { IsNotEmpty } from "@pulseitbr/lego";
 
 export type FlatListTypes<T> = {
 	data: T[];

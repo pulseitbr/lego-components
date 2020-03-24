@@ -1,4 +1,4 @@
-import { Uuid } from "lego";
+import { Uuid } from "@pulseitbr/lego";
 import React, { useState } from "react";
 import { MdAdd, MdRemove } from "react-icons/md";
 import styled from "styled-components";

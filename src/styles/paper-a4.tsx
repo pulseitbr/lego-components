@@ -1,4 +1,4 @@
-import { Colors } from "lego";
+import { Colors } from "@pulseitbr/lego";
 import styled from "styled-components";
 
 type TypesPaperA4 = Partial<{
