@@ -28,10 +28,10 @@ const toTelephone = (str = "") => {
 const checkMonth = (numbers = "", day = 0, first = /[01]/, second = /\d/) => {
 	const firstDigitMonth = numbers.substring(2, 3) || "";
 	if (firstDigitMonth === "1") {
-		return [/[0123]/, /\d/, "/", /1/, /[02]/, "/", /\d/, /\d/, /\d/, /\d/];
+		return [/[0123]/, /\d/, "/", /1/, /[012]/, "/", /\d/, /\d/, /\d/, /\d/];
 	}
 	if (day >= 30) {
-		return [/[0123]/, /\d/, "/", first, /[013456789]/, "/", /\d/, /\d/, /\d/, /\d/];
+		return [/[0123]/, /\d/, "/", first, /[0123456789]/, "/", /\d/, /\d/, /\d/, /\d/];
 	}
 
 	return [/[0123]/, /\d/, "/", first, second, "/", /\d/, /\d/, /\d/, /\d/];
