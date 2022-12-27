@@ -1,4 +1,4 @@
-import Tippy from "@tippy.js/react";
+import Tippy from "@tippyjs/react";
 import React from "react";
 import "tippy.js/animations/perspective.css";
 import "tippy.js/animations/scale.css";
