@@ -1,11 +1,10 @@
-import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
-import strip from "@rollup/plugin-strip";
 import url from "@rollup/plugin-url";
 import svgr from "@svgr/rollup";
+import commonjs from "rollup-plugin-commonjs";
 import external from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
-import { terser } from "rollup-plugin-terser";
+import strip from "@rollup/plugin-strip";
 import typescript from "rollup-plugin-typescript2";
 import visualizer from "rollup-plugin-visualizer";
 import pkg from "./package.json";
@@ -17,7 +16,6 @@ export default {
 		{
 			file: pkg.main,
 			format: "cjs",
-			plugins: [terser()],
 			exports: "named",
 			sourcemap: false
 		},
@@ -39,11 +37,11 @@ export default {
 		strip(),
 		external(),
 		postcss({
-			extensions: [".css"],
 			inject: true,
 			extract: true,
 			minimize: true,
-			autoModules: true
+			autoModules: true,
+			extensions: [".css"]
 		}),
 		url(),
 		visualizer(),
